@@ -34,10 +34,12 @@ function ChebAij = Aij2(aValley,bValley,Pcoeffs,freq,Npts,degs,range)
     for i=1:length(xPts) % ** this line can be parfor **
         fprintf('\n%d',i);
         Avec = zeros(1,length(yPts));
-        for j = 1:length(yPts) %can be parfor
+        parfor j = 1:length(yPts) %can be parfor
             Avec(j) = contourPoly2(aValley,bValley,PcoeffsXY{i,j},freq,Npts);
         end
         Avals(i,:) = Avec;
+        iFinal = i;
+        save('tempData','Avals','iFinal');
     end
     %approximate by 2D Chebfun
     ChebAij = chebfun2(Avals,[range(1) range(2) range(3) range(4)]);

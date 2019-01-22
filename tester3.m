@@ -1,10 +1,12 @@
 clear classes;
+addPaths();
+
 aValley = exp(9i*pi/8); %start of contour
 bValley = exp(1i*pi/8); %end of contour
 Pcoeffs = @(X,Y) [1/4 0 -X/2 -Y 0];
 
 ballRad = 0.25;
-Npts = 50;
+Npts = 15;
 degs = [30 30]; %Chebfun sample points in each direction
 %[100 100] used to take 40 minutes, now it takes 12
 range = [-10 10 -10 10];

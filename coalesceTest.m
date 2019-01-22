@@ -1,18 +1,5 @@
-clear; 
-addpath('../NSD/src');
-addpath ../NSD/src/pathChoosing;
-addpath ../NSD/src/pathFinding;
-addpath ../NSD/src/quadrature;
-addpath ../NSD/src/quadrature/expansion;
-addpath ../NSD/src/quadrature/quadrules;
-addpath ../NSD/src/quadrature/OPQ;
-addpath ../NSD/src/rootFinding;
-addpath ../NSD/src/singularPoints;
-addpath ../NSD/src/infContours;
-
-%addpath ../
-
-
+clear classes; 
+addPaths();
 
 Npts = 10; %number of quadrature points (for all types of quadrature)
 
