@@ -34,7 +34,7 @@ function ChebAij = Aij2(aValley,bValley,Pcoeffs,freq,Npts,degs,range)
     for i=1:length(xPts) % ** this line can be parfor **
         fprintf('\n%d',i);
         Avec = zeros(1,length(yPts));
-        parfor j = 1:length(yPts)
+        for j = 1:length(yPts) %can be parfor
             Avec(j) = contourPoly2(aValley,bValley,PcoeffsXY{i,j},freq,Npts);
         end
         Avals(i,:) = Avec;
