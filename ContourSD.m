@@ -6,6 +6,8 @@ classdef ContourSD < handle
         endPoint
         startCoverIndex
         endCoverIndex = []
+        startClusterIndices
+        endClusterIndices = []
         coarsePath
         coarsePathGrad
         length
@@ -26,12 +28,13 @@ classdef ContourSD < handle
     end
     
     methods
-        function self = ContourSD(startPoint,paramOrder,phaseDerivs,startCover,otherCovers,valleys)
+        function self = ContourSD(startPoint,paramOrder,phaseDerivs,startCover,otherCovers,valleys,clusterIndices)
             %construct an instance of this class
             self.startPoint = startPoint;
             self.paramOrder = paramOrder;
             self.phaseDerivs = phaseDerivs;
             self.startCoverIndex = startCover.index;
+            self.startClusterIndices = getClusterBuddies(clusterIndices, self.startCoverIndex);
             
             self.ICs = [startPoint; zeros(paramOrder-1,1)];
             %solve ODE to approximate contour
@@ -68,6 +71,7 @@ classdef ContourSD < handle
                 end
             else    %finite contour
                 self.endCoverIndex = contourInCover(contourEndIndex); %the cover which the contour hits
+                self.endClusterIndices = getClusterBuddies(clusterIndices, self.endCoverIndex);
                 contourEndIndex = max(contourEndIndex-1,1); %take one off, to be sure of ending before it hits
                 self.length = p(contourEndIndex);
                 self.coarsePath = self.coarsePath(1:contourEndIndex);

@@ -1,4 +1,4 @@
-function contourSeq = shortestInfinitePath(contours, covers, valleys, a, b)
+function contourSeq = shortestInfinitePath(contours, covers, coverOverlaps, valleys, a, b)
     %chooses shortest (in the sense of fewest contours) infinite (each
     %contour is infinite) sequence of paths from valley_a to valley_b
     
@@ -28,6 +28,14 @@ function contourSeq = shortestInfinitePath(contours, covers, valleys, a, b)
     edgeContourIndices = edgeContourIndices + edgeContourIndices.';
     network = network + network.';
     
+    for m = 1:numCovers
+        for n=1:numCovers
+            if network(m,n)==0
+                network(m,n) = coverOverlaps(m,n);
+            end
+        end
+    end
+    
     %set valleys to 'exact' values
     for n = 1:length(valleys)
         if abs(valleys(n)-a)<1e-12
@@ -51,6 +59,12 @@ function contourSeq = shortestInfinitePath(contours, covers, valleys, a, b)
     %now convert seequence of nodes to sequence of edges
     contourSeq = [];
     for n = 2:length(seq)
-        contourSeq = [contourSeq edgeContourIndices(seq(n-1),seq(n))];
+        if edgeContourIndices(seq(n-1),seq(n))==0
+            if coverOverlaps(seq(n-1),seq(n))==0
+                error('Contour sequence doesnt make sense');
+            end
+        else
+            contourSeq = [contourSeq edgeContourIndices(seq(n-1),seq(n))];
+        end
     end
 end
