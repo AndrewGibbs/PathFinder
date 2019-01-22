@@ -27,7 +27,7 @@ function [contoursOut] = getSDtopography(G,SPs_init,order,aValley,bValley,visual
             contours = [contours ContourSD(xi,balls(n).orderSum,G,balls(n),[balls(1:(n-1)) balls((n+1):end)],valleys,clusters)];
         end
     end
-    %contours = deleteRedudantContours(contours);
+    contours = deleteRedudantContours(contours);
 
     contourSeq = shortestInfinitePath(contours, balls, intersectionMatrix, valleys, aValley, bValley);
     

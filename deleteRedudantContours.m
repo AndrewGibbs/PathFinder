@@ -7,7 +7,8 @@ function contoursOut = deleteRedudantContours(contoursIn)
             if ~ismember(C.endCoverIndex,C.startClusterIndices)
                 contoursOut = [contoursOut C];
             end
+        else
+            contoursOut = [contoursOut C];
         end
     end
 end
-
