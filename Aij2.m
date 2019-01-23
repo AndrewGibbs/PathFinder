@@ -29,10 +29,12 @@ function ChebAij = Aij2(aValley,bValley,Pcoeffs,freq,Npts,degs,range)
         end
     end
     
+    iFinal=1;
+    
     %evaluate contour integral A(x,y) at Chebyshev nodes
     Avals = zeros(length(xPts),length(yPts));
-    for i=1:length(xPts) % ** this line can be parfor **
-        fprintf('\n%d',i);
+    for i=iFinal:length(xPts) % ** this line can be parfor **
+        fprintf('\n%d/%d',i,length(xPts));
         Avec = zeros(1,length(yPts));
         parfor j = 1:length(yPts) %can be parfor
             Avec(j) = contourPoly2(aValley,bValley,PcoeffsXY{i,j},freq,Npts);
