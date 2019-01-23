@@ -72,7 +72,8 @@ classdef ContourSD < handle
             else    %finite contour
                 self.endCoverIndex = contourInCover(contourEndIndex); %the cover which the contour hits
                 self.endClusterIndices = getClusterBuddies(clusterIndices, self.endCoverIndex);
-                contourEndIndex = max(contourEndIndex-1,1); %take one off, to be sure of ending before it hits
+                %contourEndIndex = max(contourEndIndex-1,1); %take one off, to be sure of ending before it hits
+                contourEndIndex = min(contourEndIndex,2);
                 self.length = p(contourEndIndex);
                 self.coarsePath = self.coarsePath(1:contourEndIndex);
                 self.endValley = [];
