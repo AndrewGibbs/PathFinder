@@ -1,4 +1,4 @@
-function ChebAij = Aij2(aValley,bValley,Pcoeffs,freq,Npts,degs,range)
+function ChebAij = Aij(aValley,bValley,Pcoeffs,freq,Npts,degs,range)
 %Aij(aValley,bValley,Pcoeffs,freq,Npts,degs,range)
 %approximates A(x,y) = int_C exp(i*freq*P(z,x,y)) dz, where C is an infinite
 %contour from aValley to bValley in the complex plane, P is a polynomial
@@ -29,19 +29,15 @@ function ChebAij = Aij2(aValley,bValley,Pcoeffs,freq,Npts,degs,range)
         end
     end
     
-    iFinal=1;
-    
     %evaluate contour integral A(x,y) at Chebyshev nodes
     Avals = zeros(length(xPts),length(yPts));
-    for i=iFinal:length(xPts) % ** this line can be parfor **
-        fprintf('\n%d/%d',i,length(xPts));
+    for i=1:length(xPts) % ** this line can be parfor **
+        fprintf('\n%d',i);
         Avec = zeros(1,length(yPts));
-        parfor j = 1:length(yPts) %can be parfor
-            Avec(j) = contourPoly2(aValley,bValley,PcoeffsXY{i,j},freq,Npts);
+        for j = 1:length(yPts)
+            Avec(j) = contourPoly(aValley,bValley,PcoeffsXY{i,j},freq,Npts);
         end
         Avals(i,:) = Avec;
-        iFinal = i;
-        save('tempData','Avals','iFinal');
     end
     %approximate by 2D Chebfun
     ChebAij = chebfun2(Avals,[range(1) range(2) range(3) range(4)]);

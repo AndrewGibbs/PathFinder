@@ -2,7 +2,7 @@ function I = contourPoly2(aVal,bVal,polyCoeffs,freq, Npts)
 %computes infinite contour integral from infiaVal to bVal of exp(i*freq*P(z)),
 %where P is a polynomial with coefficients given by polyCoeffs
     [G, SPs_init, order] = NSDeetsFromPoly(polyCoeffs, 1e-16); %have set clumping to be the same
-    contoursOut = getSDtopography(G,SPs_init,sum(order)+1,aVal,bVal,false);
+    contoursOut = getSDtopology(G,SPs_init,sum(order)+1,aVal,bVal,false);
 
     [~, w] = makeQuad(contoursOut,freq,Npts,G{1});
     I = sum(w);
