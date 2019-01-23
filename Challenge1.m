@@ -7,7 +7,7 @@ Pcoeffs = @(X,Y) [1/4 0 -X/2 -Y 0];
 
 ballRad = 0.25;
 Npts = 15;
-degs = [30 30]; %Chebfun sample points in each direction
+degs = [10 10]; %Chebfun sample points in each direction
 %[100 100] used to take 40 minutes, now it takes 12
 range = [-10 10 -10 10];
 %?yt?xt^2/2+t^4/4
