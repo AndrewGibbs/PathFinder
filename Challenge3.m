@@ -15,7 +15,7 @@ range = [-10 10 -10 10];
 %?yt?xt^2/2+t^4/4
 
 tic;
-A31 = Aij2(aValley, bValley, Pcoeffs, 1, Npts, degs, range); 
+A32 = Aij2(aValley, bValley, Pcoeffs, 1, Npts, degs, range); 
 T = toc;
 
 %plot results.
