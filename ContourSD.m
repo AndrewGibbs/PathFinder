@@ -13,6 +13,7 @@ classdef ContourSD < handle
         length
         endValley %may be unpopulated if finite length
         paramOrder
+        ODEorder = 1
         phaseDerivs
         %some parameters with default settings:
         coarseTol = 1e-3;
@@ -38,7 +39,8 @@ classdef ContourSD < handle
             
             self.ICs = [startPoint; zeros(paramOrder-1,1)];
             %solve ODE to approximate contour
-            [p,H] = ode45(@(t,y) NSDpathODE(t,y,self.paramOrder-1,phaseDerivs, self.ICs, false, 0), [0 self.paramPathLength], self.ICs, odeset('RelTol', self.coarseTol) );
+            %ODEorder = self.paramOrder;
+            [p,H] = ode45(@(t,y) NSDpathODE(t,y,self.ODEorder-1,phaseDerivs, self.ICs, false, 0), [0 self.paramPathLength], self.ICs, odeset('RelTol', self.coarseTol) );
             self.coarsePath = H(:,1);
             self.coarsePathGrad = 1i/phaseDerivs{2}(self.coarsePath);
             %check if path isin any of the covers, truncate it if it is
@@ -88,22 +90,22 @@ classdef ContourSD < handle
         function [Z, W] = getQuad(self,freq,Npts)
             if isinf(self.length)
                 %get relevant weighted Gauss quad rule:
-                [p, self.Wgauss] = quad_gauss_exp(self.paramOrder, Npts);
+                [p, self.Wgauss] = quad_gauss_exp(self.ODEorder, Npts);
                 %scale by frequency and add zero
-                self.P0=[0; (p/(freq^(1/self.paramOrder)))];
+                self.P0=[0; (p/(freq^(1/self.ODEorder)))];
             else
                 [p, self.Wgauss] = gauss_quad(0,self.length,Npts);
                 self.P0=[0; flipud(p)];
             end
-            [~,H] = ode45(@(t,y) NSDpathODE(t,y,self.paramOrder-1,self.phaseDerivs, self.ICs, false, 0),...
+            [~,H] = ode45(@(t,y) NSDpathODE(t,y,self.ODEorder-1,self.phaseDerivs, self.ICs, false, 0),...
                     self.P0, self.ICs, odeset('RelTol', self.fineTol) );
             self.h = H(2:end,1);
             self.dhdp = 1i./self.phaseDerivs{2}(self.h);
             %this adjusts for small deviations from the path:
-            weightWatchers = exp(1i*freq*(self.phaseDerivs{1}(self.h)-1i*self.P0(2:end).^self.paramOrder - self.phaseDerivs{1}(self.startPoint)));
+            weightWatchers = exp(1i*freq*(self.phaseDerivs{1}(self.h)-1i*self.P0(2:end).^self.ODEorder - self.phaseDerivs{1}(self.startPoint)));
             if isinf(self.length)
                 %absorb h'(p) and other constants into weights.
-                W= (1/(freq^(1/self.paramOrder)))*exp(1i*freq*self.phaseDerivs{1}(self.startPoint))...
+                W= (1/(freq^(1/self.ODEorder)))*exp(1i*freq*self.phaseDerivs{1}(self.startPoint))...
                     .*self.dhdp.*self.Wgauss.*weightWatchers;
             else
                W = self.dhdp.*self.Wgauss.*exp(1i*freq*self.phaseDerivs{1}(self.h)) ;
@@ -114,9 +116,9 @@ classdef ContourSD < handle
          
         function [Z, W] = reuseQuad(self, g)
             if isinf(self.length)
-                weightWatchers = exp(1i*freq*(g(self.h)-1i*self.P0(2:end).^self.paramOrder - g(self.startPoint)));
+                weightWatchers = exp(1i*freq*(g(self.h)-1i*self.P0(2:end).^self.ODEorder - g(self.startPoint)));
                 %absorb h'(p) and other constants into weights.
-                W= (1/(freq^(1/self.paramOrder)))*exp(1i*freq*g(self.startPoint))...
+                W= (1/(freq^(1/self.ODEorder)))*exp(1i*freq*g(self.startPoint))...
                     .*self.dhdp.*self.Wgauss.*weightWatchers;
             else
                 W = self.Wgauss.*exp(1i*freq*g(self.h)) ;

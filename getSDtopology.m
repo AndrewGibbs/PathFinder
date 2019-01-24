@@ -1,4 +1,4 @@
-function [contoursOut] = getSDtopography(G,SPs_init,order,aValley,bValley,visuals)
+function [contoursOut] = getSDtopology(G,SPs_init,order,aValley,bValley,visuals)
 %determines a sequence of contours in complex plane, which can subsequently
 %be used to generate multiple quadrature routines
     ballRad = .35;
