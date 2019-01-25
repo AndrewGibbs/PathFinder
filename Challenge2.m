@@ -7,7 +7,7 @@ Pcoeffs = @(X,Y) [2/5 -X/2 0 -Y 0 0];
 
 ballRad = 0.25;
 Npts = 50;
-degs = [1000 1000]; %Chebfun sample points in each direction
+degs = [100 100]; %Chebfun sample points in each direction
 %[100 100] used to take 40 minutes, now it takes 12
 
 %my estimations say that 12 hours should be enough time for 1000x10000
