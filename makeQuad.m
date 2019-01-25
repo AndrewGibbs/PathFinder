@@ -28,7 +28,7 @@ function [z, w] = makeQuad(contoursInSeq,freq,Npts,g)
     
     for n = 1:length(contourSubSeq)
         
-        [z_I1, w_I1] = contourSubSeq{n}(1).getQuad(freq,Npts);
+        [z_I1, w_I1] = contourSubSeq{n}(1).getQuad(freq,Npts,g);
         if contourSubSeq{n}(1).startCoverIndex == contourSubSeq{n}(2).startCoverIndex
             [z_I1j, w_I1j] = gauss_quad(contourSubSeq{n}(1).startPoint, contourSubSeq{n}(2).startPoint, Npts);
             dh_1Ij = (contourSubSeq{n}(2).startPoint - contourSubSeq{n}(1).startPoint)...
@@ -97,7 +97,7 @@ function [z, w] = makeQuad(contoursInSeq,freq,Npts,g)
                 error('cannot connect path');
             end
             
-            [z_f1, w_f1] = finiteContours(m).getQuad(freq,Npts);
+            [z_f1, w_f1] = finiteContours(m).getQuad(freq,Npts,g);
             %sum(w_f1)
             [z_f1j, w_f1j] = gauss_quad(coverStartPoint, coverEndPoint, Npts);
             dh_f1j = (coverEndPoint-coverStartPoint)/abs(coverEndPoint-coverStartPoint);
@@ -106,7 +106,7 @@ function [z, w] = makeQuad(contoursInSeq,freq,Npts,g)
             w = [w; pm*w_f1; w_f1j.*sgw(z_f1j)*dh_f1j];
             prevCoverIndex = finiteContours(m).startCoverIndex;
         end
-        [z_Iend, w_Iend] = contourSubSeq{n}(end).getQuad(freq,Npts);
+        [z_Iend, w_Iend] = contourSubSeq{n}(end).getQuad(freq,Npts,g);
         z = [z; z_Iend];
         w = [w; w_Iend];
         %sum(w_Iend)
