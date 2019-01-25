@@ -26,7 +26,6 @@ classdef ContourSD < handle
         h = []
         dhdp
         Wgauss
-        quadFreq
     end
     
     methods
@@ -76,7 +75,7 @@ classdef ContourSD < handle
                 self.endCoverIndex = contourInCover(contourEndIndex); %the cover which the contour hits
                 self.endClusterIndices = getClusterBuddies(clusterIndices, self.endCoverIndex);
                 %contourEndIndex = max(contourEndIndex-1,1); %take one off, to be sure of ending before it hits
-                contourEndIndex = max(contourEndIndex,2);
+                contourEndIndex = min(contourEndIndex,2);
                 self.length = p(contourEndIndex);
                 self.coarsePath = self.coarsePath(1:contourEndIndex);
                 self.endValley = [];
@@ -93,7 +92,6 @@ classdef ContourSD < handle
                 g = self.phaseDerivs{1};
             end
             if isempty(self.h) %if quadrature hasn't been created already, then create it
-                self.quadFreq = freq;
                 if isinf(self.length)
                     %get relevant weighted Gauss quad rule:
                     [p, self.Wgauss] = quad_gauss_exp(self.ODEorder, Npts);
@@ -116,20 +114,18 @@ classdef ContourSD < handle
                 else
                    W = self.dhdp.*self.Wgauss.*exp(1i*freq*self.phaseDerivs{1}(self.h)) ;
                 end
-                Z=self.h; 
-            else
-                [Z, W] = self.reuseQuad(g);
+                
             end
         end
          
         function [Z, W] = reuseQuad(self, g)
             if isinf(self.length)
-                weightWatchers = exp(1i*self.quadFreq*(g(self.h)-1i*self.P0(2:end).^self.ODEorder - g(self.startPoint)));
+                weightWatchers = exp(1i*freq*(g(self.h)-1i*self.P0(2:end).^self.ODEorder - g(self.startPoint)));
                 %absorb h'(p) and other constants into weights.
-                W = (1/(self.quadFreq^(1/self.ODEorder)))*exp(1i*self.quadFreq*g(self.startPoint))...
+                W = (1/(freq^(1/self.ODEorder)))*exp(1i*freq*g(self.startPoint))...
                     .*self.dhdp.*self.Wgauss.*weightWatchers;
             else
-                W = self.dhdp.*self.Wgauss.*exp(1i*self.quadFreq*g(self.h)) ;
+                W = self.Wgauss.*exp(1i*freq*g(self.h)) ;
             end
             Z=self.h; 
         end
