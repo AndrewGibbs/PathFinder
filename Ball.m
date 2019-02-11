@@ -34,7 +34,7 @@ classdef Ball < ComplexCover
                         self.radius*cos(paramVal*2*pi) + ...
                         self.radius*1i*sin(paramVal*2*pi);
             else
-                point = self.centre;
+                point = self.centre+1i*eps;
             end
         end
         

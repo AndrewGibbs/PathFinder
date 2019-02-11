@@ -88,50 +88,77 @@ classdef ContourSD < handle
             plot(self.coarsePath);
         end
         
-        function [Z, W] = getQuad(self,freq,Npts,g)
-            if nargin == 3
-                g = self.phaseDerivs{1};
-            end
-            if isempty(self.h) %if quadrature hasn't been created already, then create it
-                self.quadFreq = freq;
-                if isinf(self.length)
-                    %get relevant weighted Gauss quad rule:
-                    [p, self.Wgauss] = quad_gauss_exp(self.ODEorder, Npts);
-                    %scale by frequency and add zero
-                    self.P0=[0; (p/(freq^(1/self.ODEorder)))];
-                else
-                    [p, self.Wgauss] = gauss_quad(0,self.length,Npts);
-                    self.P0=[0; flipud(p)];
-                end
-                [~,H] = ode45(@(t,y) NSDpathODE(t,y,self.ODEorder-1,self.phaseDerivs, self.ICs, false, 0),...
-                        self.P0, self.ICs, odeset('RelTol', self.fineTol) );
-                self.h = H(2:end,1);
-                self.dhdp = 1i./self.phaseDerivs{2}(self.h);
-                %this adjusts for small deviations from the path:
-                weightWatchers = exp(1i*freq*(self.phaseDerivs{1}(self.h)-1i*self.P0(2:end).^self.ODEorder - self.phaseDerivs{1}(self.startPoint)));
-                if isinf(self.length)
-                    %absorb h'(p) and other constants into weights.
-                    W= (1/(freq^(1/self.ODEorder)))*exp(1i*freq*self.phaseDerivs{1}(self.startPoint))...
-                        .*self.dhdp.*self.Wgauss.*weightWatchers;
-                else
-                   W = self.dhdp.*self.Wgauss.*exp(1i*freq*self.phaseDerivs{1}(self.h)) ;
-                end
-                Z=self.h; 
-            else
-                [Z, W] = self.reuseQuad(g);
-            end
-        end
-         
-        function [Z, W] = reuseQuad(self, g)
+        function [Z, W] = getQuad(self,freq,Npts)
+%             if nargin <= 4
+%                 G = self.phaseDerivs;
+%             end
+%             if isempty(self.h) %if quadrature hasn't been created already, then create it
+            self.quadFreq = freq;
             if isinf(self.length)
-                weightWatchers = exp(1i*self.quadFreq*(g(self.h)-1i*self.P0(2:end).^self.ODEorder - g(self.startPoint)));
+                %get relevant weighted Gauss quad rule:
+                [p, self.Wgauss] = quad_gauss_exp(self.ODEorder, Npts);
+                %scale by frequency and add zero
+                self.P0=[0; (p/(freq^(1/self.ODEorder)))];
+            else
+                [p, self.Wgauss] = gauss_quad(0,self.length,Npts);
+                self.P0=[0; flipud(p)];
+            end
+            [~,H] = ode45(@(t,y) NSDpathODE(t,y,self.ODEorder-1,self.phaseDerivs, self.ICs, false, 0),...
+                    self.P0, self.ICs, odeset('RelTol', self.fineTol) );
+            self.h = H(2:end,1);
+            self.dhdp = 1i./self.phaseDerivs{2}(self.h);
+            %this adjusts for small deviations from the path:
+            weightWatchers = exp(1i*freq*(self.phaseDerivs{1}(self.h)-1i*self.P0(2:end).^self.ODEorder - self.phaseDerivs{1}(self.startPoint)));
+            if isinf(self.length)
                 %absorb h'(p) and other constants into weights.
-                W = (1/(self.quadFreq^(1/self.ODEorder)))*exp(1i*self.quadFreq*g(self.startPoint))...
+                W= (1/(freq^(1/self.ODEorder)))*exp(1i*freq*self.phaseDerivs{1}(self.startPoint))...
                     .*self.dhdp.*self.Wgauss.*weightWatchers;
             else
-                W = self.dhdp.*self.Wgauss.*exp(1i*self.quadFreq*g(self.h)) ;
+               W = self.dhdp.*self.Wgauss.*exp(1i*freq*self.phaseDerivs{1}(self.h)) ;
             end
             Z=self.h; 
+%             else
+%                 [Z, W] = self.reuseQuad(G, errThresh);
+%             end
+        end
+         
+        function [Z, W] = reuseQuad(self, G, errThresh)
+            if nargin == 2
+                errThresh = inf;
+            end
+            if ~isinf(errThresh) %tweak old SD path using Newton iteration
+                Zold=self.h;
+                p = self.P0(2:end);
+                Z = NaN(size(Zold));
+                dZdp = Z;
+                for n = 1:length(Zold) %#ok<CPROPLC> %iterate over all quad points
+                    [success, z_new] = NewtonSD(Zold(n),G,p(n),1,self.startPoint,errThresh);
+                    if success
+                        Z(n) = z_new;
+                        dZdp(n) =  1i./G{2}(Z(n));
+                    else
+                        Z = Zold;
+                        dZdp = self.dhdp;
+                        warning('Failed to iterate to true SD path');
+                        n = length(Zold) +1;
+                        break;
+                    end
+                    clear z_new;
+                end
+            else
+                Z = self.h;
+                dZdp = self.dhdp;
+            end
+            g = G{1};
+            if isinf(self.length)
+                weightWatchers = exp(1i*self.quadFreq*(g(Z)-1i*self.P0(2:end).^self.ODEorder - g(self.startPoint)));
+                %absorb h'(p) and other constants into weights.
+                W = (1/(self.quadFreq^(1/self.ODEorder)))*exp(1i*self.quadFreq*g(self.startPoint))...
+                    .*dZdp.*self.Wgauss.*weightWatchers;
+            else
+                W = dZdp.*self.Wgauss.*exp(1i*self.quadFreq*g(Z)) ;
+            end
+            
         end
     end
 end
