@@ -1,4 +1,4 @@
-classdef Ball < ComplexCover
+classdef EndPoint < ComplexCover
     %Ball in complex plane
     
     properties
@@ -7,13 +7,13 @@ classdef Ball < ComplexCover
     end
     
     methods
-        function self = Ball(r,c,g,index,orderSum)
-            self.radius = r;
+        function self = Ball(c,g,index,orderSum)
+            self.radius = 0;
             self.centre = c;
             self.index = index;
             self.orderSum = orderSum;
-            self.boundaryLength = 2*pi*r;
-            self.diameter = r;
+            self.boundaryLength = 0;
+            self.diameter = 0;
             
             if r>0
                 if nargin>2
@@ -34,7 +34,7 @@ classdef Ball < ComplexCover
                         self.radius*cos(paramVal*2*pi) + ...
                         self.radius*1i*sin(paramVal*2*pi);
             else
-                point = self.centre+1i*eps;
+                point = self.centre;
             end
         end
         
