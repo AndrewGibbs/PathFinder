@@ -1,20 +1,26 @@
-function [contoursOut] = getSDtopology(G,SPs_init,order,aValley,bValley,visuals)
+function [contoursOut] = getSDtopology(G,SPs_init,order,a,b,visuals,infCountour)
 %determines a sequence of contours in complex plane, which can subsequently
 %be used to generate multiple quadrature routines
-    ballRad = .35;
+    ballRad = .5;
     valleys = exp(2i*pi*(1/4 + (1:order))/order);
     stationaryPointMinDist = 1e-4; %merge balls if stationary points are this close
     
     [SPs, SPorders, clumpWidth] = sortStationaryPoints(SPs_init,stationaryPointMinDist);
     %roots at +-1
     ballIndex = 1;
+    if ~infCountour
+       for endpoint = [a b]
+           endPointBalls(ballIndex) = Ball(0,endpoint,G{1},ballIndex,0);
+           ballIndex = ballIndex + 1;
+       end
+    end
     for n = 1:length(SPs)
         ballsInit(n) = Ball(ballRad+clumpWidth(n),SPs(n),G{1},ballIndex,SPorders(n));
         ballIndex = ballIndex + 1;
     end
     
     %crude algorithm which clumps balls together when they overlap
-    balls = deleteRedundantExits(ballsInit);
+    balls = [endPointBalls deleteRedundantExits(ballsInit)];
     %balls = ballsInit;
     
     %get adjacency info for overlapping covers/balls
@@ -28,8 +34,8 @@ function [contoursOut] = getSDtopology(G,SPs_init,order,aValley,bValley,visuals)
         end
     end
     contours = deleteRedudantContours(contours);
-
-    contourSeq = shortestInfinitePath(contours, balls, intersectionMatrix, valleys, aValley, bValley);
+    
+    contourSeq = shortestInfinitePath(contours, balls, intersectionMatrix, valleys, a, b, infCountour);
     
     contoursOut = contours(contourSeq);
     

@@ -20,25 +20,39 @@ function [z, w] = makeQuad(contoursInSeq, freq, Npts, G, reuseThresh, infContour
     
     z=[]; w=[];
     
+    if false%~infContour
+       contour_a = contoursInSeq(1);
+       contour_b = contoursInSeq(end);
+       contoursInSeq = contoursInSeq(2:(end-1));
+       for C_ab = [contour_a contour_b]
+           %does path start inside another ball
+           if length(C_ab.startClusterIndices)>1
+               
+           else
+                
+           end
+           
+           %is path finite, and ends inside another ball?
+           if ~isempty(C_ab.endCoverIndex)
+              
+           else
+               
+           end
+           
+           
+       end
+    end
+    
     %make a corretion for standard Gauss, which has a different weight
     %function:
     sgw = @(z) exp(1i*freq*g(z));
-    
-    %idea of the below loop is to get all sequences of contours into
-    %subsequences of the form (II), (IFI), (IFF---FFFI), i.e. two infinite
-    %paths with finite paths between them
     subseqCount = 1;
     subseqIndex = 1;
     subseqInfPathCount =0;
-    for n =1:length(contoursInSeq)
-       contourSubSeq{subseqCount}(subseqIndex) = contoursInSeq(n);
-       if isinf(contoursInSeq(n).length)
+    for contour = contoursInSeq
+       contourSubSeq{subseqCount}(subseqIndex) = contour;
+       if isinf(contour.length)
            subseqInfPathCount = subseqInfPathCount + 1;
-           if ~infContour && n==1
-               subseqInfPathCount = subseqInfPathCount + 1;
-               %first contour in sequence, should be in its own subsequence
-               %if it's infinte
-           end
        end
        if subseqInfPathCount == 2
            subseqCount = subseqCount + 1;
@@ -49,46 +63,45 @@ function [z, w] = makeQuad(contoursInSeq, freq, Npts, G, reuseThresh, infContour
        end
     end
     
+    %idea of the above loop is to get all sequences of contours into
+    %subsequences of the form (II), (IFI), (IFF---FFFI), i.e. two infinite
+    %paths with finite paths between them
+    
     for n = 1:length(contourSubSeq)
         if recycleFlag
             [z_I1, w_I1] = contourSubSeq{n}(1).reuseQuad(G,reuseThresh);
         else
             [z_I1, w_I1] = contourSubSeq{n}(1).getQuad(freq,Npts);
         end
-%         if ~isinf %first contour is outgoing, rather than incoming
-%             w_I1 = -w_I1;
-%         end
-        if length(contourSubSeq{n})>1
-            if contourSubSeq{n}(1).startCoverIndex == contourSubSeq{n}(2).startCoverIndex
+        if ~isinf
+            w_I1
+        end
+        if contourSubSeq{n}(1).startCoverIndex == contourSubSeq{n}(2).startCoverIndex
+            [z_I1j, w_I1j] = gauss_quad(contourSubSeq{n}(1).startPoint, contourSubSeq{n}(2).startPoint, Npts);
+            dh_1Ij = (contourSubSeq{n}(2).startPoint - contourSubSeq{n}(1).startPoint)...
+                    /abs(contourSubSeq{n}(2).startPoint - contourSubSeq{n}(1).startPoint);
+        elseif contourSubSeq{n}(1).startCoverIndex == contourSubSeq{n}(2).endCoverIndex
+            [z_I1j, w_I1j] = gauss_quad(contourSubSeq{n}(1).startPoint, contourSubSeq{n}(2).endPoint, Npts);
+            dh_1Ij = (contourSubSeq{n}(2).endPoint - contourSubSeq{n}(1).startPoint)...
+                    /abs(contourSubSeq{n}(2).endPoint - contourSubSeq{n}(1).startPoint);
+        else %assume there are some overlapping balls, and that's how the two contours connect
+            if ismember(contourSubSeq{n}(1).startCoverIndex,contourSubSeq{n}(2).startClusterIndices)
                 [z_I1j, w_I1j] = gauss_quad(contourSubSeq{n}(1).startPoint, contourSubSeq{n}(2).startPoint, Npts);
                 dh_1Ij = (contourSubSeq{n}(2).startPoint - contourSubSeq{n}(1).startPoint)...
                         /abs(contourSubSeq{n}(2).startPoint - contourSubSeq{n}(1).startPoint);
-            elseif contourSubSeq{n}(1).startCoverIndex == contourSubSeq{n}(2).endCoverIndex
+            elseif ismember(contourSubSeq{n}(1).startCoverIndex,contourSubSeq{n}(2).endClusterIndices)
                 [z_I1j, w_I1j] = gauss_quad(contourSubSeq{n}(1).startPoint, contourSubSeq{n}(2).endPoint, Npts);
                 dh_1Ij = (contourSubSeq{n}(2).endPoint - contourSubSeq{n}(1).startPoint)...
                         /abs(contourSubSeq{n}(2).endPoint - contourSubSeq{n}(1).startPoint);
-            else %assume there are some overlapping balls, and that's how the two contours connect
-                if ismember(contourSubSeq{n}(1).startCoverIndex,contourSubSeq{n}(2).startClusterIndices)
-                    [z_I1j, w_I1j] = gauss_quad(contourSubSeq{n}(1).startPoint, contourSubSeq{n}(2).startPoint, Npts);
-                    dh_1Ij = (contourSubSeq{n}(2).startPoint - contourSubSeq{n}(1).startPoint)...
-                            /abs(contourSubSeq{n}(2).startPoint - contourSubSeq{n}(1).startPoint);
-                elseif ismember(contourSubSeq{n}(1).startCoverIndex,contourSubSeq{n}(2).endClusterIndices)
-                    [z_I1j, w_I1j] = gauss_quad(contourSubSeq{n}(1).startPoint, contourSubSeq{n}(2).endPoint, Npts);
-                    dh_1Ij = (contourSubSeq{n}(2).endPoint - contourSubSeq{n}(1).startPoint)...
-                            /abs(contourSubSeq{n}(2).endPoint - contourSubSeq{n}(1).startPoint);
-                else
-                    error('cant work out how these contours connect');
-                end
+            else
+                error('cant work out how these contours connect');
+            end
             %*******%
             %it seems very likely that the above inner if statement can be merged
             %with the outer one!!!
-            end
-            z = [z; z_I1; z_I1j];
-            w = [w; -w_I1; w_I1j.*sgw(z_I1j)*dh_1Ij];
-        else
-            z = [z; z_I1];
-            w = [w; w_I1];
         end
+        z = [z; z_I1; z_I1j];
+        w = [w; -w_I1; w_I1j.*sgw(z_I1j)*dh_1Ij];
         
         finiteContours = contourSubSeq{n}(2:(end)); %last one isn't actually finite... but we won't go there
         %prevCoverIndex = contourSubSeq{n}(1).startCoverIndex;
