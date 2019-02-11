@@ -1,4 +1,4 @@
-function contourSeq = shortestInfinitePath(contours, covers, coverOverlaps, valleys, a, b)
+function contourSeq = shortestInfinitePath(contours, covers, coverOverlaps, valleys, a, b, infCountour)
     %chooses shortest (in the sense of fewest contours) infinite (each
     %contour is infinite) sequence of paths from valley_a to valley_b
     
@@ -17,10 +17,22 @@ function contourSeq = shortestInfinitePath(contours, covers, coverOverlaps, vall
     for contour = contours
         contourIndex = contourIndex + 1;
         if isinf(contour.length) %cover to valley
-            network(contour.startCoverIndex, numCovers + find(valleys==contour.endValley)) = covers(contour.startCoverIndex).diameter;
+            if covers(contour.startCoverIndex).diameter == 0
+                cost = 10*eps;
+            else
+                cost = covers(contour.startCoverIndex).diameter;
+            end
+            %network(contour.startCoverIndex, numCovers + find(valleys==contour.endValley)) = covers(contour.startCoverIndex).diameter;
+            network(contour.startCoverIndex, numCovers + find(valleys==contour.endValley)) = cost;
             edgeContourIndices(contour.startCoverIndex, numCovers + find(valleys==contour.endValley)) = contourIndex;
         else %cover to cover
-            network(contour.startCoverIndex, find((1:numCovers)==contour.endCoverIndex)) = covers(contour.startCoverIndex).diameter;
+            if covers(contour.startCoverIndex).diameter ==0
+                cost = 10*eps;
+            else
+                cost = covers(contour.startCoverIndex).diameter;
+            end
+            %network(contour.startCoverIndex, find((1:numCovers)==contour.endCoverIndex)) = covers(contour.startCoverIndex).diameter;
+            network(contour.startCoverIndex, find((1:numCovers)==contour.endCoverIndex)) = cost;
             edgeContourIndices(contour.startCoverIndex, find((1:numCovers)==contour.endCoverIndex)) = contourIndex;
         end
     end
@@ -37,21 +49,26 @@ function contourSeq = shortestInfinitePath(contours, covers, coverOverlaps, vall
     end
     
     %set valleys to 'exact' values
-    for n = 1:length(valleys)
-        if abs(valleys(n)-a)<1e-12
-            valleys(n) = a;
-        elseif  abs(valleys(n)-b)<1e-12
-            valleys(n) = b;
+    if infCountour
+        for n = 1:length(valleys)
+            if abs(valleys(n)-a)<1e-12
+                valleys(n) = a;
+            elseif  abs(valleys(n)-b)<1e-12
+                valleys(n) = b;
+            end
         end
-    end
-    startValleyInd = find(valleys==a) + numCovers;
-    endValleyInd = find(valleys==b) + numCovers;
-    if isempty(startValleyInd) || isempty(endValleyInd)
-        error('Couldnt find valleys');
+        startInd = find(valleys==a) + numCovers;
+        endInd = find(valleys==b) + numCovers;
+        if isempty(startInd) || isempty(endInd)
+            error('Couldnt find valleys');
+        end
+    else
+        startInd = 1;
+        endInd = 2;
     end
     
     Gr = graph(network,'upper');
-    [seq, cost] =shortestpath(Gr,startValleyInd,endValleyInd);
+    [seq, cost] =shortestpath(Gr,startInd,endInd);
     if isinf(cost)
         error('Unable to determine shortest path');
     end
