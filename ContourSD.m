@@ -8,6 +8,8 @@ classdef ContourSD < handle
         endCoverIndex = []
         startClusterIndices
         endClusterIndices = []
+        intervalEndpoint = []
+        endClusterIntervalEndpoints = []
         coarsePath
         coarsePathGrad
         length
@@ -30,20 +32,25 @@ classdef ContourSD < handle
     end
     
     methods
-        function self = ContourSD(startPoint,paramOrder,phaseDerivs,startCover,otherCovers,valleys,clusterIndices)
+        function self = ContourSD(startPoint,phaseDerivs,startCover,otherCovers,valleys,clusterIndices,clusterEndpoints)
             %construct an instance of this class
             self.startPoint = startPoint;
-            self.paramOrder = paramOrder;
+            self.paramOrder = startCover.orderSum;
             self.phaseDerivs = phaseDerivs;
             self.startCoverIndex = startCover.index;
-            self.startClusterIndices = getClusterBuddies(clusterIndices, self.startCoverIndex);
+            [self.startClusterIndices, self.intervalEndpoint] = getClusterBuddies(clusterIndices, self.startCoverIndex, clusterEndpoints);
             
-            self.ICs = [startPoint; zeros(paramOrder-1,1)];
+            self.ICs = [startPoint; zeros(self.paramOrder-1,1)];
             %solve ODE to approximate contour
             %ODEorder = self.paramOrder;
-            [p,H] = ode45(@(t,y) NSDpathODE(t,y,self.ODEorder-1,phaseDerivs, self.ICs, false, 0), [0 self.paramPathLength], self.ICs, odeset('RelTol', self.coarseTol) );
-            self.coarsePath = H(:,1);
-            self.coarsePathGrad = 1i/phaseDerivs{2}(self.coarsePath);
+%             [p,H] = ode45(@(t,y) NSDpathODE(t,y,self.ODEorder-1,phaseDerivs, self.ICs, false, 0), [0 self.paramPathLength], self.ICs, odeset('RelTol', self.coarseTol) );
+%             self.coarsePath = H(:,1);
+%             self.coarsePathGrad = 1i/phaseDerivs{2}(self.coarsePath);
+            
+            %new streamlined version of ODE solver, much simpler than orig
+            %PathFinder:
+            [p, self.coarsePath, self.coarsePathGrad] = SDpathODE(self.paramPathLength, phaseDerivs{2}, 1, self.ICs(1), self.coarseTol);
+            
             %check if path isin any of the covers, truncate it if it is
             
             contourInCover = zeros(size(self.coarsePath));
@@ -74,7 +81,7 @@ classdef ContourSD < handle
                 end
             else    %finite contour
                 self.endCoverIndex = contourInCover(contourEndIndex); %the cover which the contour hits
-                self.endClusterIndices = getClusterBuddies(clusterIndices, self.endCoverIndex);
+                [self.endClusterIndices, self.endClusterIntervalEndpoints] = getClusterBuddies(clusterIndices, self.endCoverIndex, clusterEndpoints);
                 %contourEndIndex = max(contourEndIndex-1,1); %take one off, to be sure of ending before it hits
                 contourEndIndex = max(contourEndIndex,2);
                 self.length = p(contourEndIndex);
@@ -96,23 +103,29 @@ classdef ContourSD < handle
             self.quadFreq = freq;
             if isinf(self.length)
                 %get relevant weighted Gauss quad rule:
-                [p, self.Wgauss] = quad_gauss_exp(self.ODEorder, Npts);
+                [self.P0, self.Wgauss] = quad_gauss_exp(self.ODEorder, Npts);
                 %scale by frequency and add zero
-                self.P0=[0; (p/(freq^(1/self.ODEorder)))];
+                %self.P0=[0; (p/(freq^(1/self.ODEorder)))];
+                %self.P0=[0; p];
             else
-                [p, self.Wgauss] = gauss_quad(0,self.length,Npts);
-                self.P0=[0; flipud(p)];
+                [self.P0, self.Wgauss] = gauss_quad(0,self.length,Npts);
+                %self.P0=[0; flipud(p)];
             end
-            [~,H] = ode45(@(t,y) NSDpathODE(t,y,self.ODEorder-1,self.phaseDerivs, self.ICs, false, 0),...
-                    self.P0, self.ICs, odeset('RelTol', self.fineTol) );
-            self.h = H(2:end,1);
-            self.dhdp = 1i./self.phaseDerivs{2}(self.h);
+            
+%             [~,H] = ode45(@(t,y) NSDpathODE(t,y,self.ODEorder-1,self.phaseDerivs, self.ICs, false, 0),...
+%                     self.P0, self.ICs, odeset('RelTol', self.fineTol) );
+%             self.h = H(2:end,1);
+%             self.dhdp = 1i./self.phaseDerivs{2}(self.h);
+            
+            [~, self.h, self.dhdp] = SDpathODE(self.P0, self.phaseDerivs{2}, freq, self.ICs(1), self.fineTol);
+            
             %this adjusts for small deviations from the path:
-            weightWatchers = exp(1i*freq*(self.phaseDerivs{1}(self.h)-1i*self.P0(2:end).^self.ODEorder - self.phaseDerivs{1}(self.startPoint)));
+            weightWatchers = exp(1i*(freq*self.phaseDerivs{1}(self.h)-1i*self.P0.^self.ODEorder - freq*self.phaseDerivs{1}(self.startPoint)));
             if isinf(self.length)
                 %absorb h'(p) and other constants into weights.
-                W= (1/(freq^(1/self.ODEorder)))*exp(1i*freq*self.phaseDerivs{1}(self.startPoint))...
-                    .*self.dhdp.*self.Wgauss.*weightWatchers;
+%                 W= (1/(freq^(1/self.ODEorder)))*exp(1i*freq*self.phaseDerivs{1}(self.startPoint))...
+%                     .*self.dhdp.*self.Wgauss.*weightWatchers;
+                W= exp(1i*freq*self.phaseDerivs{1}(self.startPoint)).*self.dhdp.*self.Wgauss.*weightWatchers;
             else
                W = self.dhdp.*self.Wgauss.*exp(1i*freq*self.phaseDerivs{1}(self.h)) ;
             end
@@ -128,7 +141,7 @@ classdef ContourSD < handle
             end
             if ~isinf(errThresh) %tweak old SD path using Newton iteration
                 Zold=self.h;
-                p = self.P0(2:end);
+                p = self.P0;
                 Z = NaN(size(Zold));
                 dZdp = Z;
                 for n = 1:length(Zold) %#ok<CPROPLC> %iterate over all quad points
@@ -151,10 +164,11 @@ classdef ContourSD < handle
             end
             g = G{1};
             if isinf(self.length)
-                weightWatchers = exp(1i*self.quadFreq*(g(Z)-1i*self.P0(2:end).^self.ODEorder - g(self.startPoint)));
+                weightWatchers = exp(1i*(self.quadFreq*g(Z)-1i*self.P0.^self.ODEorder - self.quadFreq*g(self.startPoint)));
                 %absorb h'(p) and other constants into weights.
-                W = (1/(self.quadFreq^(1/self.ODEorder)))*exp(1i*self.quadFreq*g(self.startPoint))...
-                    .*dZdp.*self.Wgauss.*weightWatchers;
+%                 W = (1/(self.quadFreq^(1/self.ODEorder)))*exp(1i*self.quadFreq*g(self.startPoint))...
+%                     .*dZdp.*self.Wgauss.*weightWatchers;
+                W = exp(1i*self.quadFreq*g(self.startPoint)).*dZdp.*self.Wgauss.*weightWatchers;
             else
                 W = dZdp.*self.Wgauss.*exp(1i*self.quadFreq*g(Z)) ;
             end

@@ -2,7 +2,10 @@ function coversOut = deleteRedundantExits(coversIn)
 %sometimes, the steepest exit from a cover will start off inside of another
 %ball. These get confusing and will cause errors later, so this function
 %deletes them before contours are created.
-
+if isempty(coversIn)
+    coversOut = [];
+    return;
+end
 numCovers = length(coversIn);
 coversOut = coversIn;
 
