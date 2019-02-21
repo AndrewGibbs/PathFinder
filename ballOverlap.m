@@ -1,4 +1,4 @@
-function [A, clumpOut] = ballOverlap(balls)
+function [A, clumpOut, clumpEndpoints] = ballOverlap(balls)
 %returns matrix of logical values, if a given ball overlaps with another
 %ball
     numBalls = length(balls);
@@ -39,6 +39,17 @@ function [A, clumpOut] = ballOverlap(balls)
         if ~isempty(clump{n})
             clumpOut{m}=clump{n};
             m=m+1;
+        end
+    end
+    
+    %now, incase we are deforming a finite interval [a,b], log any finite
+    %enpoints (a or b) which are inside of any cluster
+    for n=1:length(clumpOut)
+        clumpEndpoints{n} = [];
+        for m=1:length(clumpOut{n})
+            if balls(clumpOut{n}(m)).radius == 0
+                clumpEndpoints{n} = [clumpEndpoints{n} balls(clumpOut{n}(m)).centre];
+            end
         end
     end
 end
