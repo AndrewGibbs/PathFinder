@@ -11,6 +11,8 @@ function [contoursOut] = getSDtopology(G,SPs_init,order,a,b,visuals,infCountour,
            endPointBalls(ballIndex) = Ball(0,endpoint,G{1},ballIndex,0);%IntervalEndPoint(endpoint,G{1},0);
            ballIndex = ballIndex + 1;
        end
+    else
+        endPointBalls = [];
     end
     
     %sort and contain stationary points
@@ -18,7 +20,7 @@ function [contoursOut] = getSDtopology(G,SPs_init,order,a,b,visuals,infCountour,
         
         [SPs, SPorders, clumpWidth] = sortStationaryPoints(SPs_init,stationaryPointMinDist);
         
-        SPorders = 2;
+        %SPorders = 2;
         
         for n = 1:length(SPs)
             %ballsInit(n) = Ball(ballRad+clumpWidth(n),SPs(n),G{1},ballIndex,SPorders(n));

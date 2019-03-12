@@ -57,6 +57,9 @@ classdef ContourSD < handle
             contourNaNcover = zeros(size(self.coarsePath));
             
             for cover = otherCovers
+                if iscell(cover)
+                    cover = cover{1};
+                end
                 contourInCover_yn = zeros(size(self.coarsePath));
                 contourInCover_yn = contourInCover_yn + cover.isIn(self.coarsePath);
                 contourInCover = contourInCover + contourInCover_yn.*cover.index;
@@ -92,7 +95,7 @@ classdef ContourSD < handle
         end
         
         function plot(self)
-            plot(self.coarsePath);
+            plot(self.coarsePath,'-.k');
         end
         
         function [Z, W] = getQuad(self,freq,Npts)

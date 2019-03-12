@@ -10,9 +10,8 @@ classdef (Abstract) ComplexCover
         steepestExits
         index %index all covers
         orderSum %sum of all orders of all stationary points inside cover
-        exitGrad = 1024; %accuracy to compute exit points of cover
+        exitGrad = 256; %accuracy to compute exit points of cover
         diameter
-        boundaryComplex
     end
     
     methods
@@ -25,10 +24,11 @@ classdef (Abstract) ComplexCover
             Im_goB = @(s) imag(g(self.boundaryTrace(s)));
             exits = [];
             
-            for j = 2:(self.exitGrad+1)
+            [Im_goB_s, unique_s] = unique(Im_goB(s));
+            for j = 2:(length(Im_goB_s)-1)
                 %check if this s corresponds to a local maxima
-                if Im_goB(s(j)) > Im_goB(s(j-1)) && Im_goB(s(j)) > Im_goB(s(j+1))
-                    %Im_goB_s(j) > Im_goB_s(j-1) && Im_goB_s(j) > Im_goB_s(j+1)
+                %if Im_goB(s(j)) > Im_goB(s(j-1)) && Im_goB(s(j)) > Im_goB(s(j+1))
+                if Im_goB_s(j) > Im_goB_s(j-1) && Im_goB_s(j) > Im_goB_s(j+1)
                     exits = [exits self.boundaryTrace(s(j))];
                 end
             end
@@ -36,7 +36,7 @@ classdef (Abstract) ComplexCover
         
         function plot(self)
             s = linspace(0,1,self.exitGrad);
-            plot(self.boundaryTrace(s),'k');
+            plot(self.boundaryTrace(s),'.');
         end
     end
 end

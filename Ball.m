@@ -22,6 +22,8 @@ classdef Ball < ComplexCover
             else
                 self.steepestExits = c;
             end
+            s = linspace(0,1,self.exitGrad);
+            self.boundaryComplex = self.boundaryTrace(s);
         end
         
         function yn = isIn(self,point)

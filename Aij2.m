@@ -40,7 +40,7 @@ end
     for i=iFinal:length(xPts) % ** this line can be parfor **
         fprintf('\n%d/%d',i,length(xPts));
         Avec = zeros(1,length(yPts));
-        parfor j = 1:length(yPts) %can be parfor
+        for j = 1:length(yPts) %can be parfor
             if include_xy(i,j)
                 Avec(j) = contourPoly2(aValley,bValley,PcoeffsXY{i,j},freq,Npts);
             end
