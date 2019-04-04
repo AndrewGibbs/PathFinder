@@ -1,3 +1,45 @@
+function passTest = PearceyPig(Npts)
+
+    clear classes; %clear all variables
+    
+    disp('Testing against N.P. Kirk et al. approximations of Pearcey integral');
+    
+    if nargin == 0
+        Npts = 50;
+    end
+
+    X=[-8 -6 -4 -2 0 2 4 6 8]; Y=[0 2 4 6 8];
+
+    %get endpoints
+    valleys = exp(2i*pi*(1/4 + (1:4))/4);
+    a=valleys(2); b=valleys(4);
+
+    freq=1;
+
+    xCount=0;
+    for x=X
+        xCount=xCount+1;
+        fprintf('x=%d\n',x);
+        yCount=0;   
+        for y=Y
+            yCount=yCount+1;
+            fprintf('\ty=%d ',y);
+            polyCoeffs = [1 0 x y 0];
+            [~,W]=PathFinderQuad(a, b, polyCoeffs, freq, Npts, true);
+            I_GHH=sum(W); %Gibbs-Hewett-Huybrechs estimate
+            I_CHK=KirkPearceyData(x,y); %Conor-Hobbs-Kirk estimate
+            err(xCount,yCount)=abs(I_CHK-I_GHH)/abs(I_CHK);
+            fprintf('\tabs err=%e\n',err(xCount,yCount));
+        end
+    end
+    maxErr = max(max(err));
+    if maxErr < 2e-5
+        passTest = true;
+    else
+        passTest = false;
+    end
+end
+
 function I = KirkPearceyData(x,y)
 %values taken from N.P. Kirk et al. p159 approximations of Pearcey integral
     XY=[-8.0 0.0 
