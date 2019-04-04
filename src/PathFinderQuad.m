@@ -5,13 +5,19 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, infContour)
     [phase, stationaryPoints, ~, valleys] = getInfoFromPhase(phaseIn);
     
     %cover each stationary point:
-    [covers, intersectionMatrix, clusters, clusterEndpoints] = getCovers(phase{1},freq,stationaryPoints,infContour);
+    [covers, intersectionMatrix, clusters, clusterEndpoints] = getCovers(phase{1},freq,stationaryPoints,infContour,a,b);
     
     %make the contours from each cover:
     contours = getContours(phase, covers, infContour, valleys, clusters, clusterEndpoints);
     
     %now do the complicated stuff:
-    contourSeq = shortestInfinitePath(contours, covers, intersectionMatrix, valleys, a, b, infContour);
+    contourSeq = shortestInfinitePathV2(contours, covers, intersectionMatrix, valleys, a, b, infContour);
     contoursInSeq = contours(contourSeq);
-    [z, w] = makeQuad(contoursInSeq, freq, Npts, phase);
+    
+    if infContour
+        [z, w] = makeQuad(contoursInSeq, freq, Npts, phase);
+    else
+        [z, w] = makeQuad(contoursInSeq, freq, Npts, phase, false, [a b]);
+    end
+    
 end
