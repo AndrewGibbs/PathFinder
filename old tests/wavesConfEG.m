@@ -1,7 +1,7 @@
 clear classes;
 clc;
 
-addPaths();
+%addPaths();
 
 coalesps = [.1 0.01 0.001 0.0001];
 omegas = [500 1000 10000 100000];
