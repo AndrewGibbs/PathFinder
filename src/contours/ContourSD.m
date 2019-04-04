@@ -113,6 +113,7 @@ classdef ContourSD < handle
             else
                 [self.P0, self.Wgauss] = gauss_quad(0,self.length,Npts);
                 %self.P0=[0; flipud(p)];
+                self.P0=flipud(self.P0);
             end
             
 %             [~,H] = ode45(@(t,y) NSDpathODE(t,y,self.ODEorder-1,self.phaseDerivs, self.ICs, false, 0),...
