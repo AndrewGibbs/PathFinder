@@ -11,7 +11,12 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, infContour)
     contours = getContours(phase, covers, infContour, valleys, clusters, clusterEndpoints);
     
     %now do the complicated stuff:
-    contourSeq = shortestInfinitePathV2(contours, covers, intersectionMatrix, valleys, a, b, infContour);
+    if infContour
+        endPointIndices = NaN(2,1);
+    else
+        endPointIndices = [1 2];
+    end
+    contourSeq = shortestInfinitePathV3(contours, covers, intersectionMatrix, valleys, a, b, endPointIndices);
     contoursInSeq = contours(contourSeq);
     
     if infContour
