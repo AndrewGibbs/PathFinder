@@ -1,6 +1,6 @@
 function passTest = PearceyPig(Npts)
 
-    clear classes; %clear all variables
+    %clear classes; %clear all variables
     
     disp('Testing against N.P. Kirk et al. approximations of Pearcey integral');
     

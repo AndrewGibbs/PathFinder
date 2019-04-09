@@ -40,7 +40,7 @@ classdef ContourSD < handle
             self.startCoverIndex = startCover.index;
             [self.startClusterIndices, self.intervalEndpoint] = getClusterBuddies(clusterIndices, self.startCoverIndex, clusterEndpoints);
             
-            self.ICs = [startPoint; zeros(self.paramOrder-1,1)];
+            self.ICs = [startPoint; 1i/phaseDerivs{2}(startPoint)];
             %solve ODE to approximate contour
             %ODEorder = self.paramOrder;
 %             [p,H] = ode45(@(t,y) NSDpathODE(t,y,self.ODEorder-1,phaseDerivs, self.ICs, false, 0), [0 self.paramPathLength], self.ICs, odeset('RelTol', self.coarseTol) );

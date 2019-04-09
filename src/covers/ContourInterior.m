@@ -3,13 +3,15 @@ classdef ContourInterior < ComplexCover
     
     properties
         boundary
+        pseudoCentre
     end
     
     methods
-        function self = ContourInterior(pseudoCentre,realRange,imagRange,freq,g,index,constScale)
+        function self = ContourInterior(pseudoCentre,realRange,imagRange,freq,g,index,constScale, orderSum)
             if nargin == 6
                 constScale = 1;
             end
+            self.pseudoCentre = pseudoCentre;
             self.index = index;
             Z = realRange(:).' + imagRange(:)*1i;
             contourFix = @(z) freq*abs(g(pseudoCentre)-g(z));
@@ -41,6 +43,8 @@ classdef ContourInterior < ComplexCover
             x = self.boundary.xdata; y = self.boundary.ydata;
             R = ((x-x.').^2 + (y-y.').^2);
             self.diameter = max(max(R));
+            
+            self.orderSum = orderSum;
         end
         
         function point = boundaryTrace(self,paramVal)
