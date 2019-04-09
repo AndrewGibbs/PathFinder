@@ -1,9 +1,21 @@
-function contourSeq = shortestInfinitePathV3(contours, covers, coverOverlaps, valleys, a, b, endPointIndex)
+function Q = shortestInfinitePathV3(contours, covers, coverOverlaps, valleys, a, b, endPointIndex, HermiteCandidates)
     %chooses shortest (in the sense of fewest contours) infinite (each
     %contour is infinite) sequence of paths from valley_a to valley_b
     
     if nargin < 7
         endPointIndex = NaN(2,1);
+    end
+    
+    if ~isnan(endPointIndex(1)) && ~isnan(endPointIndex(2))
+        if coverOverlaps(endPointIndex(1),endPointIndex(2))
+            %both endpoints are contained inside a non-oscillatory region -
+            %can skip the complicated stuff and just use standard
+            %quadrature
+            Q{1}.type =  'strLn';
+            Q{1}.a = a;
+            Q{1}.b = b;
+            return;
+        end
     end
     
     numValleys = length(valleys);
@@ -94,45 +106,66 @@ function contourSeq = shortestInfinitePathV3(contours, covers, coverOverlaps, va
         inOut = 1;
     end
     
-    for j = 1:length(seq)
+    n = 1;
+    for j = 1:(length(seq)-1)
         if seq(j) > numCovers %this is a valley, need to choose the contour
-            if j<length(seq)
-                %either:
-                    %finite contour
-                    %infinite contour
-                %index = seq(j)-numCovers;
-                index = edgeContourIndices(seq(j),seq(j+1));
-            else
-                index = edgeContourIndices(seq(j-1),seq(j));
-            end
-            C = contours(index);
-            if isinf(C.length)
-                Q{j}.type = 'infSD';
-                Q{j}.inOut = inOut;
-                inOut = inOut*-1;
-            else
-                Q{j}.type = 'finSD';
-                Q{j}.inOut = inOut;
-            end
-            Q{j}.contour = C;
+                contIndex = edgeContourIndices(seq(j),seq(j+1));
+            C = contours(contIndex);
+            Q{n} = assignQuadInfo(C);
+            n = n + 1;
+            
         else %this is a cover
-            %either:
-            % an endpoint in this cover/cluster
-            % infinite contour starts here, need to deterime direction
-            % finite contour & need to determine which endpoint/direction
-            index = seq(j);
-            if ismember(index,endPointIndex)
-                error('still need to code these endpoint bits');
+            coverIndex = seq(j);
+            if ismember(coverIndex,endPointIndex)
+                contourIndex = edgeContourIndices(seq(j),seq(j+1));
+                %if cover contains an enpoint of integral
+                if length(contours(contourIndex).startClusterIndices)>1 && coverIndex==endPointIndex(1)
+                    %contour starts on edge of a cluster, not just an
+                    %endpoint - need a straight line before the contour
+                    Q{n}.type = 'strLn';
+                    Q{n}.Hermite = false;
+                    Q{n}.a = contours(contourIndex).intervalEndpoint;
+                    Q{n}.b = getCoverExit(coverIndex,contourIndex);%contours(contourIndex).startPoint;
+                    n = n + 1;
+                end
+                
+                Q{n} = assignQuadInfo(contours(contourIndex));
+                n = n + 1;
+                
+                if length(contours(contourIndex).startClusterIndices)>1 && coverIndex==endPointIndex(2)
+                    %contour starts on edge of a cluster, not just an
+                    %endpoint - need a straight line after the contour
+                    Q{n}.type = 'strLn';
+                    Q{n}.Hermite = false;
+                    Q{n}.a = getCoverExit(coverIndex,contourIndex);
+                    Q{n}.b = contours(contourIndex).intervalEndpoint;
+                    n = n + 1;
+                end
+                %need a special case for if the two enpoints are in the
+                %same bubble!
             else %previous and next contours start
-                Q{j}.type = 'strLn';
-%               prevContIndex = seq(j-1) - numCovers;
-%               nextContIndex = seq(j+1) - numCovers;
+                Q{n}.type = 'strLn';
+                Q{n}.Hermite = false;
 
                 prevContIndex = edgeContourIndices(seq(j-1),seq(j));
-                Q{j}.a = getCoverExit(index,prevContIndex);
+                Q{n}.a = getCoverExit(coverIndex,prevContIndex);
                 
                 nextContIndex = edgeContourIndices(seq(j),seq(j+1));
-                Q{j}.b = getCoverExit(index,nextContIndex);
+                Q{n}.b = getCoverExit(coverIndex,nextContIndex);
+                
+                if ismember(coverIndex,HermiteCandidates) && isinf(contours(prevContIndex).length) && isinf(contours(nextContIndex).length)
+                    Q{n}.Hermite = true;
+                    Q{n}.h0 = covers{coverIndex}.pseudoCentre;
+                    Q{n}.dh0m = contours(prevContIndex).ICs(2);
+                    Q{n}.dh0p = contours(nextContIndex).ICs(2);
+                end
+                
+                n = n + 1;
+                %now add the contour after the cover in the sequence
+                
+                C = contours(nextContIndex);
+                Q{n} = assignQuadInfo(C,coverIndex);
+                n = n + 1;
             end
         end        
     end
@@ -158,5 +191,23 @@ function contourSeq = shortestInfinitePathV3(contours, covers, coverOverlaps, va
         elseif ismember(covIndex,cont.endClusterIndices)
             x = cont.endPoint;
         end
+    end
+        
+    function x = assignQuadInfo(C, startCoverIndex)
+        if isinf(C.length)
+            x.type = 'infSD';
+            x.inOut = inOut;
+            inOut = inOut*-1;
+        else
+            x.type = 'finSD';
+            if ismember(startCoverIndex, C.startClusterIndices)
+                x.inOut = 1;
+            elseif ismember(startCoverIndex, C.endClusterIndices)
+                x.inOut = -1;
+            else
+                error('cannot decide where finite contour begins/ends');
+            end
+        end
+        x.contour = C;
     end
 end

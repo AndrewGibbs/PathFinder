@@ -25,7 +25,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, infContour)
 %         [z, w] = makeQuad(contoursInSeq, freq, Npts, phase, false, [a b]);
 %     end
 
-    [z, w] = makeQuadV3(quadIngredients, freq, Npts, phase{1}, phase{2}, phase{3}, phase{4});
+    [z, w] = makeQuadV3(quadIngredients, freq, Npts, phase{1}, phase{2}, phase{});
     
     % - - - - - - - - -
 %     contourSeq = shortestInfinitePathV2(contours, covers, intersectionMatrix, valleys, a, b, true);
