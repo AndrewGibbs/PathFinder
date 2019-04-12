@@ -18,7 +18,7 @@ end
             m = m + 1;
             fprintf('\n\tfreq = %d',freq);
             g = @(x) x.^3/3 - coalesp^2*x;
-            Iml = integral(@(x) exp(1i*freq*g(x)),-1,1,'ArrayValued',true,'RelTol',1e-12);
+            Iml = integral(@(x) exp(1i*freq*g(x)),-1,1,'ArrayValued',true,'RelTol',1e-15);
             coeffs = [1/3 0 -coalesp^2 0];
             %[z,w] = quadBodge(-1,1,coeffs,freq,Npts);
             [z,w] = PathFinderQuad(-1,1, coeffs, freq, Npts, false);
