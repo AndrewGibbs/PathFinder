@@ -25,10 +25,22 @@ classdef (Abstract) ComplexCover
             Im_goB = @(s) imag(g(self.boundaryTrace(s)));
             exits = [];
             
-            for j = 2:(self.exitGrad+1)
+            %deleted immediately repeated entries
+            checked = 0;
+            deleted = 0;
+            while checked+1<length(s)
+                checked = checked + 1;
+                if Im_goB(s(checked))==Im_goB(s(checked+1))
+                   s(checked)=[];
+                    deleted = deleted + 1;
+                end
+            end
+            
+            %now search through locally unique entries to find steepest
+            %exits
+            for j = 2:(self.exitGrad+1-deleted)
                 %check if this s corresponds to a local maxima
                 if Im_goB(s(j)) > Im_goB(s(j-1)) && Im_goB(s(j)) > Im_goB(s(j+1))
-                    %Im_goB_s(j) > Im_goB_s(j-1) && Im_goB_s(j) > Im_goB_s(j+1)
                     exits = [exits self.boundaryTrace(s(j))];
                 end
             end
