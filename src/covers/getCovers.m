@@ -1,7 +1,6 @@
 function [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandidates] = getCovers(g,freq,SPs,infContour,a,b,SPorders)
 
-    x = linspace(-2.5,2.5,500);
-    C = 1;
+    Cosc = 1;
     
     coverIndex = 1;
     if ~infContour
@@ -13,14 +12,19 @@ function [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandida
         endPointBalls = [];
     end
     
-    for n = 1:length(SPs)
-        coversInit(n) = ContourInterior(SPs(n),x,x,freq,g,coverIndex,C,SPorders(n));
-        coverIndex = coverIndex + 1;
-    end
+    %coversInit = [];
+    if ~isempty(SPs)>0
+        for n = 1:length(SPs)
+            coversInit(n) = ContourInterior(SPs(n),freq,g,coverIndex,Cosc,SPorders(n));
+            coverIndex = coverIndex + 1;
+        end
 
-    %delete exits inside a cover from another mother:
-    
-    covers = [num2cell(endPointBalls) num2cell(deleteRedundantExits(coversInit))];
+        %delete exits inside a cover from another mother:
+
+        covers = [num2cell(endPointBalls) num2cell(deleteRedundantExits(coversInit))];
+    else
+        covers = num2cell(endPointBalls);
+    end
 
     %now determine which covers overlap:
     [intersectionMatrix, clusters, clusterEndpoints] = coverOverlapV2(covers);
