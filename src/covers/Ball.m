@@ -14,6 +14,8 @@ classdef Ball < ComplexCover
             self.orderSum = orderSum;
             self.boundaryLength = 2*pi*r;
             self.diameter = r;
+            self.boundary.xdata = [c];
+            self.boundary.ydata = [c];
             
             if r>0
                 if nargin>2

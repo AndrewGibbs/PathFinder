@@ -10,7 +10,7 @@ tol = 1e-12;
             break;
         end
         if strcmp(quadInfo{n}.type,'strLn')
-           if quadInfo{n}.Hermite
+           if quadInfo{n}.Hermite && false
                [quadBackupTemp{1:3}] = quadInfo{(n-1):(n+1)};
                quadBackupTemp{2}.Hermite = false;
                %store this incase the Hermite integral is unstable
@@ -35,7 +35,7 @@ tol = 1e-12;
                [z_, w__] = quadInfo{n}.contour.getQuad(freq,Npts);
                w_ = w__*quadInfo{n}.inOut;
            case 'strLn'
-               if quadInfo{n}.Hermite
+               if quadInfo{n}.Hermite && false
                    [z_, w_] = SDpathODE_Hermite(Npts, g, dg, ddg, dddg, freq, quadInfo{n}.h0, quadInfo{n}.dh0m, tol);
                    %may return a NaN if we're unlucky - in which case we
                    %call this function again, using the backup quad data,

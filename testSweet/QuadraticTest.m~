@@ -1,14 +1,13 @@
 function pass = QuadraticTest(Npts)
 if nargin == 0
-    Npts = 20;
+    Npts = 50;
 end
 
 n = 1;
 
     for ab={[-1 0],[-1 1],[0 1]}
-        a = ab{1}(1);
-        b = ab{1}(2);
-        f = @(x) x.^9;
+        a = ab{1}';
+        f = @(x) x;
         for freq = 10.^[2 3 4]
             [z w] = PathFinderQuad(a, b, [1 0 0], freq, Npts, false);
             J = f(z).'*w;
