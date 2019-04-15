@@ -51,6 +51,12 @@ classdef ContourSD < handle
             %PathFinder:
             [p, self.coarsePath, self.coarsePathGrad] = SDpathODE(self.paramPathLength, phaseDerivs{2}, 1, self.ICs(1), self.coarseTol);
             
+            %add the first p=0 to the above, just incase we stray
+            %immediately into a NaN:
+            p = [0; p];
+            self.coarsePath = [self.ICs(1); self.coarsePath];
+            self.coarsePathGrad = [self.ICs(2); self.coarsePathGrad];
+            
             %check if path isin any of the covers, truncate it if it is
             
             contourInCover = zeros(size(self.coarsePath));
@@ -68,7 +74,7 @@ classdef ContourSD < handle
                 %stationary point, although this should only happen if
                 %inside another ComplexCover anyway
             end
-            contourEndIndex = min([find(contourInCover,true),find(contourNaNcover,1)]);
+            contourEndIndex = min([find(contourInCover,true),find(contourNaNcover,true)]);
             
             if isempty(contourEndIndex) %infinite contour
                 self.length = inf;

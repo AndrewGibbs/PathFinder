@@ -13,6 +13,7 @@ classdef (Abstract) ComplexCover
         exitGrad = 1024; %accuracy to compute exit points of cover
         diameter
         boundaryComplex
+        boundary
     end
     
     methods
