@@ -55,7 +55,17 @@ function [A, clumpOut, clumpEndpoints] = coverOverlapV2(covers)
     
     %subroutine to deterine if covers overlap
     function yn = overlapping(m,n)
-        yn = max(covers{m}.isIn(covers{n}.boundaryComplex));
+        if m==n
+            yn = true;
+        elseif covers{n}.diameter>eps && covers{m}.diameter>eps
+            warning('off','MATLAB:polyshape:repairedBySimplify');
+            poly_n = polyshape(covers{n}.boundary.xdata,covers{n}.boundary.ydata);
+            poly_m = polyshape(covers{m}.boundary.xdata,covers{m}.boundary.ydata);
+            yn = overlaps(poly_n,poly_m);
+            %yn = overLapMatrix(1,2); 
+        else
+            yn = max(covers{m}.isIn(covers{n}.boundaryComplex));
+        end
     end
 end
 
