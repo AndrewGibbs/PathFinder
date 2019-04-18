@@ -1,4 +1,6 @@
-function [z, w] = makeQuadV3(quadInfo, freq, Npts, g, dg, ddg, dddg)
+function [z, w] = makeQuadV3(quadInfo, freq, Npts, G, covers, intersectionMatrix)
+
+% new fancy GQ needs additional inputs: (covers,a,b,a_index,b_index,intersectionMatrix)
 
 tol = 1e-12;
 
@@ -10,7 +12,7 @@ tol = 1e-12;
             break;
         end
         if strcmp(quadInfo{n}.type,'strLn')
-           if quadInfo{n}.Hermite && false
+           if quadInfo{n}.Hermite
                [quadBackupTemp{1:3}] = quadInfo{(n-1):(n+1)};
                quadBackupTemp{2}.Hermite = false;
                %store this incase the Hermite integral is unstable
@@ -27,7 +29,7 @@ tol = 1e-12;
 
     %make a corretion for standard Gauss, which has a different weight
     %function:
-    sgw = @(z) exp(1i*freq*g(z));
+    sgw = @(z) exp(1i*freq*G{1}(z));
     z = []; w = [];
     for n = 1:length(quadInfo)
        switch quadInfo{n}.type
@@ -35,17 +37,18 @@ tol = 1e-12;
                [z_, w__] = quadInfo{n}.contour.getQuad(freq,Npts);
                w_ = w__*quadInfo{n}.inOut;
            case 'strLn'
-               if quadInfo{n}.Hermite && false
-                   [z_, w_] = SDpathODE_Hermite(Npts, g, dg, ddg, dddg, freq, quadInfo{n}.h0, quadInfo{n}.dh0m, tol);
+               if quadInfo{n}.Hermite
+                   [z_, w_] = SDpathODE_Hermite(Npts, G{1}, G{2}, G{3}, G{4}, freq, quadInfo{n}.h0, quadInfo{n}.dh0m, tol);
                    %may return a NaN if we're unlucky - in which case we
                    %call this function again, using the backup quad data,
                    %without instructions to use Hermite quadrature:
                    if max(isnan(w_))
-                       [z_, w_] = makeQuadV3(quadBackup{n}, freq, Npts, g, dg, ddg, dddg);
+                       [z_, w_] = makeQuadV3(quadBackup{n}, freq, Npts, G{1}, G{2}, G{3}, G{4});
                    end
                else
-                   [z_, w__, dh_] = gauss_quad_complex(quadInfo{n}.a, quadInfo{n}.b, Npts);
-                   w_ = w__.*sgw(z_)*dh_;
+                   [z_, w__, dh_] = GQfancy(covers, quadInfo{n}.a, quadInfo{n}.b, ...
+                                    quadInfo{n}.a_coverIndex, quadInfo{n}.b_coverIndex, intersectionMatrix, Npts);
+                   w_ = w__.*sgw(z_).*dh_;
                end
            otherwise
                error('Do not recognise quad type');
