@@ -1,4 +1,4 @@
-function [A, clumpOut, clumpEndpoints] = coverOverlapV2(covers)
+function [A, clump, clumpEndpoints] = coverOverlapV2(covers)
 %returns matrix of logical values, if a given ball overlaps with another
 %ball
     numCovers = length(covers);
@@ -33,6 +33,33 @@ function [A, clumpOut, clumpEndpoints] = coverOverlapV2(covers)
         end
     end
     
+    
+    %now do one final run through, clumping together the clumps
+    notClumped = true;
+    
+    while notClumped
+       localClump = false;
+       clumpLength = length(clump);
+       for n = 1:clumpLength
+           for m = n+1:clumpLength
+             if max(ismember(clump{n},clump{m}))
+                %merge and delete
+                 clump{n} = unique([clump{n} clump{m}]);
+                 [clump{(m):(clumpLength-1)}] = clump{(m+1):(end)};
+                 clump{clumpLength} = [];
+                 localClump = true;
+                 break;
+             end
+             if localClump
+                 break;
+             end
+           end
+       end
+       if ~localClump
+           notClumped = false;
+       end
+    end
+    
     %now delete empty entries of clump vector
     m=1;
     for n=1:length(clump)
@@ -42,13 +69,14 @@ function [A, clumpOut, clumpEndpoints] = coverOverlapV2(covers)
         end
     end
     
+    
     %now, incase we are deforming a finite interval [a,b], log any finite
     %enpoints (a or b) which are inside of any cluster
-    for n=1:length(clumpOut)
+    for n=1:length(clump)
         clumpEndpoints{n} = [];
-        for m=1:length(clumpOut{n})
-            if covers{clumpOut{n}(m)}.diameter == 0
-                clumpEndpoints{n} = [clumpEndpoints{n} covers{clumpOut{n}(m)}.centre];
+        for m=1:length(clump{n})
+            if covers{clump{n}(m)}.diameter == 0
+                clumpEndpoints{n} = [clumpEndpoints{n} covers{clump{n}(m)}.centre];
             end
         end
     end
@@ -57,6 +85,8 @@ function [A, clumpOut, clumpEndpoints] = coverOverlapV2(covers)
     function yn = overlapping(m,n)
         if m==n
             yn = true;
+        elseif isa(covers{m},'Ball') && isa(covers{n},'Ball')
+            yn = abs(covers{m}.centre-covers{n}.centre)<covers{m}.radius+covers{n}.radius;
         elseif covers{n}.diameter>eps && covers{m}.diameter>eps
             warning('off','MATLAB:polyshape:repairedBySimplify');
             poly_n = polyshape(covers{n}.boundary.xdata,covers{n}.boundary.ydata);

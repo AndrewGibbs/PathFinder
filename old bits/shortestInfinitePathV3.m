@@ -1,25 +1,20 @@
-function Q = shortestInfinitePathV3(contours, covers, coverOverlaps, valleys, a, b, endPointIndices, infContour, HermiteCandidates, clusters)
+function Q = shortestInfinitePathV3(contours, covers, coverOverlaps, valleys, a, b, endPointIndex, HermiteCandidates)
     %chooses shortest (in the sense of fewest contours) infinite (each
     %contour is infinite) sequence of paths from valley_a to valley_b
     
     if nargin < 7
-        endPointIndices = NaN(2,1);
+        endPointIndex = NaN(2,1);
     end
     
-    if length(endPointIndices) == 2
-        for n = 1:length(clusters)
-            if min(ismember(endPointIndices,clusters{n}))%coverOverlaps(endPointIndices(1),endPointIndices(2))
-                %both endpoints are contained inside a non-oscillatory region -
-                %can skip the complicated stuff and just use standard
-                %quadrature
-                Q{1}.type =  'strLn';
-                Q{1}.a = a;
-                Q{1}.b = b;
-                Q{1}.a_coverIndex = endPointIndices(1);
-                Q{1}.b_coverIndex = endPointIndices(2);
-                Q{n}.Hermite = false;
-                return;
-            end
+    if ~isnan(endPointIndex(1)) && ~isnan(endPointIndex(2))
+        if coverOverlaps(endPointIndex(1),endPointIndex(2))
+            %both endpoints are contained inside a non-oscillatory region -
+            %can skip the complicated stuff and just use standard
+            %quadrature
+            Q{1}.type =  'strLn';
+            Q{1}.a = a;
+            Q{1}.b = b;
+            return;
         end
     end
     
@@ -49,9 +44,20 @@ function Q = shortestInfinitePathV3(contours, covers, coverOverlaps, valleys, a,
                 network(coverIndex, numCovers + find(valleys==contour.endValley)) = cost;
                 edgeContourIndices(coverIndex, numCovers + find(valleys==contour.endValley)) = contourIndex;
                 
+%                 quadInfoMatrix(coverIndex, numCovers + find(valleys==contour.endValley)).type = 'infSD';
+%                 quadInfoMatrix(coverIndex, numCovers + find(valleys==contour.endValley)).contour = contour;
+%                 quadInfoMatrix( numCovers + find(valleys==contour.endValley),coverIndex) = ...
+%                     quadInfoMatrix(coverIndex, numCovers + find(valleys==contour.endValley));
+                
             else %cover to cover
+                %network(coverIndex, find((1:numCovers)==contour.endCoverIndex)) = covers(coverIndex).diameter;
                 network(coverIndex, find((1:numCovers)==contour.endCoverIndex)) = cost;
                 edgeContourIndices(coverIndex, find((1:numCovers)==contour.endCoverIndex)) = contourIndex;
+%                 
+%                 quadInfoMatrix(coverIndex, find((1:numCovers)==contour.endCoverIndex)).type = 'finSD';
+%                 quadInfoMatrix(coverIndex, find((1:numCovers)==contour.endCoverIndex)).contour = contour;
+%                 quadInfoMatrix(quadInfoMatrix(coverIndex, find((1:numCovers)==contour.endCoverIndex))) = ...
+%                     quadInfoMatrix(quadInfoMatrix(coverIndex, find((1:numCovers)==contour.endCoverIndex)));
             end
         end
     end
@@ -67,28 +73,34 @@ function Q = shortestInfinitePathV3(contours, covers, coverOverlaps, valleys, a,
         end
     end
     
-    % adjust indices for finite/infinite endpoints
-    if infContour(1)
-        startInd = findValleyIndex(a) + numCovers;
+    
+    %set valleys to 'exact' values
+    if isnan(endPointIndex)
+        for n = 1:length(valleys)
+            if abs(valleys(n)-a)<1e-12
+                valleys(n) = a;
+            elseif  abs(valleys(n)-b)<1e-12
+                valleys(n) = b;
+            end
+        end
+        startInd = find(valleys==a) + numCovers;
+        endInd = find(valleys==b) + numCovers;
+        if isempty(startInd) || isempty(endInd)
+            error('Couldnt find valleys');
+        end
     else
-        startInd = endPointIndices(1);
+        startInd = 1;
+        endInd = 2;
     end
     
-    if infContour(2)
-        endInd = findValleyIndex(b) + numCovers;
-    else
-        endInd = endPointIndices(end);
-    end
-        
-    % solve the shortest path problem
     Gr = graph(network,'upper');
     [seq, cost] =shortestpath(Gr,startInd,endInd);
     if isinf(cost)
         error('Unable to determine shortest path');
     end
     
-    % unit scalar to determine if SD path is incoming or outgoing
-    if ~(infContour(1))
+    %unit scalar to determine if SD path is incoming or outgoing
+    if isnan(endPointIndex(1))
         inOut = -1;
     else
         inOut = 1;
@@ -104,29 +116,29 @@ function Q = shortestInfinitePathV3(contours, covers, coverOverlaps, valleys, a,
             
         else %this is a cover
             coverIndex = seq(j);
-            if ismember(coverIndex,endPointIndices)
+            if ismember(coverIndex,endPointIndex)
                 contourIndex = edgeContourIndices(seq(j),seq(j+1));
                 %if cover contains an enpoint of integral
-                if length(contours(contourIndex).startClusterIndices)>1 && coverIndex==endPointIndices(1)
+                if length(contours(contourIndex).startClusterIndices)>1 && coverIndex==endPointIndex(1)
                     %contour starts on edge of a cluster, not just an
                     %endpoint - need a straight line before the contour
                     Q{n}.type = 'strLn';
                     Q{n}.Hermite = false;
-                    [Q{n}.a, Q{n}.a_coverIndex]  = contours(contourIndex).intervalEndpoint;
-                    [Q{n}.b, Q{n}.b_coverIndex] = getCoverExit(coverIndex,contourIndex);
+                    Q{n}.a = contours(contourIndex).intervalEndpoint;
+                    Q{n}.b = getCoverExit(coverIndex,contourIndex);%contours(contourIndex).startPoint;
                     n = n + 1;
                 end
                 
                 Q{n} = assignQuadInfo(contours(contourIndex));
                 n = n + 1;
                 
-                if length(contours(contourIndex).startClusterIndices)>1 && coverIndex==endPointIndices(2)
+                if length(contours(contourIndex).startClusterIndices)>1 && coverIndex==endPointIndex(2)
                     %contour starts on edge of a cluster, not just an
                     %endpoint - need a straight line after the contour
                     Q{n}.type = 'strLn';
                     Q{n}.Hermite = false;
-                    [Q{n}.a, Q{n}.a_coverIndex] = getCoverExit(coverIndex,contourIndex);
-                    [Q{n}.b, Q{n}.b_coverIndex] = contours(contourIndex).intervalEndpoint;
+                    Q{n}.a = getCoverExit(coverIndex,contourIndex);
+                    Q{n}.b = contours(contourIndex).intervalEndpoint;
                     n = n + 1;
                 end
                 %need a special case for if the two enpoints are in the
@@ -136,10 +148,10 @@ function Q = shortestInfinitePathV3(contours, covers, coverOverlaps, valleys, a,
                 Q{n}.Hermite = false;
 
                 prevContIndex = edgeContourIndices(seq(j-1),seq(j));
-                [Q{n}.a, Q{n}.a_coverIndex] = getCoverExit(coverIndex,prevContIndex);
+                Q{n}.a = getCoverExit(coverIndex,prevContIndex);
                 
                 nextContIndex = edgeContourIndices(seq(j),seq(j+1));
-                [Q{n}.b, Q{n}.b_coverIndex] = getCoverExit(coverIndex,nextContIndex);
+                Q{n}.b = getCoverExit(coverIndex,nextContIndex);
                 
                 if ismember(coverIndex,HermiteCandidates) && isinf(contours(prevContIndex).length) && isinf(contours(nextContIndex).length)
                     Q{n}.Hermite = true;
@@ -158,19 +170,26 @@ function Q = shortestInfinitePathV3(contours, covers, coverOverlaps, valleys, a,
         end        
     end
     
-    % - - - - indented functions : 
+    %now convert seequence of nodes to sequence of edges
+%     contourSeq = [];
+%     for n = 2:length(seq)
+%         if edgeContourIndices(seq(n-1),seq(n))==0
+%             if coverOverlaps(seq(n-1),seq(n))==0
+%                 error('Contour sequence doesnt make sense');
+%             end
+%         else
+%             contourSeq = [contourSeq edgeContourIndices(seq(n-1),seq(n))];
+%         end
+%     end
     
-    function [x,n]= getCoverExit(covIndex,contIndex)
+    function x = getCoverExit(covIndex,contIndex)
         cont = contours(contIndex);
         if isinf(cont.length)
             x = cont.startPoint;
-            n = cont.startCoverIndex;
         elseif ismember(covIndex,cont.startClusterIndices)
             x = cont.startPoint;
-            n = cont.startCoverIndex;
         elseif ismember(covIndex,cont.endClusterIndices)
             x = cont.endPoint;
-            n = cont.endCoverIndex;
         end
     end
         
@@ -190,19 +209,5 @@ function Q = shortestInfinitePathV3(contours, covers, coverOverlaps, valleys, a,
             end
         end
         x.contour = C;
-    end
-
-    function n = findValleyIndex(v)
-        valleyNotFound = false;
-         for n_ = 1:length(valleys)
-            if abs(valleys(n_)-v)<1e-12
-                n = n_;
-                %valleys(m) = v;
-                valleyNotFound = false;
-            end
-         end
-        if valleyNotFound
-            error('valley not found');
-        end
     end
 end

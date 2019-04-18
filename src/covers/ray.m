@@ -1,10 +1,13 @@
-function x = ray(f, a, scale)
+function x = ray(f, a, scale, dir)
+if nargin == 3
+    dir = 1;
+end
 %follows ray to edge of contour
     N = 10;
     crappyGuess = true;
     count = 0;
     while crappyGuess == true
-        guess = a + linspace(0,scale,N);
+        guess = a + dir*linspace(0,scale,N);
         isNegative = f(guess) < 0;
         if sum(isNegative) == N
             scale = scale*2;
