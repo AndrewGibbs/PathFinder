@@ -1,34 +1,43 @@
-function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, infContour)
-%returns weights and nodes for efficient evaluation of oscillatory integral
+function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
+%Construct weights and nodes to numerically evaluate an oscillatory
+%integral.
+%PathFinderQuad(a, b, G, freq, N, infContour)
+%returns weights and nodes for efficient evaluation of oscillatory
+%integral of f(z)exp(i*k*g(z))dz from a to b, for analytic f & g.
+%
+%phaseIn is either the coefficients of a polynomial g, or a cell array of
+%anonymous functions corresponding to successive derivatives of an analytic
+%function g: G = {g, g', g'', ...}
+%
+%a and b are either finite enpoints, or (in the case where the integral is an infinite contour)
+%angles of valleys in the complex plane. The entries of (optional) two-dimensional
+%flag infContour flag if the endpoint of the integral is infinite.
+%
+%k is the frequency parameter of the integral
+%
+%N is the number of points used per segment of the PathFinder routine
+
+    params = opionalExtras(varargin);
     
     %get info about stationary points:
     [phase, stationaryPoints, stationaryPointsOrders, valleys] = getInfoFromPhase(phaseIn);
     
     %cover each stationary point:
-    [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandidates] = getCovers(phase{1},freq,stationaryPoints,infContour,a,b, stationaryPointsOrders);
+    [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandidates, endPointIndices]...
+            = getInteriorBalls(phase{1},freq,stationaryPoints,params.infContour,a,b, stationaryPointsOrders, params.numOscs);
+        %used to be getCovers(...), new code is almost the same
     
     %make the contours from each cover:
-    contours = getContours(phase, covers, infContour, valleys, clusters, clusterEndpoints);
+    contours = getContours(phase, covers, valleys, clusters, clusterEndpoints, endPointIndices);
     
-    %now do the complicated stuff:
-    if infContour
-        endPointIndices = NaN(2,1);
-    else
-        endPointIndices = [1 2];
-    end
-    quadIngredients = shortestInfinitePathV3(contours, covers, intersectionMatrix, valleys, a, b, endPointIndices, HermiteCandidates);
-    %contoursInSeq = contours(contourSeq);
-    
-%     if infContour
-%         [z, w] = makeQuad(contoursInSeq, freq, Npts, phase);
-%     else
-%         [z, w] = makeQuad(contoursInSeq, freq, Npts, phase, false, [a b]);
-%     end
+    %choose the path from a to b
+    quadIngredients = shortestInfinitePathV3(contours, covers, intersectionMatrix, valleys, a, b, endPointIndices, params.infContour, HermiteCandidates,clusters);
 
-    [z, w] = makeQuadV3(quadIngredients, freq, Npts, phase{1}, phase{2}, phase{3}, phase{4});
+    %get quadrature points
+    [z, w] = makeQuadV3(quadIngredients, freq, Npts, phase, covers, intersectionMatrix);
     
-    % - - - - - - - - -
-%     contourSeq = shortestInfinitePathV2(contours, covers, intersectionMatrix, valleys, a, b, true);
-%     contoursInSeq = contours(contourSeq);
-%     [z2, w2] = makeQuad(contoursInSeq, freq, Npts, phase);
+    %make a plot of what's happened, if requested
+    if params.plot
+        plotAll(covers, contours, z, a, b, params.infContour, stationaryPoints);
+    end
 end

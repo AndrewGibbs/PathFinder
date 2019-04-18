@@ -5,5 +5,6 @@ function [z,w,dz] = gauss_quad_complex(a,b,N)
     [s, w] = gauss_quad(0, L, N);
     dz = (b - a)/L;
     z = a + s*dz;
+    dz = repmat(dz,size(z));
 end
 

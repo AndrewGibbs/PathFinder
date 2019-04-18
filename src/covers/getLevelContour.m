@@ -2,6 +2,7 @@ function Z = getLevelContour(xi,C,g,freq, N)
 
     N = max(N,32);
     Ncirc = 8;
+    failCount = 1000;
     
     %plot level curve of:
     G = @(z) freq*abs(g(z)-g(xi))-C;
@@ -16,7 +17,7 @@ function Z = getLevelContour(xi,C,g,freq, N)
     open = true;
     
     j = 1;
-    while open
+    while open && j<failCount
         circle_j = Z(j) + circleRad*exp(1i*theta);
         positiveCircum = G(circle_j)>0;
         inds = 1:(Ncirc-1);
@@ -25,16 +26,6 @@ function Z = getLevelContour(xi,C,g,freq, N)
         for n = signChange
             contEdge = [contEdge bisection(G, circle_j(n), circle_j(n+1))];
         end
-        
-%         if j>1
-%             for n = length(contEdge)
-%                 if ~(isIn(Z(j), contEdge(n)) || isIn(Z(j-1), contEdge(n)))
-%                     contEdge = contEdge(n);
-%                 end
-%             end
-%         else
-%             contEdge = contEdge(1);
-%         end
     
         if length(contEdge)>2
             %only want the two inner elements of this vector, most likely
@@ -49,21 +40,22 @@ function Z = getLevelContour(xi,C,g,freq, N)
         else
             j = j+1;
             Z(j) = contEdge(1);
-        end
-        
-%         if length(contEdge)>1
-%             error('Have found too many level set options');
-%         end
-       
+        end       
         
         if j>2 && isIn(Z(1),Z(j))
             open = false;
         end
     end
     
+    if open
+        warning('failed to find contour, trying slower method');
+        Z = levelSetFailsafe(xi,C,g,freq,N);
+    end
+    
     %now check that stationary point actually lies inside this contour:
     if ~inpolygon(real(xi),imag(xi),real(Z),imag(Z))
-        error('Stationary point not inside of contour!');
+        warning('Stationary point not inside of contour! Trying slower method...');
+        Z = levelSetFailsafe(xi,C,g,freq,N);
     end
     
     function yn = isIn(x,y)
