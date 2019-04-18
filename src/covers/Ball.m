@@ -10,6 +10,7 @@ classdef Ball < ComplexCover
         function self = Ball(r,c,g,index,orderSum)
             self.radius = r;
             self.centre = c;
+            self.pseudoCentre = c;
             self.index = index;
             self.orderSum = orderSum;
             self.boundaryLength = 2*pi*r;

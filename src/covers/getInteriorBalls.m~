@@ -1,4 +1,4 @@
-function [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandidates, endPointIndices] = getCovers(g,freq,SPs,infContour,a,b,SPorders, Cosc)
+function [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandidates, endPointIndices] = getInteriorBalls(g, freq, SPs, infContour, a, b, SPorders, Cosc)
 
     coverIndex = 0;
     endPointBalls = [];
@@ -31,4 +31,28 @@ function [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandida
     
     HermiteCandidates = getHermiteCandidates(clusters, clusterEndpoints, covers);
     
+    function R = getInteriorRadius(xi)
+        Nangles = 64;
+        Nrads = 64;
+        scale = 
+        theta = 2*pi*(1:Nangles)/Nangles;
+        r = freq*linspace(0,1,Nrads);
+        G = @(z) freq*abs(g(z)-g(xi));
+        
+        crappyGuess = true;
+        while crappyGuess == true
+            guess = a + linspace(0,scale,N);
+            isNegative = f(guess) < 0;
+        if sum(isNegative) == N
+            scale = scale*2;
+        elseif sum(isNegative) == 0
+            scale = scale/2;
+        else
+            crappyGuess = false;
+        end
+        count = count + 1;
+        if count>100
+            error('failed to find a ray');
+        end
+    end
 end

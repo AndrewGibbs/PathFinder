@@ -53,7 +53,7 @@ function [z, W] = SDpathODE_Hermite(Npts, g, dg, ddg, dddg, k, h0, dh0m_est, tol
         if p>thresh
             LH = [H(2); (2i/k - (H(2).^2*ddg(H(1))))./dg(H(1))]; 
         else
-            LH = [H(2); -3*dddg(H(1))*(H(2)).^2./ddg(H(1))];
+            LH = [H(2); -dddg(H(1))*(H(2)).^2./(3*ddg(H(1)))];
         end
     end
    

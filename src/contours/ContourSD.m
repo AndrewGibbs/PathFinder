@@ -68,8 +68,8 @@ classdef ContourSD < handle
                 end
                 contourInCover_yn = zeros(size(self.coarsePath));
                 contourInCover_yn = contourInCover_yn + cover.isIn(self.coarsePath);
-                contourInCover = contourInCover + contourInCover_yn.*cover.index;
-                contourNaNcover = contourNaNcover + isnan(self.coarsePath);
+                contourInCover = max( contourInCover , contourInCover_yn.*cover.index);
+                contourNaNcover = max( contourNaNcover , isnan(self.coarsePath) );
                 %NaNs are typically a sign of passing through another
                 %stationary point, although this should only happen if
                 %inside another ComplexCover anyway
