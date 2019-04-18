@@ -21,7 +21,7 @@ end
             Iml = integral(@(x) exp(1i*freq*g(x)),-1,1,'ArrayValued',true,'RelTol',1e-15);
             coeffs = [1/3 0 -coalesp^2 0];
             %[z,w] = quadBodge(-1,1,coeffs,freq,Npts);
-            [z,w] = PathFinderQuad(-1,1, coeffs, freq, Npts, false);
+            [z,w] = PathFinderQuad(-1,1, coeffs, freq, Npts);
             Ipf = sum(w);
             err(n,m) = abs(Ipf-Iml)/abs(Iml);
             fprintf('\tRel err: %e',err(n,m));

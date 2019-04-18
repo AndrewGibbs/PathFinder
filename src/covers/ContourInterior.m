@@ -1,9 +1,10 @@
+
 classdef ContourInterior < ComplexCover
     %generalisation of the ball class... sort of
     
     properties
         %boundary
-        pseudoCentre
+        %pseudoCentre
         contourPts = 64
         oscScale = 1
     end

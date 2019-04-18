@@ -14,6 +14,7 @@ classdef (Abstract) ComplexCover
         diameter
         boundaryComplex
         boundary
+        pseudoCentre
     end
     
     methods
