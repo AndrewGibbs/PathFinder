@@ -1,0 +1,61 @@
+function fullPass = randomTest(tries)
+
+if nargin == 0
+    tries = 1;
+end
+
+Npts = 25;
+Pmax = 10;
+freqMax = 10000;
+minErr = 1e-5;
+numFails = 0;
+
+%randomly choose degree of polynomial:
+
+    for tryNum=1:tries
+        ranData{tryNum}.a = -5*rand;
+        ranData{tryNum}.b = 5*rand;
+        
+        ranData{tryNum}.deg = round(Pmax*rand());
+
+        ranData{tryNum}.coeffs = 10*rand(ranData{tryNum}.deg,1);
+        
+        ranData{tryNum}.freq = 10^(log10(freqMax)*rand);
+        
+        g = @(x) polyval(ranData{tryNum}.coeffs,x);
+        
+        J = integral(@(x) exp(1i*ranData{tryNum}.freq*g(x)), ranData{tryNum}.a, ranData{tryNum}.b);
+        
+        try
+            [~,w] = PathFinderQuad(ranData{tryNum}.a, ranData{tryNum}.b, ranData{tryNum}.coeffs, ranData{tryNum}.freq, Npts);
+            I = sum(w);
+            ranData{tryNum}.absErr = abs(I-J);
+            ranData{tryNum}.pass = true;
+            
+            if absErr < minErr
+                ranData{tryNum}.accurate = true;
+            else
+                ranData{tryNum}.accurate = false;
+            end
+            
+        catch
+            ranData{tryNum}.pass = false;
+            ranData{tryNum}.accurate = false;
+        end
+        
+        if ranData{tryNum}.accurate == false
+           numFails = numFails + 1;
+           fails{numFails} =  ranData{tryNum};
+        end
+        
+    end
+
+    if numFails == 0
+        fullPass = false;
+        save('randFailData','fails');
+    else
+        fullPass = true;
+    end
+
+end
+

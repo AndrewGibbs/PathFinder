@@ -15,7 +15,7 @@ function pass = BigPhase()
             sigma = sigma_tilde* 3*sqrt(2)/5;
             P = @ (x,y) [4*sqrt(2)/15 0 0 -x/2 0 0 0 0 0 -y sigma 0 0 0 0 0];
             if Yregion(y,x)
-                [z,w] = PathFinderQuad(exp(1i*9*pi/30), exp(1i*5*pi/30), P(x,y), freq, 15, 'infContour', [true true]);
+                [z,w] = PathFinderQuad(exp(1i*9*pi/30), exp(1i*5*pi/30), P(x,y), freq, 15, 'infContour', [true true], 'plot');
                  A(xCount,yCount) = sum(w);
             else
                  A(yCount,xCount) = 0;
