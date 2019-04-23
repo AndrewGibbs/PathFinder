@@ -3,6 +3,7 @@ function [z,w,dz] = gauss_quad_complex(a,b,N)
 %corresponds to z'(p) if p parametrises complex line segment
     L = abs(b-a);
     [s, w] = gauss_quad(0, L, N);
+    s = flipud(s);
     dz = (b - a)/L;
     z = a + s*dz;
     dz = repmat(dz,size(z));

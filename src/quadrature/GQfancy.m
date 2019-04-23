@@ -19,9 +19,9 @@ function [z,w,dz] = GQfancy(covers,a,b,a_index,b_index,intersectionMatrix,N)
         return;
     else
         nodes = [a nodes b];
-        z = [];
-        for x = nodes(2:end)
-            [z_,w_,dz_] = gauss_quad_complex(a,b,N);
+        z = []; w = []; dz = [];
+        for n = 1:(length(nodes)-1)%x = nodes(2:end)
+            [z_,w_,dz_] = gauss_quad_complex(nodes(n),nodes(n+1),N);
             z = [z; z_];
             w = [w; w_];
             dz = [dz; dz_];

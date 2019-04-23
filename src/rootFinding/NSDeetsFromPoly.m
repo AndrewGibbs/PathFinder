@@ -2,6 +2,8 @@ function [G,stationaryPoints,stationaryPointsOrders] = NSDeetsFromPoly(polyCoeff
 %returns all the relevant info needed by NSD given only the coefficients of
 %the polynomial
     
+    polyCoeffs = polyCoeffs(:).';
+    
     if nargin == 1
         %if two stationary points are this close, make them one
         stationaryPointMinDist=0.001;

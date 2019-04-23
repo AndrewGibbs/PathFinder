@@ -88,7 +88,7 @@ function Q = shortestInfinitePathV3(contours, covers, coverOverlaps, valleys, a,
     end
     
     % unit scalar to determine if SD path is incoming or outgoing
-    if ~(infContour(1))
+    if infContour(1)
         inOut = -1;
     else
         inOut = 1;
@@ -112,7 +112,9 @@ function Q = shortestInfinitePathV3(contours, covers, coverOverlaps, valleys, a,
                     %endpoint - need a straight line before the contour
                     Q{n}.type = 'strLn';
                     Q{n}.Hermite = false;
-                    [Q{n}.a, Q{n}.a_coverIndex]  = contours(contourIndex).intervalEndpoint;
+                    %[Q{n}.a, Q{n}.a_coverIndex]  = contours(contourIndex).intervalEndpoint;
+                    Q{n}.a  = contours(contourIndex).intervalEndpoint;
+                    Q{n}.a_coverIndex = endPointIndices(1);
                     [Q{n}.b, Q{n}.b_coverIndex] = getCoverExit(coverIndex,contourIndex);
                     n = n + 1;
                 end
@@ -126,7 +128,9 @@ function Q = shortestInfinitePathV3(contours, covers, coverOverlaps, valleys, a,
                     Q{n}.type = 'strLn';
                     Q{n}.Hermite = false;
                     [Q{n}.a, Q{n}.a_coverIndex] = getCoverExit(coverIndex,contourIndex);
-                    [Q{n}.b, Q{n}.b_coverIndex] = contours(contourIndex).intervalEndpoint;
+                    %[Q{n}.b, Q{n}.b_coverIndex] = contours(contourIndex).intervalEndpoint;
+                    Q{n}.b = contours(contourIndex).intervalEndpoint;
+                    Q{n}.b_coverIndex = endPointIndices(2);
                     n = n + 1;
                 end
                 %need a special case for if the two enpoints are in the
