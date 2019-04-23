@@ -1,6 +1,6 @@
 function plotAll(covers, contours, z, a, b, infContour, SPs)
 
-    marginSpace = 0.1;
+    marginSpace = 0.5;
     
     %get your margins:
     min_x = 0; min_y = 0; max_x = 0; max_y = 0;

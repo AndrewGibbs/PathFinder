@@ -5,7 +5,7 @@ function passTest = PearceyPig(Npts)
     disp('Testing against N.P. Kirk et al. approximations of Pearcey integral');
     
     if nargin == 0
-        Npts = 50;
+        Npts = 20;
     end
 
     X=[-8 -6 -4 -2 0 2 4 6 8]; Y=[0 2 4 6 8];
