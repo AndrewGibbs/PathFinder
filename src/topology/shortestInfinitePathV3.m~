@@ -101,15 +101,10 @@ function Q = shortestInfinitePathV3(contours, covers, coverOverlaps, valleys, a,
             C = contours(contIndex);
             Q{n} = assignQuadInfo(C);
             n = n + 1;
-            %join up final edge of ball to endpoint, if required
-            if (ismember(endPointIndices(2),C.startClusterIndices) && C.startCoverIndex~=endPointIndices(2)) ...
-                    || (ismember(endPointIndices(2),C.endClusterIndices) && C.endCoverIndex~=endPointIndices(2))
-                    Q{n}.type = 'strLn';
-                    Q{n}.Hermite = false;
-                    [Q{n}.a, Q{n}.a_coverIndex] = getCoverExit(seq(end-1),contIndex);
-                    Q{n}.b = b;
-                    Q{n}.b_coverIndex = endPointIndices(2);
-                    break;
+            if ismember(endPointIndices(2),C.startClusterIndices) && C.startCoverIndex~=endPointIndices(2)
+                
+            elseif ismember(endPointIndices(2),C.endClusterIndices) && C.startCoverIndex~=endPointIndices(2)
+                
             end
             
         else %this is a cover
@@ -172,15 +167,16 @@ function Q = shortestInfinitePathV3(contours, covers, coverOverlaps, valleys, a,
         end        
     end
     
-%     if seq(end-1)<=numCovers && (~infCountour(2))
-%         n = length(Q)+1;
-%         Q{n}.type = 'strLn';
-%         Q{n}.Hermite = false;
-%         prevContIndex = edgeContourIndices(seq(end-1),seq(end));
-%         [Q{n}.a, Q{n}.a_coverIndex] = getCoverExit(seq(end-1),prevContIndex);
-%         Q{n}.b = b;
-%         Q{n}.b_coverIndex = endPointIndices(2);
-%     end
+    %join up final edge of ball to endpoint, if required
+    if seq(end-1)<=numCovers && (~infCountour(2))
+        n = length(Q)+1;
+        Q{n}.type = 'strLn';
+        Q{n}.Hermite = false;
+        prevContIndex = edgeContourIndices(seq(end-1),seq(end));
+        [Q{n}.a, Q{n}.a_coverIndex] = getCoverExit(seq(end-1),prevContIndex);
+        Q{n}.b = b;
+        Q{n}.b_coverIndex = endPointIndices(2);
+    end
     
     % - - - - indented functions : 
     

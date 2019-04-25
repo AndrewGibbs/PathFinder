@@ -1,8 +1,12 @@
 function plotAll(covers, contours, z, a, b, infContour, SPs)
 
+    %get your margins:
     marginSpace = 0.5;
     
-    %get your margins:
+    for S = covers
+       marginSpace = max(marginSpace,S{1}.diameter);
+    end
+    
     min_x = 0; min_y = 0; max_x = 0; max_y = 0;
 
     if infContour(1)
@@ -31,7 +35,7 @@ function plotAll(covers, contours, z, a, b, infContour, SPs)
         plot(C);
         hold on;
     end
-    plot(z,'x');
+    plot(z+eps*1i,'x');
     
     %now adjust the margins a bit
     xlim([min_x-marginSpace max_x+marginSpace]);

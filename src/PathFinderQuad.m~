@@ -23,17 +23,12 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
     [phase, stationaryPoints, stationaryPointsOrders, valleys] = getInfoFromPhase(phaseIn);
     
     %cover each stationary point:
-    [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandidates, endPointIndices, standardQuadFlag]...
+    [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandidates, endPointIndices]...
             = getInteriorBalls(phase{1},freq,stationaryPoints,params.infContour,a,b, stationaryPointsOrders, params.numOscs);
         %used to be getCovers(...), new code is almost the same
         
-    if standardQuadFlag
-        [z, w_, dh] = GQfancy(covers, a, b, endPointIndices(1), endPointIndices(2), intersectionMatrix, Npts);
-        w = w_.*exp(1i*freq*phase{1}(z)).*dh;
-        if params.plot
-            plotAll(covers, [], z, a, b, params.infContour, stationaryPoints);
-        end
-        return;
+    if params(1)==0 && params(2) == 0
+        
     end
     
     %make the contours from each cover:

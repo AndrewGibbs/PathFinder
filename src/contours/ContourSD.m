@@ -71,7 +71,7 @@ classdef ContourSD < handle
                 contourInCover = max( contourInCover , contourInCover_yn.*cover.index);
                 contourNaNcover = max( contourNaNcover , isnan(self.coarsePath) );
                 %NaNs are typically a sign of passing through another
-                %stationary point, although this should only happen if
+                %stationary point, although this will only happen if
                 %inside another ComplexCover anyway
             end
             contourEndIndex = min([find(contourInCover,true),find(contourNaNcover,true)]);
@@ -105,44 +105,28 @@ classdef ContourSD < handle
         end
         
         function [Z, W] = getQuad(self,freq,Npts)
-%             if nargin <= 4
-%                 G = self.phaseDerivs;
-%             end
-%             if isempty(self.h) %if quadrature hasn't been created already, then create it
             self.quadFreq = freq;
             if isinf(self.length)
                 %get relevant weighted Gauss quad rule:
                 [self.P0, self.Wgauss] = quad_gauss_exp(self.ODEorder, Npts);
                 %scale by frequency and add zero
-                %self.P0=[0; (p/(freq^(1/self.ODEorder)))];
-                %self.P0=[0; p];
             else
-                [self.P0, self.Wgauss] = gauss_quad(0,self.length,Npts);
-                %self.P0=[0; flipud(p)];
+                [self.P0, self.Wgauss] = gauss_quad(0,self.length*freq,Npts);
                 self.P0=flipud(self.P0);
             end
-            
-%             [~,H] = ode45(@(t,y) NSDpathODE(t,y,self.ODEorder-1,self.phaseDerivs, self.ICs, false, 0),...
-%                     self.P0, self.ICs, odeset('RelTol', self.fineTol) );
-%             self.h = H(2:end,1);
-%             self.dhdp = 1i./self.phaseDerivs{2}(self.h);
             
             [~, self.h, self.dhdp] = SDpathODE(self.P0, self.phaseDerivs{2}, freq, self.ICs(1), self.fineTol);
             
             %this adjusts for small deviations from the path:
             weightWatchers = exp(1i*(freq*self.phaseDerivs{1}(self.h)-1i*self.P0.^self.ODEorder - freq*self.phaseDerivs{1}(self.startPoint)));
+            
             if isinf(self.length)
                 %absorb h'(p) and other constants into weights.
-%                 W= (1/(freq^(1/self.ODEorder)))*exp(1i*freq*self.phaseDerivs{1}(self.startPoint))...
-%                     .*self.dhdp.*self.Wgauss.*weightWatchers;
                 W= exp(1i*freq*self.phaseDerivs{1}(self.startPoint)).*self.dhdp.*self.Wgauss.*weightWatchers;
             else
-               W = self.dhdp.*self.Wgauss.*exp(1i*freq*self.phaseDerivs{1}(self.h)) ;
+               W = self.dhdp.*self.Wgauss.*exp(1i*freq*self.phaseDerivs{1}(self.h));
             end
-            Z=self.h; 
-%             else
-%                 [Z, W] = self.reuseQuad(G, errThresh);
-%             end
+            Z=self.h;
         end
          
         function [Z, W] = reuseQuad(self, G, errThresh)
