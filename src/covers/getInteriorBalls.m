@@ -1,4 +1,5 @@
-function [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandidates, endPointIndices] = getInteriorBalls(g, freq, SPs, infContour, a, b, SPorders, Cosc)
+function [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandidates, endPointIndices, nonOscFlag]...
+                = getInteriorBalls(g, freq, SPs, infContour, a, b, SPorders, Cosc)
 
     coverIndex = 0;
     endPointBalls = [];
@@ -32,6 +33,16 @@ function [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandida
     [intersectionMatrix, clusters, clusterEndpoints] = coverOverlapV2(covers);
     
     HermiteCandidates = getHermiteCandidates(clusters, clusterEndpoints, covers);
+    
+    nonOscFlag = false;
+    if (~infContour(1)) && (~infContour(2))
+        for n = 1:length(clusterEndpoints)
+            if ismember(a,clusterEndpoints{n}) && ismember(b,clusterEndpoints{n})
+                nonOscFlag = true;
+                break;
+            end
+        end
+    end
     
     function minR = getInteriorRadius(xi)
         Nangles = 32;
