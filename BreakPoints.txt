@@ -1,3 +1,0 @@
-1. coalescenceTest points appears to converge to around 1E-8 accuracy, no better. Need an explanation for this, and ideally a way to improve upon it.
-
-2. g(x)=x^2 with a = 0 b=1 has a really high error. Not sure why.
