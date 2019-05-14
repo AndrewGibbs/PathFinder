@@ -120,31 +120,25 @@ classdef ContourSD < handle
             %this adjusts for small deviations from the path:
             if TurboOn
                 weightWatchers = 1;%./weightWatchers;
-                errThresh = 1e-12;
-                Zold=self.h;
+                 Zold=self.h;
+                p = self.P0;
                 Z = NaN(size(Zold));
                 dZdp = Z;
-                NewtonSuccess = true;
                 for n = 1:length(Zold) %#ok<CPROPLC> %iterate over all quad points
-                    [success, z_new] = NewtonSD(Zold(n),self.phaseDerivs,self.P0(n),1,self.startPoint,freq,errThresh);
+                    [success, z_new] = NewtonSD(Zold(n),G,p(n),1,self.startPoint,1,errThresh);
                     if success
                         Z(n) = z_new;
-                        dZdp(n) =  1i./(freq*self.phaseDerivs{2}(Z(n)));
+                        dZdp(n) =  1i./G{2}(Z(n));
                     else
-                        NewtonSuccess = false;
+                        Z = Zold;
+                        dZdp = self.dhdp;
+                        warning('Failed to iterate to true SD path');
+                        n = length(Zold) +1;
                         break;
                     end
                     clear z_new;
                 end
-                if NewtonSuccess
-                    self.h = Z;
-                    self.dhdp = dZdp;
-                end
             else
-                NewtonSuccess = false;
-            end
-            
-            if ~NewtonSuccess
                 weightWatchers = exp(1i*(freq*self.phaseDerivs{1}(self.h)-1i*self.P0.^self.ODEorder - freq*self.phaseDerivs{1}(self.startPoint)));
             end
             

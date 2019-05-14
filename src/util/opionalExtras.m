@@ -8,7 +8,7 @@ function options = opionalExtras(varargin)
     end
     
     %set defaults:
-    options = struct('plot', false, 'infContour', [false false], 'numOscs', 2);
+    options = struct('plot', false, 'infContour', [false false], 'numOscs', 2, 'turbo', false);
     
     %now adjust them, if requested to
     N = length(varargin);
@@ -22,6 +22,8 @@ function options = opionalExtras(varargin)
                    options.infContour = varargin{n+1};
                case 'numoscs'
                    options.numOscs = varargin{n+1};
+               case 'turbo on'
+                   options.turbo = true;
            end
         end
     end
