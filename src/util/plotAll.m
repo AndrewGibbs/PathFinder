@@ -37,6 +37,9 @@ function plotAll(covers, contours, z, a, b, infContour, SPs)
     end
     plot(z+eps*1i,'x');
     
+    %plot stationary points:
+    plot(SPs+eps*1i,'r*');
+    
     %now adjust the margins a bit
     xlim([min_x-marginSpace max_x+marginSpace]);
     ylim([min_y-marginSpace max_y+marginSpace]);
