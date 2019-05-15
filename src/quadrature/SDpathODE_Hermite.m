@@ -1,4 +1,4 @@
-function [z, W] = SDpathODE_Hermite(Npts, g, dg, ddg, dddg, k, h0, dh0m_est, tol)
+function [z, W] = SDpathODE_Hermite(Npts, g, dg, ddg, dddg, k, h0, dh0m_est, tol, turbo)
 
     thresh = 1e-8;
 
@@ -41,7 +41,43 @@ function [z, W] = SDpathODE_Hermite(Npts, g, dg, ddg, dddg, k, h0, dh0m_est, tol
     end
     
     %z = h; % = h(p_j)
-    weightWatchers = exp(1i*(k*g(z) - 1i*P.^2 - k*g(h0)));
+    
+    %if this doesn't work - could formulate the Halley problem using
+    % g(h(p)) = g(\xi) + ip, over p\in(-inf,inf) and rescale the p quad points to match this.
+    % This only has one local minimum. Then, can use the same eqn for h'(p)
+    % as currently, as this is not singular so more stable for small p.
+    
+    if turbo
+       errThresh = 1e-10;
+            Zold=z;
+            ZnewMaybe = NaN(size(Zold));
+            dZdp = ZnewMaybe;
+            HalleySuccess = true;
+            for n = 1:length(Zold) %iterate over all quad points
+                [success, z_new] = HalleySD(Zold(n),{g, dg, ddg},P(n),2,h0,k,errThresh);
+                if success
+                    ZnewMaybe(n) = z_new;
+                    dZdp(n) =  2*1i*P(n)/(k*dg(ZnewMaybe(n)));
+                else
+                    HalleySuccess = false;
+                    break;
+                end
+                clear z_new;
+            end
+            if HalleySuccess
+                z = ZnewMaybe;
+                dhdp = dZdp;
+            end 
+    else
+        HalleySuccess = false;
+    end
+    
+    if HalleySuccess == false
+        weightWatchers = exp(1i*(k*g(z) - 1i*P.^2 - k*g(h0)));
+    else
+        weightWatchers = 1;
+    end
+    
     W= w.*exp(1i*k*g(h0)).*dhdp.*weightWatchers;
     
     function LH = ODE_dH(p,H)
