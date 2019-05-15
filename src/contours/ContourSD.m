@@ -20,8 +20,8 @@ classdef ContourSD < handle
         %some parameters with default settings:
         coarseTol = 1e-3;
         fineTol = 1e-13;
-        paramPathLength = 100000;
-        minArgDist = pi;
+        paramPathLength = 10
+        minArgDist = pi/2;
         ICs %intiial conditions
         %quad bits:
         P0
@@ -41,11 +41,13 @@ classdef ContourSD < handle
             [self.startClusterIndices, self.intervalEndpoint] = getClusterBuddies(clusterIndices, self.startCoverIndex, clusterEndpoints);
             
             self.ICs = [startPoint; 1i/phaseDerivs{2}(startPoint)];
-            %solve ODE to approximate contour
-            %ODEorder = self.paramOrder;
-%             [p,H] = ode45(@(t,y) NSDpathODE(t,y,self.ODEorder-1,phaseDerivs, self.ICs, false, 0), [0 self.paramPathLength], self.ICs, odeset('RelTol', self.coarseTol) );
-%             self.coarsePath = H(:,1);
-%             self.coarsePathGrad = 1i/phaseDerivs{2}(self.coarsePath);
+            
+            %need coarse path to be longer if there are more stationary
+            %points
+            
+            order = length(valleys);
+            
+            self.paramPathLength = self.paramPathLength^(order+1);
             
             %new streamlined version of ODE solver, much simpler than orig
             %PathFinder:
