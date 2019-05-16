@@ -1,4 +1,4 @@
-function [z, w] = makeQuadV3(quadInfo, freq, Npts, G, covers, intersectionMatrix, turbo)
+function [z, w] = makeQuadV3(quadInfo, freq, Npts, G, covers, intersectionMatrix, params)
 
 % new fancy GQ needs additional inputs: (covers,a,b,a_index,b_index,intersectionMatrix)
 
@@ -36,11 +36,11 @@ function [z, w] = makeQuadV3(quadInfo, freq, Npts, G, covers, intersectionMatrix
     for n = 1:length(quadInfo)
        switch quadInfo{n}.type
            case {'infSD','finSD'}
-               [z_, w__] = quadInfo{n}.contour.getQuad(freq,Npts,turbo);
+               [z_, w__] = quadInfo{n}.contour.getQuad(freq,Npts, params.turbo);
                w_ = w__*quadInfo{n}.inOut;
            case 'strLn'
                if quadInfo{n}.Hermite
-                   [z_, w_] = SDpathODE_Hermite(2*Npts, G{1}, G{2}, G{3}, G{4}, freq, quadInfo{n}.h0, quadInfo{n}.dh0m, tol, turbo);
+                   [z_, w_] = SDpathODE_Hermite(2*Npts, G{1}, G{2}, G{3}, G{4}, freq, quadInfo{n}.h0, quadInfo{n}.dh0m, tol, params.turbo);
                    %may return a NaN if we're unlucky - in which case we
                    %call this function again, using the backup quad data,
                    %without instructions to use Hermite quadrature:
@@ -49,7 +49,7 @@ function [z, w] = makeQuadV3(quadInfo, freq, Npts, G, covers, intersectionMatrix
                    end
                else
                    [z_, w__, dh_] = GQfancy(covers, quadInfo{n}.a, quadInfo{n}.b, ...
-                                    quadInfo{n}.a_coverIndex, quadInfo{n}.b_coverIndex, intersectionMatrix, Npts);
+                                    quadInfo{n}.a_coverIndex, quadInfo{n}.b_coverIndex, intersectionMatrix, max(Npts,ceil(params.numOscs*Npts)));
                    w_ = w__.*sgw(z_).*dh_;
                end
            otherwise
