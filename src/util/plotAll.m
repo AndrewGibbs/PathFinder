@@ -44,6 +44,10 @@ function plotAll(covers, contours, z, a, b, infContour, SPs)
     xlim([min_x-marginSpace max_x+marginSpace]);
     ylim([min_y-marginSpace max_y+marginSpace]);
     
+    xlabel('Real');
+    ylabel('Imaginary');
+    set(gca,'fontsize', 18)
+    
     hold off;
     
 end
