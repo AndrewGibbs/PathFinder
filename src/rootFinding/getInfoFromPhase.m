@@ -8,7 +8,8 @@ stationaryPointMinDist = .001;
     if isvector(phaseIn)
         [phase,stationaryPoints,stationaryPointsOrders] = NSDeetsFromPoly(phaseIn, stationaryPointMinDist);
         order = length(phaseIn)-1;
-        valleys = exp(2i*pi*(1/4 + (1:order))/order);
+        valleyRotate = exp(-1i*angle(phaseIn(1))/order);
+        valleys = valleyRotate*exp(2i*pi*(1/4 + (1:order))/order);
     elseif iscell(phaseIn) %user has given anonymous function cell array
         error('Have not yet coded this on latest version of PathFinder');
     else 
