@@ -1,10 +1,12 @@
-function [z, w] = makeQuadV3(quadInfo, freq, Npts, G, covers, intersectionMatrix, params)
+function [z, w, HermiteInds] = makeQuadV3(quadInfo, freq, Npts, G, covers, intersectionMatrix, params)
 
 % new fancy GQ needs additional inputs: (covers,a,b,a_index,b_index,intersectionMatrix)
 
     tol = 1e-12;
 
     Npts = max(Npts,2);
+    
+    HermiteInds = [];
 
     %collapse infinite contours connected by a single order cover into a
     %single Hermite integral
@@ -41,6 +43,7 @@ function [z, w] = makeQuadV3(quadInfo, freq, Npts, G, covers, intersectionMatrix
            case 'strLn'
                if quadInfo{n}.Hermite
                    [z_, w_] = SDpathODE_Hermite(2*Npts, G{1}, G{2}, G{3}, G{4}, freq, quadInfo{n}.h0, quadInfo{n}.dh0m, tol, params.turbo);
+                   HermiteInds = [HermiteInds quadInfo{n}.a_coverIndex];
                    %may return a NaN if we're unlucky - in which case we
                    %call this function again, using the backup quad data,
                    %without instructions to use Hermite quadrature:
