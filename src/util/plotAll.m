@@ -1,4 +1,8 @@
-function plotAll(covers, contours, z, a, b, infContour, SPs)
+function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds)
+
+    if nargin == 7
+        HermiteInds = [];
+    end
 
     %get your margins:
     marginSpace = 0.5;
@@ -29,16 +33,20 @@ function plotAll(covers, contours, z, a, b, infContour, SPs)
             C=C{1};
         end
         plot(C);
+        if C.radius>0 && ~ismember(C.index,HermiteInds)
+           fillCircle(C.centre,C.radius);
+           % plot(C.steepestExits,'ob','MarkerSize',18);
+        end
         hold on;
     end
     for C=contours
         plot(C);
         hold on;
     end
-    plot(z+eps*1i,'x');
+    plot(z+eps*1i,'bx');
     
     %plot stationary points:
-    plot(SPs+eps*1i,'r*');
+    plot(SPs+eps*1i,'r*','MarkerSize',18);
     
     %now adjust the margins a bit
     xlim([min_x-marginSpace max_x+marginSpace]);
