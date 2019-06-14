@@ -122,7 +122,7 @@ classdef ContourSD < handle
             %this adjusts for small deviations from the path:
             if TurboOn
                 weightWatchers = 1;%./weightWatchers;
-                errThresh = 1e-10;
+                errThresh = 1e-12;
                 Zold=self.h;
                 Z = NaN(size(Zold));
                 dZdp = Z;

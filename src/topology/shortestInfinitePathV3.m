@@ -102,14 +102,16 @@ function Q = shortestInfinitePathV3(contours, covers, coverOverlaps, valleys, a,
             Q{n} = assignQuadInfo(C);
             n = n + 1;
             %join up final edge of ball to endpoint, if required
-            if (ismember(endPointIndices(2),C.startClusterIndices) && C.startCoverIndex~=endPointIndices(2)) ...
-                    || (ismember(endPointIndices(2),C.endClusterIndices) && C.endCoverIndex~=endPointIndices(2))
-                    Q{n}.type = 'strLn';
-                    Q{n}.Hermite = false;
-                    [Q{n}.a, Q{n}.a_coverIndex] = getCoverExit(seq(end-1),contIndex);
-                    Q{n}.b = b;
-                    Q{n}.b_coverIndex = endPointIndices(2);
-                    break;
+            if infContour(2)
+                if (ismember(endInd,C.startClusterIndices) && C.startCoverIndex~=endInd) ...
+                        || (ismember(endInd,C.endClusterIndices) && C.endCoverIndex~=endInd)
+                        Q{n}.type = 'strLn';
+                        Q{n}.Hermite = false;
+                        [Q{n}.a, Q{n}.a_coverIndex] = getCoverExit(seq(end-1),contIndex);
+                        Q{n}.b = b;
+                        Q{n}.b_coverIndex = endPointIndices(2);
+                        break;
+                end
             end
             
         else %this is a cover
