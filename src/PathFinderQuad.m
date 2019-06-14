@@ -43,10 +43,10 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
     quadIngredients = shortestInfinitePathV3(contours, covers, intersectionMatrix, valleys, a, b, endPointIndices, params.infContour, HermiteCandidates,clusters);
 
     %get quadrature points
-    [z, w] = makeQuadV3(quadIngredients, freq, Npts, phase, covers, intersectionMatrix, params);
+    [z, w, HermiteInds] = makeQuadV3(quadIngredients, freq, Npts, phase, covers, intersectionMatrix, params);
     
     %make a plot of what's happened, if requested
     if params.plot
-        plotAll(covers, contours, z, a, b, params.infContour, stationaryPoints);
+        plotAll(covers, contours, z, a, b, params.infContour, stationaryPoints, HermiteInds);
     end
 end

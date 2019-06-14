@@ -15,10 +15,10 @@ function [z,w,dz] = GQfancy(covers,a,b,a_index,b_index,intersectionMatrix,N)
         nodes = [nodes covers{n}.pseudoCentre];
     end
     
-    if min(inCover) % z fully inside covered region
+    if false%min(inCover) % z fully inside covered region
         return;
     else
-        nodes = [a nodes b];
+        nodes = unique([a nodes b],'stable'); %can get endpoints of integration region appearing twice in here
         z = []; w = []; dz = [];
         for n = 1:(length(nodes)-1)%x = nodes(2:end)
             [z_,w_,dz_] = gauss_quad_complex(nodes(n),nodes(n+1),N);
