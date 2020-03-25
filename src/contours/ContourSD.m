@@ -22,6 +22,7 @@ classdef ContourSD < handle
         fineTol = 1e-13;
         paramPathLength = 10
         minArgDist = pi/2;
+        leavesAnalyticRegion = false
         ICs %intiial conditions
         %quad bits:
         P0
@@ -32,7 +33,14 @@ classdef ContourSD < handle
     end
     
     methods
-        function self = ContourSD(startPoint,phaseDerivs,startCover,otherCovers,valleys,clusterIndices,clusterEndpoints)
+        function self = ContourSD(startPoint,phaseDerivs,startCover,otherCovers,valleys,clusterIndices,clusterEndpoints, analDomain)
+            if nargin == 7
+                %contourInOutOfAnalDomain_yn = @(z) true(size(z));
+                isInAnalDomain = @(z) true(size(z));
+            else
+                isInAnalDomain = @(z) analDomain.isIn(z);
+            end
+            
             %construct an instance of this class
             self.startPoint = startPoint;
             self.paramOrder = startCover.orderSum;
@@ -76,7 +84,28 @@ classdef ContourSD < handle
                 %stationary point, although this will only happen if
                 %inside another ComplexCover anyway
             end
+            
+            %now check if contour leaves analytic region:
+            contourInOutOfAnalDomain_yn = ~isInAnalDomain(self.coarsePath);
+            
+            %now piece these infos together to decide where the contour
+            %should end:
+            
             contourEndIndex = min([find(contourInCover,true),find(contourNaNcover,true)]);
+            %find(contourInOutOfAnalDomain_yn,true)]
+            
+            %check if contour leaves analytic domain
+            if sum(contourInOutOfAnalDomain_yn) > 0
+                %now check if it leaves before it enters a non-oscillatory
+                %ball:
+                if isempty(contourEndIndex)
+                    contourEndIndex = find(contourInOutOfAnalDomain_yn,true);
+                    self.leavesAnalyticRegion = true;
+                elseif find(contourInOutOfAnalDomain_yn,true) < contourEndIndex
+                    contourEndIndex = min([contourEndIndex,find(contourInOutOfAnalDomain_yn,true)]);
+                    self.leavesAnalyticRegion = true;
+                end
+            end
             
             if isempty(contourEndIndex) %infinite contour
                 self.length = inf;
@@ -91,10 +120,12 @@ classdef ContourSD < handle
                     self.endValley = [];
                 end
             else    %finite contour
-                self.endCoverIndex = contourInCover(contourEndIndex); %the cover which the contour hits
-                [self.endClusterIndices, self.endClusterIntervalEndpoints] = getClusterBuddies(clusterIndices, self.endCoverIndex, clusterEndpoints);
-                %contourEndIndex = max(contourEndIndex-1,1); %take one off, to be sure of ending before it hits
-                contourEndIndex = max(contourEndIndex,2);
+                if ~self.leavesAnalyticRegion
+                    self.endCoverIndex = contourInCover(contourEndIndex); %the cover which the contour hits
+                    [self.endClusterIndices, self.endClusterIntervalEndpoints] = getClusterBuddies(clusterIndices, self.endCoverIndex, clusterEndpoints);
+                end
+                    %contourEndIndex = max(contourEndIndex-1,1); %take one off, to be sure of ending before it hits
+                    contourEndIndex = max(contourEndIndex,2);
                 self.length = p(contourEndIndex);
                 self.coarsePath = self.coarsePath(1:contourEndIndex);
                 self.endValley = [];
