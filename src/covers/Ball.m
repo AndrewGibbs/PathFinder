@@ -17,6 +17,7 @@ classdef Ball < ComplexCover
             self.diameter = r;
             self.boundary.xdata = [c];
             self.boundary.ydata = [c];
+            self.exitGrad = 32*max(self.orderSum,1);
             
             if r>0
                 if nargin>2
