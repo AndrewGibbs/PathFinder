@@ -5,7 +5,7 @@ classdef ContourInterior < ComplexCover
     properties
         %boundary
         %pseudoCentre
-        contourPts = 64
+        contourPts = 256
         oscScale = 1
     end
     

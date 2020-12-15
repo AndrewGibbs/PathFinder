@@ -1,5 +1,5 @@
 function contours = getContours(G, covers, valleys, clusters, clusterEndpoints, endPointIndices)
-
+% G can be phase handles, or the original coefficients
     contours = [];
      for n = 1:length(covers)
         if ismember(n,endPointIndices)%~infContour && ismember(n,[1 2])
