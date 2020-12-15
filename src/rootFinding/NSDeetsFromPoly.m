@@ -25,11 +25,7 @@ function [G,stationaryPoints,stationaryPointsOrders] = NSDeetsFromPoly(polyCoeff
         stationaryPointsOrders = [];
     end
     
-    G{1}=@(x) polyval(polyCoeffs,x);
-    for n = 2:2*(order+1)
-        G{n} = @(x) polyval(Dpolycoeffs,x);
-        Dpolycoeffs=Dpolycoeffs(1:(order-n+1)).*fliplr(1:(order-n+1));
-    end
+    G = getHandlesFromCoeffs(polyCoeffs);
     
 end
 

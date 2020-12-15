@@ -30,10 +30,11 @@ classdef ContourSD < handle
         dhdp
         Wgauss
         quadFreq
+        polynomial = false
     end
     
     methods
-        function self = ContourSD(startPoint,phaseDerivs,startCover,otherCovers,valleys,clusterIndices,clusterEndpoints, analDomain)
+        function self = ContourSD(startPoint, G, startCover, otherCovers, valleys, clusterIndices, clusterEndpoints, analDomain)
             if nargin == 7
                 %contourInOutOfAnalDomain_yn = @(z) true(size(z));
                 isInAnalDomain = @(z) true(size(z));
@@ -41,10 +42,17 @@ classdef ContourSD < handle
                 isInAnalDomain = @(z) analDomain.isIn(z);
             end
             
+            %quick check
+            if iscell(G)
+                self.phaseDerives = G;
+            else
+                self.polynomial = true;
+                self.phaseDerives = getHandlesFromCoeffs(G);
+            end
+            
             %construct an instance of this class
             self.startPoint = startPoint;
             self.paramOrder = startCover.orderSum;
-            self.phaseDerivs = phaseDerivs;
             self.startCoverIndex = startCover.index;
             [self.startClusterIndices, self.intervalEndpoint] = getClusterBuddies(clusterIndices, self.startCoverIndex, clusterEndpoints);
             
