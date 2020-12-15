@@ -44,10 +44,13 @@ classdef ContourSD < handle
             
             %quick check
             if iscell(G)
-                self.phaseDerives = G;
+                self.phaseDerivs = G;
+                noReturnEvent = [];
             else
                 self.polynomial = true;
-                self.phaseDerives = getHandlesFromCoeffs(G);
+                self.phaseDerivs = getHandlesFromCoeffs(G);
+                Cnr = getNoReturnConstant(G);
+                noReturnEvent = @(p,h) noReturn(h,Cnr,angle(G(1)),valleys);
             end
             
             %construct an instance of this class
@@ -56,7 +59,7 @@ classdef ContourSD < handle
             self.startCoverIndex = startCover.index;
             [self.startClusterIndices, self.intervalEndpoint] = getClusterBuddies(clusterIndices, self.startCoverIndex, clusterEndpoints);
             
-            self.ICs = [startPoint; 1i/phaseDerivs{2}(startPoint)];
+            self.ICs = [startPoint; 1i/self.phaseDerivs{2}(startPoint)];
             
             %need coarse path to be longer if there are more stationary
             %points
@@ -67,7 +70,7 @@ classdef ContourSD < handle
             
             %new streamlined version of ODE solver, much simpler than orig
             %PathFinder:
-            [p, self.coarsePath, self.coarsePathGrad] = SDpathODE(self.paramPathLength, phaseDerivs{2}, 1, self.ICs(1), self.coarseTol);
+            [p, self.coarsePath, self.coarsePathGrad] = SDpathODE(self.paramPathLength, self.phaseDerivs{2}, 1, self.ICs(1), self.coarseTol, noReturnEvent);
             
             %add the first p=0 to the above, just incase we stray
             %immediately into a NaN:

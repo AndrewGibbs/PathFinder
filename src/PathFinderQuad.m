@@ -37,7 +37,8 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
     end
     
     %make the contours from each cover:
-    contours = getContours(phase_handles, covers, valleys, clusters, clusterEndpoints, endPointIndices);
+    %contours = getContours(phase_handles, covers, valleys, clusters, clusterEndpoints, endPointIndices);
+    contours = getContours(phaseIn, covers, valleys, clusters, clusterEndpoints, endPointIndices);
     
     %choose the path from a to b
     quadIngredients = shortestInfinitePathV3(contours, covers, intersectionMatrix, valleys, a, b, endPointIndices, params.infContour, HermiteCandidates,clusters);
