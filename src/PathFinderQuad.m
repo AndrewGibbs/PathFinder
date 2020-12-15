@@ -20,16 +20,16 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
     params = opionalExtras(varargin);
     
     %get info about stationary points:
-    [phase, stationaryPoints, stationaryPointsOrders, valleys] = getInfoFromPhase(phaseIn);
+    [phase_handles, stationaryPoints, stationaryPointsOrders, valleys] = getInfoFromPhase(phaseIn);
     
     %cover each stationary point:
     [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandidates, endPointIndices, standardQuadFlag]...
-            = getInteriorBalls(phase{1},freq,stationaryPoints,params.infContour,a,b, stationaryPointsOrders, params.numOscs);
+            = getInteriorBalls(phase_handles{1},freq,stationaryPoints,params.infContour,a,b, stationaryPointsOrders, params.numOscs);
         %used to be getCovers(...), new code is almost the same
         
     if standardQuadFlag
         [z, w_, dh] = GQfancy(covers, a, b, endPointIndices(1), endPointIndices(2), intersectionMatrix, Npts);
-        w = w_.*exp(1i*freq*phase{1}(z)).*dh;
+        w = w_.*exp(1i*freq*phase_handles{1}(z)).*dh;
         if params.plot
             plotAll(covers, [], z, a, b, params.infContour, stationaryPoints);
         end
@@ -37,13 +37,13 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
     end
     
     %make the contours from each cover:
-    contours = getContours(phase, covers, valleys, clusters, clusterEndpoints, endPointIndices);
+    contours = getContours(phase_handles, covers, valleys, clusters, clusterEndpoints, endPointIndices);
     
     %choose the path from a to b
     quadIngredients = shortestInfinitePathV3(contours, covers, intersectionMatrix, valleys, a, b, endPointIndices, params.infContour, HermiteCandidates,clusters);
 
     %get quadrature points
-    [z, w, HermiteInds] = makeQuadV3(quadIngredients, freq, Npts, phase, covers, intersectionMatrix, params);
+    [z, w, HermiteInds] = makeQuadV3(quadIngredients, freq, Npts, phase_handles, covers, intersectionMatrix, params);
     
     %make a plot of what's happened, if requested
     if params.plot
