@@ -3,7 +3,7 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds)
     if nargin == 7
         HermiteInds = [];
     end
-
+    fontSize = 18;
     %get your margins:
     marginSpace = 0.5;
     
@@ -46,7 +46,7 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds)
     plot(z+eps*1i,'bx');
     
     %plot stationary points:
-    plot(SPs+eps*1i,'r*','MarkerSize',18);
+    plot(SPs+eps*1i,'r*','MarkerSize',fontSize);
     
     %now adjust the margins a bit
     xlim([min_x-marginSpace max_x+marginSpace]);
@@ -54,7 +54,7 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds)
     
     xlabel('Real');
     ylabel('Imaginary');
-    set(gca,'fontsize', 18)
+    set(gca,'fontsize', fontSize)
     
     hold off;
     
