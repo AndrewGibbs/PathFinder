@@ -1,0 +1,21 @@
+function [value,isterminal,direction] = noReturn(h,Cnr,argBeta,V)
+%function corresponding to an event which would halt ODE solve, because SD
+%path is at 'point of no return'.
+
+    %event parameters:
+    value = 1;
+    isterminal = 1;
+    direction = 0;
+
+    % the 'no return test'
+    order = length(V);
+    R = abs(h(end));
+    theta_diff = angle(h(end));
+    
+    for v = V
+        if R>1 && R*min(sin(order*(v+theta_diff+argBeta)),cos(order*(v-theta_diff+argBeta)))>Cnr
+            value = 0;
+        end
+    end
+end
+

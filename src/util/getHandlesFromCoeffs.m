@@ -1,5 +1,6 @@
 function G = getHandlesFromCoeffs(polyCoeffs)
     G{1}=@(x) polyval(polyCoeffs,x);
+    order = length(polyCoeffs)-1;
     Dpolycoeffs=polyCoeffs(1:(order)).*fliplr(1:(order));
     for n = 2:2*(order+1)
         G{n} = @(x) polyval(Dpolycoeffs,x);

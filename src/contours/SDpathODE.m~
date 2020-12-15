@@ -11,9 +11,9 @@ function [p, h, dhdp] = SDpathODE(pMax, dg, k, h0, tol, ODEevent)
     
     %solve using ODE23 at a given tolerance:
     if ~isempty(ODEevent)
-        [p,h] = ode45(ODEh, [0 pMax], h0, odeset('RelTol', tol,'Events', ODEevent));
+        [p,h] = ode1(ODEh, [0 pMax], h0, odeset('RelTol', tol,'Events', ODEevent));
     else
-        [p,h] = ode45(ODEh, [0 pMax], h0, odeset('RelTol', tol));
+        [p,h] = ode113(ODEh, [0 pMax], h0, odeset('RelTol', tol));
     end
     p = p(2:end);
     h = h(2:end);
