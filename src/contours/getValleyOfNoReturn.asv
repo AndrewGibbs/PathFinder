@@ -1,0 +1,18 @@
+function v_out = getValleyOfNoReturn(h,Cnr,argBeta,V)
+
+    order = length(V);
+    R = abs(h(end));
+    theta_end = angle(h(end));
+
+    no_valley = true;
+    for v = V
+        theta_diff = min(theta_end-v,v-theta_end)
+        if R>1 && R*min(sin(order*(v+theta_diff)),cos(order*(v-theta_diff)))>Cnr
+            v_out = v;
+            no_valley = false;
+        end
+    end
+    if no_valley
+        error('No valley found. Try increasing paramPathLength in ContourSD');
+    end
+end
