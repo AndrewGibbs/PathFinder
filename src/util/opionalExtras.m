@@ -8,7 +8,7 @@ function options = opionalExtras(varargin)
     end
     
     %set defaults:
-    options = struct('plot', false, 'infContour', [false false], 'numOscs', 1, 'turbo', true);
+    options = struct('plot', false, 'infContour', [false false], 'numOscs', 1, 'turbo', true,'plotCovers',false,'plotContours',false,'plotSpecial',false);
     
     %now adjust them, if requested to
     N = length(varargin);
@@ -18,6 +18,12 @@ function options = opionalExtras(varargin)
            switch lowerCaseArg
                case 'plot'
                    options.plot = true;
+               case 'plotcovers'
+                   options.plotCovers = true;
+               case 'plotcontours'
+                   options.plotContours = true;
+               case 'plotspecial'
+                   options.plotSpecial = true;
                case 'infcontour'
                    options.infContour = varargin{n+1};
                case 'numoscs'
