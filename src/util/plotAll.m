@@ -49,12 +49,12 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds)
     plot(SPs+eps*1i,'r*','MarkerSize',fontSize);
     
     %now adjust the margins a bit
-    xlim([min_x-marginSpace max_x+marginSpace]);
-    ylim([min_y-marginSpace max_y+marginSpace]);
-    
-    xlabel('Real');
-    ylabel('Imaginary');
-    set(gca,'fontsize', fontSize)
+%     xlim([min_x-marginSpace max_x+marginSpace]);
+%     ylim([min_y-marginSpace max_y+marginSpace]);
+%     
+%     xlabel('Real');
+%     ylabel('Imaginary');
+%     set(gca,'fontsize', fontSize)
     
     hold off;
     
