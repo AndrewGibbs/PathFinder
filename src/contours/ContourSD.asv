@@ -70,7 +70,7 @@ classdef ContourSD < handle
             
             %new streamlined version of ODE solver, much simpler than orig
             %PathFinder:
-            [p, self.coarsePath, self.coarsePathGrad] = SDpathODE(self.paramPathLength, self.phaseDerivs{2}, 1, self.ICs(1)+eps*1i, self.coarseTol, noReturnEvent);
+            [p, self.coarsePath, self.coarsePathGrad] = SDpathODE(self.paramPathLength, self.phaseDerivs{2}, 1, self.ICs(1), self.coarseTol, noReturnEvent);
             
             %add the first p=0 to the above, just incase we stray
             %immediately into a NaN:

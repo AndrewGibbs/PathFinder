@@ -49,5 +49,12 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
     %make a plot of what's happened, if requested
     if params.plot
         plotAll(covers, contours, z, a, b, params.infContour, stationaryPoints, HermiteInds);
+    elseif params.plotCovers
+        plotCovers(covers);
+    elseif params.plotContours
+        plotAll([], contours, [], a, b, params.infContour, [], HermiteInds);
+    elseif params.plotSpecial
+        coverinds = [3,4];
+        plotUsed(covers, coverinds, contours([1,2,4,5]),z);
     end
 end

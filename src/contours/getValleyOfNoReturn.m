@@ -1,19 +1,13 @@
-function [value,isterminal,direction] = noReturn(h,Cnr,argBeta,V)
-%function corresponding to an event which would halt ODE solve, because SD
-%path is at 'point of no return'.
-
-    %event parameters:
-    value = 1;
-    isterminal = 1;
-    direction = 0;
-
-    % the 'no return test'
+function v_out = getValleyOfNoReturn(h,Cnr,argBeta,V)
+    
     order = length(V);
     R = abs(h(end));
     theta_end = mod(angle(h(end)),2*pi);
     theta_diff = 0.95*pi/(2*order);
-    
-    for v = mod(angle(V),2*pi)
+
+    no_valley = true;
+    for v_count = 1:length(V)
+        v = mod(angle(V(v_count)),2*pi);
         %first check if theta_end is pointing sufficiently close to valley
         theta_L = mod(v-theta_diff,2*pi);
         theta_R = mod(v+theta_diff,2*pi);
@@ -31,8 +25,12 @@ function [value,isterminal,direction] = noReturn(h,Cnr,argBeta,V)
         end
 
         if in_arc && R>1 && R*min(sin(order*(v+theta_diff-argBeta)),cos(order*(v-theta_diff-argBeta)))>Cnr && theta_diff<pi/(2*order)
-            value = 0;
+            v_out = V(v_count);
+            no_valley = false;
         end
     end
+    
+    if no_valley
+        error('No valley found. Try increasing paramPathLength in ContourSD');
+    end
 end
-
