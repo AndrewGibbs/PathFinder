@@ -1,6 +1,9 @@
 function [p, h, dhdp] = SDpathODE(pMax, dg, k, h0, tol, ODEevent)
-    if nargin == 5
+    if nargin <= 5
         ODEevent = [];
+    end
+    if nargin == 4
+        tol = 1e-3;
     end
 
     pMax = pMax(:).';
