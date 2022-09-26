@@ -145,8 +145,14 @@ classdef ContourSD < handle
             end
         end
         
-        function plot(self)
-            plot(self.coarsePath,'-.k');
+        function plot(self,linestyle,linewidth)
+            if nargin == 1
+                linestyle ='-.k';
+            end
+            if nargin <= 2
+                linewidth = 1.0;
+            end
+            plot(self.coarsePath,linestyle,'LineWidth',linewidth);
         end
         
         function [Z, W] = getQuad(self,freq,Npts,TurboOn)

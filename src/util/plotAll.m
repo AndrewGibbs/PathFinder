@@ -44,6 +44,12 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds)
         hold on;
     end
     plot(z+eps*1i,'bx');
+
+    % now highlight used contours
+    for C=contours
+        plot(C);
+        hold on;
+    end
     
     %plot stationary points:
     plot(SPs+eps*1i,'r*','MarkerSize',fontSize);
