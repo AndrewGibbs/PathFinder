@@ -52,7 +52,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
     elseif params.plotCovers
         plotCovers(covers);
     elseif params.plotContours
-        plotAll([], contours, [], a, b, params.infContour, [], HermiteInds);
+        plotContours(contours,[a b stationaryPoints],quadIngredients)
     elseif params.plotSpecial
         coverinds = [3,4];
         plotUsed(covers, coverinds, contours([1,2,4,5]),z);
