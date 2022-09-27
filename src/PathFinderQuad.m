@@ -24,7 +24,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
     
     %cover each stationary point:
     [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandidates, endPointIndices, standardQuadFlag]...
-            = getInteriorBalls(phase_handles{1},freq,stationaryPoints,params.infContour,a,b, stationaryPointsOrders, params.numOscs);
+            = getInteriorBalls(phase_handles{1},freq,stationaryPoints,params.infContour,a,b, stationaryPointsOrders, params.numOscs, params.Hermite);
         %used to be getCovers(...), new code is almost the same
         
     if standardQuadFlag
@@ -42,10 +42,15 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
     
     %choose the path from a to b
     quadIngredients = shortestInfinitePathV3(contours, covers, intersectionMatrix, valleys, a, b, endPointIndices, params.infContour, HermiteCandidates,clusters);
+    
+    % filter out SD contours which are of much smaller value
+    if params.contourStartThresh>0
+        quadIngredients = fliter_paths(quadIngredients, covers, intersectionMatrix, phase_handles{1}, freq, params.contourStartThresh);
+    end
 
     %get quadrature points
     [z, w, HermiteInds] = makeQuadV3(quadIngredients, freq, Npts, phase_handles, covers, intersectionMatrix, params);
-    
+
     %make a plot of what's happened, if requested
     if params.plot
         plotAll(covers, contours, z, a, b, params.infContour, stationaryPoints, HermiteInds);
