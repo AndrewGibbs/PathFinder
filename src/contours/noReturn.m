@@ -30,7 +30,7 @@ function [value,isterminal,direction] = noReturn(h,Cnr,argBeta,V)
             end
         end
 
-        if in_arc && R>1 && R*min(sin(order*(v+theta_diff-argBeta)),cos(order*(v-theta_diff-argBeta)))>Cnr && theta_diff<pi/(2*order)
+        if in_arc && R>1 && R*min(sin(order*(v+theta_diff+argBeta/order)),cos(order*(v-theta_diff+argBeta/order)))>Cnr && theta_diff<pi/(2*order)
             value = 0;
         end
     end

@@ -130,7 +130,8 @@ classdef ContourSD < handle
 %                     error('too far from a valley...');
 %                     self.endValley = [];
 %                 end
-                  self.endValley = getValleyOfNoReturn(self.coarsePath(end),Cnr,angle(G(1)),valleys);
+%                   self.endValley = getValleyOfNoReturn(self.coarsePath(end),Cnr,angle(G(1)),valleys);
+                self.endValley = getValleyOfNoReturn(self.coarsePath(end),valleys);
             else    %finite contour
                 if ~self.leavesAnalyticRegion
                     self.endCoverIndex = contourInCover(contourEndIndex); %the cover which the contour hits

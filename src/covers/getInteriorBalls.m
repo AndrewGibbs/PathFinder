@@ -1,5 +1,5 @@
 function [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandidates, endPointIndices, nonOscFlag]...
-                = getInteriorBalls(g, freq, SPs, infContour, a, b, SPorders, Cosc)
+                = getInteriorBalls(g, freq, SPs, infContour, a, b, SPorders, Cosc, Hermite)
 
     coverIndex = 0;
     endPointBalls = [];
@@ -32,8 +32,12 @@ function [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandida
     %now determine which covers overlap:
     [intersectionMatrix, clusters, clusterEndpoints] = coverOverlapV2(covers);
     
-    HermiteCandidates = getHermiteCandidates(clusters, clusterEndpoints, covers);
-    
+    if Hermite
+        HermiteCandidates = getHermiteCandidates(clusters, clusterEndpoints, covers);
+    else
+        HermiteCandidates = [];
+    end
+
     nonOscFlag = false;
     if (~infContour(1)) && (~infContour(2))
         for n = 1:length(clusterEndpoints)
