@@ -8,7 +8,9 @@ function options = opionalExtras(varargin)
     end
     
     %set defaults:
-    options = struct('plot', false, 'infContour', [false false], 'numOscs', 1, 'turbo', true,'plotCovers',false,'plotContours',false,'plotSpecial',false);
+    options = struct('plot', false, 'infContour', [false false], 'numOscs', 1, ...
+        'turbo', true,'plotCovers',false,'plotContours',false,'plotSpecial',false,...
+        'contourStartThresh',0.0,'Hermite',true);
     
     %now adjust them, if requested to
     N = length(varargin);
@@ -32,6 +34,10 @@ function options = opionalExtras(varargin)
                    options.turbo = true;
                case 'turbo off'
                    options.turbo = false;
+               case 'contour thresh'
+                   options.contourStartThresh = varargin{n+1};
+               case 'hermite'
+                   options.Hermite = varargin{n+1};
            end
         end
     end
