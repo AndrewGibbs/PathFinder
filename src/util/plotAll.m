@@ -1,4 +1,4 @@
-function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds)
+function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeffs)
 
     if nargin == 7
         HermiteInds = [];
@@ -51,17 +51,21 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds)
         hold on;
     end
     
+    % now plot no return regions
+    theta = linspace(0,2*pi,10000);
+    plot(exp(1i*theta).*plot_no_return(theta,g_coeffs),'m:','LineWidth',2);
+
     %plot stationary points:
     plot(SPs+eps*1i,'r*','MarkerSize',fontSize);
     
     %now adjust the margins a bit
-%     xlim([min_x-marginSpace max_x+marginSpace]);
-%     ylim([min_y-marginSpace max_y+marginSpace]);
-%     
-%     xlabel('Real');
-%     ylabel('Imaginary');
-%     set(gca,'fontsize', fontSize)
+    axis equal;
+    xlim([min_x-marginSpace max_x+marginSpace]);
+    ylim([min_y-marginSpace max_y+marginSpace]);
     
+    xlabel('Real');
+    ylabel('Imaginary');
+    set(gca,'fontsize', fontSize);
     hold off;
     
 end

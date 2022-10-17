@@ -10,7 +10,10 @@ function options = opionalExtras(varargin)
     %set defaults:
     options = struct('plot', false, 'infContour', [false false], 'numOscs', 1, ...
         'turbo', true,'plotCovers',false,'plotContours',false,'plotSpecial',false,...
-        'contourStartThresh',0.0,'Hermite',true);
+        'contourStartThresh',1e-16,'Hermite',false,'truncation',1.0,...
+        'global_solver','Euler','global_step_size',0.1,...
+        'quad_solver','Euler','quad_step_size',1e-13,'Taylor_terms',4, ...
+        'finitePathTruncL',10.0, 'NewtonThresh',1e-8,'NewtonIts',50);
     
     %now adjust them, if requested to
     N = length(varargin);
@@ -38,6 +41,22 @@ function options = opionalExtras(varargin)
                    options.contourStartThresh = varargin{n+1};
                case 'hermite'
                    options.Hermite = varargin{n+1};
+               case 'global solver'
+                   options.global_solver = varargin{n+1};
+               case 'global step size'
+                   options.global_step_size = varargin{n+1};
+               case 'quad solver'
+                   options.quad_solver = varargin{n+1};
+               case 'quad step size'
+                   options.quad_step_size = varargin{n+1};
+               case 'taylor terms'
+                   options.Taylor_terms = varargin{n+1};
+               case 'finite path truncation'
+                   options.finitePathTruncL = varargin{n+1};
+               case 'newton thresh'
+                   options.NewtonThresh = varargin{n+1};
+               case 'max newton steps'
+                   options.NewtonIts = varargin{n+1};
            end
         end
     end

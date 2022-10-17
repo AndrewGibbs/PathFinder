@@ -1,33 +1,37 @@
-function quadIngredients_out = fliter_paths(quadIngredients,covers,intersectionMatrix,g,freq,thresh)
-    used_SPs = [];
+function [quadIngredients_out, max_val] = fliter_paths(quadIngredients,covers,intersectionMatrix,g,freq,thresh)
+    used_CPs = [];
     quad_ingredient_index = [];
     count = 0;
     for q = quadIngredients
         count = count + 1;
         if strcmp(q{1}.type,'infSD')
-            used_SPs = [used_SPs q{1}.contour.startPoint];
+            used_CPs = [used_CPs q{1}.contour.startPoint];
             quad_ingredient_index = [quad_ingredient_index count];
         elseif strcmp(q{1}.type,'finSD')
-            used_SPs = [used_SPs q{1}.contour.startPoint q{1}.contour.endPoint];
+            % add both endpoints, as it's a finite path
+            used_CPs = [used_CPs q{1}.contour.startPoint q{1}.contour.endPoint];
             quad_ingredient_index = [quad_ingredient_index count count];
         elseif strcmp(q{1}.type,'strLn')
             % solve the shortest path problem
             Gr = graph(intersectionMatrix,'upper');
-            seq =shortestpath(Gr,quadIngredients{3}.a_coverIndex,quadIngredients{3}.b_coverIndex);
+            %seq =shortestpath(Gr,quadIngredients{3}.a_coverIndex,quadIngredients{3}.b_coverIndex);
+            seq =shortestpath(Gr,q{1}.a_coverIndex,q{1}.b_coverIndex);
             for n = seq
-                used_SPs = [used_SPs covers{n}.centre];
+                used_CPs = [used_CPs covers{n}.centre];
                 quad_ingredient_index = [quad_ingredient_index count];
             end
         end
     end
 
     count = 0;
-    max_val = max(abs(exp(1i*freq*g(used_SPs))));
+    max_val = max(abs(exp(1i*freq*g(used_CPs))));
     for n=1:length(quadIngredients)
-        relevant_SPs = used_SPs(quad_ingredient_index==n);
+        relevant_CPs = used_CPs(quad_ingredient_index==n);
         keep_bits = false;
-        for SP = relevant_SPs
-            if max_val*thresh < abs(exp(1i*freq*g(SP)))
+        % if any bits of the quad ingredient are above the threshold, keep
+        % the entire integreient
+        for SP = relevant_CPs
+            if max_val*thresh <= abs(exp(1i*freq*g(SP)))
                 keep_bits = true;
             end
         end

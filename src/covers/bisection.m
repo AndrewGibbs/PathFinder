@@ -1,13 +1,13 @@
-function [c,count] = bisection(f, a, b)
+function [c,count] = bisection(f, a, b, tol)
 
-tol = 1e-4;
-L = abs(b-a);
+% L = abs(b-a);
 % rayDir = (b-a)/L;
 % ray = @(s) a + s*(b-a);
-
+c = NaN;
 %inside contour f is negative, outside contour f is positive
 
-err = @(a,b) min(abs(f(a)),abs(f(b))); 
+% err = @(a,b) min(abs(f(a)),abs(f(b)));
+err = @(a,b) abs(b-a);
 if f(a) == 0
     c = a;
     return
@@ -17,16 +17,19 @@ elseif f(b) == 0
 end
 
 if f(a)>0
-    f = @(x) -f(x);
+    %f = @(x) -f(x);
+    sgn = -1;
+else
+    sgn = 1;
 end
 
-c_err = inf;
+c_err = err(a,b);
 count = 0;
 while c_err>tol
    c = a + (b-a)/2;
-   if f(c) > 0
+   if sgn*f(c) > 0
        b = c;
-   elseif f(c) < 0
+   elseif sgn*f(c) < 0
        a = c;
    else
        break;
