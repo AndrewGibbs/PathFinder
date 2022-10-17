@@ -1,5 +1,6 @@
-function contours = getContours(G, covers, valleys, clusters, clusterEndpoints, endPointIndices)
+function contours = getContours(G, covers, valleys, clusters, clusterEndpoints, endPointIndices, params)
 % G can be phase handles, or the original coefficients
+    global_contour_params = struct('solver', params.global_solver, 'step_size', params.global_step_size) ;
     contours = [];
      for n = 1:length(covers)
         if ismember(n,endPointIndices)%~infContour && ismember(n,[1 2])
@@ -8,7 +9,7 @@ function contours = getContours(G, covers, valleys, clusters, clusterEndpoints, 
             intervalEndpoint = [];
         end
         for xi = covers{n}.steepestExits
-            contours = [contours ContourSD(xi,G,covers{n},coversComplement(n),valleys,clusters,clusterEndpoints)];
+            contours = [contours ContourSD(xi,G,covers{n},coversComplement(n),valleys,clusters,clusterEndpoints,global_contour_params)];
         end
      end
      

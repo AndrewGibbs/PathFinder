@@ -1,0 +1,50 @@
+# CompilerName=gcc
+# Mode=optim
+ninja_required_version = 1.3
+
+# Basic folders
+root = .
+builddir = $root/build/glnxa64
+matlabdir = /home/andrew/matlab
+startdir = /home/andrew/Dropbox/PathFinderInf/src/MEXcompilation
+
+# Toolchain information
+cc = /usr/bin/gcc
+cxx = g++
+linker = /usr/bin/gcc
+linkerxx = g++
+
+cflags =  -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I "$root" -I "$startdir" -I "$root/interface" -I "$matlabdir/extern/include" -I "." -DMODEL=SDquadODEulerNEwtonCorrection_mex -c 
+
+cxxflags =  -fexceptions -fPIC -fno-omit-frame-pointer -pthread -std=c++11 -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c++11 -I "$root" -I "$startdir" -I "$root/interface" -I "$matlabdir/extern/include" -I "." -DMODEL=SDquadODEulerNEwtonCorrection_mex -c 
+
+ldflags =  -pthread -Wl,--no-undefined -Wl,-rpath-link,$matlabdir/bin/glnxa64 -shared  -L"$matlabdir/bin/glnxa64" -lmx -lmex -lmat -lm -lstdc++  -o SDquadODEulerNEwtonCorrection_mex.mexa64 -lemlrt -lcovrt -lut -lmwmathutil  -Wl,--version-script,SDquadODEulerNEwtonCorrection_mex.map
+
+# Build Rules
+rule cc
+    command = $cc $cflags $in -o $out
+
+rule cxx
+    command = $cxx $cxxflags $in -o $out
+
+rule link
+    command = $linker $in $ldflags
+
+rule linkxx
+    command = $linkerxx $in $ldflags
+
+# Build
+build $builddir/SDquadODEulerNEwtonCorrection_data.o : cc $root/SDquadODEulerNEwtonCorrection_data.c
+build $builddir/rt_nonfinite.o : cc $root/rt_nonfinite.c
+build $builddir/SDquadODEulerNEwtonCorrection_initialize.o : cc $root/SDquadODEulerNEwtonCorrection_initialize.c
+build $builddir/SDquadODEulerNEwtonCorrection_terminate.o : cc $root/SDquadODEulerNEwtonCorrection_terminate.c
+build $builddir/SDquadODEulerNEwtonCorrection.o : cc $root/SDquadODEulerNEwtonCorrection.c
+build $builddir/_coder_SDquadODEulerNEwtonCorrection_api.o : cc $root/interface/_coder_SDquadODEulerNEwtonCorrection_api.c
+build $builddir/_coder_SDquadODEulerNEwtonCorrection_mex.o : cc $root/interface/_coder_SDquadODEulerNEwtonCorrection_mex.c
+build $builddir/eml_int_forloop_overflow_check.o : cc $root/eml_int_forloop_overflow_check.c
+build $builddir/SDquadODEulerNEwtonCorrection_emxutil.o : cc $root/SDquadODEulerNEwtonCorrection_emxutil.c
+build $builddir/_coder_SDquadODEulerNEwtonCorrection_info.o : cc $root/interface/_coder_SDquadODEulerNEwtonCorrection_info.c
+build $builddir/c_mexapi_version.o : cc $matlabdir/extern/version/c_mexapi_version.c
+
+# Link
+build $root/SDquadODEulerNEwtonCorrection_mex.mexa64 : link $builddir/SDquadODEulerNEwtonCorrection_data.o $builddir/rt_nonfinite.o $builddir/SDquadODEulerNEwtonCorrection_initialize.o $builddir/SDquadODEulerNEwtonCorrection_terminate.o $builddir/SDquadODEulerNEwtonCorrection.o $builddir/_coder_SDquadODEulerNEwtonCorrection_api.o $builddir/_coder_SDquadODEulerNEwtonCorrection_mex.o $builddir/eml_int_forloop_overflow_check.o $builddir/SDquadODEulerNEwtonCorrection_emxutil.o $builddir/_coder_SDquadODEulerNEwtonCorrection_info.o $builddir/c_mexapi_version.o 
