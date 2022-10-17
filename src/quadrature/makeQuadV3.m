@@ -8,6 +8,12 @@ function [z, w, HermiteInds] = makeQuadV3(quadInfo, freq, Npts, G, covers, inter
     
     HermiteInds = [];
 
+    quad_params = struct('solver', params.quad_solver, 'step_size', params.quad_step_size, ...
+                    'Taylor_terms', params.Taylor_terms, 'turbo', params.turbo,...
+                    'max_SP_integrand_val', params.max_SP_integrand_val, 'contourStartThresh', params.contourStartThresh,...
+                    'finitePathTruncL',params.finitePathTruncL,...
+                    'NewtonThresh', params.NewtonThresh, 'NewtonIts', params.NewtonIts);
+
     %collapse infinite contours connected by a single order cover into a
     %single Hermite integral
     n = 1;
@@ -39,7 +45,7 @@ function [z, w, HermiteInds] = makeQuadV3(quadInfo, freq, Npts, G, covers, inter
        switch quadInfo{n}.type
            case {'infSD','finSD'}
 %                if abs(exp(1i*freq*quadInfo{n}.contour.startPoint))>params.contourStartThresh
-                   [z_, w__] = quadInfo{n}.contour.getQuad(freq,Npts, params.turbo);
+                   [z_, w__] = quadInfo{n}.contour.getQuad(freq,Npts, quad_params);
                    w_ = w__*quadInfo{n}.inOut;
 %                else
 %                     z_ = [];
