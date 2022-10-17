@@ -17,7 +17,7 @@ function [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandida
     if ~isempty(SPs)>0
         for n = 1:length(SPs)
             coverIndex = coverIndex + 1;
-            coversInit(n) = Ball(getInteriorRadius(SPs(n)),SPs(n),g,coverIndex,SPorders(n));
+            coversInit(n) = Ball(getInteriorRadius(SPs(n)),SPs(n),g,coverIndex,sum(SPorders+1));
             %coversInit(n) = ContourInterior(SPs(n),freq,g,coverIndex,Cosc,SPorders(n));
             %  ( ^^ only the above line of code actually changed from cover version ^^)
         end
@@ -49,6 +49,7 @@ function [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandida
     end
     
     function minR = getInteriorRadius(xi)
+
         Nangles = 32;
         Nrads = 32;
         scale = 2/freq;
