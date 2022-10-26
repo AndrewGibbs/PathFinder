@@ -69,16 +69,18 @@ classdef ContourSD < handle
                     [CPs, CPs_radii] = getBallDeets(otherCovers);
     %             [valley_index, ball_index] = SDpathODEuler(self.ICs(1), G, cover_centres, cover_radii, valleys, base_step_size);
 %                 tic;
-                max_steps_before_fail = 1000;%10000;
+                max_steps_before_fail = 50000;%10000;
                 [p, self.coarsePath, valley_index, ball_index, success] = ...
-                    SDpathODEuler_mex(self.ICs(1), G, CPs, CPs_radii, valleys.', global_contour_params.step_size, int64(max_steps_before_fail));
+                    SDpathODEuler_mex(self.ICs(1), G, CPs, CPs_radii, valleys.', ...
+                    global_contour_params.step_size, int64(max_steps_before_fail), int64(self.startCoverIndex));
 %                 Euler_mex_time = toc;
                 if ~success
                     max_retrys = 10;
                     for n=1:max_retrys
                         warning('Euluer solve did not converge in time for this path, retrying with smaller step size...');
                             [p, self.coarsePath, valley_index, ball_index, success] = ...
-                                SDpathODEuler_mex(self.ICs(1), G, CPs, CPs_radii, valleys.', global_contour_params.step_size*2^(-n), int64(max_steps_before_fail*4^n));
+                                SDpathODEuler_mex(self.ICs(1), G, CPs, CPs_radii, valleys.', ...
+                                global_contour_params.step_size*2^(-n), int64(max_steps_before_fail*4^n), int64(self.startCoverIndex));
                         if success
                             break;
                         end
@@ -193,7 +195,7 @@ classdef ContourSD < handle
                 % be this useful)
                 order = length(self.phaseCoeffs)-1;
                 Dpolycoeffs=self.phaseCoeffs(1:(order)).*fliplr(1:(order));
-                SPs = sort(roots(Dpolycoeffs));
+%                 SPs = sort(roots(Dpolycoeffs));
 %                 [self.h, self.dhdp, Newton_success] = SDquadODEulerNEwton(self.P0, self.ICs(1), self.phaseCoeffs, SPs, freq);
                 [self.h, self.dhdp, Newton_success] = SDquadODEulerNEwtonCorrection_mex(self.P0, freq*self.coarseParam, self.ICs(1), self.coarsePath, self.phaseCoeffs, freq, quad_params.NewtonThresh, uint32(quad_params.NewtonIts));
 %                 Euler_time = toc;

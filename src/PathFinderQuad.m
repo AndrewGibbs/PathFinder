@@ -27,7 +27,8 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
     
     %cover each stationary point:
     [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandidates, endPointIndices, standardQuadFlag]...
-            = getInteriorBalls(phase_handles{1},freq,stationaryPoints,params.infContour,a,b, stationaryPointsOrders, params.numOscs, params.Hermite);
+            = getInteriorBalls(phase_handles{1},freq,stationaryPoints,params.infContour,a,b, stationaryPointsOrders, ...
+            params.numOscs, params.Hermite, phaseIn);
         %used to be getCovers(...), new code is almost the same
 
     % test this new guy out
@@ -52,11 +53,11 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
     quadIngredients = shortestInfinitePathV4(a,b,contours, covers, valleys, params);
 %     quadIngredients = shortestInfinitePathV3(contours, covers, intersectionMatrix, valleys, a, b, endPointIndices, params.infContour, HermiteCandidates,clusters);
     
-    % filter out SD contours which are of much smaller value
-    if params.contourStartThresh>0
-        [quadIngredients, params.max_SP_integrand_val] = fliter_paths_v2(quadIngredients, phase_handles{1}, freq, params.contourStartThresh);
+    % filter out SD contours which are of much smaller value, or empty
+    [quadIngredients, params.max_SP_integrand_val] = fliter_paths_v2(quadIngredients, phase_handles{1}, freq, params.contourStartThresh);
+
+    if params.contourStartThresh==0
         %fliter_paths(quadIngredients, covers, intersectionMatrix, phase_handles{1}, freq, params.contourStartThresh);
-    else
         params.max_SP_integrand_val = inf;
     end
 

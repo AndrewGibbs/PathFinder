@@ -31,6 +31,12 @@
   },
   {
     "directory": "/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation/codegen/mex/get_interior_ball",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=get_interior_ball_mex -c  polyval.c -o build/glnxa64/polyval.o",
+    "file": "polyval.c",
+    "output": "build/glnxa64/polyval.o"
+  },
+  {
+    "directory": "/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation/codegen/mex/get_interior_ball",
     "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=get_interior_ball_mex -c  indexShapeCheck.c -o build/glnxa64/indexShapeCheck.o",
     "file": "indexShapeCheck.c",
     "output": "build/glnxa64/indexShapeCheck.o"
