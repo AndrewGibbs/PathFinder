@@ -73,7 +73,7 @@ void beyondNoReturn(const emlrtStack *sp, const creal_T h, real_T Cnr,
   h_st.tls = g_st.tls;
   V_data = V->data;
   emlrtHeapReferenceStackEnterFcnR2012b((emlrtCTX)sp);
-  emxInit_real_T(sp, &b, 1, &t_emlrtRTEI);
+  emxInit_real_T(sp, &b, 1, &s_emlrtRTEI);
   /* function corresponding to an event which would halt ODE solve, because SD
    */
   /* path is at 'point of no return'. */
@@ -95,10 +95,10 @@ void beyondNoReturn(const emlrtStack *sp, const creal_T h, real_T Cnr,
     theta_L = r * (r * muDoubleScalarCos(theta_tmp));
     theta_tmp = r * (r * muDoubleScalarSin(theta_tmp));
   }
-  emxInit_creal_T(&st, &b_r, 1, &s_emlrtRTEI);
+  emxInit_creal_T(&st, &b_r, 1, &r_emlrtRTEI);
   idx = b_r->size[0];
   b_r->size[0] = b->size[0];
-  emxEnsureCapacity_creal_T(&st, b_r, idx, &s_emlrtRTEI);
+  emxEnsureCapacity_creal_T(&st, b_r, idx, &r_emlrtRTEI);
   r1 = b_r->data;
   last = b->size[0];
   for (idx = 0; idx < last; idx++) {
