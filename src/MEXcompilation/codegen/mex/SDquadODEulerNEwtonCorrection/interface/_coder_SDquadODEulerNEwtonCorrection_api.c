@@ -355,7 +355,6 @@ void c_SDquadODEulerNEwtonCorrection(const mxArray *const prhs[8], int32_T nlhs,
   emxArray_real_T *Newton_success;
   emxArray_real_T *p_coarse;
   emxArray_real_T *p_quad;
-  const mxArray *prhs_copy_idx_1;
   creal_T h0;
   real_T NewtonThresh;
   real_T freq;
@@ -369,12 +368,11 @@ void c_SDquadODEulerNEwtonCorrection(const mxArray *const prhs[8], int32_T nlhs,
   emxInit_creal_T(&st, &h_quad, 1, &l_emlrtRTEI);
   emxInit_creal_T(&st, &dhdp_quad, 1, &l_emlrtRTEI);
   emxInit_real_T(&st, &Newton_success, 1, &l_emlrtRTEI);
-  prhs_copy_idx_1 = emlrtProtectR2012b(prhs[1], 1, false, -1);
   /* Marshall function inputs */
   p_quad->canFreeData = false;
   emlrt_marshallIn(&st, emlrtAlias(prhs[0]), "p_quad", p_quad);
   p_coarse->canFreeData = false;
-  emlrt_marshallIn(&st, emlrtAlias(prhs_copy_idx_1), "p_coarse", p_coarse);
+  emlrt_marshallIn(&st, emlrtAlias(prhs[1]), "p_coarse", p_coarse);
   h0 = c_emlrt_marshallIn(&st, emlrtAliasP(prhs[2]), "h0");
   e_emlrt_marshallIn(&st, emlrtAliasP(prhs[3]), "h_coarse", h_coarse);
   g_emlrt_marshallIn(&st, emlrtAliasP(prhs[4]), "gCoeffs", gCoeffs);

@@ -1,5 +1,7 @@
-function [p_log_out, h_log_out, valley_index, ball_index, success] = SDpathODEuler(h0, gCoeffs, SPs, cover_radii, valleys, base_step_size, n_max)
+function [p_log_out, h_log_out, valley_index, ball_index, success] = ...
+    SDpathODEuler(h0, gCoeffs, SPs, cover_radii, valleys, base_step_size, n_max, excluded_SPs_indices) %#codegen
     %computes NSD path h(p) and h'(p)
+    %excluded_SPs_indices
     valley_index = [];
     ball_index = [];
     success = true;
@@ -10,7 +12,7 @@ function [p_log_out, h_log_out, valley_index, ball_index, success] = SDpathODEul
     for n=1:length(SPs)
         % another bodge to stop stationary points being treated like critical
         % points
-        if cover_radii(n)==0
+        if cover_radii(n)==0% || ismember(n,excluded_SPs_indices)
             SPs(n) = inf;
         end
     end
@@ -40,10 +42,21 @@ function [p_log_out, h_log_out, valley_index, ball_index, success] = SDpathODEul
     n =1;
     while ~halt_euler(h)
         n = n+1;
-        step_size = base_step_size*min(1/abs_dF(h),... %aims to keep error roughly constant
-                    min(abs(SPs-h)))/abs(F(h)); % stops us getting too close to branch
-        h = h + step_size*F(h);
-        p_log(n) = p_log(n-1)+step_size;
+        dg_h = polyval(dgCoeffs,h);
+        ddg_h = polyval(ddgCoeffs,h);
+%         step_dir = 1i*abs(dg_h)/dg_h;
+         F_h = 1i/dg_h;
+%         abs_one_over_abs_dF_h = abs(dg_h^2/ddg_h);
+
+%         step_size = base_step_size*min(1/abs_dF(h),... %aims to keep error roughly constant
+%                     min(abs(SPs-h)))/abs(F(h)); % stops us getting too close to branch
+
+%         p_step_size = base_step_size*min(abs(dg_h^2/ddg_h),min(abs(SPs-h)))/abs(F_h);
+        p_step_size = base_step_size*min(abs(dg_h^2/ddg_h),min(abs(SPs-h))/abs(F_h));
+        h = h + p_step_size*F_h;
+
+%         h = h + step_size*F(h);
+        p_log(n) = p_log(n-1)+p_step_size;
         h_log(n) = h;
         if n==n_max
             success = false;
