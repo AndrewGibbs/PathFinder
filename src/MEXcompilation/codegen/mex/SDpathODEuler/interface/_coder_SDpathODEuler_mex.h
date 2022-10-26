@@ -22,7 +22,7 @@
 
 /* Function Declarations */
 void SDpathODEuler_mexFunction(int32_T nlhs, mxArray *plhs[5], int32_T nrhs,
-                               const mxArray *prhs[7]);
+                               const mxArray *prhs[8]);
 
 MEXFUNCTION_LINKAGE void mexFunction(int32_T nlhs, mxArray *plhs[],
                                      int32_T nrhs, const mxArray *prhs[]);

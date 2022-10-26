@@ -1,6 +1,6 @@
 function [h_quad, dhdp_quad, Newton_success] = SDquadODEulerNEwtonCorrection(p_quad, p_coarse, h0, h_coarse, gCoeffs, freq, NewtonThresh, NewtonIts)
 
-    p_coarse = p_coarse*freq;
+%     p_coarse = p_coarse*freq;
 
     h_quad = zeros(size(p_quad))+1i*eps;
     Newton_success = ones(size(p_quad));

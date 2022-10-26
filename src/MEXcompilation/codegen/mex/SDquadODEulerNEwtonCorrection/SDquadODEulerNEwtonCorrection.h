@@ -22,14 +22,12 @@
 #include <string.h>
 
 /* Function Declarations */
-void SDquadODEulerNEwtonCorrection(const emlrtStack *sp,
-                                   const emxArray_real_T *p_quad,
-                                   emxArray_real_T *p_coarse, const creal_T h0,
-                                   const emxArray_creal_T *h_coarse,
-                                   const emxArray_creal_T *gCoeffs, real_T freq,
-                                   real_T NewtonThresh, uint32_T NewtonIts,
-                                   emxArray_creal_T *h_quad,
-                                   emxArray_creal_T *dhdp_quad,
-                                   emxArray_real_T *Newton_success);
+void SDquadODEulerNEwtonCorrection(
+    const emlrtStack *sp, const emxArray_real_T *p_quad,
+    const emxArray_real_T *p_coarse, const creal_T h0,
+    const emxArray_creal_T *h_coarse, const emxArray_creal_T *gCoeffs,
+    real_T freq, real_T NewtonThresh, uint32_T NewtonIts,
+    emxArray_creal_T *h_quad, emxArray_creal_T *dhdp_quad,
+    emxArray_real_T *Newton_success);
 
 /* End of code generation (SDquadODEulerNEwtonCorrection.h) */

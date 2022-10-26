@@ -429,15 +429,13 @@ static void binary_expand_op(const emlrtStack *sp, emxArray_creal_T *dgCoeffs,
   }
 }
 
-void SDquadODEulerNEwtonCorrection(const emlrtStack *sp,
-                                   const emxArray_real_T *p_quad,
-                                   emxArray_real_T *p_coarse, const creal_T h0,
-                                   const emxArray_creal_T *h_coarse,
-                                   const emxArray_creal_T *gCoeffs, real_T freq,
-                                   real_T NewtonThresh, uint32_T NewtonIts,
-                                   emxArray_creal_T *h_quad,
-                                   emxArray_creal_T *dhdp_quad,
-                                   emxArray_real_T *Newton_success)
+void SDquadODEulerNEwtonCorrection(
+    const emlrtStack *sp, const emxArray_real_T *p_quad,
+    const emxArray_real_T *p_coarse, const creal_T h0,
+    const emxArray_creal_T *h_coarse, const emxArray_creal_T *gCoeffs,
+    real_T freq, real_T NewtonThresh, uint32_T NewtonIts,
+    emxArray_creal_T *h_quad, emxArray_creal_T *dhdp_quad,
+    emxArray_real_T *Newton_success)
 {
   emlrtStack b_st;
   emlrtStack c_st;
@@ -456,6 +454,7 @@ void SDquadODEulerNEwtonCorrection(const emlrtStack *sp,
   creal_T *dgCoeffs_data;
   creal_T *dhdp_quad_data;
   creal_T *h_quad_data;
+  const real_T *p_coarse_data;
   const real_T *p_quad_data;
   real_T b_im;
   real_T b_re;
@@ -468,7 +467,6 @@ void SDquadODEulerNEwtonCorrection(const emlrtStack *sp,
   real_T h_coarse_re;
   real_T re;
   real_T *Newton_success_data;
-  real_T *p_coarse_data;
   real_T *r1;
   int32_T N;
   int32_T b_i;
@@ -502,10 +500,7 @@ void SDquadODEulerNEwtonCorrection(const emlrtStack *sp,
   p_coarse_data = p_coarse->data;
   p_quad_data = p_quad->data;
   emlrtHeapReferenceStackEnterFcnR2012b((emlrtCTX)sp);
-  loop_ub = p_coarse->size[0];
-  for (i = 0; i < loop_ub; i++) {
-    p_coarse_data[i] *= freq;
-  }
+  /*      p_coarse = p_coarse*freq; */
   i = h_quad->size[0];
   h_quad->size[0] = p_quad->size[0];
   emxEnsureCapacity_creal_T(sp, h_quad, i, &d_emlrtRTEI);

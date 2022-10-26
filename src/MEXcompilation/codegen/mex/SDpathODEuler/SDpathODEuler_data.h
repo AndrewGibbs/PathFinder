@@ -43,8 +43,8 @@ extern emlrtRSInfo gb_emlrtRSI;
 extern emlrtRSInfo hb_emlrtRSI;
 extern emlrtRTEInfo emlrtRTEI;
 extern emlrtBCInfo u_emlrtBCI;
+extern emlrtRTEInfo r_emlrtRTEI;
 extern emlrtRTEInfo s_emlrtRTEI;
 extern emlrtRTEInfo t_emlrtRTEI;
-extern emlrtRTEInfo u_emlrtRTEI;
 
 /* End of code generation (SDpathODEuler_data.h) */

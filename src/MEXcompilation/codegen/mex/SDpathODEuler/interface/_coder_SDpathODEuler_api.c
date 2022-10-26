@@ -18,7 +18,7 @@
 #include "rt_nonfinite.h"
 
 /* Variable Definitions */
-static emlrtRTEInfo v_emlrtRTEI = {
+static emlrtRTEInfo u_emlrtRTEI = {
     1,                          /* lineNo */
     1,                          /* colNo */
     "_coder_SDpathODEuler_api", /* fName */
@@ -76,33 +76,45 @@ static int64_T k_emlrt_marshallIn(const emlrtStack *sp, const mxArray *n_max,
 static int64_T l_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u,
                                   const emlrtMsgIdentifier *parentId);
 
-static creal_T m_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+static void m_emlrt_marshallIn(const emlrtStack *sp,
+                               const mxArray *excluded_SPs_indices,
+                               const char_T *identifier, emxArray_int64_T *y);
+
+static void n_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u,
+                               const emlrtMsgIdentifier *parentId,
+                               emxArray_int64_T *y);
+
+static creal_T o_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
                                   const emlrtMsgIdentifier *msgId);
-
-static void n_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
-                               const emlrtMsgIdentifier *msgId,
-                               emxArray_creal_T *ret);
-
-static void o_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
-                               const emlrtMsgIdentifier *msgId,
-                               emxArray_creal_T *ret);
 
 static void p_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
                                const emlrtMsgIdentifier *msgId,
+                               emxArray_creal_T *ret);
+
+static void q_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+                               const emlrtMsgIdentifier *msgId,
+                               emxArray_creal_T *ret);
+
+static void r_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+                               const emlrtMsgIdentifier *msgId,
                                emxArray_real_T *ret);
 
-static real_T q_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+static real_T s_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
                                  const emlrtMsgIdentifier *msgId);
 
-static int64_T r_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+static int64_T t_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
                                   const emlrtMsgIdentifier *msgId);
+
+static void u_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+                               const emlrtMsgIdentifier *msgId,
+                               emxArray_int64_T *ret);
 
 /* Function Definitions */
 static creal_T b_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u,
                                   const emlrtMsgIdentifier *parentId)
 {
   creal_T y;
-  y = m_emlrt_marshallIn(sp, emlrtAlias(u), parentId);
+  y = o_emlrt_marshallIn(sp, emlrtAlias(u), parentId);
   emlrtDestroyArray(&u);
   return y;
 }
@@ -150,7 +162,7 @@ static void d_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u,
                                const emlrtMsgIdentifier *parentId,
                                emxArray_creal_T *y)
 {
-  n_emlrt_marshallIn(sp, emlrtAlias(u), parentId, y);
+  p_emlrt_marshallIn(sp, emlrtAlias(u), parentId, y);
   emlrtDestroyArray(&u);
 }
 
@@ -207,7 +219,7 @@ static void f_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u,
                                const emlrtMsgIdentifier *parentId,
                                emxArray_creal_T *y)
 {
-  o_emlrt_marshallIn(sp, emlrtAlias(u), parentId, y);
+  q_emlrt_marshallIn(sp, emlrtAlias(u), parentId, y);
   emlrtDestroyArray(&u);
 }
 
@@ -226,7 +238,7 @@ static void h_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u,
                                const emlrtMsgIdentifier *parentId,
                                emxArray_real_T *y)
 {
-  p_emlrt_marshallIn(sp, emlrtAlias(u), parentId, y);
+  r_emlrt_marshallIn(sp, emlrtAlias(u), parentId, y);
   emlrtDestroyArray(&u);
 }
 
@@ -248,7 +260,7 @@ static real_T j_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u,
                                  const emlrtMsgIdentifier *parentId)
 {
   real_T y;
-  y = q_emlrt_marshallIn(sp, emlrtAlias(u), parentId);
+  y = s_emlrt_marshallIn(sp, emlrtAlias(u), parentId);
   emlrtDestroyArray(&u);
   return y;
 }
@@ -270,12 +282,32 @@ static int64_T l_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u,
                                   const emlrtMsgIdentifier *parentId)
 {
   int64_T y;
-  y = r_emlrt_marshallIn(sp, emlrtAlias(u), parentId);
+  y = t_emlrt_marshallIn(sp, emlrtAlias(u), parentId);
   emlrtDestroyArray(&u);
   return y;
 }
 
-static creal_T m_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+static void m_emlrt_marshallIn(const emlrtStack *sp,
+                               const mxArray *excluded_SPs_indices,
+                               const char_T *identifier, emxArray_int64_T *y)
+{
+  emlrtMsgIdentifier thisId;
+  thisId.fIdentifier = (const char_T *)identifier;
+  thisId.fParent = NULL;
+  thisId.bParentIsCell = false;
+  n_emlrt_marshallIn(sp, emlrtAlias(excluded_SPs_indices), &thisId, y);
+  emlrtDestroyArray(&excluded_SPs_indices);
+}
+
+static void n_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u,
+                               const emlrtMsgIdentifier *parentId,
+                               emxArray_int64_T *y)
+{
+  u_emlrt_marshallIn(sp, emlrtAlias(u), parentId, y);
+  emlrtDestroyArray(&u);
+}
+
+static creal_T o_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
                                   const emlrtMsgIdentifier *msgId)
 {
   static const int32_T dims = 0;
@@ -287,7 +319,7 @@ static creal_T m_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
   return ret;
 }
 
-static void n_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+static void p_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
                                const emlrtMsgIdentifier *msgId,
                                emxArray_creal_T *ret)
 {
@@ -307,7 +339,7 @@ static void n_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
   emlrtDestroyArray(&src);
 }
 
-static void o_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+static void q_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
                                const emlrtMsgIdentifier *msgId,
                                emxArray_creal_T *ret)
 {
@@ -326,7 +358,7 @@ static void o_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
   emlrtDestroyArray(&src);
 }
 
-static void p_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+static void r_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
                                const emlrtMsgIdentifier *msgId,
                                emxArray_real_T *ret)
 {
@@ -345,7 +377,7 @@ static void p_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
   emlrtDestroyArray(&src);
 }
 
-static real_T q_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+static real_T s_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
                                  const emlrtMsgIdentifier *msgId)
 {
   static const int32_T dims = 0;
@@ -357,7 +389,7 @@ static real_T q_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
   return ret;
 }
 
-static int64_T r_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+static int64_T t_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
                                   const emlrtMsgIdentifier *msgId)
 {
   static const int32_T dims = 0;
@@ -369,7 +401,26 @@ static int64_T r_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
   return ret;
 }
 
-void SDpathODEuler_api(const mxArray *const prhs[7], int32_T nlhs,
+static void u_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+                               const emlrtMsgIdentifier *msgId,
+                               emxArray_int64_T *ret)
+{
+  static const int32_T dims = -1;
+  int32_T i;
+  int32_T i1;
+  const boolean_T b = true;
+  emlrtCheckVsBuiltInR2012b((emlrtCTX)sp, msgId, src, (const char_T *)"int64",
+                            false, 1U, (void *)&dims, &b, &i);
+  ret->allocatedSize = i;
+  i1 = ret->size[0];
+  ret->size[0] = i;
+  emxEnsureCapacity_int64_T(sp, ret, i1, (emlrtRTEInfo *)NULL);
+  ret->data = (int64_T *)emlrtMxGetData(src);
+  ret->canFreeData = false;
+  emlrtDestroyArray(&src);
+}
+
+void SDpathODEuler_api(const mxArray *const prhs[8], int32_T nlhs,
                        const mxArray *plhs[5])
 {
   emlrtStack st = {
@@ -381,6 +432,7 @@ void SDpathODEuler_api(const mxArray *const prhs[7], int32_T nlhs,
   emxArray_creal_T *gCoeffs;
   emxArray_creal_T *h_log_out;
   emxArray_creal_T *valleys;
+  emxArray_int64_T *excluded_SPs_indices;
   emxArray_real_T *cover_radii;
   emxArray_real_T *p_log_out;
   const mxArray *prhs_copy_idx_3;
@@ -396,12 +448,13 @@ void SDpathODEuler_api(const mxArray *const prhs[7], int32_T nlhs,
   valley_index_data = &(*(real_T(*)[1])mxMalloc(sizeof(real_T)))[0];
   ball_index_data = &(*(real_T(*)[1])mxMalloc(sizeof(real_T)))[0];
   emlrtHeapReferenceStackEnterFcnR2012b(&st);
-  emxInit_creal_T(&st, &gCoeffs, 2, &v_emlrtRTEI);
-  emxInit_creal_T(&st, &SPs, 1, &v_emlrtRTEI);
-  emxInit_real_T(&st, &cover_radii, 1, &v_emlrtRTEI);
-  emxInit_creal_T(&st, &valleys, 1, &v_emlrtRTEI);
-  emxInit_real_T(&st, &p_log_out, 1, &v_emlrtRTEI);
-  emxInit_creal_T(&st, &h_log_out, 1, &v_emlrtRTEI);
+  emxInit_creal_T(&st, &gCoeffs, 2, &u_emlrtRTEI);
+  emxInit_creal_T(&st, &SPs, 1, &u_emlrtRTEI);
+  emxInit_real_T(&st, &cover_radii, 1, &u_emlrtRTEI);
+  emxInit_creal_T(&st, &valleys, 1, &u_emlrtRTEI);
+  emxInit_int64_T(&st, &excluded_SPs_indices, &u_emlrtRTEI);
+  emxInit_real_T(&st, &p_log_out, 1, &u_emlrtRTEI);
+  emxInit_creal_T(&st, &h_log_out, 1, &u_emlrtRTEI);
   prhs_copy_idx_3 = emlrtProtectR2012b(prhs[3], 3, false, -1);
   /* Marshall function inputs */
   h0 = emlrt_marshallIn(&st, emlrtAliasP(prhs[0]), "h0");
@@ -414,15 +467,19 @@ void SDpathODEuler_api(const mxArray *const prhs[7], int32_T nlhs,
   base_step_size =
       i_emlrt_marshallIn(&st, emlrtAliasP(prhs[5]), "base_step_size");
   n_max = k_emlrt_marshallIn(&st, emlrtAliasP(prhs[6]), "n_max");
+  excluded_SPs_indices->canFreeData = false;
+  m_emlrt_marshallIn(&st, emlrtAlias(prhs[7]), "excluded_SPs_indices",
+                     excluded_SPs_indices);
   /* Invoke the target function */
   SDpathODEuler(&st, h0, gCoeffs, SPs, cover_radii, valleys, base_step_size,
-                n_max, p_log_out, h_log_out, (real_T *)valley_index_data,
-                valley_index_size, (real_T *)ball_index_data, ball_index_size,
-                &success);
+                n_max, excluded_SPs_indices, p_log_out, h_log_out,
+                (real_T *)valley_index_data, valley_index_size,
+                (real_T *)ball_index_data, ball_index_size, &success);
   /* Marshall function outputs */
   p_log_out->canFreeData = false;
   plhs[0] = emlrt_marshallOut(p_log_out);
   emxFree_real_T(&st, &p_log_out);
+  emxFree_int64_T(&st, &excluded_SPs_indices);
   emxFree_creal_T(&st, &valleys);
   emxFree_real_T(&st, &cover_radii);
   emxFree_creal_T(&st, &SPs);
