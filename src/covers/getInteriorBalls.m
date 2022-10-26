@@ -1,5 +1,5 @@
 function [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandidates, endPointIndices, nonOscFlag]...
-                = getInteriorBalls(g, freq, SPs, infContour, a, b, SPorders, Cosc, Hermite)
+                = getInteriorBalls(g, freq, SPs, infContour, a, b, SPorders, Cosc, Hermite,g_coeffs)
 
     coverIndex = 0;
     endPointBalls = [];
@@ -17,7 +17,10 @@ function [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandida
     if ~isempty(SPs)>0
         for n = 1:length(SPs)
             coverIndex = coverIndex + 1;
-            coversInit(n) = Ball(getInteriorRadius(SPs(n)),SPs(n),g,coverIndex,sum(SPorders+1));
+%             r_min = getInteriorRadius(SPs(n));
+            r_min2 = get_interior_ball_mex(g_coeffs.', freq, SPs(n), uint32(SPorders(n)), Cosc);
+            %get_stepest_exits_on_ball(g_coeffs,centre,radius)
+            coversInit(n) = Ball(r_min2,SPs(n),g_coeffs,coverIndex,sum(SPorders+1));
             %coversInit(n) = ContourInterior(SPs(n),freq,g,coverIndex,Cosc,SPorders(n));
             %  ( ^^ only the above line of code actually changed from cover version ^^)
         end

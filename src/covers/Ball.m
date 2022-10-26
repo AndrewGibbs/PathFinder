@@ -7,7 +7,7 @@ classdef Ball < ComplexCover
     end
     
     methods
-        function self = Ball(r,c,g,index,orderSum)
+        function self = Ball(r,c,g_coeffs,index,orderSum)
             self.radius = r;
             self.centre = c;
             self.pseudoCentre = c;
@@ -21,7 +21,9 @@ classdef Ball < ComplexCover
             
             if r>0
                 if nargin>2
-                    self.steepestExits = self.getSteepestExits(g);
+                    %self.steepestExits = self.getSteepestExits(@(x) polyval(g_coeffs,x)); % used
+                    %to be polyval g, now it's just coeffs
+                    self.steepestExits = get_stepest_exits_on_ball_mex(g_coeffs.',c,r).';
                 end
             else
                 self.steepestExits = c;

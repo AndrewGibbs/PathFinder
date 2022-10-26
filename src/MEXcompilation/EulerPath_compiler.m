@@ -11,5 +11,6 @@ cover_radii_type = coder.typeof(1,[Inf 1],[true false]);
 valleys_type = coder.typeof(1+1i,[Inf 1],[true false]);
 base_step_size = coder.typeof(1.0);
 n_max_type = coder.typeof(int64(1));
+excluded_SPs_indices_type = coder.typeof(int64(1),[Inf 1],[true false]);
 
-codegen SDpathODEuler -args {h0_type, gCoeffs_type, SPs_type, cover_radii_type, valleys_type, base_step_size, n_max_type}
+codegen SDpathODEuler -args {h0_type, gCoeffs_type, SPs_type, cover_radii_type, valleys_type, base_step_size, n_max_type, excluded_SPs_indices_type}

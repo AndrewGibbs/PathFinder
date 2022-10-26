@@ -16,26 +16,27 @@
 #include "get_interior_ball_emxutil.h"
 #include "get_interior_ball_types.h"
 #include "indexShapeCheck.h"
+#include "polyval.h"
 #include "rt_nonfinite.h"
 #include "mwmathutil.h"
 
 /* Variable Definitions */
 static emlrtRSInfo emlrtRSI = {
-    12,                  /* lineNo */
-    "get_interior_ball", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/covers/get_interior_ball.m" /* pathName
-                                                                         */
-};
-
-static emlrtRSInfo b_emlrtRSI = {
     13,                  /* lineNo */
     "get_interior_ball", /* fcnName */
     "/home/andrew/Dropbox/PathFinderInf/src/covers/get_interior_ball.m" /* pathName
                                                                          */
 };
 
+static emlrtRSInfo b_emlrtRSI = {
+    14,                  /* lineNo */
+    "get_interior_ball", /* fcnName */
+    "/home/andrew/Dropbox/PathFinderInf/src/covers/get_interior_ball.m" /* pathName
+                                                                         */
+};
+
 static emlrtRSInfo c_emlrtRSI = {
-    25,                  /* lineNo */
+    27,                  /* lineNo */
     "get_interior_ball", /* fcnName */
     "/home/andrew/Dropbox/PathFinderInf/src/covers/get_interior_ball.m" /* pathName
                                                                          */
@@ -92,14 +93,15 @@ static emlrtMCInfo emlrtMCI = {
 };
 
 static emlrtBCInfo emlrtBCI = {
-    -1,                                                          /* iFirst */
-    -1,                                                          /* iLast */
-    3,                                                           /* lineNo */
-    18,                                                          /* colNo */
-    "dG_",                                                       /* aName */
-    "diff_coeffs",                                               /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/util/diff_coeffs.m", /* pName */
-    0                                                            /* checkKind */
+    -1,                  /* iFirst */
+    -1,                  /* iLast */
+    14,                  /* lineNo */
+    71,                  /* colNo */
+    "dG_SP",             /* aName */
+    "get_interior_ball", /* fName */
+    "/home/andrew/Dropbox/PathFinderInf/src/covers/get_interior_ball.m", /* pName
+                                                                          */
+    0 /* checkKind */
 };
 
 static emlrtBCInfo b_emlrtBCI = {
@@ -114,15 +116,14 @@ static emlrtBCInfo b_emlrtBCI = {
 };
 
 static emlrtBCInfo c_emlrtBCI = {
-    -1,                  /* iFirst */
-    -1,                  /* iLast */
-    13,                  /* lineNo */
-    71,                  /* colNo */
-    "dG_SP",             /* aName */
-    "get_interior_ball", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/covers/get_interior_ball.m", /* pName
-                                                                          */
-    0 /* checkKind */
+    -1,                                                          /* iFirst */
+    -1,                                                          /* iLast */
+    3,                                                           /* lineNo */
+    18,                                                          /* colNo */
+    "dG_",                                                       /* aName */
+    "diff_coeffs",                                               /* fName */
+    "/home/andrew/Dropbox/PathFinderInf/src/util/diff_coeffs.m", /* pName */
+    0                                                            /* checkKind */
 };
 
 static emlrtDCInfo
@@ -235,22 +236,21 @@ real_T get_interior_ball(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
   const mxArray *b_y;
   const mxArray *m;
   const creal_T *g_coeffs_data;
+  creal_T b_SP;
+  creal_T dc;
+  creal_T dc1;
   creal_T *dG_SP_data;
   creal_T *dG__data;
   real_T ray_intervals[32];
   real_T ray_mins[16];
-  real_T SP_re;
-  real_T a;
-  real_T b;
-  real_T b_y_im;
-  real_T b_y_re;
+  real_T SP_tmp;
+  real_T b_SP_tmp;
   real_T c;
   real_T c_err;
   real_T count;
   real_T guess_radius;
   real_T radius;
   real_T thresh;
-  real_T y_im;
   real_T y_re;
   real_T *y_data;
   int32_T b_g_coeffs[2];
@@ -279,6 +279,7 @@ real_T get_interior_ball(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
   /* MEX-able code to efficiently determine interior ball of the */
   /* \omega|g(z)-g(\xi)|=C$ contours */
   thresh = 0.05 / freq;
+  /* F = @(r,theta) freq*abs(G{1}(r*exp(1i*theta))-G{1}(SP)) - C; */
   qY = order + 1U;
   if (order + 1U < order) {
     qY = MAX_uint32_T;
@@ -352,7 +353,8 @@ real_T get_interior_ball(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
       }
       k = (int32_T)count;
       if (k > i1) {
-        emlrtDynamicBoundsCheckR2012b((int32_T)count, 1, i1, &emlrtBCI, &b_st);
+        emlrtDynamicBoundsCheckR2012b((int32_T)count, 1, i1, &c_emlrtBCI,
+                                      &b_st);
       }
     }
     b_g_coeffs[0] = 1;
@@ -361,13 +363,13 @@ real_T get_interior_ball(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
     indexShapeCheck(&c_st, *(int32_T(*)[2])dG_->size, b_g_coeffs);
     if (k != 0) {
       y_re = dG__data[0].re;
-      y_im = dG__data[0].im;
+      c_err = dG__data[0].im;
       i1 = k - 2;
       for (k = 0; k <= i1; k++) {
-        SP_re = SP.re * y_re - SP.im * y_im;
-        c_err = SP.re * y_im + SP.im * y_re;
-        y_re = SP_re + dG__data[k + 1].re;
-        y_im = c_err + dG__data[k + 1].im;
+        count = SP.re * y_re - SP.im * c_err;
+        c_err = SP.re * c_err + SP.im * y_re;
+        y_re = count + dG__data[k + 1].re;
+        c_err += dG__data[k + 1].im;
       }
     }
     if (((int32_T)(n + 1U) < 1) || ((int32_T)(n + 1U) > dG_SP->size[0])) {
@@ -379,7 +381,7 @@ real_T get_interior_ball(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
       emlrtDynamicBoundsCheckR2012b((int32_T)(n + 1U), 1, dG_SP->size[0],
                                     &d_emlrtBCI, &st);
     }
-    dG_SP_data[n].im = y_im;
+    dG_SP_data[n].im = c_err;
     if (*emlrtBreakCheckR2012bFlagVar != 0) {
       emlrtBreakCheckR2012b(&st);
     }
@@ -392,11 +394,14 @@ real_T get_interior_ball(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
     b_n = uv[(int32_T)qY - 1];
   }
   if (((int32_T)qY < 1) || ((int32_T)qY > dG_SP->size[0])) {
-    emlrtDynamicBoundsCheckR2012b((int32_T)qY, 1, dG_SP->size[0], &c_emlrtBCI,
+    emlrtDynamicBoundsCheckR2012b((int32_T)qY, 1, dG_SP->size[0], &emlrtBCI,
                                   (emlrtCTX)sp);
   }
   st.site = &b_emlrtRSI;
   b_st.site = &i_emlrtRSI;
+  /*      guess_radius =
+   * double(abs(double(factorial(nu))*C/(freq*abs(G{nu}(SP))))^(1/double(nu)));
+   */
   /* make sure this isn't too ridiculous */
   guess_radius = muDoubleScalarMin(
       muDoubleScalarPower(
@@ -405,7 +410,7 @@ real_T get_interior_ball(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
               (freq * muDoubleScalarHypot(dG_SP_data[(int32_T)qY - 1].re,
                                           dG_SP_data[(int32_T)qY - 1].im))),
           1.0 / (real_T)qY),
-      2.0 / freq);
+      10.0 / freq);
   /*  solve problem on each ray */
   emxFree_creal_T(sp, &dG_SP);
   for (b_i = 0; b_i < 16; b_i++) {
@@ -416,9 +421,46 @@ real_T get_interior_ball(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
   no_sign_change = true;
   while (no_sign_change) {
     for (n = 0; n < 16; n++) {
-      a = ray_intervals[n];
-      b = ray_intervals[n + 16];
-      if (muDoubleScalarSign(a) != muDoubleScalarSign(b)) {
+      x_tmp =
+          (uint16_T)muDoubleScalarRound(6.2831853071795862 * ((real_T)n + 1.0));
+      z = (uint16_T)((uint32_T)x_tmp >> 4);
+      x = (uint16_T)((uint32_T)x_tmp - (z << 4));
+      if ((x > 0) && (x >= 8)) {
+        z++;
+      }
+      if (z == 0) {
+        y_re = 1.0;
+        c_err = 0.0;
+      } else {
+        y_re = muDoubleScalarCos(z);
+        c_err = muDoubleScalarSin(z);
+      }
+      SP_tmp = ray_intervals[n];
+      b_SP.re = SP.re + SP_tmp * y_re;
+      b_SP.im = SP.im + SP_tmp * c_err;
+      dc = polyval(g_coeffs, b_SP);
+      dc1 = polyval(g_coeffs, SP);
+      z = (uint16_T)((uint32_T)x_tmp >> 4);
+      x = (uint16_T)((uint32_T)x_tmp - (z << 4));
+      if ((x > 0) && (x >= 8)) {
+        z++;
+      }
+      if (z == 0) {
+        y_re = 1.0;
+        c_err = 0.0;
+      } else {
+        y_re = muDoubleScalarCos(z);
+        c_err = muDoubleScalarSin(z);
+      }
+      b_SP_tmp = ray_intervals[n + 16];
+      b_SP.re = SP.re + b_SP_tmp * y_re;
+      b_SP.im = SP.im + b_SP_tmp * c_err;
+      b_SP = polyval(g_coeffs, b_SP);
+      if (muDoubleScalarSign(
+              freq * muDoubleScalarHypot(dc.re - dc1.re, dc.im - dc1.im) - C) !=
+          muDoubleScalarSign(
+              freq * muDoubleScalarHypot(b_SP.re - dc1.re, b_SP.im - dc1.im) -
+              C)) {
         no_sign_change = false;
         st.site = &c_emlrtRSI;
         /*  L = abs(b-a); */
@@ -427,8 +469,6 @@ real_T get_interior_ball(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
         c = rtNaN;
         /* inside contour f is negative, outside contour f is positive */
         /*  err = @(a,b) min(abs(f(a)),abs(f(b))); */
-        x_tmp = (uint16_T)muDoubleScalarRound(6.2831853071795862 *
-                                              ((real_T)n + 1.0));
         z = (uint16_T)((uint32_T)x_tmp >> 4);
         x = (uint16_T)((uint32_T)x_tmp - (z << 4));
         if ((x > 0) && (x >= 8)) {
@@ -436,40 +476,17 @@ real_T get_interior_ball(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
         }
         if (z == 0) {
           y_re = 1.0;
-          y_im = 0.0;
+          c_err = 0.0;
         } else {
           y_re = muDoubleScalarCos(z);
-          y_im = muDoubleScalarSin(z);
+          c_err = muDoubleScalarSin(z);
         }
-        y_re *= a;
-        y_im *= a;
-        if (g_coeffs->size[0] != 0) {
-          b_y_re = g_coeffs_data[0].re;
-          b_y_im = g_coeffs_data[0].im;
-          i = g_coeffs->size[0];
-          for (k = 0; k <= i - 2; k++) {
-            c_err = y_re * b_y_re - y_im * b_y_im;
-            b_y_im = y_re * b_y_im + y_im * b_y_re;
-            b_y_re = c_err + g_coeffs_data[k + 1].re;
-            b_y_im += g_coeffs_data[k + 1].im;
-          }
-        }
-        if (g_coeffs->size[0] != 0) {
-          y_re = g_coeffs_data[0].re;
-          y_im = g_coeffs_data[0].im;
-          i = g_coeffs->size[0];
-          for (k = 0; k <= i - 2; k++) {
-            SP_re = SP.re * y_re - SP.im * y_im;
-            c_err = SP.re * y_im + SP.im * y_re;
-            y_re = SP_re + g_coeffs_data[k + 1].re;
-            y_im = c_err + g_coeffs_data[k + 1].im;
-          }
-        }
-        y_re = b_y_re - y_re;
-        y_im = b_y_im - y_im;
-        count = freq * muDoubleScalarHypot(y_re, y_im) - C;
+        b_SP.re = SP.re + SP_tmp * y_re;
+        b_SP.im = SP.im + SP_tmp * c_err;
+        dc = polyval(g_coeffs, b_SP);
+        count = freq * muDoubleScalarHypot(dc.re - dc1.re, dc.im - dc1.im) - C;
         if (count == 0.0) {
-          c = a;
+          c = SP_tmp;
         } else {
           z = (uint16_T)((uint32_T)x_tmp >> 4);
           x = (uint16_T)((uint32_T)x_tmp - (z << 4));
@@ -478,39 +495,17 @@ real_T get_interior_ball(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
           }
           if (z == 0) {
             y_re = 1.0;
-            y_im = 0.0;
+            c_err = 0.0;
           } else {
             y_re = muDoubleScalarCos(z);
-            y_im = muDoubleScalarSin(z);
+            c_err = muDoubleScalarSin(z);
           }
-          y_re *= b;
-          y_im *= b;
-          if (g_coeffs->size[0] != 0) {
-            b_y_re = g_coeffs_data[0].re;
-            b_y_im = g_coeffs_data[0].im;
-            i = g_coeffs->size[0];
-            for (k = 0; k <= i - 2; k++) {
-              c_err = y_re * b_y_re - y_im * b_y_im;
-              b_y_im = y_re * b_y_im + y_im * b_y_re;
-              b_y_re = c_err + g_coeffs_data[k + 1].re;
-              b_y_im += g_coeffs_data[k + 1].im;
-            }
-          }
-          if (g_coeffs->size[0] != 0) {
-            y_re = g_coeffs_data[0].re;
-            y_im = g_coeffs_data[0].im;
-            i = g_coeffs->size[0];
-            for (k = 0; k <= i - 2; k++) {
-              SP_re = SP.re * y_re - SP.im * y_im;
-              c_err = SP.re * y_im + SP.im * y_re;
-              y_re = SP_re + g_coeffs_data[k + 1].re;
-              y_im = c_err + g_coeffs_data[k + 1].im;
-            }
-          }
-          y_re = b_y_re - y_re;
-          y_im = b_y_im - y_im;
-          if (freq * muDoubleScalarHypot(y_re, y_im) - C == 0.0) {
-            c = b;
+          b_SP.re = SP.re + b_SP_tmp * y_re;
+          b_SP.im = SP.im + b_SP_tmp * c_err;
+          dc = polyval(g_coeffs, b_SP);
+          if (freq * muDoubleScalarHypot(dc.re - dc1.re, dc.im - dc1.im) - C ==
+              0.0) {
+            c = b_SP_tmp;
           } else {
             if (count > 0.0) {
               /* f = @(x) -f(x); */
@@ -518,11 +513,11 @@ real_T get_interior_ball(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
             } else {
               b_i = 1;
             }
-            c_err = rtInf;
+            c_err = muDoubleScalarAbs(b_SP_tmp - SP_tmp);
             count = 0.0;
             exitg1 = false;
             while ((!exitg1) && (c_err > thresh)) {
-              c = a + (b - a) / 2.0;
+              c = SP_tmp + (b_SP_tmp - SP_tmp) / 2.0;
               z = (uint16_T)((uint32_T)x_tmp >> 4);
               x = (uint16_T)((uint32_T)x_tmp - (z << 4));
               if ((x > 0) && (x >= 8)) {
@@ -530,41 +525,20 @@ real_T get_interior_ball(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
               }
               if (z == 0) {
                 y_re = 1.0;
-                y_im = 0.0;
+                c_err = 0.0;
               } else {
                 y_re = muDoubleScalarCos(z);
-                y_im = muDoubleScalarSin(z);
+                c_err = muDoubleScalarSin(z);
               }
-              y_re *= c;
-              y_im *= c;
-              if (g_coeffs->size[0] != 0) {
-                b_y_re = g_coeffs_data[0].re;
-                b_y_im = g_coeffs_data[0].im;
-                i = g_coeffs->size[0];
-                for (k = 0; k <= i - 2; k++) {
-                  c_err = y_re * b_y_re - y_im * b_y_im;
-                  b_y_im = y_re * b_y_im + y_im * b_y_re;
-                  b_y_re = c_err + g_coeffs_data[k + 1].re;
-                  b_y_im += g_coeffs_data[k + 1].im;
-                }
-              }
-              if (g_coeffs->size[0] != 0) {
-                y_re = g_coeffs_data[0].re;
-                y_im = g_coeffs_data[0].im;
-                i = g_coeffs->size[0];
-                for (k = 0; k <= i - 2; k++) {
-                  SP_re = SP.re * y_re - SP.im * y_im;
-                  c_err = SP.re * y_im + SP.im * y_re;
-                  y_re = SP_re + g_coeffs_data[k + 1].re;
-                  y_im = c_err + g_coeffs_data[k + 1].im;
-                }
-              }
-              y_re = b_y_re - y_re;
-              y_im = b_y_im - y_im;
+              b_SP.re = SP.re + c * y_re;
+              b_SP.im = SP.im + c * c_err;
+              dc = polyval(g_coeffs, b_SP);
               guard1 = false;
-              if ((real_T)b_i * (freq * muDoubleScalarHypot(y_re, y_im) - C) >
+              if ((real_T)b_i * (freq * muDoubleScalarHypot(dc.re - dc1.re,
+                                                            dc.im - dc1.im) -
+                                 C) >
                   0.0) {
-                b = c;
+                b_SP_tmp = c;
                 guard1 = true;
               } else {
                 z = (uint16_T)((uint32_T)x_tmp >> 4);
@@ -574,47 +548,26 @@ real_T get_interior_ball(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
                 }
                 if (z == 0) {
                   y_re = 1.0;
-                  y_im = 0.0;
+                  c_err = 0.0;
                 } else {
                   y_re = muDoubleScalarCos(z);
-                  y_im = muDoubleScalarSin(z);
+                  c_err = muDoubleScalarSin(z);
                 }
-                y_re *= c;
-                y_im *= c;
-                if (g_coeffs->size[0] != 0) {
-                  b_y_re = g_coeffs_data[0].re;
-                  b_y_im = g_coeffs_data[0].im;
-                  i = g_coeffs->size[0];
-                  for (k = 0; k <= i - 2; k++) {
-                    c_err = y_re * b_y_re - y_im * b_y_im;
-                    b_y_im = y_re * b_y_im + y_im * b_y_re;
-                    b_y_re = c_err + g_coeffs_data[k + 1].re;
-                    b_y_im += g_coeffs_data[k + 1].im;
-                  }
-                }
-                if (g_coeffs->size[0] != 0) {
-                  y_re = g_coeffs_data[0].re;
-                  y_im = g_coeffs_data[0].im;
-                  i = g_coeffs->size[0];
-                  for (k = 0; k <= i - 2; k++) {
-                    SP_re = SP.re * y_re - SP.im * y_im;
-                    c_err = SP.re * y_im + SP.im * y_re;
-                    y_re = SP_re + g_coeffs_data[k + 1].re;
-                    y_im = c_err + g_coeffs_data[k + 1].im;
-                  }
-                }
-                y_re = b_y_re - y_re;
-                y_im = b_y_im - y_im;
-                if ((real_T)b_i * (freq * muDoubleScalarHypot(y_re, y_im) - C) <
+                b_SP.re = SP.re + c * y_re;
+                b_SP.im = SP.im + c * c_err;
+                dc = polyval(g_coeffs, b_SP);
+                if ((real_T)b_i * (freq * muDoubleScalarHypot(dc.re - dc1.re,
+                                                              dc.im - dc1.im) -
+                                   C) <
                     0.0) {
-                  a = c;
+                  SP_tmp = c;
                   guard1 = true;
                 } else {
                   exitg1 = true;
                 }
               }
               if (guard1) {
-                c_err = muDoubleScalarAbs(b - a);
+                c_err = muDoubleScalarAbs(b_SP_tmp - SP_tmp);
                 count++;
                 if (count > 1000.0) {
                   b_st.site = &k_emlrtRSI;
