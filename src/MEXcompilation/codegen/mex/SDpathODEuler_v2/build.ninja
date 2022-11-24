@@ -39,9 +39,9 @@ build $builddir/rt_nonfinite.o : cc $root/rt_nonfinite.c
 build $builddir/SDpathODEuler_v2_initialize.o : cc $root/SDpathODEuler_v2_initialize.c
 build $builddir/SDpathODEuler_v2_terminate.o : cc $root/SDpathODEuler_v2_terminate.c
 build $builddir/SDpathODEuler_v2.o : cc $root/SDpathODEuler_v2.c
-build $builddir/mod.o : cc $root/mod.c
 build $builddir/angle.o : cc $root/angle.c
 build $builddir/abs.o : cc $root/abs.c
+build $builddir/mod.o : cc $root/mod.c
 build $builddir/indexShapeCheck.o : cc $root/indexShapeCheck.c
 build $builddir/beyondNoReturn.o : cc $root/beyondNoReturn.c
 build $builddir/_coder_SDpathODEuler_v2_api.o : cc $root/interface/_coder_SDpathODEuler_v2_api.c
@@ -53,4 +53,4 @@ build $builddir/_coder_SDpathODEuler_v2_info.o : cc $root/interface/_coder_SDpat
 build $builddir/c_mexapi_version.o : cc $matlabdir/extern/version/c_mexapi_version.c
 
 # Link
-build $root/SDpathODEuler_v2_mex.mexa64 : link $builddir/SDpathODEuler_v2_data.o $builddir/rt_nonfinite.o $builddir/SDpathODEuler_v2_initialize.o $builddir/SDpathODEuler_v2_terminate.o $builddir/SDpathODEuler_v2.o $builddir/mod.o $builddir/angle.o $builddir/abs.o $builddir/indexShapeCheck.o $builddir/beyondNoReturn.o $builddir/_coder_SDpathODEuler_v2_api.o $builddir/_coder_SDpathODEuler_v2_mex.o $builddir/eml_int_forloop_overflow_check.o $builddir/exp.o $builddir/SDpathODEuler_v2_emxutil.o $builddir/_coder_SDpathODEuler_v2_info.o $builddir/c_mexapi_version.o 
+build $root/SDpathODEuler_v2_mex.mexa64 : link $builddir/SDpathODEuler_v2_data.o $builddir/rt_nonfinite.o $builddir/SDpathODEuler_v2_initialize.o $builddir/SDpathODEuler_v2_terminate.o $builddir/SDpathODEuler_v2.o $builddir/angle.o $builddir/abs.o $builddir/mod.o $builddir/indexShapeCheck.o $builddir/beyondNoReturn.o $builddir/_coder_SDpathODEuler_v2_api.o $builddir/_coder_SDpathODEuler_v2_mex.o $builddir/eml_int_forloop_overflow_check.o $builddir/exp.o $builddir/SDpathODEuler_v2_emxutil.o $builddir/_coder_SDpathODEuler_v2_info.o $builddir/c_mexapi_version.o 

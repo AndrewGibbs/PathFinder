@@ -1,5 +1,7 @@
-function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeffs)
+function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeffs,V)
 
+    set(0,'defaultTextInterpreter','latex');
+    f = figure();
     if nargin == 7
         HermiteInds = [];
     end
@@ -7,6 +9,7 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeff
     %get your margins:
     marginSpace = 0.5;
     
+    lightGrayColor = [.85 .85 .85];
     for S = covers
        marginSpace = max(marginSpace,S{1}.diameter);
     end
@@ -34,7 +37,7 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeff
         end
         plot(C);
         if C.radius>0 && ~ismember(C.index,HermiteInds)
-           fillCircle(C.centre,C.radius);
+           fillCircle(C.centre,C.radius,lightGrayColor);
            % plot(C.steepestExits,'ob','MarkerSize',18);
         end
         hold on;
@@ -43,20 +46,47 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeff
         plot(C);
         hold on;
     end
-    plot(z+eps*1i,'bx');
 
     % now highlight used contours
-    for C=contours
-        plot(C);
-        hold on;
-    end
+%     for C=contours
+%         plot(C);
+%         hold on;
+%     end
     
     % now plot no return regions
-    theta = linspace(0,2*pi,10000);
-    plot(exp(1i*theta).*plot_no_return(theta,g_coeffs),'m:','LineWidth',2);
+    theta = linspace(0,2*pi,100);
+    grayColor = [.6 .6 .6];
+    %plot(exp(1i*theta).*plot_no_return(theta,g_coeffs),'Color',grayColor,'LineWidth',2);
+    R = zeros(length(theta),1);
+    order = length(g_coeffs)-1;
+    smidgin = 1/100;
+    min_R = inf;
+    for v = angle(V)
+        theta = linspace(v-pi/(2*order)+smidgin,v+pi/(2*order)-smidgin);
+        for n=1:length(theta)
+%         [~,v_index] = min(abs(exp(1i*angle(V))-exp(1i*theta(n))));
+%         v = mod(angle(V(v_index)),2*pi);
+        theta_diff = min(abs([theta(n)-v, theta(n)-v-2*pi theta(n)-v+2*pi]));
+%         if theta_diff < pi/(2*order)
+         R(n) = get_r_star(g_coeffs,theta_diff);
+%         else
+%             R(n) = inf;
+%         end
+        end
+         event_horizon = fliplr(exp(1i*theta).*R');
+        big_arc = 2*(max(max_x-min_x,max_y-min_y)+2*marginSpace)*exp(1i*theta);
+        X = [real(big_arc) real(event_horizon)];
+        Y = [imag(big_arc) imag(event_horizon)];
+        fill(X,Y,'k','EdgeColor','k','FaceAlpha',0.1,'EdgeAlpha',0.0);
+        min_R = min(R);
+    end
+   
+%     plot(exp(1i*theta).*R','Color',grayColor,'LineWidth',2);
 
+
+    plot(z+eps*1i,'r.','MarkerSize',4.5);
     %plot stationary points:
-    plot(SPs+eps*1i,'r*','MarkerSize',fontSize);
+    plot(SPs+eps*1i,'k.');
     
     %now adjust the margins a bit
     axis equal;
@@ -67,5 +97,6 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeff
     ylabel('Imaginary');
     set(gca,'fontsize', fontSize);
     hold off;
+    f.Position = [100 100 800 800];
     
 end
