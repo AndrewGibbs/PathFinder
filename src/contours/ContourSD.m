@@ -1,4 +1,4 @@
-classdef ContourSD < handle
+ classdef ContourSD < handle
     %Steepest descent contour object
     
     properties
@@ -69,18 +69,40 @@ classdef ContourSD < handle
                     [CPs, CPs_radii] = getBallDeets(otherCovers);
     %             [valley_index, ball_index] = SDpathODEuler(self.ICs(1), G, cover_centres, cover_radii, valleys, base_step_size);
 %                 tic;
-                max_steps_before_fail = 50000;%10000;
+                max_steps_before_fail = global_contour_params.max_number_of_ODE_steps;%10000;
                 [p, self.coarsePath, valley_index, ball_index, success] = ...
-                    SDpathODEuler_mex(self.ICs(1), G, CPs, CPs_radii, valleys.', ...
-                    global_contour_params.step_size, int64(max_steps_before_fail), int64(self.startCoverIndex));
+                    SDpathODEuler_v2_mex(self.ICs(1), G, CPs, CPs_radii, valleys.', ...
+                    global_contour_params.step_size, int64(max_steps_before_fail), global_contour_params.r_star);
 %                 Euler_mex_time = toc;
+                if ~isempty(ball_index) % finite contour - need to check approximation of endpoint is sufficiently accurate
+%                     max_deviation = global_contour_params.step_size*abs(self.coarsePath(end)-otherCovers{ball_index}.centre);
+                    [SEn_n, success] = SE_NEwtonCorrection_mex(p(end), self.coarsePath(end), self.ICs(1), G, ...
+                                        global_contour_params.NewtonThresh, uint32(global_contour_params.NewtonIts),...
+                                        otherCovers{ball_index}.centre, global_contour_params.step_size);
+%                     warning('Steepest descent contour may end in a ball, finer step size is needed to be sure');
+                    if success
+                        self.endPoint = SEn_n;
+                    else
+                        warning('Steepest descent contour may end in a ball, finer step size is needed to be sure');
+                    end
+                end
                 if ~success
                     max_retrys = 10;
                     for n=1:max_retrys
                         warning('Euluer solve did not converge in time for this path, retrying with smaller step size...');
                             [p, self.coarsePath, valley_index, ball_index, success] = ...
-                                SDpathODEuler_mex(self.ICs(1), G, CPs, CPs_radii, valleys.', ...
-                                global_contour_params.step_size*2^(-n), int64(max_steps_before_fail*4^n), int64(self.startCoverIndex));
+                                SDpathODEuler_v2_mex(self.ICs(1), G, CPs, CPs_radii, valleys.', ...
+                                global_contour_params.step_size*2^(-n), int64(max_steps_before_fail*4^n), global_contour_params.r_star);
+                        if success && ~isempty(ball_index)
+                            [SEn_n, success] = _mex(p(end), self.coarsePath(end),...
+                                                self.ICs(1), G, global_contour_params.NewtonThresh, uint32(global_contour_params.NewtonIts),...
+             SE_NEwtonCorrection                                   otherCovers{ball_index}.centre, global_contour_params.step_size);
+                            if success
+                                self.endPoint = SEn_n;
+                            else
+                                warning('Steepest descent contour may end in a ball, finer step size is needed to be sure');
+                            end
+                        end
                         if success
                             break;
                         end
@@ -96,7 +118,8 @@ classdef ContourSD < handle
                     
                     self.length = p(end);
                     self.endValley = [];
-                    self.endPoint = self.coarsePath(end);
+%                     self.endPoint = self.coarsePath(end); % should have
+%                     been taken care of further up
                 end
                 self.coarseParam = p;
 
@@ -157,14 +180,15 @@ classdef ContourSD < handle
             end
         end
         
-        function plot(self,linestyle,linewidth)
-            if nargin == 1
-                linestyle ='-.k';
-            end
-            if nargin <= 2
-                linewidth = 1.0;
-            end
-            plot(self.coarsePath,linestyle,'LineWidth',linewidth);
+        function plot(self,linewidth)
+%             if nargin == 1
+%                 linestyle ='-.k';
+%             end
+%             if nargin <= 2
+%                 linewidth = 1.0;
+%             end
+            grayColor = [.7 .7 .7];
+            plot(self.coarsePath,'.:','Color',grayColor,'MarkerSize',4.5);
         end
         
         function [Z, W] = getQuad(self,freq,Npts,quad_params)% should absorb Turbo into quad struct
@@ -197,6 +221,20 @@ classdef ContourSD < handle
                 Dpolycoeffs=self.phaseCoeffs(1:(order)).*fliplr(1:(order));
 %                 SPs = sort(roots(Dpolycoeffs));
 %                 [self.h, self.dhdp, Newton_success] = SDquadODEulerNEwton(self.P0, self.ICs(1), self.phaseCoeffs, SPs, freq);
+
+                % if largest p value of coarse solve is less than
+                % largest p value of quad, trace further.
+
+                if max(self.P0) > freq*max(self.coarseParam)% global_contour_params.step_size, int64(max_steps_before_fail)
+                    SPs = roots(Dpolycoeffs);
+                    max_steps_before_fail = quad_params.max_number_of_ODE_steps;
+                    [self.coarseParam, self.coarsePath, success] = ...
+                        SDpathODEuler_extend_coarse_path_mex(self.coarseParam, self.coarsePath, self.phaseCoeffs, SPs, quad_params.global_step_size, int64(max_steps_before_fail), max(self.P0)/freq);
+                    if ~success
+                        warning('failed to converge extended contour');
+                    end
+                end
+
                 [self.h, self.dhdp, Newton_success] = SDquadODEulerNEwtonCorrection_mex(self.P0, freq*self.coarseParam, self.ICs(1), self.coarsePath, self.phaseCoeffs, freq, quad_params.NewtonThresh, uint32(quad_params.NewtonIts));
 %                 Euler_time = toc;
 

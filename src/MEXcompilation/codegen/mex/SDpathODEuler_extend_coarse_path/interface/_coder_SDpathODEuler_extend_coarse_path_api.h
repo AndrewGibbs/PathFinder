@@ -3,9 +3,9 @@
  * course requirements at degree granting institutions only.  Not for
  * government, commercial, or other organizational use.
  *
- * indexShapeCheck.h
+ * _coder_SDpathODEuler_extend_coarse_path_api.h
  *
- * Code generation for function 'indexShapeCheck'
+ * Code generation for function '_coder_SDpathODEuler_extend_coarse_path_api'
  *
  */
 
@@ -21,7 +21,7 @@
 #include <string.h>
 
 /* Function Declarations */
-void indexShapeCheck(const emlrtStack *sp, const int32_T matrixSize[2],
-                     const int32_T indexSize[2]);
+void c_SDpathODEuler_extend_coarse_p(const mxArray *const prhs[7], int32_T nlhs,
+                                     const mxArray *plhs[3]);
 
-/* End of code generation (indexShapeCheck.h) */
+/* End of code generation (_coder_SDpathODEuler_extend_coarse_path_api.h) */

@@ -18,7 +18,7 @@
 #include "rt_nonfinite.h"
 
 /* Variable Definitions */
-static emlrtRTEInfo i_emlrtRTEI = {
+static emlrtRTEInfo k_emlrtRTEI = {
     1,                              /* lineNo */
     1,                              /* colNo */
     "_coder_get_interior_ball_api", /* fName */
@@ -231,7 +231,7 @@ void get_interior_ball_api(const mxArray *const prhs[5], const mxArray **plhs)
   uint32_T order;
   st.tls = emlrtRootTLSGlobal;
   emlrtHeapReferenceStackEnterFcnR2012b(&st);
-  emxInit_creal_T(&st, &g_coeffs, 1, &i_emlrtRTEI);
+  emxInit_creal_T(&st, &g_coeffs, 1, &k_emlrtRTEI);
   /* Marshall function inputs */
   emlrt_marshallIn(&st, emlrtAliasP(prhs[0]), "g_coeffs", g_coeffs);
   freq = c_emlrt_marshallIn(&st, emlrtAliasP(prhs[1]), "freq");

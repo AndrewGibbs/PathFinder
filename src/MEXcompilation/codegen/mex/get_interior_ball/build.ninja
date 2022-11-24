@@ -40,13 +40,13 @@ build $builddir/get_interior_ball_initialize.o : cc $root/get_interior_ball_init
 build $builddir/get_interior_ball_terminate.o : cc $root/get_interior_ball_terminate.c
 build $builddir/get_interior_ball.o : cc $root/get_interior_ball.c
 build $builddir/polyval.o : cc $root/polyval.c
-build $builddir/indexShapeCheck.o : cc $root/indexShapeCheck.c
 build $builddir/_coder_get_interior_ball_api.o : cc $root/interface/_coder_get_interior_ball_api.c
 build $builddir/_coder_get_interior_ball_mex.o : cc $root/interface/_coder_get_interior_ball_mex.c
 build $builddir/eml_int_forloop_overflow_check.o : cc $root/eml_int_forloop_overflow_check.c
+build $builddir/diff_coeffs.o : cc $root/diff_coeffs.c
 build $builddir/get_interior_ball_emxutil.o : cc $root/get_interior_ball_emxutil.c
 build $builddir/_coder_get_interior_ball_info.o : cc $root/interface/_coder_get_interior_ball_info.c
 build $builddir/c_mexapi_version.o : cc $matlabdir/extern/version/c_mexapi_version.c
 
 # Link
-build $root/get_interior_ball_mex.mexa64 : link $builddir/get_interior_ball_data.o $builddir/rt_nonfinite.o $builddir/get_interior_ball_initialize.o $builddir/get_interior_ball_terminate.o $builddir/get_interior_ball.o $builddir/polyval.o $builddir/indexShapeCheck.o $builddir/_coder_get_interior_ball_api.o $builddir/_coder_get_interior_ball_mex.o $builddir/eml_int_forloop_overflow_check.o $builddir/get_interior_ball_emxutil.o $builddir/_coder_get_interior_ball_info.o $builddir/c_mexapi_version.o 
+build $root/get_interior_ball_mex.mexa64 : link $builddir/get_interior_ball_data.o $builddir/rt_nonfinite.o $builddir/get_interior_ball_initialize.o $builddir/get_interior_ball_terminate.o $builddir/get_interior_ball.o $builddir/polyval.o $builddir/_coder_get_interior_ball_api.o $builddir/_coder_get_interior_ball_mex.o $builddir/eml_int_forloop_overflow_check.o $builddir/diff_coeffs.o $builddir/get_interior_ball_emxutil.o $builddir/_coder_get_interior_ball_info.o $builddir/c_mexapi_version.o 

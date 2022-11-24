@@ -1,5 +1,5 @@
 function addPaths()
-%paths required for PathFinder2
+%paths required for PathFinder
     addpath(genpath('src'));
 %     addpath('src/contours');
 %     addpath('src/covers');

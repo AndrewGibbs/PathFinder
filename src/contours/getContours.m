@@ -1,6 +1,8 @@
 function contours = getContours(G, covers, valleys, clusters, clusterEndpoints, endPointIndices, params)
 % G can be phase handles, or the original coefficients
-    global_contour_params = struct('solver', params.global_solver, 'step_size', params.global_step_size) ;
+    global_contour_params = struct('solver', params.global_solver, ...
+        'step_size', params.global_step_size, 'max_number_of_ODE_steps', params.max_number_of_ODE_steps,...
+        'NewtonThresh',params.NewtonThresh, 'NewtonIts', params.NewtonIts,'r_star',params.r_star) ;
     contours = [];
      for n = 1:length(covers)
         if ismember(n,endPointIndices)%~infContour && ismember(n,[1 2])
@@ -12,7 +14,6 @@ function contours = getContours(G, covers, valleys, clusters, clusterEndpoints, 
             contours = [contours ContourSD(xi,G,covers{n},coversComplement(n),valleys,clusters,clusterEndpoints,global_contour_params)];
         end
      end
-     
      
     function coversOut = coversComplement(n)
         numCovers = length(covers);
