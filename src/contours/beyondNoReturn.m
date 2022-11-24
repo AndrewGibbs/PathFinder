@@ -2,7 +2,7 @@ function [value,v_index] = beyondNoReturn(h,Cnr,argBeta,V)
 %function corresponding to an event which would halt ODE solve, because SD
 %path is at 'point of no return'.
 
-wiggle_room = 0.95;
+% wiggle_room = 0.95;
 
     % the 'no return test'
     order = length(V);

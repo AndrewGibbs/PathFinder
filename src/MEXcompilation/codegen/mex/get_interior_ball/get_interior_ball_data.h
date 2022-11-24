@@ -24,5 +24,6 @@
 extern emlrtCTX emlrtRootTLSGlobal;
 extern const volatile char_T *emlrtBreakCheckR2012bFlagVar;
 extern emlrtContext emlrtContextGlobal;
+extern emlrtRTEInfo e_emlrtRTEI;
 
 /* End of code generation (get_interior_ball_data.h) */

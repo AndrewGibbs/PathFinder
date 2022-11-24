@@ -18,7 +18,7 @@
 #include "rt_nonfinite.h"
 
 /* Variable Definitions */
-static emlrtRTEInfo t_emlrtRTEI = {
+static emlrtRTEInfo w_emlrtRTEI = {
     1,                             /* lineNo */
     1,                             /* colNo */
     "_coder_SDpathODEuler_v2_api", /* fName */
@@ -369,7 +369,7 @@ static int64_T r_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
   return ret;
 }
 
-void SDpathODEuler_v2_api(const mxArray *const prhs[7], int32_T nlhs,
+void SDpathODEuler_v2_api(const mxArray *const prhs[8], int32_T nlhs,
                           const mxArray *plhs[5])
 {
   emlrtStack st = {
@@ -383,9 +383,11 @@ void SDpathODEuler_v2_api(const mxArray *const prhs[7], int32_T nlhs,
   emxArray_creal_T *valleys;
   emxArray_real_T *cover_radii;
   emxArray_real_T *p_log_out;
+  const mxArray *prhs_copy_idx_3;
   creal_T h0;
   int64_T n_max;
   real_T base_step_size;
+  real_T r_star;
   real_T *ball_index_data;
   real_T *valley_index_data;
   int32_T ball_index_size[2];
@@ -395,27 +397,30 @@ void SDpathODEuler_v2_api(const mxArray *const prhs[7], int32_T nlhs,
   valley_index_data = &(*(real_T(*)[1])mxMalloc(sizeof(real_T)))[0];
   ball_index_data = &(*(real_T(*)[1])mxMalloc(sizeof(real_T)))[0];
   emlrtHeapReferenceStackEnterFcnR2012b(&st);
-  emxInit_creal_T(&st, &gCoeffs, 2, &t_emlrtRTEI);
-  emxInit_creal_T(&st, &SPs, 1, &t_emlrtRTEI);
-  emxInit_real_T(&st, &cover_radii, 1, &t_emlrtRTEI);
-  emxInit_creal_T(&st, &valleys, 1, &t_emlrtRTEI);
-  emxInit_real_T(&st, &p_log_out, 1, &t_emlrtRTEI);
-  emxInit_creal_T(&st, &h_log_out, 1, &t_emlrtRTEI);
+  emxInit_creal_T(&st, &gCoeffs, 2, &w_emlrtRTEI);
+  emxInit_creal_T(&st, &SPs, 1, &w_emlrtRTEI);
+  emxInit_real_T(&st, &cover_radii, 1, &w_emlrtRTEI);
+  emxInit_creal_T(&st, &valleys, 1, &w_emlrtRTEI);
+  emxInit_real_T(&st, &p_log_out, 1, &w_emlrtRTEI);
+  emxInit_creal_T(&st, &h_log_out, 1, &w_emlrtRTEI);
+  prhs_copy_idx_3 = emlrtProtectR2012b(prhs[3], 3, false, -1);
   /* Marshall function inputs */
   h0 = emlrt_marshallIn(&st, emlrtAliasP(prhs[0]), "h0");
   c_emlrt_marshallIn(&st, emlrtAliasP(prhs[1]), "gCoeffs", gCoeffs);
   e_emlrt_marshallIn(&st, emlrtAliasP(prhs[2]), "SPs", SPs);
   cover_radii->canFreeData = false;
-  g_emlrt_marshallIn(&st, emlrtAlias(prhs[3]), "cover_radii", cover_radii);
+  g_emlrt_marshallIn(&st, emlrtAlias(prhs_copy_idx_3), "cover_radii",
+                     cover_radii);
   e_emlrt_marshallIn(&st, emlrtAliasP(prhs[4]), "valleys", valleys);
   base_step_size =
       i_emlrt_marshallIn(&st, emlrtAliasP(prhs[5]), "base_step_size");
   n_max = k_emlrt_marshallIn(&st, emlrtAliasP(prhs[6]), "n_max");
+  r_star = i_emlrt_marshallIn(&st, emlrtAliasP(prhs[7]), "r_star");
   /* Invoke the target function */
   SDpathODEuler_v2(&st, h0, gCoeffs, SPs, cover_radii, valleys, base_step_size,
-                   n_max, p_log_out, h_log_out, (real_T *)valley_index_data,
-                   valley_index_size, (real_T *)ball_index_data,
-                   ball_index_size, &success);
+                   n_max, r_star, p_log_out, h_log_out,
+                   (real_T *)valley_index_data, valley_index_size,
+                   (real_T *)ball_index_data, ball_index_size, &success);
   /* Marshall function outputs */
   p_log_out->canFreeData = false;
   plhs[0] = emlrt_marshallOut(p_log_out);
