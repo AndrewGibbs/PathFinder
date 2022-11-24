@@ -5,8 +5,9 @@ function [z, w, HermiteInds] = makeQuadV4(quadInfo, freq, Npts, g, params)
     quad_params = struct('solver', params.quad_solver, 'step_size', params.quad_step_size, ...
                     'Taylor_terms', params.Taylor_terms, 'turbo', params.turbo,...
                     'max_SP_integrand_val', params.max_SP_integrand_val, 'contourStartThresh', params.contourStartThresh,...
-                    'finitePathTruncL',params.finitePathTruncL,...
-                    'NewtonThresh', params.NewtonThresh, 'NewtonIts', params.NewtonIts);
+                    'finitePathTruncL',params.finitePathTruncL,'max_number_of_ODE_steps',params.max_number_of_ODE_steps,...
+                    'NewtonThresh', params.NewtonThresh, 'NewtonIts', params.NewtonIts,...
+                    'global_step_size',params.global_step_size);
 
 
     %make a corretion for standard Gauss, which has a different weight
@@ -21,7 +22,7 @@ function [z, w, HermiteInds] = makeQuadV4(quadInfo, freq, Npts, g, params)
                    [z_, w__] = quadInfo{n}.contour.getQuad(freq,Npts, quad_params);
                    w_ = w__*quadInfo{n}.inOut;
                 case 'strLn'
-                   [z_, w__, dh_] = gauss_quad_complex(quadInfo{n}.a,quadInfo{n}.b,Npts);
+                   [z_, w__, dh_] = gauss_quad_complex(quadInfo{n}.a,quadInfo{n}.b,ceil(quadInfo{n}.Nscale*Npts));
                    w_ = w__.*sgw(z_).*dh_;
             end
         end

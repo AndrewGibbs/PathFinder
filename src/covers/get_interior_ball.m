@@ -10,7 +10,7 @@ function radius = get_interior_ball(g_coeffs, freq, SP, order, C)
     nu = order+1;
 
 %% Initial guess:
-    [~, dG_SP] = get_derivs_at_x(g_coeffs, SP, nu);
+    [~, dG_SP] = get_derivs_at_x(g_coeffs.', SP, nu);
     guess_radius = double(abs(double(factorial(nu))*C/(freq*abs(dG_SP(nu))))^(1/double(nu)));
 %     guess_radius = double(abs(double(factorial(nu))*C/(freq*abs(G{nu}(SP))))^(1/double(nu)));
     %make sure this isn't too ridiculous
@@ -22,9 +22,10 @@ function radius = get_interior_ball(g_coeffs, freq, SP, order, C)
     no_sign_change = true;
     while no_sign_change
         for n=1:num_rays
-            if sign(F(ray_intervals(n,1),double(2*pi*n/num_rays))) ~= sign(F(ray_intervals(n,2),double(2*pi*n/num_rays)))
+            theta = 2*pi*double(n)/double(num_rays);
+            if sign(F(ray_intervals(n,1),theta)) ~= sign(F(ray_intervals(n,2),theta))
                 no_sign_change = false;
-                ray_mins(n) = bisection(@(r) F(r,double(2*pi*n/num_rays)), ray_intervals(n,1), ray_intervals(n,2), thresh);
+                ray_mins(n) = bisection(@(r) F(r,theta), ray_intervals(n,1), ray_intervals(n,2), thresh);
             end
         end
         if no_sign_change

@@ -30,21 +30,14 @@ emlrtContext emlrtContextGlobal = {
     NULL                                                  /* fSigMem */
 };
 
-emlrtRSInfo l_emlrtRSI = {
+emlrtRSInfo k_emlrtRSI = {
     21,                               /* lineNo */
     "eml_int_forloop_overflow_check", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/eml/"
     "eml_int_forloop_overflow_check.m" /* pathName */
 };
 
-emlrtRSInfo o_emlrtRSI = {
-    13,               /* lineNo */
-    "beyondNoReturn", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/beyondNoReturn.m" /* pathName
-                                                                        */
-};
-
-emlrtRSInfo q_emlrtRSI =
+emlrtRSInfo s_emlrtRSI =
     {
         74,                    /* lineNo */
         "applyScalarFunction", /* fcnName */
@@ -52,62 +45,96 @@ emlrtRSInfo q_emlrtRSI =
         "applyScalarFunction.m" /* pathName */
 };
 
-emlrtRSInfo u_emlrtRSI = {
+emlrtRSInfo w_emlrtRSI = {
     17,                                                        /* lineNo */
     "min",                                                     /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/datafun/min.m" /* pathName */
 };
 
-emlrtRSInfo v_emlrtRSI = {
+emlrtRSInfo x_emlrtRSI = {
     40,         /* lineNo */
     "minOrMax", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/minOrMax.m" /* pathName
                                                                        */
 };
 
-emlrtRSInfo w_emlrtRSI = {
+emlrtRSInfo y_emlrtRSI = {
     90,        /* lineNo */
     "minimum", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/minOrMax.m" /* pathName
                                                                        */
 };
 
-emlrtRSInfo x_emlrtRSI = {
+emlrtRSInfo ab_emlrtRSI = {
     169,             /* lineNo */
     "unaryMinOrMax", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/unaryMinOrMax.m" /* pathName
                                                                             */
 };
 
-emlrtRSInfo y_emlrtRSI = {
+emlrtRSInfo bb_emlrtRSI = {
     62,                      /* lineNo */
     "vectorMinOrMaxInPlace", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/"
     "vectorMinOrMaxInPlace.m" /* pathName */
 };
 
-emlrtRSInfo ab_emlrtRSI = {
+emlrtRSInfo cb_emlrtRSI = {
     54,                      /* lineNo */
     "vectorMinOrMaxInPlace", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/"
     "vectorMinOrMaxInPlace.m" /* pathName */
 };
 
-emlrtRSInfo bb_emlrtRSI = {
+emlrtRSInfo db_emlrtRSI = {
     103,         /* lineNo */
     "findFirst", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/"
     "vectorMinOrMaxInPlace.m" /* pathName */
 };
 
-emlrtRSInfo cb_emlrtRSI = {
+emlrtRSInfo eb_emlrtRSI = {
     120,                        /* lineNo */
     "minOrMaxRealVectorKernel", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/"
     "vectorMinOrMaxInPlace.m" /* pathName */
 };
 
-emlrtRTEInfo emlrtRTEI = {
+emlrtRSInfo fb_emlrtRSI = {
+    15,                                                        /* lineNo */
+    "min",                                                     /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/lib/matlab/datafun/min.m" /* pathName */
+};
+
+emlrtRSInfo gb_emlrtRSI = {
+    46,         /* lineNo */
+    "minOrMax", /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/minOrMax.m" /* pathName
+                                                                       */
+};
+
+emlrtRSInfo hb_emlrtRSI = {
+    92,        /* lineNo */
+    "minimum", /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/minOrMax.m" /* pathName
+                                                                       */
+};
+
+emlrtRSInfo ib_emlrtRSI = {
+    204,             /* lineNo */
+    "unaryMinOrMax", /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/unaryMinOrMax.m" /* pathName
+                                                                            */
+};
+
+emlrtRSInfo jb_emlrtRSI = {
+    893,                    /* lineNo */
+    "minRealVectorOmitNaN", /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/unaryMinOrMax.m" /* pathName
+                                                                            */
+};
+
+emlrtRTEInfo b_emlrtRTEI = {
     130,             /* lineNo */
     27,              /* colNo */
     "unaryMinOrMax", /* fName */
@@ -115,35 +142,7 @@ emlrtRTEInfo emlrtRTEI = {
                                                                             */
 };
 
-emlrtBCInfo s_emlrtBCI = {
-    -1,               /* iFirst */
-    -1,               /* iLast */
-    14,               /* lineNo */
-    21,               /* colNo */
-    "V",              /* aName */
-    "beyondNoReturn", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/beyondNoReturn.m", /* pName
-                                                                         */
-    0 /* checkKind */
-};
-
-emlrtRTEInfo q_emlrtRTEI = {
-    13,               /* lineNo */
-    27,               /* colNo */
-    "beyondNoReturn", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/beyondNoReturn.m" /* pName
-                                                                        */
-};
-
-emlrtRTEInfo r_emlrtRTEI = {
-    13,               /* lineNo */
-    34,               /* colNo */
-    "beyondNoReturn", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/beyondNoReturn.m" /* pName
-                                                                        */
-};
-
-emlrtRTEInfo s_emlrtRTEI =
+emlrtRTEInfo t_emlrtRTEI =
     {
         30,                    /* lineNo */
         21,                    /* colNo */

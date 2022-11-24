@@ -30,4 +30,11 @@ emlrtContext emlrtContextGlobal = {
     NULL                                                  /* fSigMem */
 };
 
+emlrtRTEInfo e_emlrtRTEI = {
+    2,                                                          /* lineNo */
+    5,                                                          /* colNo */
+    "diff_coeffs",                                              /* fName */
+    "/home/andrew/Dropbox/PathFinderInf/src/util/diff_coeffs.m" /* pName */
+};
+
 /* End of code generation (get_interior_ball_data.c) */

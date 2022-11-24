@@ -22,6 +22,9 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
 
     params = opionalExtras(varargin);
 
+    % get r* parameter used for determining regions of no return
+    params.r_star = get_r_star(phaseIn);
+
     % rotate inf valleys if required:
     [a,b,params] = Jordan_rotate(a,b,valleys,params);
     
@@ -30,11 +33,6 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
             = getInteriorBalls(phase_handles{1},freq,stationaryPoints,params.infContour,a,b, stationaryPointsOrders, ...
             params.numOscs, params.Hermite, phaseIn);
         %used to be getCovers(...), new code is almost the same
-
-    % test this new guy out
-    tic;
-    get_interior_ball_mex(phaseIn.', freq, stationaryPoints(1), uint32(stationaryPointsOrders(1)), params.numOscs);
-    new_time = toc;
         
 %     if standardQuadFlag
 %         [z, w_, dh] = GQfancy(covers, a, b, endPointIndices(1), endPointIndices(2), intersectionMatrix, Npts);
@@ -64,7 +62,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
     % refine the endpoints of the finite paths (not at SEs), as these need
     % to connect exactly to straight line contours inside of balls, but
     % currently these are based on coarse approximations.
-    quadIngredients = refine_finite_endpoints(quadIngredients, phaseIn, freq, params);
+%     quadIngredients = refine_finite_endpoints(quadIngredients, phaseIn, freq, params);
 
     %get quadrature points
 %     [z, w, HermiteInds] = makeQuadV3(quadIngredients, freq, Npts, phase_handles, covers, intersectionMatrix, params);
@@ -72,7 +70,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
 
     %make a plot of what's happened, if requested
     if params.plot
-        plotAll(covers, contours, z, a, b, params.infContour, stationaryPoints, HermiteInds, phaseIn);
+        plotAll(covers, contours, z, a, b, params.infContour, stationaryPoints, HermiteInds, phaseIn, valleys);
     elseif params.plotCovers
         plotCovers(covers);
     elseif params.plotContours

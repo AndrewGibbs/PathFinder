@@ -18,13 +18,13 @@
 #include "mwmathutil.h"
 
 /* Variable Definitions */
-static emlrtRSInfo r_emlrtRSI = {
+static emlrtRSInfo t_emlrtRSI = {
     10,                                                      /* lineNo */
     "exp",                                                   /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/elfun/exp.m" /* pathName */
 };
 
-static emlrtRSInfo s_emlrtRSI = {
+static emlrtRSInfo u_emlrtRSI = {
     33,                           /* lineNo */
     "applyScalarFunctionInPlace", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/"
@@ -49,11 +49,11 @@ void b_exp(const emlrtStack *sp, emxArray_creal_T *x)
   c_st.prev = &b_st;
   c_st.tls = b_st.tls;
   x_data = x->data;
-  st.site = &r_emlrtRSI;
+  st.site = &t_emlrtRSI;
   nx = x->size[0];
-  b_st.site = &s_emlrtRSI;
+  b_st.site = &u_emlrtRSI;
   if ((1 <= x->size[0]) && (x->size[0] > 2147483646)) {
-    c_st.site = &l_emlrtRSI;
+    c_st.site = &k_emlrtRSI;
     check_forloop_overflow_error(&c_st);
   }
   for (k = 0; k < nx; k++) {

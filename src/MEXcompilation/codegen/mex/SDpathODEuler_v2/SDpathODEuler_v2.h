@@ -23,11 +23,10 @@
 
 /* Function Declarations */
 void SDpathODEuler_v2(const emlrtStack *sp, const creal_T h0,
-                      const emxArray_creal_T *gCoeffs,
-                      const emxArray_creal_T *SPs,
-                      const emxArray_real_T *cover_radii,
+                      const emxArray_creal_T *gCoeffs, emxArray_creal_T *SPs,
+                      emxArray_real_T *cover_radii,
                       const emxArray_creal_T *valleys, real_T base_step_size,
-                      int64_T n_max, emxArray_real_T *p_log_out,
+                      int64_T n_max, real_T r_star, emxArray_real_T *p_log_out,
                       emxArray_creal_T *h_log_out, real_T valley_index_data[],
                       int32_T valley_index_size[2], real_T ball_index_data[],
                       int32_T ball_index_size[2], boolean_T *success);
