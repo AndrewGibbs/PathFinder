@@ -27,17 +27,6 @@ typedef struct {
 } rtDesignRangeCheckInfo;
 #endif /* typedef_rtDesignRangeCheckInfo */
 
-#ifndef typedef_rtEqualityCheckInfo
-#define typedef_rtEqualityCheckInfo
-typedef struct {
-  int32_T nDims;
-  int32_T lineNo;
-  int32_T colNo;
-  const char_T *fName;
-  const char_T *pName;
-} rtEqualityCheckInfo;
-#endif /* typedef_rtEqualityCheckInfo */
-
 #ifndef typedef_rtRunTimeErrorInfo
 #define typedef_rtRunTimeErrorInfo
 typedef struct {

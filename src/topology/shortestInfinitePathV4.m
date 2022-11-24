@@ -133,6 +133,30 @@ function Q = shortestInfinitePathV4(a,b,contours, covers, valleys, params)
     adj_mat(SExs_range,SEns_range) = SExs_to_SEns_adj;
     adj_mat(SEns_range,CPs_range)= SEns_to_CPs_adj;
 
+     % it will be useful to group these points together:
+     CPs_and_SExs_and_SEns = [CPs SExs SEns];
+
+    % now do one final loop over SPs, to connect any points inside that
+    % ball
+    for n=1:num_CPs
+        % initialise with points on boundary of ball
+        indices_in_nth_ball_closure = [];%covers{n}.steepestExits
+        for SE = covers{n}.steepestExits
+            indices_in_nth_ball_closure = [indices_in_nth_ball_closure find(SE==CPs_and_SExs_and_SEns)];
+        end
+        % now add all points in interior of ball to same set
+        for m=1:length(CPs_and_SExs_and_SEns)
+            if covers{n}.isIn(CPs_and_SExs_and_SEns(m))
+                indices_in_nth_ball_closure = [indices_in_nth_ball_closure m];
+            end
+        end
+        for p=indices_in_nth_ball_closure
+            for q=indices_in_nth_ball_closure
+                adj_mat(p,q) = 1;
+            end
+        end
+    end
+
     % now convert to symmetric logical form
     adj_mat = (adj_mat+adj_mat')>0;
 
@@ -143,7 +167,7 @@ function Q = shortestInfinitePathV4(a,b,contours, covers, valleys, params)
         if params.infContour(n)
             for m = 1:num_valleys
                 if abs(ab(n) - valleys(m)) < 10*eps
-                    endPointIndices(n) = num_CPs + m;
+                    endPointIndices(n) = num_CPs + num_SExs + num_SEns + m;
                     break
                 end
             end
@@ -157,22 +181,20 @@ function Q = shortestInfinitePathV4(a,b,contours, covers, valleys, params)
         end
     end
 
-    if min(endPointIndices) == 0
+    if min(endPointIndices) <= 0
         error('Could not find endpoints in valleys or steepest exits');
     end
 
     %% now compute shortest path and allocate quadrature 'ingredients'
 %      Gr = graph(adj_mat,'upper');
-%      [seq, ~] =shortestpath(Gr,endPointIndices(1),endPointIndices(2));
      [~, seq] = dijkstra(adj_mat*1,endPointIndices(2),endPointIndices(1));
-
-     % it will be useful to group these points together:
-     CPs_and_SExs_and_SEns = [CPs SExs SEns];
 
      all_to_CP_map = @(n) n;
      all_to_SEx_map = @(n) n-num_CPs;%num_SEns
      all_to_SEn_map = @(n) n-num_CPs-num_SExs;
      all_to_valley_map = @(n) n-num_CPs-num_SExs-num_SEns;
+
+     CPs_submatrix = adj_mat(1:num_CPs,1:(num_CPs+num_SExs+num_SEns));
 
     % turn the path into instructions for quadrature
     for n=1:(length(seq)-1)
@@ -210,6 +232,25 @@ function Q = shortestInfinitePathV4(a,b,contours, covers, valleys, params)
                 Q{n}.type = 'strLn';
                 Q{n}.a = CPs_and_SExs_and_SEns(start_index);
                 Q{n}.b = CPs_and_SExs_and_SEns(end_index);
+%                 Q{n}.Nscale = 1;
+                r_min = inf;
+                for m=1:num_CPs
+                    if adj_mat(m,start_index) && adj_mat(m,end_index) && covers{m}.radius>0
+                        r_min = min(r_min, covers{m}.radius);
+                    end
+                end
+%                 bma_scaled = abs(b-a)/r_min;
+%                 r = 2 + bma_scaled;
+%                 rho_est = 1/bma_scaled *(r+sqrt(r^2-bma_scaled^2));
+%                 Q{n}.Nscale = log(2+sqrt(3))/log(rho_est);
+
+                Q{n}.Nscale = max(1,abs(Q{n}.a-Q{n}.b)/r_min);
+%                 for B = covers
+%                     if (ismember(Q{n}.a,B{1}.steepestExits) && ismember(Q{n}.b,B{1}.steepestExits) ) 
+%                             Q{n}.Nscale = max(1,abs(Q{n}.a-Q{n}.b)/B{1}.radius);
+%                         break;
+%                     end
+%                 end
             end
         end
     end

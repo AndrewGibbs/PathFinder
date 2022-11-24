@@ -31,12 +31,6 @@
   },
   {
     "directory": "/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation/codegen/mex/SDpathODEuler_v2",
-    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDpathODEuler_v2_mex -c  mod.c -o build/glnxa64/mod.o",
-    "file": "mod.c",
-    "output": "build/glnxa64/mod.o"
-  },
-  {
-    "directory": "/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation/codegen/mex/SDpathODEuler_v2",
     "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDpathODEuler_v2_mex -c  angle.c -o build/glnxa64/angle.o",
     "file": "angle.c",
     "output": "build/glnxa64/angle.o"
@@ -46,6 +40,12 @@
     "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDpathODEuler_v2_mex -c  abs.c -o build/glnxa64/abs.o",
     "file": "abs.c",
     "output": "build/glnxa64/abs.o"
+  },
+  {
+    "directory": "/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation/codegen/mex/SDpathODEuler_v2",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDpathODEuler_v2_mex -c  mod.c -o build/glnxa64/mod.o",
+    "file": "mod.c",
+    "output": "build/glnxa64/mod.o"
   },
   {
     "directory": "/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation/codegen/mex/SDpathODEuler_v2",
