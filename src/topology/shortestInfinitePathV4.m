@@ -1,6 +1,6 @@
 function Q = shortestInfinitePathV4(a,b,contours, covers, valleys, params)
 % TO DO:
-% * Super special case of two steepest exits in the same ball.
+% * Super special case of two steepest entrances in the same ball.
 
 %% PART ONE: Get all connections as a result of overlapping/sharing of balls
     SEx_count = 0;

@@ -20,79 +20,123 @@
 
 /* Variable Definitions */
 static emlrtRSInfo emlrtRSI = {
-    15,                              /* lineNo */
+    12,                              /* lineNo */
     "SDquadODEulerNEwtonCorrection", /* fcnName */
     "/home/andrew/Dropbox/PathFinderInf/src/contours/"
     "SDquadODEulerNEwtonCorrection.m" /* pathName */
 };
 
 static emlrtRSInfo b_emlrtRSI = {
-    24,                              /* lineNo */
+    15,                              /* lineNo */
     "SDquadODEulerNEwtonCorrection", /* fcnName */
     "/home/andrew/Dropbox/PathFinderInf/src/contours/"
     "SDquadODEulerNEwtonCorrection.m" /* pathName */
 };
 
 static emlrtRSInfo c_emlrtRSI = {
+    24,                              /* lineNo */
+    "SDquadODEulerNEwtonCorrection", /* fcnName */
+    "/home/andrew/Dropbox/PathFinderInf/src/contours/"
+    "SDquadODEulerNEwtonCorrection.m" /* pathName */
+};
+
+static emlrtRSInfo d_emlrtRSI = {
+    26,                              /* lineNo */
+    "SDquadODEulerNEwtonCorrection", /* fcnName */
+    "/home/andrew/Dropbox/PathFinderInf/src/contours/"
+    "SDquadODEulerNEwtonCorrection.m" /* pathName */
+};
+
+static emlrtRSInfo e_emlrtRSI = {
+    7,                                                           /* lineNo */
+    "ref/ref",                                                   /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/ref.m" /* pathName */
+};
+
+static emlrtRSInfo f_emlrtRSI = {
     17,                                                        /* lineNo */
     "max",                                                     /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/datafun/max.m" /* pathName */
 };
 
-static emlrtRSInfo d_emlrtRSI = {
+static emlrtRSInfo g_emlrtRSI = {
     38,         /* lineNo */
     "minOrMax", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/minOrMax.m" /* pathName
                                                                        */
 };
 
-static emlrtRSInfo e_emlrtRSI = {
+static emlrtRSInfo h_emlrtRSI = {
     77,        /* lineNo */
     "maximum", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/minOrMax.m" /* pathName
                                                                        */
 };
 
-static emlrtRSInfo f_emlrtRSI = {
+static emlrtRSInfo i_emlrtRSI = {
     169,             /* lineNo */
     "unaryMinOrMax", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/unaryMinOrMax.m" /* pathName
                                                                             */
 };
 
-static emlrtRSInfo g_emlrtRSI = {
+static emlrtRSInfo j_emlrtRSI = {
     62,                      /* lineNo */
     "vectorMinOrMaxInPlace", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/"
     "vectorMinOrMaxInPlace.m" /* pathName */
 };
 
-static emlrtRSInfo h_emlrtRSI = {
+static emlrtRSInfo k_emlrtRSI = {
     54,                      /* lineNo */
     "vectorMinOrMaxInPlace", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/"
     "vectorMinOrMaxInPlace.m" /* pathName */
 };
 
-static emlrtRSInfo i_emlrtRSI = {
+static emlrtRSInfo l_emlrtRSI = {
     103,         /* lineNo */
     "findFirst", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/"
     "vectorMinOrMaxInPlace.m" /* pathName */
 };
 
-static emlrtRSInfo j_emlrtRSI = {
+static emlrtRSInfo m_emlrtRSI = {
     21,                               /* lineNo */
     "eml_int_forloop_overflow_check", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/eml/"
     "eml_int_forloop_overflow_check.m" /* pathName */
 };
 
-static emlrtRSInfo k_emlrtRSI = {
+static emlrtRSInfo n_emlrtRSI = {
     120,                        /* lineNo */
     "minOrMaxRealVectorKernel", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/"
     "vectorMinOrMaxInPlace.m" /* pathName */
+};
+
+static emlrtBCInfo emlrtBCI = {
+    -1,                                              /* iFirst */
+    -1,                                              /* iLast */
+    50,                                              /* lineNo */
+    79,                                              /* colNo */
+    "h_quad",                                        /* aName */
+    "SDquadODEulerNEwtonCorrection/get_Newton_step", /* fName */
+    "/home/andrew/Dropbox/PathFinderInf/src/contours/"
+    "SDquadODEulerNEwtonCorrection.m", /* pName */
+    0                                  /* checkKind */
+};
+
+static emlrtBCInfo b_emlrtBCI = {
+    -1,                                              /* iFirst */
+    -1,                                              /* iLast */
+    50,                                              /* lineNo */
+    46,                                              /* colNo */
+    "p_quad",                                        /* aName */
+    "SDquadODEulerNEwtonCorrection/get_Newton_step", /* fName */
+    "/home/andrew/Dropbox/PathFinderInf/src/contours/"
+    "SDquadODEulerNEwtonCorrection.m", /* pName */
+    0                                  /* checkKind */
 };
 
 static emlrtRTEInfo emlrtRTEI = {
@@ -103,35 +147,11 @@ static emlrtRTEInfo emlrtRTEI = {
                                                                             */
 };
 
-static emlrtBCInfo emlrtBCI = {
-    -1,                              /* iFirst */
-    -1,                              /* iLast */
-    26,                              /* lineNo */
-    86,                              /* colNo */
-    "h_quad",                        /* aName */
-    "SDquadODEulerNEwtonCorrection", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/"
-    "SDquadODEulerNEwtonCorrection.m", /* pName */
-    0                                  /* checkKind */
-};
-
-static emlrtBCInfo b_emlrtBCI = {
-    -1,                              /* iFirst */
-    -1,                              /* iLast */
-    26,                              /* lineNo */
-    53,                              /* colNo */
-    "p_quad",                        /* aName */
-    "SDquadODEulerNEwtonCorrection", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/"
-    "SDquadODEulerNEwtonCorrection.m", /* pName */
-    0                                  /* checkKind */
-};
-
 static emlrtBCInfo c_emlrtBCI = {
     -1,                              /* iFirst */
     -1,                              /* iLast */
     25,                              /* lineNo */
-    138,                             /* colNo */
+    44,                              /* colNo */
     "h_quad",                        /* aName */
     "SDquadODEulerNEwtonCorrection", /* fName */
     "/home/andrew/Dropbox/PathFinderInf/src/contours/"
@@ -140,30 +160,6 @@ static emlrtBCInfo c_emlrtBCI = {
 };
 
 static emlrtBCInfo d_emlrtBCI = {
-    -1,                              /* iFirst */
-    -1,                              /* iLast */
-    25,                              /* lineNo */
-    103,                             /* colNo */
-    "h_quad",                        /* aName */
-    "SDquadODEulerNEwtonCorrection", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/"
-    "SDquadODEulerNEwtonCorrection.m", /* pName */
-    0                                  /* checkKind */
-};
-
-static emlrtBCInfo e_emlrtBCI = {
-    -1,                              /* iFirst */
-    -1,                              /* iLast */
-    25,                              /* lineNo */
-    70,                              /* colNo */
-    "p_quad",                        /* aName */
-    "SDquadODEulerNEwtonCorrection", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/"
-    "SDquadODEulerNEwtonCorrection.m", /* pName */
-    0                                  /* checkKind */
-};
-
-static emlrtBCInfo f_emlrtBCI = {
     -1,                              /* iFirst */
     -1,                              /* iLast */
     21,                              /* lineNo */
@@ -175,7 +171,7 @@ static emlrtBCInfo f_emlrtBCI = {
     0                                  /* checkKind */
 };
 
-static emlrtBCInfo g_emlrtBCI = {
+static emlrtBCInfo e_emlrtBCI = {
     -1,                              /* iFirst */
     -1,                              /* iLast */
     20,                              /* lineNo */
@@ -196,7 +192,7 @@ static emlrtECInfo emlrtECI = {
     "SDquadODEulerNEwtonCorrection.m" /* pName */
 };
 
-static emlrtBCInfo h_emlrtBCI = {
+static emlrtBCInfo f_emlrtBCI = {
     -1,                              /* iFirst */
     -1,                              /* iLast */
     9,                               /* lineNo */
@@ -208,7 +204,7 @@ static emlrtBCInfo h_emlrtBCI = {
     0                                  /* checkKind */
 };
 
-static emlrtBCInfo i_emlrtBCI = {
+static emlrtBCInfo g_emlrtBCI = {
     -1,                              /* iFirst */
     -1,                              /* iLast */
     9,                               /* lineNo */
@@ -220,7 +216,7 @@ static emlrtBCInfo i_emlrtBCI = {
     0                                  /* checkKind */
 };
 
-static emlrtBCInfo j_emlrtBCI = {
+static emlrtBCInfo h_emlrtBCI = {
     -1,                              /* iFirst */
     -1,                              /* iLast */
     15,                              /* lineNo */
@@ -232,7 +228,7 @@ static emlrtBCInfo j_emlrtBCI = {
     0                                  /* checkKind */
 };
 
-static emlrtBCInfo k_emlrtBCI = {
+static emlrtBCInfo i_emlrtBCI = {
     -1,                              /* iFirst */
     -1,                              /* iLast */
     15,                              /* lineNo */
@@ -244,7 +240,7 @@ static emlrtBCInfo k_emlrtBCI = {
     0                                  /* checkKind */
 };
 
-static emlrtBCInfo l_emlrtBCI = {
+static emlrtBCInfo j_emlrtBCI = {
     -1,                              /* iFirst */
     -1,                              /* iLast */
     21,                              /* lineNo */
@@ -256,7 +252,7 @@ static emlrtBCInfo l_emlrtBCI = {
     0                                  /* checkKind */
 };
 
-static emlrtBCInfo m_emlrtBCI = {
+static emlrtBCInfo k_emlrtBCI = {
     -1,                              /* iFirst */
     -1,                              /* iLast */
     21,                              /* lineNo */
@@ -268,12 +264,36 @@ static emlrtBCInfo m_emlrtBCI = {
     0                                  /* checkKind */
 };
 
+static emlrtBCInfo l_emlrtBCI = {
+    -1,                              /* iFirst */
+    -1,                              /* iLast */
+    27,                              /* lineNo */
+    32,                              /* colNo */
+    "h_quad",                        /* aName */
+    "SDquadODEulerNEwtonCorrection", /* fName */
+    "/home/andrew/Dropbox/PathFinderInf/src/contours/"
+    "SDquadODEulerNEwtonCorrection.m", /* pName */
+    0                                  /* checkKind */
+};
+
+static emlrtBCInfo m_emlrtBCI = {
+    -1,                              /* iFirst */
+    -1,                              /* iLast */
+    27,                              /* lineNo */
+    20,                              /* colNo */
+    "h_quad",                        /* aName */
+    "SDquadODEulerNEwtonCorrection", /* fName */
+    "/home/andrew/Dropbox/PathFinderInf/src/contours/"
+    "SDquadODEulerNEwtonCorrection.m", /* pName */
+    0                                  /* checkKind */
+};
+
 static emlrtBCInfo n_emlrtBCI = {
     -1,                              /* iFirst */
     -1,                              /* iLast */
-    25,                              /* lineNo */
+    31,                              /* lineNo */
     32,                              /* colNo */
-    "h_quad",                        /* aName */
+    "Newton_success",                /* aName */
     "SDquadODEulerNEwtonCorrection", /* fName */
     "/home/andrew/Dropbox/PathFinderInf/src/contours/"
     "SDquadODEulerNEwtonCorrection.m", /* pName */
@@ -283,31 +303,7 @@ static emlrtBCInfo n_emlrtBCI = {
 static emlrtBCInfo o_emlrtBCI = {
     -1,                              /* iFirst */
     -1,                              /* iLast */
-    25,                              /* lineNo */
-    20,                              /* colNo */
-    "h_quad",                        /* aName */
-    "SDquadODEulerNEwtonCorrection", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/"
-    "SDquadODEulerNEwtonCorrection.m", /* pName */
-    0                                  /* checkKind */
-};
-
-static emlrtBCInfo p_emlrtBCI = {
-    -1,                              /* iFirst */
-    -1,                              /* iLast */
-    28,                              /* lineNo */
-    32,                              /* colNo */
-    "Newton_success",                /* aName */
-    "SDquadODEulerNEwtonCorrection", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/"
-    "SDquadODEulerNEwtonCorrection.m", /* pName */
-    0                                  /* checkKind */
-};
-
-static emlrtBCInfo q_emlrtBCI = {
-    -1,                              /* iFirst */
-    -1,                              /* iLast */
-    31,                              /* lineNo */
+    34,                              /* lineNo */
     32,                              /* colNo */
     "Newton_success",                /* aName */
     "SDquadODEulerNEwtonCorrection", /* fName */
@@ -379,7 +375,7 @@ static emlrtRTEInfo k_emlrtRTEI = {
     "SDquadODEulerNEwtonCorrection.m" /* pName */
 };
 
-static emlrtRSInfo l_emlrtRSI = {
+static emlrtRSInfo o_emlrtRSI = {
     9,                               /* lineNo */
     "SDquadODEulerNEwtonCorrection", /* fcnName */
     "/home/andrew/Dropbox/PathFinderInf/src/contours/"
@@ -456,15 +452,16 @@ void SDquadODEulerNEwtonCorrection(
   creal_T *h_quad_data;
   const real_T *p_coarse_data;
   const real_T *p_quad_data;
-  real_T b_im;
-  real_T b_re;
+  real_T Newton_step_im;
+  real_T Newton_step_re;
   real_T brm;
   real_T ex;
-  real_T freq_times_g_at_se_im;
-  real_T freq_times_g_at_se_re;
+  real_T freq_times_g_at_se_contents_im;
+  real_T freq_times_g_at_se_contents_re;
   real_T h0_im;
   real_T h0_re;
   real_T h_coarse_re;
+  real_T im;
   real_T re;
   real_T *Newton_success_data;
   real_T *r1;
@@ -500,6 +497,20 @@ void SDquadODEulerNEwtonCorrection(
   p_coarse_data = p_coarse->data;
   p_quad_data = p_quad->data;
   emlrtHeapReferenceStackEnterFcnR2012b((emlrtCTX)sp);
+  st.site = &emlrtRSI;
+  b_st.site = &e_emlrtRSI;
+  st.site = &emlrtRSI;
+  b_st.site = &e_emlrtRSI;
+  st.site = &emlrtRSI;
+  b_st.site = &e_emlrtRSI;
+  st.site = &emlrtRSI;
+  b_st.site = &e_emlrtRSI;
+  st.site = &emlrtRSI;
+  b_st.site = &e_emlrtRSI;
+  st.site = &emlrtRSI;
+  b_st.site = &e_emlrtRSI;
+  st.site = &emlrtRSI;
+  b_st.site = &e_emlrtRSI;
   /*      p_coarse = p_coarse*freq; */
   i = h_quad->size[0];
   h_quad->size[0] = p_quad->size[0];
@@ -519,29 +530,29 @@ void SDquadODEulerNEwtonCorrection(
     Newton_success_data[i] = 1.0;
   }
   if (gCoeffs->size[1] != 0) {
-    b_re = gCoeffs_data[0].re;
-    b_im = gCoeffs_data[0].im;
+    Newton_step_re = gCoeffs_data[0].re;
+    Newton_step_im = gCoeffs_data[0].im;
     i = gCoeffs->size[1];
     for (k = 0; k <= i - 2; k++) {
-      h0_re = h0.re * b_re - h0.im * b_im;
-      h0_im = h0.re * b_im + h0.im * b_re;
-      b_re = h0_re + gCoeffs_data[k + 1].re;
-      b_im = h0_im + gCoeffs_data[k + 1].im;
+      h0_re = h0.re * Newton_step_re - h0.im * Newton_step_im;
+      h0_im = h0.re * Newton_step_im + h0.im * Newton_step_re;
+      Newton_step_re = h0_re + gCoeffs_data[k + 1].re;
+      Newton_step_im = h0_im + gCoeffs_data[k + 1].im;
     }
   }
-  freq_times_g_at_se_re = freq * b_re;
-  freq_times_g_at_se_im = freq * b_im;
+  freq_times_g_at_se_contents_re = freq * Newton_step_re;
+  freq_times_g_at_se_contents_im = freq * Newton_step_im;
   if (1 > gCoeffs->size[1] - 1) {
     loop_ub = 0;
   } else {
     if (1 > gCoeffs->size[1]) {
-      emlrtDynamicBoundsCheckR2012b(1, 1, gCoeffs->size[1], &i_emlrtBCI,
+      emlrtDynamicBoundsCheckR2012b(1, 1, gCoeffs->size[1], &g_emlrtBCI,
                                     (emlrtCTX)sp);
     }
     if ((gCoeffs->size[1] - 1 < 1) ||
         (gCoeffs->size[1] - 1 > gCoeffs->size[1])) {
       emlrtDynamicBoundsCheckR2012b(gCoeffs->size[1] - 1, 1, gCoeffs->size[1],
-                                    &h_emlrtBCI, (emlrtCTX)sp);
+                                    &f_emlrtBCI, (emlrtCTX)sp);
     }
     loop_ub = gCoeffs->size[1] - 1;
   }
@@ -576,7 +587,7 @@ void SDquadODEulerNEwtonCorrection(
       dgCoeffs_data[i].im = r1[i] * gCoeffs_data[i].im;
     }
   } else {
-    st.site = &l_emlrtRSI;
+    st.site = &o_emlrtRSI;
     binary_expand_op(&st, dgCoeffs, gCoeffs, loop_ub - 1, r);
     dgCoeffs_data = dgCoeffs->data;
   }
@@ -587,7 +598,7 @@ void SDquadODEulerNEwtonCorrection(
   for (N = 0; N < i; N++) {
     /*  linearly interpolate coarse solve for initial guess */
     if (N + 1 > p_quad->size[0]) {
-      emlrtDynamicBoundsCheckR2012b(N + 1, 1, p_quad->size[0], &j_emlrtBCI,
+      emlrtDynamicBoundsCheckR2012b(N + 1, 1, p_quad->size[0], &h_emlrtBCI,
                                     (emlrtCTX)sp);
     }
     i1 = r2->size[0];
@@ -616,23 +627,23 @@ void SDquadODEulerNEwtonCorrection(
         last++;
       }
     }
-    st.site = &emlrtRSI;
+    st.site = &b_emlrtRSI;
     loop_ub = r3->size[0];
     for (i1 = 0; i1 < loop_ub; i1++) {
       if (r5[i1] > p_coarse->size[0]) {
-        emlrtDynamicBoundsCheckR2012b(r5[i1], 1, p_coarse->size[0], &k_emlrtBCI,
+        emlrtDynamicBoundsCheckR2012b(r5[i1], 1, p_coarse->size[0], &i_emlrtBCI,
                                       &st);
       }
     }
-    b_st.site = &c_emlrtRSI;
-    c_st.site = &d_emlrtRSI;
-    d_st.site = &e_emlrtRSI;
+    b_st.site = &f_emlrtRSI;
+    c_st.site = &g_emlrtRSI;
+    d_st.site = &h_emlrtRSI;
     if (r3->size[0] < 1) {
       emlrtErrorWithMessageIdR2018a(
           &d_st, &emlrtRTEI, "Coder:toolbox:eml_min_or_max_varDimZero",
           "Coder:toolbox:eml_min_or_max_varDimZero", 0);
     }
-    e_st.site = &f_emlrtRSI;
+    e_st.site = &i_emlrtRSI;
     last = r3->size[0];
     if (r3->size[0] <= 2) {
       if (r3->size[0] == 1) {
@@ -650,15 +661,15 @@ void SDquadODEulerNEwtonCorrection(
         }
       }
     } else {
-      f_st.site = &h_emlrtRSI;
+      f_st.site = &k_emlrtRSI;
       ex = p_coarse_data[r5[0] - 1];
       if (!muDoubleScalarIsNaN(ex)) {
         b_i = 1;
       } else {
         b_i = 0;
-        g_st.site = &i_emlrtRSI;
+        g_st.site = &l_emlrtRSI;
         if (r3->size[0] > 2147483646) {
-          h_st.site = &j_emlrtRSI;
+          h_st.site = &m_emlrtRSI;
           b_check_forloop_overflow_error(&h_st);
         }
         k = 2;
@@ -675,12 +686,12 @@ void SDquadODEulerNEwtonCorrection(
       if (b_i == 0) {
         b_i = 1;
       } else {
-        f_st.site = &g_emlrtRSI;
+        f_st.site = &j_emlrtRSI;
         ex = p_coarse_data[r5[b_i - 1] - 1];
         loop_ub = b_i + 1;
-        g_st.site = &k_emlrtRSI;
+        g_st.site = &n_emlrtRSI;
         if ((b_i + 1 <= r3->size[0]) && (r3->size[0] > 2147483646)) {
-          h_st.site = &j_emlrtRSI;
+          h_st.site = &m_emlrtRSI;
           b_check_forloop_overflow_error(&h_st);
         }
         for (k = loop_ub; k <= last; k++) {
@@ -696,234 +707,217 @@ void SDquadODEulerNEwtonCorrection(
     /* blank. */
     /*  get intermediate step size */
     if (N + 1 > p_quad->size[0]) {
-      emlrtDynamicBoundsCheckR2012b(N + 1, 1, p_quad->size[0], &g_emlrtBCI,
+      emlrtDynamicBoundsCheckR2012b(N + 1, 1, p_quad->size[0], &e_emlrtBCI,
                                     (emlrtCTX)sp);
     }
     if ((b_i < 1) || (b_i > h_coarse->size[0])) {
-      emlrtDynamicBoundsCheckR2012b(b_i, 1, h_coarse->size[0], &f_emlrtBCI,
+      emlrtDynamicBoundsCheckR2012b(b_i, 1, h_coarse->size[0], &d_emlrtBCI,
                                     (emlrtCTX)sp);
     }
     if (dgCoeffs->size[1] != 0) {
-      b_re = dgCoeffs_data[0].re;
-      b_im = dgCoeffs_data[0].im;
+      Newton_step_re = dgCoeffs_data[0].re;
+      Newton_step_im = dgCoeffs_data[0].im;
       i1 = dgCoeffs->size[1];
       for (k = 0; k <= i1 - 2; k++) {
         h0_im = h_coarse_data[b_i - 1].re;
         h0_re = h_coarse_data[b_i - 1].im;
-        h_coarse_re = h0_im * b_re - h0_re * b_im;
-        h0_im = h0_im * b_im + h0_re * b_re;
-        b_re = h_coarse_re + dgCoeffs_data[k + 1].re;
-        b_im = h0_im + dgCoeffs_data[k + 1].im;
+        h_coarse_re = h0_im * Newton_step_re - h0_re * Newton_step_im;
+        h0_im = h0_im * Newton_step_im + h0_re * Newton_step_re;
+        Newton_step_re = h_coarse_re + dgCoeffs_data[k + 1].re;
+        Newton_step_im = h0_im + dgCoeffs_data[k + 1].im;
       }
     }
-    if (b_im == 0.0) {
+    if (Newton_step_im == 0.0) {
       re = 0.0;
-      h0_re = 1.0 / b_re;
-    } else if (b_re == 0.0) {
-      re = 1.0 / b_im;
-      h0_re = 0.0;
+      im = 1.0 / Newton_step_re;
+    } else if (Newton_step_re == 0.0) {
+      re = 1.0 / Newton_step_im;
+      im = 0.0;
     } else {
-      brm = muDoubleScalarAbs(b_re);
-      h0_im = muDoubleScalarAbs(b_im);
+      brm = muDoubleScalarAbs(Newton_step_re);
+      h0_im = muDoubleScalarAbs(Newton_step_im);
       if (brm > h0_im) {
-        brm = b_im / b_re;
-        h0_im = b_re + brm * b_im;
+        brm = Newton_step_im / Newton_step_re;
+        h0_im = Newton_step_re + brm * Newton_step_im;
         re = brm / h0_im;
-        h0_re = (1.0 - brm * 0.0) / h0_im;
+        im = (1.0 - brm * 0.0) / h0_im;
       } else if (h0_im == brm) {
-        if (b_re > 0.0) {
-          h_coarse_re = 0.5;
+        if (Newton_step_re > 0.0) {
+          h0_re = 0.5;
         } else {
-          h_coarse_re = -0.5;
+          h0_re = -0.5;
         }
-        if (b_im > 0.0) {
+        if (Newton_step_im > 0.0) {
           h0_im = 0.5;
         } else {
           h0_im = -0.5;
         }
-        re = (0.0 * h_coarse_re + h0_im) / brm;
-        h0_re = (h_coarse_re - 0.0 * h0_im) / brm;
+        re = (0.0 * h0_re + h0_im) / brm;
+        im = (h0_re - 0.0 * h0_im) / brm;
       } else {
-        brm = b_re / b_im;
-        h0_im = b_im + brm * b_re;
+        brm = Newton_step_re / Newton_step_im;
+        h0_im = Newton_step_im + brm * Newton_step_re;
         re = (brm * 0.0 + 1.0) / h0_im;
-        h0_re = brm / h0_im;
+        im = brm / h0_im;
       }
     }
-    if (h0_re == 0.0) {
+    if (im == 0.0) {
       re /= freq;
-      h0_re = 0.0;
+      im = 0.0;
     } else if (re == 0.0) {
       re = 0.0;
-      h0_re /= freq;
+      im /= freq;
     } else {
       re /= freq;
-      h0_re /= freq;
+      im /= freq;
     }
     if (N + 1 > h_quad->size[0]) {
-      emlrtDynamicBoundsCheckR2012b(N + 1, 1, h_quad->size[0], &m_emlrtBCI,
+      emlrtDynamicBoundsCheckR2012b(N + 1, 1, h_quad->size[0], &k_emlrtBCI,
                                     (emlrtCTX)sp);
     }
     if (b_i > h_coarse->size[0]) {
-      emlrtDynamicBoundsCheckR2012b(b_i, 1, h_coarse->size[0], &l_emlrtBCI,
+      emlrtDynamicBoundsCheckR2012b(b_i, 1, h_coarse->size[0], &j_emlrtBCI,
                                     (emlrtCTX)sp);
     }
     h0_im = p_quad_data[N] - ex;
     h_quad_data[N].re = h_coarse_data[b_i - 1].re + h0_im * re;
     if (b_i > h_coarse->size[0]) {
-      emlrtDynamicBoundsCheckR2012b(b_i, 1, h_coarse->size[0], &l_emlrtBCI,
+      emlrtDynamicBoundsCheckR2012b(b_i, 1, h_coarse->size[0], &j_emlrtBCI,
                                     (emlrtCTX)sp);
     }
     if (N + 1 > h_quad->size[0]) {
-      emlrtDynamicBoundsCheckR2012b(N + 1, 1, h_quad->size[0], &m_emlrtBCI,
+      emlrtDynamicBoundsCheckR2012b(N + 1, 1, h_quad->size[0], &k_emlrtBCI,
                                     (emlrtCTX)sp);
     }
-    h_quad_data[N].im = h_coarse_data[b_i - 1].im + h0_im * h0_re;
+    h_quad_data[N].im = h_coarse_data[b_i - 1].im + h0_im * im;
     /*  Newton corrector step */
-    st.site = &b_emlrtRSI;
+    st.site = &c_emlrtRSI;
     if ((1U <= NewtonIts) && (NewtonIts > 4294967294U)) {
-      b_st.site = &j_emlrtRSI;
+      b_st.site = &m_emlrtRSI;
       check_forloop_overflow_error(&b_st);
     }
     last = 0;
     exitg1 = false;
     while ((!exitg1) && (last <= (int32_T)NewtonIts - 1)) {
-      if (N + 1 > p_quad->size[0]) {
-        emlrtDynamicBoundsCheckR2012b(N + 1, 1, p_quad->size[0], &e_emlrtBCI,
-                                      (emlrtCTX)sp);
-      }
-      if (N + 1 > h_quad->size[0]) {
-        emlrtDynamicBoundsCheckR2012b(N + 1, 1, h_quad->size[0], &d_emlrtBCI,
-                                      (emlrtCTX)sp);
-      }
-      if (gCoeffs->size[1] != 0) {
-        b_re = gCoeffs_data[0].re;
-        b_im = gCoeffs_data[0].im;
-        i1 = gCoeffs->size[1];
-        for (k = 0; k <= i1 - 2; k++) {
-          h_coarse_re = h_quad_data[N].re;
-          brm = h_quad_data[N].im;
-          h0_re = h_coarse_re * b_re - brm * b_im;
-          h0_im = h_coarse_re * b_im + brm * b_re;
-          b_re = h0_re + gCoeffs_data[k + 1].re;
-          b_im = h0_im + gCoeffs_data[k + 1].im;
-        }
-      }
       if (N + 1 > h_quad->size[0]) {
         emlrtDynamicBoundsCheckR2012b(N + 1, 1, h_quad->size[0], &c_emlrtBCI,
                                       (emlrtCTX)sp);
       }
       if (dgCoeffs->size[1] != 0) {
         re = dgCoeffs_data[0].re;
-        h0_im = dgCoeffs_data[0].im;
+        im = dgCoeffs_data[0].im;
         i1 = dgCoeffs->size[1];
         for (k = 0; k <= i1 - 2; k++) {
           h_coarse_re = h_quad_data[N].re;
           brm = h_quad_data[N].im;
-          h0_re = h_coarse_re * re - brm * h0_im;
-          h0_im = h_coarse_re * h0_im + brm * re;
+          h0_re = h_coarse_re * re - brm * im;
+          h0_im = h_coarse_re * im + brm * re;
           re = h0_re + dgCoeffs_data[k + 1].re;
-          h0_im += dgCoeffs_data[k + 1].im;
+          im = h0_im + dgCoeffs_data[k + 1].im;
         }
       }
-      b_re = (-freq_times_g_at_se_re - 0.0 * p_quad_data[N]) + freq * b_re;
-      ex = (-freq_times_g_at_se_im - p_quad_data[N]) + freq * b_im;
-      h_coarse_re = freq * re;
-      h0_re = freq * h0_im;
-      if (h0_re == 0.0) {
-        if (ex == 0.0) {
-          re = b_re / h_coarse_re;
-          h0_im = 0.0;
-        } else if (b_re == 0.0) {
-          re = 0.0;
-          h0_im = ex / h_coarse_re;
-        } else {
-          re = b_re / h_coarse_re;
-          h0_im = ex / h_coarse_re;
-        }
-      } else if (h_coarse_re == 0.0) {
-        if (b_re == 0.0) {
-          re = ex / h0_re;
-          h0_im = 0.0;
-        } else if (ex == 0.0) {
-          re = 0.0;
-          h0_im = -(b_re / h0_re);
-        } else {
-          re = ex / h0_re;
-          h0_im = -(b_re / h0_re);
-        }
-      } else {
-        brm = muDoubleScalarAbs(h_coarse_re);
-        h0_im = muDoubleScalarAbs(h0_re);
-        if (brm > h0_im) {
-          brm = h0_re / h_coarse_re;
-          h0_im = h_coarse_re + brm * h0_re;
-          re = (b_re + brm * ex) / h0_im;
-          h0_im = (ex - brm * b_re) / h0_im;
-        } else if (h0_im == brm) {
-          if (h_coarse_re > 0.0) {
-            h_coarse_re = 0.5;
-          } else {
-            h_coarse_re = -0.5;
-          }
-          if (h0_re > 0.0) {
-            h0_im = 0.5;
-          } else {
-            h0_im = -0.5;
-          }
-          re = (b_re * h_coarse_re + ex * h0_im) / brm;
-          h0_im = (ex * h_coarse_re - b_re * h0_im) / brm;
-        } else {
-          brm = h_coarse_re / h0_re;
-          h0_im = h0_re + brm * h_coarse_re;
-          re = (brm * b_re + ex) / h0_im;
-          h0_im = (brm * ex - b_re) / h0_im;
-        }
-      }
-      if (N + 1 > h_quad->size[0]) {
-        emlrtDynamicBoundsCheckR2012b(N + 1, 1, h_quad->size[0], &o_emlrtBCI,
-                                      (emlrtCTX)sp);
-      }
-      h_quad_data[N].re -= re;
-      if (N + 1 > h_quad->size[0]) {
-        emlrtDynamicBoundsCheckR2012b(N + 1, 1, h_quad->size[0], &n_emlrtBCI,
-                                      (emlrtCTX)sp);
-      }
-      h_quad_data[N].im -= h0_im;
+      st.site = &d_emlrtRSI;
       if (N + 1 > p_quad->size[0]) {
         emlrtDynamicBoundsCheckR2012b(N + 1, 1, p_quad->size[0], &b_emlrtBCI,
-                                      (emlrtCTX)sp);
+                                      &st);
       }
       if (N + 1 > h_quad->size[0]) {
         emlrtDynamicBoundsCheckR2012b(N + 1, 1, h_quad->size[0], &emlrtBCI,
-                                      (emlrtCTX)sp);
+                                      &st);
       }
       if (gCoeffs->size[1] != 0) {
-        b_re = gCoeffs_data[0].re;
-        b_im = gCoeffs_data[0].im;
+        Newton_step_re = gCoeffs_data[0].re;
+        Newton_step_im = gCoeffs_data[0].im;
         i1 = gCoeffs->size[1];
         for (k = 0; k <= i1 - 2; k++) {
           h_coarse_re = h_quad_data[N].re;
           brm = h_quad_data[N].im;
-          h0_re = h_coarse_re * b_re - brm * b_im;
-          h0_im = h_coarse_re * b_im + brm * b_re;
-          b_re = h0_re + gCoeffs_data[k + 1].re;
-          b_im = h0_im + gCoeffs_data[k + 1].im;
+          h0_re = h_coarse_re * Newton_step_re - brm * Newton_step_im;
+          h0_im = h_coarse_re * Newton_step_im + brm * Newton_step_re;
+          Newton_step_re = h0_re + gCoeffs_data[k + 1].re;
+          Newton_step_im = h0_im + gCoeffs_data[k + 1].im;
         }
       }
-      b_re = (freq_times_g_at_se_re + 0.0 * p_quad_data[N]) - freq * b_re;
-      b_im = (freq_times_g_at_se_im + p_quad_data[N]) - freq * b_im;
-      if (muDoubleScalarHypot(b_re, b_im) < NewtonThresh) {
+      Newton_step_re =
+          (-freq_times_g_at_se_contents_re - 0.0 * p_quad_data[N]) +
+          freq * Newton_step_re;
+      ex = (-freq_times_g_at_se_contents_im - p_quad_data[N]) +
+           freq * Newton_step_im;
+      h0_re = freq * re;
+      h_coarse_re = freq * im;
+      if (h_coarse_re == 0.0) {
+        if (ex == 0.0) {
+          re = Newton_step_re / h0_re;
+          im = 0.0;
+        } else if (Newton_step_re == 0.0) {
+          re = 0.0;
+          im = ex / h0_re;
+        } else {
+          re = Newton_step_re / h0_re;
+          im = ex / h0_re;
+        }
+      } else if (h0_re == 0.0) {
+        if (Newton_step_re == 0.0) {
+          re = ex / h_coarse_re;
+          im = 0.0;
+        } else if (ex == 0.0) {
+          re = 0.0;
+          im = -(Newton_step_re / h_coarse_re);
+        } else {
+          re = ex / h_coarse_re;
+          im = -(Newton_step_re / h_coarse_re);
+        }
+      } else {
+        brm = muDoubleScalarAbs(h0_re);
+        h0_im = muDoubleScalarAbs(h_coarse_re);
+        if (brm > h0_im) {
+          brm = h_coarse_re / h0_re;
+          h0_im = h0_re + brm * h_coarse_re;
+          re = (Newton_step_re + brm * ex) / h0_im;
+          im = (ex - brm * Newton_step_re) / h0_im;
+        } else if (h0_im == brm) {
+          if (h0_re > 0.0) {
+            h0_re = 0.5;
+          } else {
+            h0_re = -0.5;
+          }
+          if (h_coarse_re > 0.0) {
+            h0_im = 0.5;
+          } else {
+            h0_im = -0.5;
+          }
+          re = (Newton_step_re * h0_re + ex * h0_im) / brm;
+          im = (ex * h0_re - Newton_step_re * h0_im) / brm;
+        } else {
+          brm = h0_re / h_coarse_re;
+          h0_im = h_coarse_re + brm * h0_re;
+          re = (brm * Newton_step_re + ex) / h0_im;
+          im = (brm * ex - Newton_step_re) / h0_im;
+        }
+      }
+      if (N + 1 > h_quad->size[0]) {
+        emlrtDynamicBoundsCheckR2012b(N + 1, 1, h_quad->size[0], &m_emlrtBCI,
+                                      (emlrtCTX)sp);
+      }
+      h_quad_data[N].re -= re;
+      if (N + 1 > h_quad->size[0]) {
+        emlrtDynamicBoundsCheckR2012b(N + 1, 1, h_quad->size[0], &l_emlrtBCI,
+                                      (emlrtCTX)sp);
+      }
+      h_quad_data[N].im -= im;
+      /*              err = abs(freq_times_g_at_se+ 1i*p_quad(N) -
+       * freq*polyval(gCoeffs,h_quad(N))); */
+      if (muDoubleScalarHypot(re, im) < NewtonThresh) {
         if (N + 1 > Newton_success->size[0]) {
           emlrtDynamicBoundsCheckR2012b(N + 1, 1, Newton_success->size[0],
-                                        &p_emlrtBCI, (emlrtCTX)sp);
+                                        &n_emlrtBCI, (emlrtCTX)sp);
         }
         Newton_success_data[N] = last + 1U;
         exitg1 = true;
       } else if (last + 1U == NewtonIts) {
         if (N + 1 > Newton_success->size[0]) {
           emlrtDynamicBoundsCheckR2012b(N + 1, 1, Newton_success->size[0],
-                                        &q_emlrtBCI, (emlrtCTX)sp);
+                                        &o_emlrtBCI, (emlrtCTX)sp);
         }
         qY = last + 2U;
         if (last + 2U < last + 1U) {
@@ -986,51 +980,51 @@ void SDquadODEulerNEwtonCorrection(
   emxFree_creal_T(sp, &dgCoeffs);
   loop_ub = dhdp_quad->size[0];
   for (i = 0; i < loop_ub; i++) {
-    h_coarse_re = dhdp_quad_data[i].re;
-    h0_re = dhdp_quad_data[i].im;
-    if (h0_re == 0.0) {
+    h0_re = dhdp_quad_data[i].re;
+    h_coarse_re = dhdp_quad_data[i].im;
+    if (h_coarse_re == 0.0) {
       re = 0.0;
-      h0_re = 1.0 / h_coarse_re;
-    } else if (h_coarse_re == 0.0) {
-      re = 1.0 / h0_re;
-      h0_re = 0.0;
+      im = 1.0 / h0_re;
+    } else if (h0_re == 0.0) {
+      re = 1.0 / h_coarse_re;
+      im = 0.0;
     } else {
-      brm = muDoubleScalarAbs(h_coarse_re);
-      h0_im = muDoubleScalarAbs(h0_re);
+      brm = muDoubleScalarAbs(h0_re);
+      h0_im = muDoubleScalarAbs(h_coarse_re);
       if (brm > h0_im) {
-        brm = h0_re / h_coarse_re;
-        h0_im = h_coarse_re + brm * h0_re;
+        brm = h_coarse_re / h0_re;
+        h0_im = h0_re + brm * h_coarse_re;
         re = brm / h0_im;
-        h0_re = (1.0 - brm * 0.0) / h0_im;
+        im = (1.0 - brm * 0.0) / h0_im;
       } else if (h0_im == brm) {
-        if (h_coarse_re > 0.0) {
-          h_coarse_re = 0.5;
-        } else {
-          h_coarse_re = -0.5;
-        }
         if (h0_re > 0.0) {
+          h0_re = 0.5;
+        } else {
+          h0_re = -0.5;
+        }
+        if (h_coarse_re > 0.0) {
           h0_im = 0.5;
         } else {
           h0_im = -0.5;
         }
-        re = (0.0 * h_coarse_re + h0_im) / brm;
-        h0_re = (h_coarse_re - 0.0 * h0_im) / brm;
+        re = (0.0 * h0_re + h0_im) / brm;
+        im = (h0_re - 0.0 * h0_im) / brm;
       } else {
-        brm = h_coarse_re / h0_re;
-        h0_im = h0_re + brm * h_coarse_re;
+        brm = h0_re / h_coarse_re;
+        h0_im = h_coarse_re + brm * h0_re;
         re = (brm * 0.0 + 1.0) / h0_im;
-        h0_re = brm / h0_im;
+        im = brm / h0_im;
       }
     }
-    if (h0_re == 0.0) {
+    if (im == 0.0) {
       dhdp_quad_data[i].re = re / freq;
       dhdp_quad_data[i].im = 0.0;
     } else if (re == 0.0) {
       dhdp_quad_data[i].re = 0.0;
-      dhdp_quad_data[i].im = h0_re / freq;
+      dhdp_quad_data[i].im = im / freq;
     } else {
       dhdp_quad_data[i].re = re / freq;
-      dhdp_quad_data[i].im = h0_re / freq;
+      dhdp_quad_data[i].im = im / freq;
     }
   }
   emlrtHeapReferenceStackLeaveFcnR2012b((emlrtCTX)sp);

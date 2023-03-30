@@ -16,11 +16,20 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
 %k is the frequency parameter of the integral
 %
 %N is the number of points used per segment of the PathFinder routine
-    
+
+    params = optionalExtras(varargin,freq);
+
+    if length(phaseIn)<=2 % if linear phase
+        % contour can be computed instantly without approximation, reduce to this
+        [z,w] = linear_phase_NSD(a,b,freq,phaseIn(1),phaseIn(2),Npts);
+        if params.plot
+            plotAll([], [], z, a, b, params.infContour, [], [], [], []);
+        end
+        return;
+    end
+
     %get info about stationary points:
     [phase_handles, stationaryPoints, stationaryPointsOrders, valleys] = getInfoFromPhase(phaseIn);
-
-    params = opionalExtras(varargin);
 
     % get r* parameter used for determining regions of no return
     params.r_star = get_r_star(phaseIn);
@@ -31,7 +40,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
     %cover each stationary point:
     [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandidates, endPointIndices, standardQuadFlag]...
             = getInteriorBalls(phase_handles{1},freq,stationaryPoints,params.infContour,a,b, stationaryPointsOrders, ...
-            params.numOscs, params.Hermite, phaseIn);
+            params.numOscs, params.Hermite, phaseIn, params.ball_clump_thresh);
         %used to be getCovers(...), new code is almost the same
         
 %     if standardQuadFlag
@@ -48,7 +57,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
     contours = getContours(phaseIn, covers, valleys, clusters, clusterEndpoints, endPointIndices, params);
 
     %choose the path from a to b
-    quadIngredients = shortestInfinitePathV4(a,b,contours, covers, valleys, params);
+        quadIngredients = shortestInfinitePathV4(a,b,contours, covers, valleys, params);
 %     quadIngredients = shortestInfinitePathV3(contours, covers, intersectionMatrix, valleys, a, b, endPointIndices, params.infContour, HermiteCandidates,clusters);
     
     % filter out SD contours which are of much smaller value, or empty

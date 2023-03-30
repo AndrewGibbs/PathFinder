@@ -1,6 +1,6 @@
 clear all;
-close all;
-cd /home/andrew/Dropbox/PathFinderInf/src/MEXcompilation;
+% cd src/MEXcompilation/;
+% cd /home/andrew/Dropbox/PathFinderInf/src/MEXcompilation;
 % cd MEXcompilation;
 %SDpathODEuler_extend_coarse_path(self.coarseParam, self.coarsePath, self.phaseCoeffs, SPs, quad_params.global_step_size, int64(max_steps_before_fail), max(self.P0)/freq);
 % let's go through each argument in order:
@@ -12,4 +12,6 @@ step_size_type = coder.typeof(1.0);
 n_max_type = coder.typeof(int64(1));
 P_new_max_type = coder.typeof(1.0);
 
-codegen SDpathODEuler_extend_coarse_path -args {coarseParam_type, coarsePath_type, phaseCoeffs_type, SPs_type, step_size_type, n_max_type, P_new_max_type}
+codegen SDpathODEuler_extend_coarse_path -d src/MEXcompilation/ -args {coarseParam_type, coarsePath_type, phaseCoeffs_type, SPs_type, step_size_type, n_max_type, P_new_max_type}
+
+% cd ../..;
