@@ -65,49 +65,92 @@
             %new streamlined version of ODE solver, much simpler than orig
             %PathFinder:
             if strcmp(global_contour_params.solver,'Euler')
-%                 [~,~,SPs, SPs_radii] = getBallDeets(otherCovers);
-                    [CPs, CPs_radii] = getBallDeets(otherCovers);
-    %             [valley_index, ball_index] = SDpathODEuler(self.ICs(1), G, cover_centres, cover_radii, valleys, base_step_size);
-%                 tic;
+                use_refined_P_val = false;
+                [CPs, CPs_radii] = getBallDeets(otherCovers);
                 max_steps_before_fail = global_contour_params.max_number_of_ODE_steps;%10000;
-                [p, self.coarsePath, valley_index, ball_index, success] = ...
-                    SDpathODEuler_v2_mex(self.ICs(1), G, CPs, CPs_radii, valleys.', ...
-                    global_contour_params.step_size, int64(max_steps_before_fail), global_contour_params.r_star);
-%                 Euler_mex_time = toc;
-                if ~isempty(ball_index) % finite contour - need to check approximation of endpoint is sufficiently accurate
-%                     max_deviation = global_contour_params.step_size*abs(self.coarsePath(end)-otherCovers{ball_index}.centre);
-                    [SEn_n, success] = SE_NEwtonCorrection_mex(p(end), self.coarsePath(end), self.ICs(1), G, ...
-                                        global_contour_params.NewtonThresh, uint32(global_contour_params.NewtonIts),...
-                                        otherCovers{ball_index}.centre, global_contour_params.step_size);
-%                     warning('Steepest descent contour may end in a ball, finer step size is needed to be sure');
-                    if success
-                        self.endPoint = SEn_n;
-                    else
-                        warning('Steepest descent contour may end in a ball, finer step size is needed to be sure');
-                    end
-                end
-                if ~success
-                    max_retrys = 10;
-                    for n=1:max_retrys
-                        warning('Euluer solve did not converge in time for this path, retrying with smaller step size...');
-                            [p, self.coarsePath, valley_index, ball_index, success] = ...
-                                SDpathODEuler_v2_mex(self.ICs(1), G, CPs, CPs_radii, valleys.', ...
-                                global_contour_params.step_size*2^(-n), int64(max_steps_before_fail*4^n), global_contour_params.r_star);
-                        if success && ~isempty(ball_index)
-                            [SEn_n, success] = _mex(p(end), self.coarsePath(end),...
-                                                self.ICs(1), G, global_contour_params.NewtonThresh, uint32(global_contour_params.NewtonIts),...
-             SE_NEwtonCorrection                                   otherCovers{ball_index}.centre, global_contour_params.step_size);
+                max_retrys = 10;
+                success = false;
+                num_retrys = 0;
+%                 while ~success && num_retrys<max_retrys
+%                     tic;
+%                     [p, self.coarsePath, valley_index, ball_index, success] = ...
+%                         SDpathODEuler_v2_mex(self.ICs(1), G, CPs, CPs_radii, valleys.', ...
+%                             global_contour_params.step_size/(2^num_retrys), int64(max_steps_before_fail)*(4^num_retrys), global_contour_params.r_star);
+%                     old_coarse_approx_time = toc    
+%                     temp_Newton_big_thresh = 10^-4;
+%                     tic;
+                            [p, self.coarsePath, valley_index, ball_index, success] = SDpathODEuler_v3_mex(self.ICs(1), G, CPs, CPs_radii, valleys.', ...
+                            global_contour_params.step_size, int64(max_steps_before_fail), global_contour_params.r_star,...
+                            global_contour_params.NewtonBigThresh, global_contour_params.NewtonThresh);
+%                     new_coarse_approx_time = toc  
+                    if ~isempty(ball_index) && false
+                        if length(self.coarsePath) > 1
+                        % finite contour - need to check approximation of endpoint is sufficiently accurate
+    
+                        % guess at point on circumferance of ball where
+                        % contour intersects
+                            SEn_guess = make_SEn_guess(self.coarsePath(end),length(self.coarsePath(end))-1,otherCovers{ball_index}.centre,otherCovers{ball_index}.radius);
+                        % now refine this point, by finding all values on
+                        % circle where real part is value of contour
+                            [SEn_refined, P_refined, ~] = get_stepest_entrances_on_ball(G, otherCovers{ball_index}.centre, otherCovers{ball_index}.radius,...
+                                                                        self.ICs(1), SEn_guess);
+                        % check that the new steepest entrance isn't too far from
+                        % what we started with
+                            max_deviation = global_contour_params.step_size*otherCovers{ball_index}.radius;
+                            if abs(self.coarsePath(end)-SEn_refined)<max_deviation %use refined version for Newton solve
+                                success = true;
+                                SEn_n = SEn_refined;
+                                use_refined_P_val = true;
+                            else % if not, try to refine with Newton iteration
+                                [SEn_n, success] = SE_NEwtonCorrection_mex(p(end), self.coarsePath(end), self.ICs(1), G, ...
+                                                    global_contour_params.NewtonThresh, uint32(global_contour_params.NewtonIts),...
+                                                    otherCovers{ball_index}.centre, global_contour_params.step_size);
+                            end
                             if success
                                 self.endPoint = SEn_n;
                             else
                                 warning('Steepest descent contour may end in a ball, finer step size is needed to be sure');
                             end
-                        end
-                        if success
-                            break;
+                        else % contour starts in another ball, should be from a finite endpoint
+                            success = true;
+                            self.endPoint = self.coarsePath;
                         end
                     end
-                end
+%                     num_retrys = num_retrys + 1;
+%                 end
+%                 if ~success
+%                     max_retrys = 10;
+%                     for n=1:max_retrys
+%                         warning(sprintf('Euluer solve did not converge in time for this path, retrying step size %e and %d steps',...
+%                             global_contour_params.step_size*2^(-n), max_steps_before_fail*4^n));
+%                             [p, self.coarsePath, valley_index, ball_index, success] = ...
+%                                 SDpathODEuler_v2_mex(self.ICs(1), G, CPs, CPs_radii, valleys.', ...
+%                                 global_contour_params.step_size*2^(-n), int64(max_steps_before_fail*4^n), global_contour_params.r_star);
+%                         if success && ~isempty(ball_index)
+%                                                 SEn_guess = make_SEn_guess(self.coarsePath(end),self.coarsePath(end-1),otherCovers{ball_index}.centre,otherCovers{ball_index}.radius);
+%                         [SEn_refined, P_refined, ~] = get_stepest_entrances_on_ball(G, otherCovers{ball_index}.centre, otherCovers{ball_index}.radius,...
+%                                                                 self.ICs(1), SEn_guess);
+% %                             max_deviation = step_size_adjust*otherCovers{ball_index}.radius;
+%                             if abs(self.coarsePath(end)-SEn_refined)<max_deviation %use refined version for Newton solve
+%                                 success = true;
+%                                 SEn_n = SEn_refined;
+%                                 use_refined_P_val = true;
+%                             else
+%                                 [SEn_n, success] = SE_NEwtonCorrection_mex(p(end), self.coarsePath(end),...
+%                                                 self.ICs(1), G, global_contour_params.NewtonThresh, uint32(global_contour_params.NewtonIts),...
+%                                                 otherCovers{ball_index}.centre, global_contour_params.step_size);
+%                             end
+%                             if success
+%                                 self.endPoint = SEn_n;
+%                             else
+%                                 warning('Steepest descent contour may end in a ball, finer step size is needed to be sure');
+%                             end
+%                         end
+%                         if success
+%                             break;
+%                         end
+%                     end
+%                 end
                 
                 if isempty(ball_index) %infinite contour
                     self.length = inf;
@@ -116,9 +159,13 @@
                     self.endCoverIndex = otherCovers{ball_index}.index; %the cover which the contour hits
                     [self.endClusterIndices, self.endClusterIntervalEndpoints] = getClusterBuddies(clusterIndices, self.endCoverIndex, clusterEndpoints);
                     
-                    self.length = p(end);
+                    if use_refined_P_val
+                        self.length = P_refined;
+                    else
+                        self.length = p(end);
+                    end
                     self.endValley = [];
-%                     self.endPoint = self.coarsePath(end); % should have
+                    self.endPoint = self.coarsePath(end); % should have
 %                     been taken care of further up
                 end
                 self.coarseParam = p;
@@ -180,7 +227,7 @@
             end
         end
         
-        function plot(self,linewidth)
+        function plot(self)
 %             if nargin == 1
 %                 linestyle ='-.k';
 %             end
@@ -200,7 +247,8 @@
             else % finite path
                 % determine the truncation parameter, based on when
                 % integrand reaches machine precision:
-                machine_precision_length = abs(log(quad_params.contourStartThresh/quad_params.max_SP_integrand_val))/freq;
+                IG_start_size = abs(exp(1i*freq*polyval(self.phaseCoeffs,self.startPoint)));
+                machine_precision_length = abs(log(quad_params.max_SP_integrand_val*quad_params.contourStartThresh/IG_start_size))/freq;
                 % now determine truncation parameter, based on optimal
                 % truncation vs discretisation of GauLeg:
                 optimal_truncation = quad_params.finitePathTruncL*Npts/freq;

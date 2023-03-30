@@ -1,5 +1,5 @@
 function [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandidates, endPointIndices, nonOscFlag]...
-                = getInteriorBalls(g, freq, SPs, infContour, a, b, SPorders, Cosc, Hermite,g_coeffs)
+                = getInteriorBalls(g, freq, SPs, infContour, a, b, SPorders, Cosc, Hermite,g_coeffs,ball_clump_thresh)
 
     coverIndex = 0;
     endPointBalls = [];
@@ -15,14 +15,40 @@ function [covers, intersectionMatrix, clusters, clusterEndpoints, HermiteCandida
     end
     
     if ~isempty(SPs)>0
+        radii = zeros(length(SPs),1);
+        centres = SPs;
         for n = 1:length(SPs)
+%             coverIndex = coverIndex + 1;
+            radii(n) = get_interior_ball_mex(g_coeffs.', freq, SPs(n), uint32(SPorders(n)), Cosc);
+        end
+
+%             coversInit(n) = Ball(r_min,SPs(n),g_coeffs,coverIndex,sum(SPorders+1));
+
+        % now loop over all balls and check they're not too close
+        sparse_balls = false;
+        num_balls = length(SPs);
+        while sparse_balls == false
+            sparse_balls = true;
+            for m=(length(endPointIndices)+1):num_balls
+                for m_ = (m+1):num_balls
+                    if abs(centres(m)-centres(m_))<ball_clump_thresh
+                        sparse_balls = false;
+                        mergeSP = (centres(m)+centres(m_))/2;
+                        merge_rad = (radii(m)+radii(m_))/2;
+
+                        num_balls = num_balls - 1;
+                        radii(m_)= [];
+                        centres(m_) = [];
+                        radii(m)= mergeSP;
+                        centres(m) = merge_rad;
+                    end
+                end
+            end
+        end
+
+        for n=1:num_balls
             coverIndex = coverIndex + 1;
-%             r_min = getInteriorRadius(SPs(n));
-            r_min2 = get_interior_ball_mex(g_coeffs.', freq, SPs(n), uint32(SPorders(n)), Cosc);
-            %get_stepest_exits_on_ball(g_coeffs,centre,radius)
-            coversInit(n) = Ball(r_min2,SPs(n),g_coeffs,coverIndex,sum(SPorders+1));
-            %coversInit(n) = ContourInterior(SPs(n),freq,g,coverIndex,Cosc,SPorders(n));
-            %  ( ^^ only the above line of code actually changed from cover version ^^)
+            coversInit(n) = Ball(radii(n),centres(n),g_coeffs,coverIndex,sum(SPorders+1));
         end
 
         %delete exits inside a cover from another mother:

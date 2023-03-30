@@ -1,7 +1,7 @@
 function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeffs,V)
 
     set(0,'defaultTextInterpreter','latex');
-    f = figure();
+%     f = figure();
     if nargin == 7
         HermiteInds = [];
     end
@@ -59,7 +59,7 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeff
     %plot(exp(1i*theta).*plot_no_return(theta,g_coeffs),'Color',grayColor,'LineWidth',2);
     R = zeros(length(theta),1);
     order = length(g_coeffs)-1;
-    smidgin = 1/100;
+    smidgin = 1/1000;
     min_R = inf;
     for v = angle(V)
         theta = linspace(v-pi/(2*order)+smidgin,v+pi/(2*order)-smidgin);
@@ -74,7 +74,7 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeff
 %         end
         end
          event_horizon = fliplr(exp(1i*theta).*R');
-        big_arc = 2*(max(max_x-min_x,max_y-min_y)+2*marginSpace)*exp(1i*theta);
+        big_arc = 15*(max(max_x-min_x,max_y-min_y)+2*marginSpace)*exp(1i*theta);
         X = [real(big_arc) real(event_horizon)];
         Y = [imag(big_arc) imag(event_horizon)];
         fill(X,Y,'k','EdgeColor','k','FaceAlpha',0.1,'EdgeAlpha',0.0);
@@ -96,7 +96,8 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeff
     xlabel('Real');
     ylabel('Imaginary');
     set(gca,'fontsize', fontSize);
+    set(gcf, 'Position', [0 0 800 800]);
+    title(['$g(x)=',latex(poly2sym(g_coeffs)),'$'],'Interpreter','latex');
     hold off;
-    f.Position = [100 100 800 800];
     
 end

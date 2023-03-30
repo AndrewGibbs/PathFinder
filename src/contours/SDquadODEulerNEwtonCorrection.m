@@ -22,8 +22,11 @@ function [h_quad, dhdp_quad, Newton_success] = SDquadODEulerNEwtonCorrection(p_q
 
         % Newton corrector step
         for n = 1:NewtonIts
-            h_quad(N) = h_quad(N) - (-freq_times_g_at_se - 1i*p_quad(N) + freq*polyval(gCoeffs,h_quad(N)))/(freq*polyval(dgCoeffs,h_quad(N)));
-            err = abs(freq_times_g_at_se+ 1i*p_quad(N) - freq*polyval(gCoeffs,h_quad(N)));
+            dh_N = polyval(dgCoeffs,h_quad(N));
+            Newton_step = get_Newton_step();
+            h_quad(N) = h_quad(N) - Newton_step;
+%             err = abs(freq_times_g_at_se+ 1i*p_quad(N) - freq*polyval(gCoeffs,h_quad(N)));
+            err = abs(Newton_step);
             if err < NewtonThresh
                 Newton_success(N) = n;
                 break;
@@ -42,4 +45,8 @@ function [h_quad, dhdp_quad, Newton_success] = SDquadODEulerNEwtonCorrection(p_q
 
     % now get Jacobian
     dhdp_quad = F(h_quad);
+
+    function s = get_Newton_step()
+        s = (-freq_times_g_at_se - 1i*p_quad(N) + freq*polyval(gCoeffs,h_quad(N)))/(freq*dh_N);
+    end
 end
