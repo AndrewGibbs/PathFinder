@@ -1,4 +1,4 @@
-function options = opionalExtras(varargin)
+function options = optionalExtras(varargin,freq)
     %allows user to manually adjust default parameters, like plotting etc
     
      if length(varargin)==1 && ~ischar(varargin{1})
@@ -13,7 +13,8 @@ function options = opionalExtras(varargin)
         'contourStartThresh',1e-16,'Hermite',false,'truncation',1.0,...
         'global_solver','Euler','global_step_size',0.1,'max_number_of_ODE_steps',50000,...
         'quad_solver','Euler','quad_step_size',1e-13,'Taylor_terms',4, ...
-        'finitePathTruncL',10.0, 'NewtonThresh',1e-8,'NewtonIts',50);
+        'NewtonThresh',min(1e-4/freq,1e-10),'NewtonBigThresh',1e-2,'NewtonIts',50,...
+        'ball_clump_thresh',0, 'finitePathTruncL',10.0);
     
     %now adjust them, if requested to
     N = length(varargin);
@@ -55,6 +56,8 @@ function options = opionalExtras(varargin)
                    options.finitePathTruncL = varargin{n+1};
                case 'newton thresh'
                    options.NewtonThresh = varargin{n+1};
+               case 'newton big thresh'
+                   options.NewtonBigThresh = varargin{n+1};
                case 'max newton steps'
                    options.NewtonIts = varargin{n+1};
            end
