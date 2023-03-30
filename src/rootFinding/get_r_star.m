@@ -2,9 +2,14 @@ function r_star = get_r_star(g_coeffs,theta)
     if nargin == 1
         theta = 0;
     end
+
     % function which computes the r_* parameter, used for determining no
     % return regions
     rho = length(g_coeffs)-1;
+    if sum(g_coeffs(2:rho) == 0)==(rho-1) % if all but first coefficient are zero
+        r_star = 0;
+        return; % leave subroutine early
+    end
     star_coeffs_lr = zeros(1,rho-1+1); % order is one lower, but add one for zero index
 
     % make final coefficient of polynomial
@@ -22,4 +27,7 @@ function r_star = get_r_star(g_coeffs,theta)
     % filter out imaginary roots, and make purely real
     real_roots = real(star_roots(abs(imag(star_roots))<100*eps));
     r_star = min(real_roots(real_roots>0));
+    if isempty(r_star)
+        error("Could not find r_star variable");
+    end
 end
