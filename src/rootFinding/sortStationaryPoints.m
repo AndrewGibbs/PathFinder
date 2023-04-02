@@ -27,19 +27,6 @@ function [stationaryPoints,stationaryPointsOrders,clumpWidth] = sortStationaryPo
         end
     end
     
-%     for n = 1:length(stationaryPointsInit)
-%         if ~(ismember(n,m_clumped))
-%             clump{n} = stationaryPointsInit(n);
-%         end
-%         for m = n+1:length(stationaryPointsInit)
-%             if abs(stationaryPointsInit(n)-stationaryPointsInit(m)) < stationaryPointMinDist
-%                 clumpIndex(m) = clumpIndex(n);
-%                 clump{clumpIndex(m)} = [clump{clumpIndex(m)} stationaryPointsInit(m)];
-%                 m_clumped = [m_clumped m];
-%             end
-%         end
-%     end
-    
     SPcount = 0;
     for n=1:length(clump)
        if ~isempty(clump{n})
@@ -50,16 +37,5 @@ function [stationaryPoints,stationaryPointsOrders,clumpWidth] = sortStationaryPo
        end
     end
     
-%     distinctCount=0;
-%     %determine the orders of the stationary points, by checking for repetitions:
-%     for n = 1:length(stationaryPointsInit)
-%         if n>1 & abs(stationaryPointsInit(n)-stationaryPointsInit(n-1)) < stationaryPointMinDist
-%             stationaryPointsOrders(distinctCount)=stationaryPointsOrders(distinctCount)+1;
-%         else
-%             distinctCount = distinctCount+1;
-%             stationaryPoints(distinctCount) = stationaryPointsInit(n);
-%             stationaryPointsOrders(distinctCount) = 1;
-%         end
-%     end
 end
 
