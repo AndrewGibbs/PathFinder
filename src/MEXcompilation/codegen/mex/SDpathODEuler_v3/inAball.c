@@ -36,11 +36,11 @@ void b_inAball(const emlrtStack *sp, const creal_T h,
   while ((!exitg1) && (b_index <= cover_centres->size[0] - 1)) {
     if (b_index + 1 > cover_centres->size[0]) {
       emlrtDynamicBoundsCheckR2012b(b_index + 1, 1, cover_centres->size[0],
-                                    &u_emlrtBCI, (emlrtCTX)sp);
+                                    &y_emlrtBCI, (emlrtCTX)sp);
     }
     if (b_index + 1 > cover_radii->size[0]) {
       emlrtDynamicBoundsCheckR2012b(b_index + 1, 1, cover_radii->size[0],
-                                    &v_emlrtBCI, (emlrtCTX)sp);
+                                    &ab_emlrtBCI, (emlrtCTX)sp);
     }
     if (muDoubleScalarHypot(h.re - cover_centres_data[b_index].re,
                             h.im - cover_centres_data[b_index].im) <
@@ -75,15 +75,15 @@ boolean_T inAball(const emlrtStack *sp, const creal_T h,
   while ((!exitg1) && (b_index - 1 <= cover_centres->size[0] - 1)) {
     if ((b_index < 1) || (b_index > cover_centres->size[0])) {
       emlrtDynamicBoundsCheckR2012b(b_index, 1, cover_centres->size[0],
-                                    &u_emlrtBCI, (emlrtCTX)sp);
+                                    &y_emlrtBCI, (emlrtCTX)sp);
     }
     if (b_index > cover_centres->size[0]) {
       emlrtDynamicBoundsCheckR2012b(b_index, 1, cover_centres->size[0],
-                                    &u_emlrtBCI, (emlrtCTX)sp);
+                                    &y_emlrtBCI, (emlrtCTX)sp);
     }
     if (b_index > cover_radii->size[0]) {
       emlrtDynamicBoundsCheckR2012b(b_index, 1, cover_radii->size[0],
-                                    &v_emlrtBCI, (emlrtCTX)sp);
+                                    &ab_emlrtBCI, (emlrtCTX)sp);
     }
     if (muDoubleScalarHypot(h.re - cover_centres_data[b_index - 1].re,
                             h.im - cover_centres_data[b_index - 1].im) <

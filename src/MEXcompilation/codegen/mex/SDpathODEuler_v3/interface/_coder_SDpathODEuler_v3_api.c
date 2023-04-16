@@ -18,7 +18,7 @@
 #include "rt_nonfinite.h"
 
 /* Variable Definitions */
-static emlrtRTEInfo cb_emlrtRTEI = {
+static emlrtRTEInfo fb_emlrtRTEI = {
     1,                             /* lineNo */
     1,                             /* colNo */
     "_coder_SDpathODEuler_v3_api", /* fName */
@@ -398,12 +398,12 @@ void SDpathODEuler_v3_api(const mxArray *const prhs[10], int32_T nlhs,
   valley_index_data = &(*(real_T(*)[1])mxMalloc(sizeof(real_T)))[0];
   ball_index_data = &(*(real_T(*)[1])mxMalloc(sizeof(real_T)))[0];
   emlrtHeapReferenceStackEnterFcnR2012b(&st);
-  emxInit_creal_T(&st, &gCoeffs, 2, &cb_emlrtRTEI);
-  emxInit_creal_T(&st, &SPs, 1, &cb_emlrtRTEI);
-  emxInit_real_T(&st, &cover_radii, 1, &cb_emlrtRTEI);
-  emxInit_creal_T(&st, &valleys, 1, &cb_emlrtRTEI);
-  emxInit_real_T(&st, &p_log_out, 1, &cb_emlrtRTEI);
-  emxInit_creal_T(&st, &h_log_out, 1, &cb_emlrtRTEI);
+  emxInit_creal_T(&st, &gCoeffs, 2, &fb_emlrtRTEI);
+  emxInit_creal_T(&st, &SPs, 1, &fb_emlrtRTEI);
+  emxInit_real_T(&st, &cover_radii, 1, &fb_emlrtRTEI);
+  emxInit_creal_T(&st, &valleys, 1, &fb_emlrtRTEI);
+  emxInit_real_T(&st, &p_log_out, 1, &fb_emlrtRTEI);
+  emxInit_creal_T(&st, &h_log_out, 1, &fb_emlrtRTEI);
   /* Marshall function inputs */
   h0 = emlrt_marshallIn(&st, emlrtAliasP(prhs[0]), "h0");
   c_emlrt_marshallIn(&st, emlrtAliasP(prhs[1]), "gCoeffs", gCoeffs);

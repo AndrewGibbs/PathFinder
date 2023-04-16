@@ -30,7 +30,7 @@ emlrtContext emlrtContextGlobal = {
     NULL                                                  /* fSigMem */
 };
 
-emlrtRSInfo m_emlrtRSI = {
+emlrtRSInfo d_emlrtRSI = {
     21,                               /* lineNo */
     "eml_int_forloop_overflow_check", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/eml/"

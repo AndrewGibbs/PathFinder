@@ -24,7 +24,7 @@
 extern emlrtCTX emlrtRootTLSGlobal;
 extern const volatile char_T *emlrtBreakCheckR2012bFlagVar;
 extern emlrtContext emlrtContextGlobal;
-extern emlrtRSInfo m_emlrtRSI;
+extern emlrtRSInfo d_emlrtRSI;
 extern emlrtRTEInfo f_emlrtRTEI;
 extern emlrtRTEInfo g_emlrtRTEI;
 

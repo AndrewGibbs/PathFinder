@@ -6,7 +6,7 @@ ninja_required_version = 1.3
 root = .
 builddir = $root/build/glnxa64
 matlabdir = /home/andrew/matlab
-startdir = /home/andrew/Dropbox/PathFinderInf/src/MEXcompilation
+startdir = /home/andrew/OneDrive/PathFinder/src/MEXcompilation
 
 # Toolchain information
 cc = /usr/bin/gcc

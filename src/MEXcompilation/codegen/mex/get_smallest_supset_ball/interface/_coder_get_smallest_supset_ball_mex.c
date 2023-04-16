@@ -19,7 +19,7 @@
 
 /* Function Definitions */
 void get_smallest_supset_ball_mexFunction(int32_T nlhs, mxArray *plhs[1],
-                                          int32_T nrhs, const mxArray *prhs[4])
+                                          int32_T nrhs, const mxArray *prhs[5])
 {
   emlrtStack st = {
       NULL, /* site */
@@ -29,8 +29,8 @@ void get_smallest_supset_ball_mexFunction(int32_T nlhs, mxArray *plhs[1],
   const mxArray *outputs;
   st.tls = emlrtRootTLSGlobal;
   /* Check for proper number of arguments. */
-  if (nrhs != 4) {
-    emlrtErrMsgIdAndTxt(&st, "EMLRT:runTime:WrongNumberOfInputs", 5, 12, 4, 4,
+  if (nrhs != 5) {
+    emlrtErrMsgIdAndTxt(&st, "EMLRT:runTime:WrongNumberOfInputs", 5, 12, 5, 4,
                         24, "get_smallest_supset_ball");
   }
   if (nlhs > 1) {

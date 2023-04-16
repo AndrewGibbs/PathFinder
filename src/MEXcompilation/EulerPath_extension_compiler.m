@@ -1,4 +1,4 @@
-clear all;
+% clear all;
 % cd src/MEXcompilation/;
 % cd /home/andrew/Dropbox/PathFinderInf/src/MEXcompilation;
 % cd MEXcompilation;

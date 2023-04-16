@@ -1,6 +1,7 @@
-clear all;
-close all;
-cd /home/andrew/Dropbox/PathFinderInf/src/MEXcompilation;
+% clear all;
+% close all;
+% cd /home/andrew/Dropbox/PathFinderInf/src/MEXcompilation;
+% cd src/MEXcompilation/;
 % cd MEXcompilation;
 % SDquadODEulerNEwtonCorrection(p_quad, p_coarse, h0, h_coarse, gCoeffs, freq)
 % let's go through each argument in order:
