@@ -1,4 +1,4 @@
-function [phase,stationaryPoints,stationaryPointsOrders,valleys] = getInfoFromPhase(phaseIn)
+function [phase,stationaryPoints,valleys] = getInfoFromPhase(phaseIn)
 %determines stationary points from phase function, which may be
 %input as coefficients of a polynomial, or (soon) a cell array of anonymous
 %functions
@@ -6,7 +6,7 @@ function [phase,stationaryPoints,stationaryPointsOrders,valleys] = getInfoFromPh
 stationaryPointMinDist = .001;
 
     if isvector(phaseIn)
-        [phase,stationaryPoints,stationaryPointsOrders] = NSDeetsFromPoly(phaseIn, stationaryPointMinDist);
+        [phase,stationaryPoints] = NSDeetsFromPoly(phaseIn, stationaryPointMinDist);
         order = length(phaseIn)-1;
         valleyRotate = exp(-1i*angle(phaseIn(1))/order);
         valleys = valleyRotate*exp(2i*pi*(1/4 + (1:order))/order);

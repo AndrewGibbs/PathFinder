@@ -26,43 +26,41 @@
 static emlrtRSInfo ub_emlrtRSI = {
     13,               /* lineNo */
     "beyondNoReturn", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/beyondNoReturn.m" /* pathName
-                                                                        */
+    "/home/andrew/OneDrive/PathFinder/src/contours/beyondNoReturn.m" /* pathName
+                                                                      */
 };
 
 static emlrtRSInfo vb_emlrtRSI = {
     16,               /* lineNo */
     "beyondNoReturn", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/beyondNoReturn.m" /* pathName
-                                                                        */
+    "/home/andrew/OneDrive/PathFinder/src/contours/beyondNoReturn.m" /* pathName
+                                                                      */
 };
 
-static emlrtBCInfo x_emlrtBCI = {
+static emlrtBCInfo cb_emlrtBCI = {
     -1,               /* iFirst */
     -1,               /* iLast */
     14,               /* lineNo */
     21,               /* colNo */
     "V",              /* aName */
     "beyondNoReturn", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/beyondNoReturn.m", /* pName
-                                                                         */
+    "/home/andrew/OneDrive/PathFinder/src/contours/beyondNoReturn.m", /* pName
+                                                                       */
     0 /* checkKind */
 };
 
-static emlrtRTEInfo ab_emlrtRTEI = {
+static emlrtRTEInfo db_emlrtRTEI = {
     13,               /* lineNo */
     27,               /* colNo */
     "beyondNoReturn", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/beyondNoReturn.m" /* pName
-                                                                        */
+    "/home/andrew/OneDrive/PathFinder/src/contours/beyondNoReturn.m" /* pName */
 };
 
-static emlrtRTEInfo bb_emlrtRTEI = {
+static emlrtRTEInfo eb_emlrtRTEI = {
     13,               /* lineNo */
     34,               /* colNo */
     "beyondNoReturn", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/beyondNoReturn.m" /* pName
-                                                                        */
+    "/home/andrew/OneDrive/PathFinder/src/contours/beyondNoReturn.m" /* pName */
 };
 
 /* Function Definitions */
@@ -116,7 +114,7 @@ void beyondNoReturn(const emlrtStack *sp, const creal_T h, real_T Cnr,
   h_st.tls = g_st.tls;
   V_data = V->data;
   emlrtHeapReferenceStackEnterFcnR2012b((emlrtCTX)sp);
-  emxInit_real_T(sp, &b, 1, &bb_emlrtRTEI);
+  emxInit_real_T(sp, &b, 1, &eb_emlrtRTEI);
   /* function corresponding to an event which would halt ODE solve, because SD
    */
   /* path is at 'point of no return'. */
@@ -139,10 +137,10 @@ void beyondNoReturn(const emlrtStack *sp, const creal_T h, real_T Cnr,
     theta_L = r * (r * muDoubleScalarCos(theta_tmp));
     theta_tmp = r * (r * muDoubleScalarSin(theta_tmp));
   }
-  emxInit_creal_T(&st, &b_r, 1, &ab_emlrtRTEI);
+  emxInit_creal_T(&st, &b_r, 1, &db_emlrtRTEI);
   idx = b_r->size[0];
   b_r->size[0] = b->size[0];
-  emxEnsureCapacity_creal_T(&st, b_r, idx, &ab_emlrtRTEI);
+  emxEnsureCapacity_creal_T(&st, b_r, idx, &db_emlrtRTEI);
   r1 = b_r->data;
   last = b->size[0];
   for (idx = 0; idx < last; idx++) {
@@ -165,7 +163,7 @@ void beyondNoReturn(const emlrtStack *sp, const creal_T h, real_T Cnr,
   d_st.site = &eb_emlrtRSI;
   emxFree_creal_T(&d_st, &b_r);
   if (b->size[0] < 1) {
-    emlrtErrorWithMessageIdR2018a(&d_st, &emlrtRTEI,
+    emlrtErrorWithMessageIdR2018a(&d_st, &b_emlrtRTEI,
                                   "Coder:toolbox:eml_min_or_max_varDimZero",
                                   "Coder:toolbox:eml_min_or_max_varDimZero", 0);
   }
@@ -225,7 +223,7 @@ void beyondNoReturn(const emlrtStack *sp, const creal_T h, real_T Cnr,
   emxFree_real_T(&e_st, &b);
   *v_index = idx;
   if ((idx < 1) || (idx > V->size[0])) {
-    emlrtDynamicBoundsCheckR2012b(idx, 1, V->size[0], &x_emlrtBCI,
+    emlrtDynamicBoundsCheckR2012b(idx, 1, V->size[0], &cb_emlrtBCI,
                                   (emlrtCTX)sp);
   }
   v = b_mod(muDoubleScalarAtan2(V_data[idx - 1].im, V_data[idx - 1].re));

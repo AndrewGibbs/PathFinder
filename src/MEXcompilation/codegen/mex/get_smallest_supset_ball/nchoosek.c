@@ -16,14 +16,14 @@
 #include "mwmathutil.h"
 
 /* Variable Definitions */
-static emlrtRSInfo n_emlrtRSI = {
+static emlrtRSInfo p_emlrtRSI = {
     45,         /* lineNo */
     "nchoosek", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/specfun/nchoosek.m" /* pathName
                                                                      */
 };
 
-static emlrtRSInfo o_emlrtRSI = {
+static emlrtRSInfo q_emlrtRSI = {
     116,   /* lineNo */
     "nCk", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/specfun/nchoosek.m" /* pathName
@@ -68,7 +68,7 @@ real_T nchoosek(const emlrtStack *sp, real_T x, real_T k)
                                   "MATLAB:nchoosek:KOutOfRange",
                                   "MATLAB:nchoosek:KOutOfRange", 0);
   } else {
-    st.site = &n_emlrtRSI;
+    st.site = &p_emlrtRSI;
     b_k = k;
     if (k > x / 2.0) {
       b_k = x - k;
@@ -85,7 +85,7 @@ real_T nchoosek(const emlrtStack *sp, real_T x, real_T k)
       y = muDoubleScalarRound(y);
     }
     if (!(y <= 9.007199254740992E+15)) {
-      b_st.site = &o_emlrtRSI;
+      b_st.site = &q_emlrtRSI;
       warning(&b_st);
     }
   }
