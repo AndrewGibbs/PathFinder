@@ -1,0 +1,66 @@
+# CompilerName=gcc
+# Mode=optim
+ninja_required_version = 1.3
+
+# Basic folders
+root = .
+builddir = $root/build/glnxa64
+matlabdir = /home/andrew/matlab
+startdir = /home/andrew/OneDrive/PathFinder/src
+
+# Toolchain information
+cc = /usr/bin/gcc
+cxx = g++
+linker = /usr/bin/gcc
+linkerxx = g++
+
+cflags =  -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I "$root" -I "$startdir" -I "$root/interface" -I "$matlabdir/extern/include" -I "." -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=get_stepest_exits_on_ball_mex -c 
+
+cxxflags =  -fexceptions -fPIC -fno-omit-frame-pointer -pthread -std=c++11 -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c++11 -I "$root" -I "$startdir" -I "$root/interface" -I "$matlabdir/extern/include" -I "." -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=get_stepest_exits_on_ball_mex -c 
+
+ldflags =  -pthread -Wl,--no-undefined -Wl,-rpath-link,$matlabdir/bin/glnxa64 -shared  -L"$matlabdir/bin/glnxa64" -lmx -lmex -lmat -lm -lstdc++  -o get_stepest_exits_on_ball_mex.mexa64 -L"$matlabdir/bin/glnxa64" -lmwlapack -lmwblas -lemlrt -lcovrt -lut -lmwmathutil  -Wl,--version-script,get_stepest_exits_on_ball_mex.map
+
+# Build Rules
+rule cc
+    command = $cc $cflags $in -o $out
+
+rule cxx
+    command = $cxx $cxxflags $in -o $out
+
+rule link
+    command = $linker $in $ldflags
+
+rule linkxx
+    command = $linkerxx $in $ldflags
+
+# Build
+build $builddir/get_stepest_exits_on_ball_data.o : cc $root/get_stepest_exits_on_ball_data.c
+build $builddir/rt_nonfinite.o : cc $root/rt_nonfinite.c
+build $builddir/get_stepest_exits_on_ball_initialize.o : cc $root/get_stepest_exits_on_ball_initialize.c
+build $builddir/get_stepest_exits_on_ball_terminate.o : cc $root/get_stepest_exits_on_ball_terminate.c
+build $builddir/get_stepest_exits_on_ball.o : cc $root/get_stepest_exits_on_ball.c
+build $builddir/nchoosek.o : cc $root/nchoosek.c
+build $builddir/warning.o : cc $root/warning.c
+build $builddir/mpower.o : cc $root/mpower.c
+build $builddir/sum.o : cc $root/sum.c
+build $builddir/sumMatrixIncludeNaN.o : cc $root/sumMatrixIncludeNaN.c
+build $builddir/eye.o : cc $root/eye.c
+build $builddir/eig.o : cc $root/eig.c
+build $builddir/anyNonFinite.o : cc $root/anyNonFinite.c
+build $builddir/schur.o : cc $root/schur.c
+build $builddir/diag.o : cc $root/diag.c
+build $builddir/angle.o : cc $root/angle.c
+build $builddir/abs.o : cc $root/abs.c
+build $builddir/_coder_get_stepest_exits_on_ball_api.o : cc $root/interface/_coder_get_stepest_exits_on_ball_api.c
+build $builddir/_coder_get_stepest_exits_on_ball_mex.o : cc $root/interface/_coder_get_stepest_exits_on_ball_mex.c
+build $builddir/eml_int_forloop_overflow_check.o : cc $root/eml_int_forloop_overflow_check.c
+build $builddir/log.o : cc $root/log.c
+build $builddir/cos.o : cc $root/cos.c
+build $builddir/sin.o : cc $root/sin.c
+build $builddir/exp.o : cc $root/exp.c
+build $builddir/get_stepest_exits_on_ball_emxutil.o : cc $root/get_stepest_exits_on_ball_emxutil.c
+build $builddir/_coder_get_stepest_exits_on_ball_info.o : cc $root/interface/_coder_get_stepest_exits_on_ball_info.c
+build $builddir/c_mexapi_version.o : cc $matlabdir/extern/version/c_mexapi_version.c
+
+# Link
+build $root/get_stepest_exits_on_ball_mex.mexa64 : link $builddir/get_stepest_exits_on_ball_data.o $builddir/rt_nonfinite.o $builddir/get_stepest_exits_on_ball_initialize.o $builddir/get_stepest_exits_on_ball_terminate.o $builddir/get_stepest_exits_on_ball.o $builddir/nchoosek.o $builddir/warning.o $builddir/mpower.o $builddir/sum.o $builddir/sumMatrixIncludeNaN.o $builddir/eye.o $builddir/eig.o $builddir/anyNonFinite.o $builddir/schur.o $builddir/diag.o $builddir/angle.o $builddir/abs.o $builddir/_coder_get_stepest_exits_on_ball_api.o $builddir/_coder_get_stepest_exits_on_ball_mex.o $builddir/eml_int_forloop_overflow_check.o $builddir/log.o $builddir/cos.o $builddir/sin.o $builddir/exp.o $builddir/get_stepest_exits_on_ball_emxutil.o $builddir/_coder_get_stepest_exits_on_ball_info.o $builddir/c_mexapi_version.o 

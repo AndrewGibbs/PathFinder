@@ -23,11 +23,18 @@ static emlrtRTEInfo o_emlrtRTEI = {
 };
 
 /* Function Definitions */
-void check_forloop_overflow_error(const emlrtStack *sp)
+void b_check_forloop_overflow_error(const emlrtStack *sp)
 {
   emlrtErrorWithMessageIdR2018a(
       sp, &o_emlrtRTEI, "Coder:toolbox:int_forloop_overflow",
       "Coder:toolbox:int_forloop_overflow", 3, 4, 5, "int32");
+}
+
+void check_forloop_overflow_error(const emlrtStack *sp)
+{
+  emlrtErrorWithMessageIdR2018a(
+      sp, &o_emlrtRTEI, "Coder:toolbox:int_forloop_overflow",
+      "Coder:toolbox:int_forloop_overflow", 3, 4, 6, "uint32");
 }
 
 /* End of code generation (eml_int_forloop_overflow_check.c) */

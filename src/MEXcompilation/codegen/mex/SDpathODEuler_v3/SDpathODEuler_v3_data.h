@@ -39,9 +39,9 @@ extern emlrtRSInfo lb_emlrtRSI;
 extern emlrtRSInfo mb_emlrtRSI;
 extern emlrtRSInfo nb_emlrtRSI;
 extern emlrtRSInfo ob_emlrtRSI;
-extern emlrtRTEInfo emlrtRTEI;
-extern emlrtBCInfo u_emlrtBCI;
-extern emlrtBCInfo v_emlrtBCI;
-extern emlrtRTEInfo w_emlrtRTEI;
+extern emlrtRTEInfo b_emlrtRTEI;
+extern emlrtBCInfo y_emlrtBCI;
+extern emlrtBCInfo ab_emlrtBCI;
+extern emlrtRTEInfo ab_emlrtRTEI;
 
 /* End of code generation (SDpathODEuler_v3_data.h) */

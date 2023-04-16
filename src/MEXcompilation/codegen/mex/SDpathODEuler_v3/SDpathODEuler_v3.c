@@ -19,6 +19,7 @@
 #include "beyondNoReturn.h"
 #include "eml_int_forloop_overflow_check.h"
 #include "exp.h"
+#include "getNoReturnConstant.h"
 #include "inAball.h"
 #include "indexShapeCheck.h"
 #include "mod.h"
@@ -43,108 +44,108 @@ typedef struct {
 
 /* Variable Definitions */
 static emlrtRSInfo emlrtRSI = {
-    93,                 /* lineNo */
+    99,                 /* lineNo */
     "SDpathODEuler_v3", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pathName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pathName
+                                                                        */
 };
 
 static emlrtRSInfo b_emlrtRSI = {
-    91,                 /* lineNo */
+    97,                 /* lineNo */
     "SDpathODEuler_v3", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pathName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pathName
+                                                                        */
 };
 
 static emlrtRSInfo c_emlrtRSI = {
-    90,                 /* lineNo */
+    96,                 /* lineNo */
     "SDpathODEuler_v3", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pathName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pathName
+                                                                        */
 };
 
 static emlrtRSInfo d_emlrtRSI = {
-    87,                 /* lineNo */
+    93,                 /* lineNo */
     "SDpathODEuler_v3", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pathName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pathName
+                                                                        */
 };
 
 static emlrtRSInfo e_emlrtRSI = {
-    86,                 /* lineNo */
+    92,                 /* lineNo */
     "SDpathODEuler_v3", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pathName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pathName
+                                                                        */
 };
 
 static emlrtRSInfo f_emlrtRSI = {
     78,                 /* lineNo */
     "SDpathODEuler_v3", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pathName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pathName
+                                                                        */
 };
 
 static emlrtRSInfo g_emlrtRSI = {
     76,                 /* lineNo */
     "SDpathODEuler_v3", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pathName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pathName
+                                                                        */
 };
 
 static emlrtRSInfo h_emlrtRSI = {
     69,                 /* lineNo */
     "SDpathODEuler_v3", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pathName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pathName
+                                                                        */
 };
 
 static emlrtRSInfo i_emlrtRSI = {
     62,                 /* lineNo */
     "SDpathODEuler_v3", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pathName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pathName
+                                                                        */
 };
 
 static emlrtRSInfo j_emlrtRSI = {
     54,                 /* lineNo */
     "SDpathODEuler_v3", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pathName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pathName
+                                                                        */
 };
 
 static emlrtRSInfo k_emlrtRSI = {
     46,                 /* lineNo */
     "SDpathODEuler_v3", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pathName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pathName
+                                                                        */
 };
 
 static emlrtRSInfo l_emlrtRSI = {
     37,                 /* lineNo */
     "SDpathODEuler_v3", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pathName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pathName
+                                                                        */
 };
 
 static emlrtRSInfo m_emlrtRSI = {
     29,                 /* lineNo */
     "SDpathODEuler_v3", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pathName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pathName
+                                                                        */
 };
 
 static emlrtRSInfo n_emlrtRSI = {
     28,                 /* lineNo */
     "SDpathODEuler_v3", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pathName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pathName
+                                                                        */
 };
 
 static emlrtRSInfo o_emlrtRSI = {
     9,                  /* lineNo */
     "SDpathODEuler_v3", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pathName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pathName
+                                                                        */
 };
 
 static emlrtRSInfo p_emlrtRSI = {
@@ -154,38 +155,38 @@ static emlrtRSInfo p_emlrtRSI = {
 };
 
 static emlrtRSInfo r_emlrtRSI = {
-    121,                           /* lineNo */
+    127,                           /* lineNo */
     "SDpathODEuler_v3/halt_euler", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pathName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pathName
+                                                                        */
 };
 
 static emlrtRSInfo s_emlrtRSI = {
     12,                  /* lineNo */
     "beyondNoReturn_v2", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/beyondNoReturn_v2.m" /* pathName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/beyondNoReturn_v2.m" /* pathName
+                                                                         */
 };
 
 static emlrtRSInfo t_emlrtRSI = {
     16,                  /* lineNo */
     "beyondNoReturn_v2", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/beyondNoReturn_v2.m" /* pathName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/beyondNoReturn_v2.m" /* pathName
+                                                                         */
 };
 
 static emlrtRSInfo u_emlrtRSI = {
     21,                  /* lineNo */
     "beyondNoReturn_v2", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/beyondNoReturn_v2.m" /* pathName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/beyondNoReturn_v2.m" /* pathName
+                                                                         */
 };
 
 static emlrtRSInfo v_emlrtRSI = {
     23,                  /* lineNo */
     "beyondNoReturn_v2", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/beyondNoReturn_v2.m" /* pathName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/beyondNoReturn_v2.m" /* pathName
+                                                                         */
 };
 
 static emlrtRSInfo pb_emlrtRSI = {
@@ -201,239 +202,277 @@ static emlrtRSInfo qb_emlrtRSI = {
 };
 
 static emlrtRSInfo rb_emlrtRSI = {
-    115,                              /* lineNo */
+    121,                              /* lineNo */
     "SDpathODEuler_v3/Newton_method", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pathName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pathName
+                                                                        */
 };
 
 static emlrtRSInfo sb_emlrtRSI = {
-    110,                              /* lineNo */
+    116,                              /* lineNo */
     "SDpathODEuler_v3/Newton_method", /* fcnName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pathName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pathName
+                                                                        */
 };
 
-static emlrtBCInfo
-    emlrtBCI =
-        {
-            -1,                    /* iFirst */
-            -1,                    /* iLast */
-            9,                     /* lineNo */
-            27,                    /* colNo */
-            "coeffs",              /* aName */
-            "getNoReturnConstant", /* fName */
-            "/home/andrew/Dropbox/PathFinderInf/src/contours/"
-            "getNoReturnConstant.m", /* pName */
-            0                        /* checkKind */
+static emlrtBCInfo emlrtBCI = {
+    -1,                 /* iFirst */
+    -1,                 /* iLast */
+    93,                 /* lineNo */
+    25,                 /* colNo */
+    "h_log",            /* aName */
+    "SDpathODEuler_v3", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
+    0 /* checkKind */
 };
 
 static emlrtBCInfo b_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    28,                 /* lineNo */
-    24,                 /* colNo */
-    "gCoeffs",          /* aName */
+    93,                 /* lineNo */
+    23,                 /* colNo */
+    "h_log",            /* aName */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     0 /* checkKind */
 };
 
 static emlrtBCInfo c_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    28,                 /* lineNo */
-    27,                 /* colNo */
-    "gCoeffs",          /* aName */
+    92,                 /* lineNo */
+    25,                 /* colNo */
+    "p_log",            /* aName */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     0 /* checkKind */
-};
-
-static emlrtECInfo emlrtECI = {
-    2,                  /* nDims */
-    28,                 /* lineNo */
-    16,                 /* colNo */
-    "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
 };
 
 static emlrtBCInfo d_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    29,                 /* lineNo */
-    26,                 /* colNo */
-    "dgCoeffs",         /* aName */
+    92,                 /* lineNo */
+    23,                 /* colNo */
+    "p_log",            /* aName */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     0 /* checkKind */
+};
+
+static emlrtECInfo emlrtECI = {
+    -1,                 /* nDims */
+    89,                 /* lineNo */
+    13,                 /* colNo */
+    "SDpathODEuler_v3", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtBCInfo e_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    29,                 /* lineNo */
-    29,                 /* colNo */
-    "dgCoeffs",         /* aName */
+    89,                 /* lineNo */
+    21,                 /* colNo */
+    "h_log",            /* aName */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     0 /* checkKind */
-};
-
-static emlrtECInfo b_emlrtECI = {
-    2,                  /* nDims */
-    29,                 /* lineNo */
-    17,                 /* colNo */
-    "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
 };
 
 static emlrtBCInfo f_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    36,                 /* lineNo */
-    29,                 /* colNo */
-    "gCoeffs",          /* aName */
+    89,                 /* lineNo */
+    19,                 /* colNo */
+    "h_log",            /* aName */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     0 /* checkKind */
+};
+
+static emlrtECInfo b_emlrtECI = {
+    -1,                 /* nDims */
+    88,                 /* lineNo */
+    13,                 /* colNo */
+    "SDpathODEuler_v3", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtBCInfo g_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    43,                 /* lineNo */
-    11,                 /* colNo */
+    88,                 /* lineNo */
+    21,                 /* colNo */
     "p_log",            /* aName */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     0 /* checkKind */
 };
 
 static emlrtBCInfo h_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    61,                 /* lineNo */
+    88,                 /* lineNo */
     19,                 /* colNo */
     "p_log",            /* aName */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     0 /* checkKind */
 };
 
 static emlrtBCInfo i_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    86,                 /* lineNo */
-    23,                 /* colNo */
-    "p_log",            /* aName */
+    44,                 /* lineNo */
+    11,                 /* colNo */
+    "h_log",            /* aName */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     0 /* checkKind */
 };
 
 static emlrtBCInfo j_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    86,                 /* lineNo */
-    25,                 /* colNo */
+    61,                 /* lineNo */
+    19,                 /* colNo */
     "p_log",            /* aName */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     0 /* checkKind */
 };
 
 static emlrtBCInfo k_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    44,                 /* lineNo */
+    43,                 /* lineNo */
     11,                 /* colNo */
-    "h_log",            /* aName */
+    "p_log",            /* aName */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     0 /* checkKind */
 };
 
 static emlrtBCInfo l_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    87,                 /* lineNo */
-    23,                 /* colNo */
-    "h_log",            /* aName */
+    36,                 /* lineNo */
+    29,                 /* colNo */
+    "gCoeffs",          /* aName */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     0 /* checkKind */
+};
+
+static emlrtECInfo c_emlrtECI = {
+    2,                  /* nDims */
+    29,                 /* lineNo */
+    17,                 /* colNo */
+    "SDpathODEuler_v3", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtBCInfo m_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    87,                 /* lineNo */
-    25,                 /* colNo */
-    "h_log",            /* aName */
+    29,                 /* lineNo */
+    29,                 /* colNo */
+    "dgCoeffs",         /* aName */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     0 /* checkKind */
 };
 
 static emlrtBCInfo n_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
+    29,                 /* lineNo */
+    26,                 /* colNo */
+    "dgCoeffs",         /* aName */
+    "SDpathODEuler_v3", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
+    0 /* checkKind */
+};
+
+static emlrtECInfo d_emlrtECI = {
+    2,                  /* nDims */
+    28,                 /* lineNo */
+    16,                 /* colNo */
+    "SDpathODEuler_v3", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
+};
+
+static emlrtBCInfo o_emlrtBCI = {
+    -1,                 /* iFirst */
+    -1,                 /* iLast */
+    28,                 /* lineNo */
+    27,                 /* colNo */
+    "gCoeffs",          /* aName */
+    "SDpathODEuler_v3", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
+    0 /* checkKind */
+};
+
+static emlrtBCInfo p_emlrtBCI = {
+    -1,                 /* iFirst */
+    -1,                 /* iLast */
+    28,                 /* lineNo */
+    24,                 /* colNo */
+    "gCoeffs",          /* aName */
+    "SDpathODEuler_v3", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
+    0 /* checkKind */
+};
+
+static emlrtBCInfo q_emlrtBCI = {
+    -1,                 /* iFirst */
+    -1,                 /* iLast */
     19,                 /* lineNo */
     24,                 /* colNo */
     "cover_radii",      /* aName */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     0 /* checkKind */
 };
 
-static emlrtBCInfo o_emlrtBCI = {
+static emlrtBCInfo r_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
     20,                 /* lineNo */
     17,                 /* colNo */
     "SPs",              /* aName */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     0 /* checkKind */
-};
-
-static emlrtBCInfo
-    p_emlrtBCI =
-        {
-            -1,                    /* iFirst */
-            -1,                    /* iLast */
-            7,                     /* lineNo */
-            30,                    /* colNo */
-            "coeffs",              /* aName */
-            "getNoReturnConstant", /* fName */
-            "/home/andrew/Dropbox/PathFinderInf/src/contours/"
-            "getNoReturnConstant.m", /* pName */
-            0                        /* checkKind */
 };
 
 static emlrtDCInfo emlrtDCI = {
     41,                 /* lineNo */
     5,                  /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     1 /* checkKind */
 };
 
@@ -441,8 +480,8 @@ static emlrtDCInfo b_emlrtDCI = {
     41,                 /* lineNo */
     5,                  /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     4 /* checkKind */
 };
 
@@ -450,8 +489,8 @@ static emlrtDCInfo c_emlrtDCI = {
     42,                 /* lineNo */
     5,                  /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     1 /* checkKind */
 };
 
@@ -459,68 +498,104 @@ static emlrtDCInfo d_emlrtDCI = {
     42,                 /* lineNo */
     5,                  /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     4 /* checkKind */
 };
 
-static emlrtBCInfo q_emlrtBCI = {
+static emlrtBCInfo s_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
     72,                 /* lineNo */
     15,                 /* colNo */
     "p_log",            /* aName */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     0 /* checkKind */
 };
 
-static emlrtBCInfo r_emlrtBCI = {
+static emlrtBCInfo t_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
     73,                 /* lineNo */
     15,                 /* colNo */
     "h_log",            /* aName */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m", /* pName
-                                                                           */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
     0 /* checkKind */
 };
 
-static emlrtBCInfo s_emlrtBCI = {
+static emlrtDCInfo e_emlrtDCI = {
+    86,                 /* lineNo */
+    13,                 /* colNo */
+    "SDpathODEuler_v3", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
+    1 /* checkKind */
+};
+
+static emlrtDCInfo f_emlrtDCI = {
+    86,                 /* lineNo */
+    13,                 /* colNo */
+    "SDpathODEuler_v3", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
+    4 /* checkKind */
+};
+
+static emlrtDCInfo g_emlrtDCI = {
+    87,                 /* lineNo */
+    13,                 /* colNo */
+    "SDpathODEuler_v3", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
+    1 /* checkKind */
+};
+
+static emlrtDCInfo h_emlrtDCI = {
+    87,                 /* lineNo */
+    13,                 /* colNo */
+    "SDpathODEuler_v3", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m", /* pName
+                                                                         */
+    4 /* checkKind */
+};
+
+static emlrtBCInfo w_emlrtBCI = {
     -1,                  /* iFirst */
     -1,                  /* iLast */
     13,                  /* lineNo */
     25,                  /* colNo */
     "V",                 /* aName */
     "beyondNoReturn_v2", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/beyondNoReturn_v2.m", /* pName
-                                                                            */
+    "/home/andrew/OneDrive/PathFinder/src/contours/beyondNoReturn_v2.m", /* pName
+                                                                          */
     0 /* checkKind */
 };
 
-static emlrtBCInfo t_emlrtBCI = {
+static emlrtBCInfo x_emlrtBCI = {
     -1,                  /* iFirst */
     -1,                  /* iLast */
     21,                  /* lineNo */
     36,                  /* colNo */
     "g_coeffs",          /* aName */
     "beyondNoReturn_v2", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/beyondNoReturn_v2.m", /* pName
-                                                                            */
+    "/home/andrew/OneDrive/PathFinder/src/contours/beyondNoReturn_v2.m", /* pName
+                                                                          */
     0 /* checkKind */
 };
 
-static emlrtBCInfo w_emlrtBCI = {
+static emlrtBCInfo bb_emlrtBCI = {
     -1,                  /* iFirst */
     -1,                  /* iLast */
     23,                  /* lineNo */
     40,                  /* colNo */
     "g_coeffs",          /* aName */
     "beyondNoReturn_v2", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/beyondNoReturn_v2.m", /* pName
-                                                                            */
+    "/home/andrew/OneDrive/PathFinder/src/contours/beyondNoReturn_v2.m", /* pName
+                                                                          */
     0 /* checkKind */
 };
 
@@ -535,151 +610,182 @@ static emlrtRTEInfo f_emlrtRTEI = {
     13,                 /* lineNo */
     9,                  /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtRTEInfo g_emlrtRTEI = {
     14,                 /* lineNo */
     9,                  /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtRTEInfo h_emlrtRTEI = {
     28,                 /* lineNo */
     37,                 /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtRTEInfo i_emlrtRTEI = {
     28,                 /* lineNo */
     5,                  /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtRTEInfo j_emlrtRTEI = {
     29,                 /* lineNo */
     39,                 /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtRTEInfo k_emlrtRTEI = {
     29,                 /* lineNo */
     5,                  /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtRTEInfo l_emlrtRTEI = {
     41,                 /* lineNo */
     5,                  /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtRTEInfo m_emlrtRTEI = {
     42,                 /* lineNo */
     5,                  /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtRTEInfo n_emlrtRTEI = {
-    86,                 /* lineNo */
+    92,                 /* lineNo */
     5,                  /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtRTEInfo o_emlrtRTEI = {
-    87,                 /* lineNo */
+    93,                 /* lineNo */
     5,                  /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtRTEInfo p_emlrtRTEI = {
     54,                 /* lineNo */
     68,                 /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtRTEInfo q_emlrtRTEI = {
-    2,                  /* lineNo */
-    5,                  /* colNo */
+    84,                 /* lineNo */
+    13,                 /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtRTEInfo r_emlrtRTEI = {
-    54,                 /* lineNo */
-    64,                 /* colNo */
+    85,                 /* lineNo */
+    13,                 /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtRTEInfo s_emlrtRTEI = {
-    121,                /* lineNo */
-    25,                 /* colNo */
+    86,                 /* lineNo */
+    13,                 /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtRTEInfo t_emlrtRTEI = {
-    121,                /* lineNo */
-    30,                 /* colNo */
+    87,                 /* lineNo */
+    13,                 /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtRTEInfo u_emlrtRTEI = {
-    121,                /* lineNo */
-    66,                 /* colNo */
+    2,                  /* lineNo */
+    5,                  /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtRTEInfo v_emlrtRTEI = {
-    12,                  /* lineNo */
-    31,                  /* colNo */
-    "beyondNoReturn_v2", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/beyondNoReturn_v2.m" /* pName
-                                                                           */
+    127,                /* lineNo */
+    25,                 /* colNo */
+    "SDpathODEuler_v3", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
+};
+
+static emlrtRTEInfo w_emlrtRTEI = {
+    127,                /* lineNo */
+    30,                 /* colNo */
+    "SDpathODEuler_v3", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtRTEInfo x_emlrtRTEI = {
-    103,                /* lineNo */
-    23,                 /* colNo */
+    127,                /* lineNo */
+    66,                 /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
-                                                                          */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
 };
 
 static emlrtRTEInfo y_emlrtRTEI = {
-    104,                /* lineNo */
+    12,                  /* lineNo */
+    31,                  /* colNo */
+    "beyondNoReturn_v2", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/contours/beyondNoReturn_v2.m" /* pName
+                                                                         */
+};
+
+static emlrtRTEInfo bb_emlrtRTEI = {
+    109,                /* lineNo */
+    23,                 /* colNo */
+    "SDpathODEuler_v3", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
+};
+
+static emlrtRTEInfo cb_emlrtRTEI = {
+    110,                /* lineNo */
     24,                 /* colNo */
     "SDpathODEuler_v3", /* fName */
-    "/home/andrew/Dropbox/PathFinderInf/src/contours/SDpathODEuler_v3.m" /* pName
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v3.m" /* pName
+                                                                        */
+};
+
+static emlrtRSInfo wb_emlrtRSI = {
+    102,      /* lineNo */
+    "intmod", /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/+scalar/mod.m" /* pathName
                                                                           */
 };
 
@@ -705,6 +811,9 @@ static void b_binary_expand_op(const emlrtStack *sp, c_captured_var *dgCoeffs,
 static void binary_expand_op(const emlrtStack *sp, emxArray_creal_T *ddgCoeffs,
                              const c_captured_var *dgCoeffs, int32_T i1,
                              const emxArray_real_T *r1);
+
+static int64_T div_s64_floor(const emlrtStack *sp, int64_T numerator,
+                             int64_T denominator);
 
 static boolean_T halt_euler(const emlrtStack *sp, const b_captured_var *h,
                             const c_captured_var *SPs,
@@ -737,7 +846,7 @@ static void Newton_method(const emlrtStack *sp, b_captured_var *g_h,
   st.prev = sp;
   st.tls = sp->tls;
   emlrtHeapReferenceStackEnterFcnR2012b((emlrtCTX)sp);
-  emxInit_creal_T(sp, &b_p, 2, &x_emlrtRTEI);
+  emxInit_creal_T(sp, &b_p, 2, &bb_emlrtRTEI);
   do {
     exitg1 = 0;
     im = muDoubleScalarHypot(Newton_step.re, Newton_step.im);
@@ -750,7 +859,7 @@ static void Newton_method(const emlrtStack *sp, b_captured_var *g_h,
         i = b_p->size[0] * b_p->size[1];
         b_p->size[0] = 1;
         b_p->size[1] = gCoeffs->contents->size[1];
-        emxEnsureCapacity_creal_T(&st, b_p, i, &x_emlrtRTEI);
+        emxEnsureCapacity_creal_T(&st, b_p, i, &bb_emlrtRTEI);
         p_data = b_p->data;
         loop_ub = gCoeffs->contents->size[1];
         for (i = 0; i < loop_ub; i++) {
@@ -774,7 +883,7 @@ static void Newton_method(const emlrtStack *sp, b_captured_var *g_h,
         i = b_p->size[0] * b_p->size[1];
         b_p->size[0] = 1;
         b_p->size[1] = dgCoeffs->contents->size[1];
-        emxEnsureCapacity_creal_T(&st, b_p, i, &y_emlrtRTEI);
+        emxEnsureCapacity_creal_T(&st, b_p, i, &cb_emlrtRTEI);
         p_data = b_p->data;
         loop_ub = dgCoeffs->contents->size[1];
         for (i = 0; i < loop_ub; i++) {
@@ -884,13 +993,13 @@ static void b_Newton_method(const emlrtStack *sp, b_captured_var *g_h,
   st.prev = sp;
   st.tls = sp->tls;
   emlrtHeapReferenceStackEnterFcnR2012b((emlrtCTX)sp);
-  emxInit_creal_T(sp, &b_p, 2, &x_emlrtRTEI);
+  emxInit_creal_T(sp, &b_p, 2, &bb_emlrtRTEI);
   st.site = &sb_emlrtRSI;
   /*     %% indended functions */
   i = b_p->size[0] * b_p->size[1];
   b_p->size[0] = 1;
   b_p->size[1] = gCoeffs->contents->size[1];
-  emxEnsureCapacity_creal_T(&st, b_p, i, &x_emlrtRTEI);
+  emxEnsureCapacity_creal_T(&st, b_p, i, &bb_emlrtRTEI);
   p_data = b_p->data;
   loop_ub = gCoeffs->contents->size[1];
   for (i = 0; i < loop_ub; i++) {
@@ -916,7 +1025,7 @@ static void b_Newton_method(const emlrtStack *sp, b_captured_var *g_h,
   i = b_p->size[0] * b_p->size[1];
   b_p->size[0] = 1;
   b_p->size[1] = dgCoeffs->contents->size[1];
-  emxEnsureCapacity_creal_T(&st, b_p, i, &y_emlrtRTEI);
+  emxEnsureCapacity_creal_T(&st, b_p, i, &cb_emlrtRTEI);
   p_data = b_p->data;
   loop_ub = dgCoeffs->contents->size[1];
   for (i = 0; i < loop_ub; i++) {
@@ -1007,7 +1116,7 @@ static void b_Newton_method(const emlrtStack *sp, b_captured_var *g_h,
         i = b_p->size[0] * b_p->size[1];
         b_p->size[0] = 1;
         b_p->size[1] = gCoeffs->contents->size[1];
-        emxEnsureCapacity_creal_T(&st, b_p, i, &x_emlrtRTEI);
+        emxEnsureCapacity_creal_T(&st, b_p, i, &bb_emlrtRTEI);
         p_data = b_p->data;
         loop_ub = gCoeffs->contents->size[1];
         for (i = 0; i < loop_ub; i++) {
@@ -1031,7 +1140,7 @@ static void b_Newton_method(const emlrtStack *sp, b_captured_var *g_h,
         i = b_p->size[0] * b_p->size[1];
         b_p->size[0] = 1;
         b_p->size[1] = dgCoeffs->contents->size[1];
-        emxEnsureCapacity_creal_T(&st, b_p, i, &y_emlrtRTEI);
+        emxEnsureCapacity_creal_T(&st, b_p, i, &cb_emlrtRTEI);
         p_data = b_p->data;
         loop_ub = dgCoeffs->contents->size[1];
         for (i = 0; i < loop_ub; i++) {
@@ -1195,6 +1304,42 @@ static void binary_expand_op(const emlrtStack *sp, emxArray_creal_T *ddgCoeffs,
   }
 }
 
+static int64_T div_s64_floor(const emlrtStack *sp, int64_T numerator,
+                             int64_T denominator)
+{
+  int64_T quotient;
+  uint64_T absDenominator;
+  uint64_T absNumerator;
+  uint64_T tempAbsQuotient;
+  boolean_T quotientNeedsNegation;
+  if (denominator == 0L) {
+    emlrtDivisionByZeroErrorR2012b(NULL, (emlrtCTX)sp);
+  } else {
+    if (numerator < 0L) {
+      absNumerator = ~(uint64_T)numerator + 1UL;
+    } else {
+      absNumerator = (uint64_T)numerator;
+    }
+    if (denominator < 0L) {
+      absDenominator = ~(uint64_T)denominator + 1UL;
+    } else {
+      absDenominator = (uint64_T)denominator;
+    }
+    quotientNeedsNegation = ((numerator < 0L) != (denominator < 0L));
+    tempAbsQuotient = absNumerator / absDenominator;
+    if (quotientNeedsNegation) {
+      absNumerator %= absDenominator;
+      if (absNumerator > 0UL) {
+        tempAbsQuotient++;
+      }
+      quotient = -(int64_T)tempAbsQuotient;
+    } else {
+      quotient = (int64_T)tempAbsQuotient;
+    }
+  }
+  return quotient;
+}
+
 static boolean_T halt_euler(const emlrtStack *sp, const b_captured_var *h,
                             const c_captured_var *SPs,
                             const d_captured_var *cover_radii,
@@ -1248,22 +1393,22 @@ static boolean_T halt_euler(const emlrtStack *sp, const b_captured_var *h,
   i_st.prev = &h_st;
   i_st.tls = h_st.tls;
   emlrtHeapReferenceStackEnterFcnR2012b((emlrtCTX)sp);
-  emxInit_creal_T(sp, &cover_centres, 1, &s_emlrtRTEI);
+  emxInit_creal_T(sp, &cover_centres, 1, &v_emlrtRTEI);
   st.site = &r_emlrtRSI;
   theta_diff = h->contents.re;
   r = h->contents.im;
   k = cover_centres->size[0];
   cover_centres->size[0] = SPs->contents->size[0];
-  emxEnsureCapacity_creal_T(&st, cover_centres, k, &s_emlrtRTEI);
+  emxEnsureCapacity_creal_T(&st, cover_centres, k, &v_emlrtRTEI);
   cover_centres_data = cover_centres->data;
   last = SPs->contents->size[0];
   for (k = 0; k < last; k++) {
     cover_centres_data[k] = SPs->contents->data[k];
   }
-  emxInit_real_T(&st, &b_cover_radii, 1, &t_emlrtRTEI);
+  emxInit_real_T(&st, &b_cover_radii, 1, &w_emlrtRTEI);
   k = b_cover_radii->size[0];
   b_cover_radii->size[0] = cover_radii->contents->size[0];
-  emxEnsureCapacity_real_T(&st, b_cover_radii, k, &t_emlrtRTEI);
+  emxEnsureCapacity_real_T(&st, b_cover_radii, k, &w_emlrtRTEI);
   cover_radii_data = b_cover_radii->data;
   last = cover_radii->contents->size[0];
   for (k = 0; k < last; k++) {
@@ -1276,15 +1421,15 @@ static boolean_T halt_euler(const emlrtStack *sp, const b_captured_var *h,
   while ((!exitg1) && (last - 1 <= cover_centres->size[0] - 1)) {
     if ((last < 1) || (last > cover_centres->size[0])) {
       emlrtDynamicBoundsCheckR2012b(last, 1, cover_centres->size[0],
-                                    &u_emlrtBCI, &st);
+                                    &y_emlrtBCI, &st);
     }
     if (last > cover_centres->size[0]) {
       emlrtDynamicBoundsCheckR2012b(last, 1, cover_centres->size[0],
-                                    &u_emlrtBCI, &st);
+                                    &y_emlrtBCI, &st);
     }
     if (last > b_cover_radii->size[0]) {
       emlrtDynamicBoundsCheckR2012b(last, 1, b_cover_radii->size[0],
-                                    &v_emlrtBCI, &st);
+                                    &ab_emlrtBCI, &st);
     }
     if (muDoubleScalarHypot(theta_diff - cover_centres_data[last - 1].re,
                             r - cover_centres_data[last - 1].im) <
@@ -1298,14 +1443,14 @@ static boolean_T halt_euler(const emlrtStack *sp, const b_captured_var *h,
       }
     }
   }
-  emxInit_creal_T(sp, &b_r, 1, &v_emlrtRTEI);
+  emxInit_creal_T(sp, &b_r, 1, &y_emlrtRTEI);
   if (value) {
     b_yn = true;
   } else {
     st.site = &r_emlrtRSI;
     k = cover_centres->size[0];
     cover_centres->size[0] = valleys->contents->size[0];
-    emxEnsureCapacity_creal_T(&st, cover_centres, k, &u_emlrtRTEI);
+    emxEnsureCapacity_creal_T(&st, cover_centres, k, &x_emlrtRTEI);
     cover_centres_data = cover_centres->data;
     last = valleys->contents->size[0];
     for (k = 0; k < last; k++) {
@@ -1336,7 +1481,7 @@ static boolean_T halt_euler(const emlrtStack *sp, const b_captured_var *h,
       }
       k = b_r->size[0];
       b_r->size[0] = b_cover_radii->size[0];
-      emxEnsureCapacity_creal_T(&b_st, b_r, k, &v_emlrtRTEI);
+      emxEnsureCapacity_creal_T(&b_st, b_r, k, &y_emlrtRTEI);
       r1 = b_r->data;
       last = b_cover_radii->size[0];
       for (k = 0; k < last; k++) {
@@ -1359,7 +1504,7 @@ static boolean_T halt_euler(const emlrtStack *sp, const b_captured_var *h,
       e_st.site = &eb_emlrtRSI;
       if (b_cover_radii->size[0] < 1) {
         emlrtErrorWithMessageIdR2018a(
-            &e_st, &emlrtRTEI, "Coder:toolbox:eml_min_or_max_varDimZero",
+            &e_st, &b_emlrtRTEI, "Coder:toolbox:eml_min_or_max_varDimZero",
             "Coder:toolbox:eml_min_or_max_varDimZero", 0);
       }
       f_st.site = &fb_emlrtRSI;
@@ -1419,7 +1564,7 @@ static boolean_T halt_euler(const emlrtStack *sp, const b_captured_var *h,
       }
       if ((idx < 1) || (idx > cover_centres->size[0])) {
         emlrtDynamicBoundsCheckR2012b(idx, 1, cover_centres->size[0],
-                                      &s_emlrtBCI, &st);
+                                      &w_emlrtBCI, &st);
       }
       b_st.site = &t_emlrtRSI;
       theta_diff = b_mod(x_re_tmp) -
@@ -1467,7 +1612,7 @@ static boolean_T halt_euler(const emlrtStack *sp, const b_captured_var *h,
         /*  now check Dave's refined polynomial condition */
         k = gCoeffs->contents->size[1];
         if (1 > k) {
-          emlrtDynamicBoundsCheckR2012b(1, 1, k, &t_emlrtBCI, &st);
+          emlrtDynamicBoundsCheckR2012b(1, 1, k, &x_emlrtBCI, &st);
         }
         b_st.site = &u_emlrtRSI;
         c_st.site = &pb_emlrtRSI;
@@ -1486,12 +1631,12 @@ static boolean_T halt_euler(const emlrtStack *sp, const b_captured_var *h,
           k = gCoeffs->contents->size[1];
           idx = (gCoeffs->contents->size[1] - last) - 1;
           if ((idx < 1) || (idx > k)) {
-            emlrtDynamicBoundsCheckR2012b(idx, 1, k, &w_emlrtBCI, &st);
+            emlrtDynamicBoundsCheckR2012b(idx, 1, k, &bb_emlrtBCI, &st);
           }
           k = gCoeffs->contents->size[1];
           a = (gCoeffs->contents->size[1] - last) - 1;
           if ((a < 1) || (a > k)) {
-            emlrtDynamicBoundsCheckR2012b(a, 1, k, &w_emlrtBCI, &st);
+            emlrtDynamicBoundsCheckR2012b(a, 1, k, &bb_emlrtBCI, &st);
           }
           b_st.site = &v_emlrtRSI;
           c_st.site = &pb_emlrtRSI;
@@ -1556,12 +1701,12 @@ void SDpathODEuler_v3(
   emlrtStack h_st;
   emlrtStack i_st;
   emlrtStack st;
-  emxArray_creal_T *c_SPs;
   emxArray_creal_T *ddgCoeffs;
   emxArray_creal_T *h_log;
+  emxArray_creal_T *h_log_copy;
   emxArray_real_T *p_log;
+  emxArray_real_T *p_log_copy;
   emxArray_real_T *r;
-  emxArray_real_T *varargin_1;
   const creal_T *SPs_data;
   const creal_T *gCoeffs_data;
   const creal_T *valleys_data;
@@ -1569,6 +1714,7 @@ void SDpathODEuler_v3(
   creal_T dc;
   creal_T *ddgCoeffs_data;
   creal_T *h_log_data;
+  int64_T x;
   const real_T *cover_radii_data;
   real_T Cnr;
   real_T brm;
@@ -1580,15 +1726,14 @@ void SDpathODEuler_v3(
   real_T *p_log_data;
   real_T *p_log_out_data;
   int32_T iv[2];
+  int32_T a;
   int32_T exitg11;
   int32_T idx;
-  int32_T j;
   int32_T k;
   int32_T last;
   uint32_T n;
   boolean_T a__2;
   boolean_T exitg1;
-  boolean_T exitg2;
   st.prev = sp;
   st.tls = sp->tls;
   b_st.prev = &st;
@@ -1612,46 +1757,46 @@ void SDpathODEuler_v3(
   SPs_data = SPs->data;
   gCoeffs_data = gCoeffs->data;
   emlrtHeapReferenceStackEnterFcnR2012b((emlrtCTX)sp);
-  emxInitStruct_captured_var(sp, &b_gCoeffs, &q_emlrtRTEI);
+  emxInitStruct_captured_var(sp, &b_gCoeffs, &u_emlrtRTEI);
   st.site = &o_emlrtRSI;
   b_st.site = &p_emlrtRSI;
-  k = b_gCoeffs.contents->size[0] * b_gCoeffs.contents->size[1];
+  a = b_gCoeffs.contents->size[0] * b_gCoeffs.contents->size[1];
   b_gCoeffs.contents->size[0] = 1;
   b_gCoeffs.contents->size[1] = gCoeffs->size[1];
-  emxEnsureCapacity_creal_T(&st, b_gCoeffs.contents, k, &e_emlrtRTEI);
+  emxEnsureCapacity_creal_T(&st, b_gCoeffs.contents, a, &e_emlrtRTEI);
   last = gCoeffs->size[1];
-  for (k = 0; k < last; k++) {
-    b_gCoeffs.contents->data[k] = gCoeffs_data[k];
+  for (a = 0; a < last; a++) {
+    b_gCoeffs.contents->data[a] = gCoeffs_data[a];
   }
-  emxInitStruct_captured_var1(&st, &b_SPs, &q_emlrtRTEI);
+  emxInitStruct_captured_var1(&st, &b_SPs, &u_emlrtRTEI);
   st.site = &o_emlrtRSI;
   b_st.site = &p_emlrtRSI;
-  k = b_SPs.contents->size[0];
+  a = b_SPs.contents->size[0];
   b_SPs.contents->size[0] = SPs->size[0];
-  emxEnsureCapacity_creal_T(&st, b_SPs.contents, k, &e_emlrtRTEI);
+  emxEnsureCapacity_creal_T(&st, b_SPs.contents, a, &e_emlrtRTEI);
   last = SPs->size[0];
-  for (k = 0; k < last; k++) {
-    b_SPs.contents->data[k] = SPs_data[k];
+  for (a = 0; a < last; a++) {
+    b_SPs.contents->data[a] = SPs_data[a];
   }
-  emxInitStruct_captured_var2(&st, &b_cover_radii, &q_emlrtRTEI);
+  emxInitStruct_captured_var2(&st, &b_cover_radii, &u_emlrtRTEI);
   st.site = &o_emlrtRSI;
   b_st.site = &p_emlrtRSI;
-  k = b_cover_radii.contents->size[0];
+  a = b_cover_radii.contents->size[0];
   b_cover_radii.contents->size[0] = cover_radii->size[0];
-  emxEnsureCapacity_real_T(&st, b_cover_radii.contents, k, &e_emlrtRTEI);
+  emxEnsureCapacity_real_T(&st, b_cover_radii.contents, a, &e_emlrtRTEI);
   last = cover_radii->size[0];
-  for (k = 0; k < last; k++) {
-    b_cover_radii.contents->data[k] = cover_radii_data[k];
+  for (a = 0; a < last; a++) {
+    b_cover_radii.contents->data[a] = cover_radii_data[a];
   }
-  emxInitStruct_captured_var1(&st, &b_valleys, &q_emlrtRTEI);
+  emxInitStruct_captured_var1(&st, &b_valleys, &u_emlrtRTEI);
   st.site = &o_emlrtRSI;
   b_st.site = &p_emlrtRSI;
-  k = b_valleys.contents->size[0];
+  a = b_valleys.contents->size[0];
   b_valleys.contents->size[0] = valleys->size[0];
-  emxEnsureCapacity_creal_T(&st, b_valleys.contents, k, &e_emlrtRTEI);
+  emxEnsureCapacity_creal_T(&st, b_valleys.contents, a, &e_emlrtRTEI);
   last = valleys->size[0];
-  for (k = 0; k < last; k++) {
-    b_valleys.contents->data[k] = valleys_data[k];
+  for (a = 0; a < last; a++) {
+    b_valleys.contents->data[a] = valleys_data[a];
   }
   st.site = &o_emlrtRSI;
   b_st.site = &p_emlrtRSI;
@@ -1678,38 +1823,37 @@ void SDpathODEuler_v3(
   valley_index_size[1] = 0;
   ball_index_size[0] = 0;
   ball_index_size[1] = 0;
-  *success = true;
   if (SPs->size[0] == 0) {
-    k = b_SPs.contents->size[0];
+    a = b_SPs.contents->size[0];
     b_SPs.contents->size[0] = 1;
-    emxEnsureCapacity_creal_T(sp, b_SPs.contents, k, &f_emlrtRTEI);
+    emxEnsureCapacity_creal_T(sp, b_SPs.contents, a, &f_emlrtRTEI);
     b_SPs.contents->data[0].re = rtInf;
     b_SPs.contents->data[0].im = 0.0;
     /*  bodge to speed things up further down */
-    k = b_cover_radii.contents->size[0];
+    a = b_cover_radii.contents->size[0];
     b_cover_radii.contents->size[0] = 1;
-    emxEnsureCapacity_real_T(sp, b_cover_radii.contents, k, &g_emlrtRTEI);
+    emxEnsureCapacity_real_T(sp, b_cover_radii.contents, a, &g_emlrtRTEI);
     b_cover_radii.contents->data[0] = 0.0;
   }
-  k = b_SPs.contents->size[0];
-  for (last = 0; last < k; last++) {
+  a = b_SPs.contents->size[0];
+  for (last = 0; last < a; last++) {
     /*  another bodge to stop stationary points being treated like critical */
     /*  points */
     if (last + 1 > b_cover_radii.contents->size[0]) {
       emlrtDynamicBoundsCheckR2012b(last + 1, 1,
                                     b_cover_radii.contents->size[0],
-                                    &n_emlrtBCI, (emlrtCTX)sp);
+                                    &q_emlrtBCI, (emlrtCTX)sp);
     }
     if (b_cover_radii.contents->data[last] == 0.0) {
       /*  || ismember(n,excluded_SPs_indices) */
       if (last + 1 > b_SPs.contents->size[0]) {
         emlrtDynamicBoundsCheckR2012b(last + 1, 1, b_SPs.contents->size[0],
-                                      &o_emlrtBCI, (emlrtCTX)sp);
+                                      &r_emlrtBCI, (emlrtCTX)sp);
       }
       b_SPs.contents->data[last].re = rtInf;
       if (last + 1 > b_SPs.contents->size[0]) {
         emlrtDynamicBoundsCheckR2012b(last + 1, 1, b_SPs.contents->size[0],
-                                      &o_emlrtBCI, (emlrtCTX)sp);
+                                      &r_emlrtBCI, (emlrtCTX)sp);
       }
       b_SPs.contents->data[last].im = 0.0;
     }
@@ -1724,45 +1868,45 @@ void SDpathODEuler_v3(
     last = 0;
   } else {
     if (1 > gCoeffs->size[1]) {
-      emlrtDynamicBoundsCheckR2012b(1, 1, gCoeffs->size[1], &b_emlrtBCI,
+      emlrtDynamicBoundsCheckR2012b(1, 1, gCoeffs->size[1], &p_emlrtBCI,
                                     (emlrtCTX)sp);
     }
     if ((gCoeffs->size[1] - 1 < 1) ||
         (gCoeffs->size[1] - 1 > gCoeffs->size[1])) {
       emlrtDynamicBoundsCheckR2012b(gCoeffs->size[1] - 1, 1, gCoeffs->size[1],
-                                    &c_emlrtBCI, (emlrtCTX)sp);
+                                    &o_emlrtBCI, (emlrtCTX)sp);
     }
     last = gCoeffs->size[1] - 1;
   }
   st.site = &n_emlrtRSI;
-  emxInit_real_T(&st, &r, 2, &q_emlrtRTEI);
+  emxInit_real_T(&st, &r, 2, &u_emlrtRTEI);
   p_log_out_data = r->data;
   if (gCoeffs->size[1] - 1 < 1) {
     r->size[0] = 1;
     r->size[1] = 0;
   } else {
-    k = r->size[0] * r->size[1];
+    a = r->size[0] * r->size[1];
     r->size[0] = 1;
     r->size[1] = (int32_T) - (1.0 - ((real_T)gCoeffs->size[1] - 1.0)) + 1;
-    emxEnsureCapacity_real_T(&st, r, k, &h_emlrtRTEI);
+    emxEnsureCapacity_real_T(&st, r, a, &h_emlrtRTEI);
     p_log_out_data = r->data;
     idx = (int32_T) - (1.0 - ((real_T)gCoeffs->size[1] - 1.0));
-    for (k = 0; k <= idx; k++) {
-      p_log_out_data[k] = ((real_T)gCoeffs->size[1] - 1.0) - (real_T)k;
+    for (a = 0; a <= idx; a++) {
+      p_log_out_data[a] = ((real_T)gCoeffs->size[1] - 1.0) - (real_T)a;
     }
   }
   if ((last != r->size[1]) && ((last != 1) && (r->size[1] != 1))) {
-    emlrtDimSizeImpxCheckR2021b(last, r->size[1], &emlrtECI, (emlrtCTX)sp);
+    emlrtDimSizeImpxCheckR2021b(last, r->size[1], &d_emlrtECI, (emlrtCTX)sp);
   }
   emxInitStruct_captured_var(sp, &dgCoeffs, &i_emlrtRTEI);
   if (last == r->size[1]) {
-    k = dgCoeffs.contents->size[0] * dgCoeffs.contents->size[1];
+    a = dgCoeffs.contents->size[0] * dgCoeffs.contents->size[1];
     dgCoeffs.contents->size[0] = 1;
     dgCoeffs.contents->size[1] = last;
-    emxEnsureCapacity_creal_T(sp, dgCoeffs.contents, k, &i_emlrtRTEI);
-    for (k = 0; k < last; k++) {
-      dgCoeffs.contents->data[k].re = p_log_out_data[k] * gCoeffs_data[k].re;
-      dgCoeffs.contents->data[k].im = p_log_out_data[k] * gCoeffs_data[k].im;
+    emxEnsureCapacity_creal_T(sp, dgCoeffs.contents, a, &i_emlrtRTEI);
+    for (a = 0; a < last; a++) {
+      dgCoeffs.contents->data[a].re = p_log_out_data[a] * gCoeffs_data[a].re;
+      dgCoeffs.contents->data[a].im = p_log_out_data[a] * gCoeffs_data[a].im;
     }
   } else {
     st.site = &n_emlrtRSI;
@@ -1773,12 +1917,12 @@ void SDpathODEuler_v3(
   } else {
     if (1 > dgCoeffs.contents->size[1]) {
       emlrtDynamicBoundsCheckR2012b(1, 1, dgCoeffs.contents->size[1],
-                                    &d_emlrtBCI, (emlrtCTX)sp);
+                                    &n_emlrtBCI, (emlrtCTX)sp);
     }
     if ((dgCoeffs.contents->size[1] - 1 < 1) ||
         (dgCoeffs.contents->size[1] - 1 > dgCoeffs.contents->size[1])) {
       emlrtDynamicBoundsCheckR2012b(dgCoeffs.contents->size[1] - 1, 1,
-                                    dgCoeffs.contents->size[1], &e_emlrtBCI,
+                                    dgCoeffs.contents->size[1], &m_emlrtBCI,
                                     (emlrtCTX)sp);
     }
     last = dgCoeffs.contents->size[1] - 1;
@@ -1788,30 +1932,30 @@ void SDpathODEuler_v3(
     r->size[0] = 1;
     r->size[1] = 0;
   } else {
-    k = r->size[0] * r->size[1];
+    a = r->size[0] * r->size[1];
     r->size[0] = 1;
     r->size[1] =
         (int32_T) - (1.0 - (((real_T)gCoeffs->size[1] - 1.0) - 1.0)) + 1;
-    emxEnsureCapacity_real_T(&st, r, k, &j_emlrtRTEI);
+    emxEnsureCapacity_real_T(&st, r, a, &j_emlrtRTEI);
     p_log_out_data = r->data;
     idx = (int32_T) - (1.0 - (((real_T)gCoeffs->size[1] - 1.0) - 1.0));
-    for (k = 0; k <= idx; k++) {
-      p_log_out_data[k] = (((real_T)gCoeffs->size[1] - 1.0) - 1.0) - (real_T)k;
+    for (a = 0; a <= idx; a++) {
+      p_log_out_data[a] = (((real_T)gCoeffs->size[1] - 1.0) - 1.0) - (real_T)a;
     }
   }
   if ((last != r->size[1]) && ((last != 1) && (r->size[1] != 1))) {
-    emlrtDimSizeImpxCheckR2021b(last, r->size[1], &b_emlrtECI, (emlrtCTX)sp);
+    emlrtDimSizeImpxCheckR2021b(last, r->size[1], &c_emlrtECI, (emlrtCTX)sp);
   }
   emxInit_creal_T(sp, &ddgCoeffs, 2, &k_emlrtRTEI);
   if (last == r->size[1]) {
-    k = ddgCoeffs->size[0] * ddgCoeffs->size[1];
+    a = ddgCoeffs->size[0] * ddgCoeffs->size[1];
     ddgCoeffs->size[0] = 1;
     ddgCoeffs->size[1] = last;
-    emxEnsureCapacity_creal_T(sp, ddgCoeffs, k, &k_emlrtRTEI);
+    emxEnsureCapacity_creal_T(sp, ddgCoeffs, a, &k_emlrtRTEI);
     ddgCoeffs_data = ddgCoeffs->data;
-    for (k = 0; k < last; k++) {
-      ddgCoeffs_data[k].re = p_log_out_data[k] * dgCoeffs.contents->data[k].re;
-      ddgCoeffs_data[k].im = p_log_out_data[k] * dgCoeffs.contents->data[k].im;
+    for (a = 0; a < last; a++) {
+      ddgCoeffs_data[a].re = p_log_out_data[a] * dgCoeffs.contents->data[a].re;
+      ddgCoeffs_data[a].im = p_log_out_data[a] * dgCoeffs.contents->data[a].im;
     }
   } else {
     st.site = &m_emlrtRSI;
@@ -1821,39 +1965,12 @@ void SDpathODEuler_v3(
   /*  may not need this yet - but it's the local error est */
   /*  get parameters for halting zones */
   if (1 > gCoeffs->size[1]) {
-    emlrtDynamicBoundsCheckR2012b(1, 1, gCoeffs->size[1], &f_emlrtBCI,
+    emlrtDynamicBoundsCheckR2012b(1, 1, gCoeffs->size[1], &l_emlrtBCI,
                                   (emlrtCTX)sp);
   }
+  emxInit_real_T(sp, &p_log, 1, &l_emlrtRTEI);
   st.site = &l_emlrtRSI;
-  /*  computes the constant which determines how large / narrow the SD path */
-  /*  must be before it cannot leave the complex segment */
-  Cnr = 0.0;
-  k = gCoeffs->size[1];
-  for (j = 0; j <= k - 3; j++) {
-    last = (gCoeffs->size[1] - j) - 1;
-    if ((last < 1) || (last > gCoeffs->size[1])) {
-      emlrtDynamicBoundsCheckR2012b(last, 1, gCoeffs->size[1], &p_emlrtBCI,
-                                    &st);
-    }
-    idx = (gCoeffs->size[1] - j) - 1;
-    if ((idx < 1) || (idx > gCoeffs->size[1])) {
-      emlrtDynamicBoundsCheckR2012b(idx, 1, gCoeffs->size[1], &p_emlrtBCI, &st);
-    }
-    Cnr += muDoubleScalarHypot(((real_T)j + 1.0) * gCoeffs_data[last - 1].re,
-                               ((real_T)j + 1.0) * gCoeffs_data[idx - 1].im);
-    if (*emlrtBreakCheckR2012bFlagVar != 0) {
-      emlrtBreakCheckR2012b(&st);
-    }
-  }
-  if (1 > gCoeffs->size[1]) {
-    emlrtDynamicBoundsCheckR2012b(1, 1, gCoeffs->size[1], &emlrtBCI, &st);
-  }
-  emxInit_real_T(&st, &p_log, 1, &l_emlrtRTEI);
-  Cnr /= ((real_T)gCoeffs->size[1] - 1.0) *
-         muDoubleScalarHypot(gCoeffs_data[0].re, gCoeffs_data[0].im);
-  /*  C =
-   * norm(sum(fliplr(1:(deg-1)).*abs(coeffs(1:(deg-1))))/(deg*abs(coeffs(1))));
-   */
+  Cnr = getNoReturnConstant(&st, gCoeffs);
   /*  main loop */
   h.contents = h0;
   if (!(n_max >= 0.0)) {
@@ -1863,9 +1980,9 @@ void SDpathODEuler_v3(
   if (p_step_size != (int32_T)muDoubleScalarFloor(p_step_size)) {
     emlrtIntegerCheckR2012b(p_step_size, &emlrtDCI, (emlrtCTX)sp);
   }
-  k = p_log->size[0];
+  a = p_log->size[0];
   p_log->size[0] = (int32_T)(int64_T)muDoubleScalarFloor(p_step_size);
-  emxEnsureCapacity_real_T(sp, p_log, k, &l_emlrtRTEI);
+  emxEnsureCapacity_real_T(sp, p_log, a, &l_emlrtRTEI);
   p_log_data = p_log->data;
   if (!(n_max >= 0.0)) {
     emlrtNonNegativeCheckR2012b((real_T)n_max, &b_emlrtDCI, (emlrtCTX)sp);
@@ -1874,8 +1991,8 @@ void SDpathODEuler_v3(
     emlrtIntegerCheckR2012b(p_step_size, &emlrtDCI, (emlrtCTX)sp);
   }
   last = (int32_T)(int64_T)muDoubleScalarFloor(p_step_size);
-  for (k = 0; k < last; k++) {
-    p_log_data[k] = 0.0;
+  for (a = 0; a < last; a++) {
+    p_log_data[a] = 0.0;
   }
   emxInit_creal_T(sp, &h_log, 1, &m_emlrtRTEI);
   if (!(n_max >= 0.0)) {
@@ -1884,9 +2001,9 @@ void SDpathODEuler_v3(
   if (p_step_size != (int32_T)muDoubleScalarFloor(p_step_size)) {
     emlrtIntegerCheckR2012b(p_step_size, &c_emlrtDCI, (emlrtCTX)sp);
   }
-  k = h_log->size[0];
+  a = h_log->size[0];
   h_log->size[0] = (int32_T)(int64_T)muDoubleScalarFloor(p_step_size);
-  emxEnsureCapacity_creal_T(sp, h_log, k, &m_emlrtRTEI);
+  emxEnsureCapacity_creal_T(sp, h_log, a, &m_emlrtRTEI);
   h_log_data = h_log->data;
   if (!(n_max >= 0.0)) {
     emlrtNonNegativeCheckR2012b((real_T)n_max, &d_emlrtDCI, (emlrtCTX)sp);
@@ -1895,29 +2012,28 @@ void SDpathODEuler_v3(
     emlrtIntegerCheckR2012b(p_step_size, &c_emlrtDCI, (emlrtCTX)sp);
   }
   last = (int32_T)(int64_T)muDoubleScalarFloor(p_step_size);
-  for (k = 0; k < last; k++) {
-    h_log_data[k].re = 0.0;
-    h_log_data[k].im = 2.2204460492503131E-16;
+  for (a = 0; a < last; a++) {
+    h_log_data[a].re = 0.0;
+    h_log_data[a].im = 2.2204460492503131E-16;
   }
   if (1 > (int32_T)n_max) {
-    emlrtDynamicBoundsCheckR2012b(1, 1, (int32_T)n_max, &g_emlrtBCI,
+    emlrtDynamicBoundsCheckR2012b(1, 1, (int32_T)n_max, &k_emlrtBCI,
                                   (emlrtCTX)sp);
   }
   p_log_data[0] = 0.0;
   if (1 > h_log->size[0]) {
-    emlrtDynamicBoundsCheckR2012b(1, 1, h_log->size[0], &k_emlrtBCI,
+    emlrtDynamicBoundsCheckR2012b(1, 1, h_log->size[0], &i_emlrtBCI,
                                   (emlrtCTX)sp);
   }
   h_log_data[0] = h0;
   n = 1U;
-  emxInit_real_T(sp, &varargin_1, 1, &r_emlrtRTEI);
-  emxInit_creal_T(sp, &c_SPs, 1, &p_emlrtRTEI);
-  exitg1 = false;
+  emxInit_real_T(sp, &p_log_copy, 1, &q_emlrtRTEI);
+  emxInit_creal_T(sp, &h_log_copy, 1, &r_emlrtRTEI);
   do {
     exitg11 = 0;
     st.site = &k_emlrtRSI;
-    if ((!exitg1) && (!halt_euler(&st, &h, &b_SPs, &b_cover_radii, &b_valleys,
-                                  &b_gCoeffs, &b_r_star))) {
+    if (!halt_euler(&st, &h, &b_SPs, &b_cover_radii, &b_valleys, &b_gCoeffs,
+                    &b_r_star)) {
       /*  get ingreidents which will be used multiple times */
       n++;
       dg_h.contents = polyval(dgCoeffs.contents, h.contents);
@@ -2012,31 +2128,31 @@ void SDpathODEuler_v3(
         }
       }
       st.site = &j_emlrtRSI;
-      k = c_SPs->size[0];
-      c_SPs->size[0] = b_SPs.contents->size[0];
-      emxEnsureCapacity_creal_T(&st, c_SPs, k, &p_emlrtRTEI);
-      ddgCoeffs_data = c_SPs->data;
+      a = h_log_copy->size[0];
+      h_log_copy->size[0] = b_SPs.contents->size[0];
+      emxEnsureCapacity_creal_T(&st, h_log_copy, a, &p_emlrtRTEI);
+      ddgCoeffs_data = h_log_copy->data;
       last = b_SPs.contents->size[0];
-      for (k = 0; k < last; k++) {
-        ddgCoeffs_data[k].re = b_SPs.contents->data[k].re - h.contents.re;
-        ddgCoeffs_data[k].im = b_SPs.contents->data[k].im - h.contents.im;
+      for (a = 0; a < last; a++) {
+        ddgCoeffs_data[a].re = b_SPs.contents->data[a].re - h.contents.re;
+        ddgCoeffs_data[a].im = b_SPs.contents->data[a].im - h.contents.im;
       }
       b_st.site = &j_emlrtRSI;
-      b_abs(&b_st, c_SPs, varargin_1);
-      p_log_out_data = varargin_1->data;
+      b_abs(&b_st, h_log_copy, p_log_copy);
+      p_log_out_data = p_log_copy->data;
       b_st.site = &kb_emlrtRSI;
       c_st.site = &lb_emlrtRSI;
       d_st.site = &mb_emlrtRSI;
-      if (varargin_1->size[0] < 1) {
+      if (p_log_copy->size[0] < 1) {
         emlrtErrorWithMessageIdR2018a(
-            &d_st, &emlrtRTEI, "Coder:toolbox:eml_min_or_max_varDimZero",
+            &d_st, &b_emlrtRTEI, "Coder:toolbox:eml_min_or_max_varDimZero",
             "Coder:toolbox:eml_min_or_max_varDimZero", 0);
       }
       e_st.site = &nb_emlrtRSI;
       f_st.site = &ob_emlrtRSI;
-      last = varargin_1->size[0];
-      if (varargin_1->size[0] <= 2) {
-        if (varargin_1->size[0] == 1) {
+      last = p_log_copy->size[0];
+      if (p_log_copy->size[0] <= 2) {
+        if (p_log_copy->size[0] == 1) {
           sgnbi = p_log_out_data[0];
         } else if ((p_log_out_data[0] > p_log_out_data[1]) ||
                    (muDoubleScalarIsNaN(p_log_out_data[0]) &&
@@ -2052,16 +2168,16 @@ void SDpathODEuler_v3(
         } else {
           idx = 0;
           h_st.site = &ib_emlrtRSI;
-          if (varargin_1->size[0] > 2147483646) {
+          if (p_log_copy->size[0] > 2147483646) {
             i_st.site = &q_emlrtRSI;
             check_forloop_overflow_error(&i_st);
           }
           k = 2;
-          exitg2 = false;
-          while ((!exitg2) && (k <= last)) {
+          exitg1 = false;
+          while ((!exitg1) && (k <= last)) {
             if (!muDoubleScalarIsNaN(p_log_out_data[k - 1])) {
               idx = k;
-              exitg2 = true;
+              exitg1 = true;
             } else {
               k++;
             }
@@ -2072,14 +2188,14 @@ void SDpathODEuler_v3(
         } else {
           g_st.site = &gb_emlrtRSI;
           sgnbi = p_log_out_data[idx - 1];
-          j = idx + 1;
+          a = idx + 1;
           h_st.site = &jb_emlrtRSI;
-          if ((idx + 1 <= varargin_1->size[0]) &&
-              (varargin_1->size[0] > 2147483646)) {
+          if ((idx + 1 <= p_log_copy->size[0]) &&
+              (p_log_copy->size[0] > 2147483646)) {
             i_st.site = &q_emlrtRSI;
             check_forloop_overflow_error(&i_st);
           }
-          for (k = j; k <= last; k++) {
+          for (k = a; k <= last; k++) {
             p_step_size = p_log_out_data[k - 1];
             if (sgnbi > p_step_size) {
               sgnbi = p_step_size;
@@ -2099,7 +2215,7 @@ void SDpathODEuler_v3(
       if (((int32_T)((real_T)n - 1.0) < 1) ||
           ((int32_T)((real_T)n - 1.0) > p_log->size[0])) {
         emlrtDynamicBoundsCheckR2012b((int32_T)((real_T)n - 1.0), 1,
-                                      p_log->size[0], &h_emlrtBCI,
+                                      p_log->size[0], &j_emlrtBCI,
                                       (emlrtCTX)sp);
       }
       p.contents = p_log_data[(int32_T)n - 2] + p_step_size;
@@ -2170,17 +2286,17 @@ void SDpathODEuler_v3(
       }
       if (((int32_T)n < 1) || ((int32_T)n > p_log->size[0])) {
         emlrtDynamicBoundsCheckR2012b((int32_T)n, 1, p_log->size[0],
-                                      &q_emlrtBCI, (emlrtCTX)sp);
+                                      &s_emlrtBCI, (emlrtCTX)sp);
       }
       p_log_data[(int32_T)n - 1] = p.contents;
       if (((int32_T)n < 1) || ((int32_T)n > h_log->size[0])) {
         emlrtDynamicBoundsCheckR2012b((int32_T)n, 1, h_log->size[0],
-                                      &r_emlrtBCI, (emlrtCTX)sp);
+                                      &t_emlrtBCI, (emlrtCTX)sp);
       }
       h_log_data[(int32_T)n - 1].re = h.contents.re;
       if (((int32_T)n < 1) || ((int32_T)n > h_log->size[0])) {
         emlrtDynamicBoundsCheckR2012b((int32_T)n, 1, h_log->size[0],
-                                      &r_emlrtBCI, (emlrtCTX)sp);
+                                      &t_emlrtBCI, (emlrtCTX)sp);
       }
       h_log_data[(int32_T)n - 1].im = h.contents.im;
       st.site = &g_emlrtRSI;
@@ -2191,86 +2307,201 @@ void SDpathODEuler_v3(
         b_Newton_method(&st, &g_h, &b_gCoeffs, &h, &dg_h, &dgCoeffs, &g_se, &p,
                         &b_Newton_small_threshold);
       }
+      x = n;
+      if (n_max != 0L) {
+        st.site = &wb_emlrtRSI;
+        x -= div_s64_floor(&st, x, n_max) * n_max;
+      }
+      if (x == 0L) {
+        /*  need to add more points */
+        /*              success = false; */
+        /*              break */
+        a = p_log_copy->size[0];
+        p_log_copy->size[0] = p_log->size[0];
+        emxEnsureCapacity_real_T(sp, p_log_copy, a, &q_emlrtRTEI);
+        p_log_out_data = p_log_copy->data;
+        last = p_log->size[0];
+        for (a = 0; a < last; a++) {
+          p_log_out_data[a] = p_log_data[a];
+        }
+        a = h_log_copy->size[0];
+        h_log_copy->size[0] = h_log->size[0];
+        emxEnsureCapacity_creal_T(sp, h_log_copy, a, &r_emlrtRTEI);
+        ddgCoeffs_data = h_log_copy->data;
+        last = h_log->size[0];
+        for (a = 0; a < last; a++) {
+          ddgCoeffs_data[a] = h_log_data[a];
+        }
+        if (n_max > MAX_int64_T - n) {
+          x = MAX_int64_T;
+        } else {
+          x = n_max + n;
+        }
+        if (!(x >= 0.0)) {
+          emlrtNonNegativeCheckR2012b((real_T)x, &f_emlrtDCI, (emlrtCTX)sp);
+        }
+        p_step_size = (real_T)(int64_T)muDoubleScalarFloor((real_T)x);
+        if (p_step_size != (int32_T)muDoubleScalarFloor(p_step_size)) {
+          emlrtIntegerCheckR2012b(p_step_size, &e_emlrtDCI, (emlrtCTX)sp);
+        }
+        a = p_log->size[0];
+        p_log->size[0] = (int32_T)(int64_T)muDoubleScalarFloor(p_step_size);
+        emxEnsureCapacity_real_T(sp, p_log, a, &s_emlrtRTEI);
+        p_log_data = p_log->data;
+        if (!(x >= 0.0)) {
+          emlrtNonNegativeCheckR2012b((real_T)x, &f_emlrtDCI, (emlrtCTX)sp);
+        }
+        if (p_step_size != (int32_T)muDoubleScalarFloor(p_step_size)) {
+          emlrtIntegerCheckR2012b(p_step_size, &e_emlrtDCI, (emlrtCTX)sp);
+        }
+        last = (int32_T)(int64_T)muDoubleScalarFloor(p_step_size);
+        for (a = 0; a < last; a++) {
+          p_log_data[a] = 0.0;
+        }
+        if (n_max > MAX_int64_T - n) {
+          x = MAX_int64_T;
+        } else {
+          x = n_max + n;
+        }
+        if (!(x >= 0.0)) {
+          emlrtNonNegativeCheckR2012b((real_T)x, &h_emlrtDCI, (emlrtCTX)sp);
+        }
+        p_step_size = (real_T)(int64_T)muDoubleScalarFloor((real_T)x);
+        if (p_step_size != (int32_T)muDoubleScalarFloor(p_step_size)) {
+          emlrtIntegerCheckR2012b(p_step_size, &g_emlrtDCI, (emlrtCTX)sp);
+        }
+        a = h_log->size[0];
+        h_log->size[0] = (int32_T)(int64_T)muDoubleScalarFloor(p_step_size);
+        emxEnsureCapacity_creal_T(sp, h_log, a, &t_emlrtRTEI);
+        h_log_data = h_log->data;
+        if (!(x >= 0.0)) {
+          emlrtNonNegativeCheckR2012b((real_T)x, &h_emlrtDCI, (emlrtCTX)sp);
+        }
+        if (p_step_size != (int32_T)muDoubleScalarFloor(p_step_size)) {
+          emlrtIntegerCheckR2012b(p_step_size, &g_emlrtDCI, (emlrtCTX)sp);
+        }
+        last = (int32_T)(int64_T)muDoubleScalarFloor(p_step_size);
+        for (a = 0; a < last; a++) {
+          h_log_data[a].re = 0.0;
+          h_log_data[a].im = 0.0;
+        }
+        if (n_max > MAX_int64_T - n) {
+          x = MAX_int64_T;
+        } else {
+          x = n_max + n;
+        }
+        if (1 > (int32_T)x) {
+          emlrtDynamicBoundsCheckR2012b(1, 1, (int32_T)x, &h_emlrtBCI,
+                                        (emlrtCTX)sp);
+        }
+        if (n_max > MAX_int64_T - n) {
+          x = MAX_int64_T;
+        } else {
+          x = n_max + n;
+        }
+        if (((int32_T)n < 1) || ((int32_T)n > (int32_T)x)) {
+          emlrtDynamicBoundsCheckR2012b((int32_T)n, 1, (int32_T)x, &g_emlrtBCI,
+                                        (emlrtCTX)sp);
+        }
+        if ((int32_T)n != p_log_copy->size[0]) {
+          emlrtSubAssignSizeCheck1dR2017a((int32_T)n, p_log_copy->size[0],
+                                          &b_emlrtECI, (emlrtCTX)sp);
+        }
+        last = (int32_T)n;
+        for (a = 0; a < last; a++) {
+          p_log_data[a] = p_log_out_data[a];
+        }
+        if (1 > h_log->size[0]) {
+          emlrtDynamicBoundsCheckR2012b(1, 1, h_log->size[0], &f_emlrtBCI,
+                                        (emlrtCTX)sp);
+        }
+        if (((int32_T)n < 1) || ((int32_T)n > h_log->size[0])) {
+          emlrtDynamicBoundsCheckR2012b((int32_T)n, 1, h_log->size[0],
+                                        &e_emlrtBCI, (emlrtCTX)sp);
+        }
+        if ((int32_T)n != h_log_copy->size[0]) {
+          emlrtSubAssignSizeCheck1dR2017a((int32_T)n, h_log_copy->size[0],
+                                          &emlrtECI, (emlrtCTX)sp);
+        }
+        last = (int32_T)n;
+        for (a = 0; a < last; a++) {
+          h_log_data[a] = ddgCoeffs_data[a];
+        }
+      }
       if (*emlrtBreakCheckR2012bFlagVar != 0) {
         emlrtBreakCheckR2012b((emlrtCTX)sp);
-      }
-      if (n_max == n) {
-        *success = false;
-        exitg1 = true;
       }
     } else {
       exitg11 = 1;
     }
   } while (exitg11 == 0);
-  emxFree_creal_T(sp, &c_SPs);
-  emxFree_real_T(sp, &varargin_1);
+  emxFree_creal_T(sp, &h_log_copy);
+  emxFree_real_T(sp, &p_log_copy);
   emxFree_creal_T(sp, &ddgCoeffs);
   emxFreeStruct_captured_var(sp, &dgCoeffs);
   emxFreeStruct_captured_var(sp, &b_gCoeffs);
   if (1 > p_log->size[0]) {
-    emlrtDynamicBoundsCheckR2012b(1, 1, p_log->size[0], &i_emlrtBCI,
+    emlrtDynamicBoundsCheckR2012b(1, 1, p_log->size[0], &d_emlrtBCI,
                                   (emlrtCTX)sp);
   }
   last = (int32_T)n;
   if (((int32_T)n < 1) || ((int32_T)n > p_log->size[0])) {
-    emlrtDynamicBoundsCheckR2012b((int32_T)n, 1, p_log->size[0], &j_emlrtBCI,
+    emlrtDynamicBoundsCheckR2012b((int32_T)n, 1, p_log->size[0], &c_emlrtBCI,
                                   (emlrtCTX)sp);
   }
   iv[0] = 1;
   iv[1] = (int32_T)n;
   st.site = &e_emlrtRSI;
   indexShapeCheck(&st, p_log->size[0], iv);
-  k = p_log_out->size[0];
+  a = p_log_out->size[0];
   p_log_out->size[0] = (int32_T)n;
-  emxEnsureCapacity_real_T(sp, p_log_out, k, &n_emlrtRTEI);
+  emxEnsureCapacity_real_T(sp, p_log_out, a, &n_emlrtRTEI);
   p_log_out_data = p_log_out->data;
-  for (k = 0; k < last; k++) {
-    p_log_out_data[k] = p_log_data[k];
+  for (a = 0; a < last; a++) {
+    p_log_out_data[a] = p_log_data[a];
   }
   emxFree_real_T(sp, &p_log);
   if (1 > h_log->size[0]) {
-    emlrtDynamicBoundsCheckR2012b(1, 1, h_log->size[0], &l_emlrtBCI,
+    emlrtDynamicBoundsCheckR2012b(1, 1, h_log->size[0], &b_emlrtBCI,
                                   (emlrtCTX)sp);
   }
   if (((int32_T)n < 1) || ((int32_T)n > h_log->size[0])) {
-    emlrtDynamicBoundsCheckR2012b((int32_T)n, 1, h_log->size[0], &m_emlrtBCI,
+    emlrtDynamicBoundsCheckR2012b((int32_T)n, 1, h_log->size[0], &emlrtBCI,
                                   (emlrtCTX)sp);
   }
   iv[0] = 1;
   iv[1] = (int32_T)n;
   st.site = &d_emlrtRSI;
   indexShapeCheck(&st, h_log->size[0], iv);
-  k = h_log_out->size[0];
+  a = h_log_out->size[0];
   h_log_out->size[0] = (int32_T)n;
-  emxEnsureCapacity_creal_T(sp, h_log_out, k, &o_emlrtRTEI);
+  emxEnsureCapacity_creal_T(sp, h_log_out, a, &o_emlrtRTEI);
   ddgCoeffs_data = h_log_out->data;
-  for (k = 0; k < last; k++) {
-    ddgCoeffs_data[k] = h_log_data[k];
+  for (a = 0; a < last; a++) {
+    ddgCoeffs_data[a] = h_log_data[a];
   }
   emxFree_creal_T(sp, &h_log);
-  if (*success) {
-    st.site = &c_emlrtRSI;
-    if (inAball(&st, h.contents, b_SPs.contents, b_cover_radii.contents)) {
-      st.site = &b_emlrtRSI;
-      b_inAball(&st, h.contents, b_SPs.contents, b_cover_radii.contents, &a__2,
-                &p_step_size);
-      ball_index_size[0] = 1;
-      ball_index_size[1] = 1;
-      ball_index_data[0] = p_step_size;
-    } else {
-      st.site = &emlrtRSI;
-      beyondNoReturn(
-          &st, h.contents, Cnr,
-          muDoubleScalarAtan2(gCoeffs_data[0].im, gCoeffs_data[0].re),
-          b_valleys.contents, &a__2, &p_step_size);
-      valley_index_size[0] = 1;
-      valley_index_size[1] = 1;
-      valley_index_data[0] = p_step_size;
-    }
+  st.site = &c_emlrtRSI;
+  if (inAball(&st, h.contents, b_SPs.contents, b_cover_radii.contents)) {
+    st.site = &b_emlrtRSI;
+    b_inAball(&st, h.contents, b_SPs.contents, b_cover_radii.contents, &a__2,
+              &p_step_size);
+    ball_index_size[0] = 1;
+    ball_index_size[1] = 1;
+    ball_index_data[0] = p_step_size;
+  } else {
+    st.site = &emlrtRSI;
+    beyondNoReturn(&st, h.contents, Cnr,
+                   muDoubleScalarAtan2(gCoeffs_data[0].im, gCoeffs_data[0].re),
+                   b_valleys.contents, &a__2, &p_step_size);
+    valley_index_size[0] = 1;
+    valley_index_size[1] = 1;
+    valley_index_data[0] = p_step_size;
   }
   emxFreeStruct_captured_var(sp, &b_SPs);
   emxFreeStruct_captured_var1(sp, &b_cover_radii);
   emxFreeStruct_captured_var(sp, &b_valleys);
+  *success = true;
   emlrtHeapReferenceStackLeaveFcnR2012b((emlrtCTX)sp);
 }
 
