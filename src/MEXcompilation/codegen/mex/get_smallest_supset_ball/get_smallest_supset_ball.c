@@ -11,6 +11,7 @@
 
 /* Include files */
 #include "get_smallest_supset_ball.h"
+#include "abs.h"
 #include "conv.h"
 #include "eml_int_forloop_overflow_check.h"
 #include "flip.h"
@@ -19,6 +20,7 @@
 #include "get_smallest_supset_ball_types.h"
 #include "mpower.h"
 #include "nchoosek.h"
+#include "polyval.h"
 #include "roots.h"
 #include "rt_nonfinite.h"
 #include "mwmathutil.h"
@@ -27,112 +29,192 @@
 static emlrtRSInfo
     emlrtRSI =
         {
-            8,                          /* lineNo */
+            5,                          /* lineNo */
             "get_smallest_supset_ball", /* fcnName */
             "/home/andrew/OneDrive/PathFinder/src/covers/"
             "get_smallest_supset_ball.m" /* pathName */
 };
 
-static emlrtRSInfo b_emlrtRSI = {
+static emlrtRSInfo
+    b_emlrtRSI =
+        {
+            7,                          /* lineNo */
+            "get_smallest_supset_ball", /* fcnName */
+            "/home/andrew/OneDrive/PathFinder/src/covers/"
+            "get_smallest_supset_ball.m" /* pathName */
+};
+
+static emlrtRSInfo
+    c_emlrtRSI =
+        {
+            9,                          /* lineNo */
+            "get_smallest_supset_ball", /* fcnName */
+            "/home/andrew/OneDrive/PathFinder/src/covers/"
+            "get_smallest_supset_ball.m" /* pathName */
+};
+
+static emlrtRSInfo e_emlrtRSI = {
     22,                  /* lineNo */
     "get_r_given_theta", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
                                                                             */
 };
 
-static emlrtRSInfo c_emlrtRSI = {
+static emlrtRSInfo f_emlrtRSI = {
     25,                  /* lineNo */
     "get_r_given_theta", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
                                                                             */
 };
 
-static emlrtRSInfo d_emlrtRSI = {
+static emlrtRSInfo g_emlrtRSI = {
     26,                  /* lineNo */
     "get_r_given_theta", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
                                                                             */
 };
 
-static emlrtRSInfo e_emlrtRSI = {
+static emlrtRSInfo h_emlrtRSI = {
     31,                  /* lineNo */
     "get_r_given_theta", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
                                                                             */
 };
 
-static emlrtRSInfo f_emlrtRSI = {
+static emlrtRSInfo i_emlrtRSI = {
     32,                  /* lineNo */
     "get_r_given_theta", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
                                                                             */
 };
 
-static emlrtRSInfo g_emlrtRSI = {
+static emlrtRSInfo j_emlrtRSI = {
     35,                  /* lineNo */
     "get_r_given_theta", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
                                                                             */
 };
 
-static emlrtRSInfo h_emlrtRSI = {
+static emlrtRSInfo k_emlrtRSI = {
     38,                  /* lineNo */
     "get_r_given_theta", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
                                                                             */
 };
 
-static emlrtRSInfo i_emlrtRSI = {
+static emlrtRSInfo l_emlrtRSI = {
     44,                  /* lineNo */
     "get_r_given_theta", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
                                                                             */
 };
 
-static emlrtRSInfo db_emlrtRSI = {
+static emlrtRSInfo fb_emlrtRSI = {
     44,                                                          /* lineNo */
     "mpower",                                                    /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/matfun/mpower.m" /* pathName */
 };
 
-static emlrtRSInfo eb_emlrtRSI = {
+static emlrtRSInfo gb_emlrtRSI = {
     71,                                                      /* lineNo */
     "power",                                                 /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/ops/power.m" /* pathName */
 };
 
-static emlrtRSInfo pc_emlrtRSI = {
-    18,                                                      /* lineNo */
-    "abs",                                                   /* fcnName */
-    "/home/andrew/matlab/toolbox/eml/lib/matlab/elfun/abs.m" /* pathName */
-};
-
-static emlrtRSInfo qc_emlrtRSI =
-    {
-        74,                    /* lineNo */
-        "applyScalarFunction", /* fcnName */
-        "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/"
-        "applyScalarFunction.m" /* pathName */
-};
-
-static emlrtRSInfo rc_emlrtRSI = {
+static emlrtRSInfo tc_emlrtRSI = {
     15,                                                        /* lineNo */
     "min",                                                     /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/datafun/min.m" /* pathName */
 };
 
-static emlrtRSInfo sc_emlrtRSI = {
+static emlrtRSInfo uc_emlrtRSI = {
     46,         /* lineNo */
     "minOrMax", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/minOrMax.m" /* pathName
                                                                        */
 };
 
-static emlrtRSInfo tc_emlrtRSI = {
+static emlrtRSInfo vc_emlrtRSI = {
     92,        /* lineNo */
     "minimum", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/minOrMax.m" /* pathName
                                                                        */
+};
+
+static emlrtRSInfo wc_emlrtRSI = {
+    204,             /* lineNo */
+    "unaryMinOrMax", /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/unaryMinOrMax.m" /* pathName
+                                                                            */
+};
+
+static emlrtRSInfo xc_emlrtRSI = {
+    893,                    /* lineNo */
+    "minRealVectorOmitNaN", /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/unaryMinOrMax.m" /* pathName
+                                                                            */
+};
+
+static emlrtRSInfo yc_emlrtRSI = {
+    62,                      /* lineNo */
+    "vectorMinOrMaxInPlace", /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/"
+    "vectorMinOrMaxInPlace.m" /* pathName */
+};
+
+static emlrtRSInfo ad_emlrtRSI = {
+    54,                      /* lineNo */
+    "vectorMinOrMaxInPlace", /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/"
+    "vectorMinOrMaxInPlace.m" /* pathName */
+};
+
+static emlrtRSInfo bd_emlrtRSI = {
+    103,         /* lineNo */
+    "findFirst", /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/"
+    "vectorMinOrMaxInPlace.m" /* pathName */
+};
+
+static emlrtRSInfo cd_emlrtRSI = {
+    120,                        /* lineNo */
+    "minOrMaxRealVectorKernel", /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/"
+    "vectorMinOrMaxInPlace.m" /* pathName */
+};
+
+static emlrtRSInfo dd_emlrtRSI = {
+    15,                                                        /* lineNo */
+    "max",                                                     /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/lib/matlab/datafun/max.m" /* pathName */
+};
+
+static emlrtRSInfo ed_emlrtRSI = {
+    44,         /* lineNo */
+    "minOrMax", /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/minOrMax.m" /* pathName
+                                                                       */
+};
+
+static emlrtRSInfo fd_emlrtRSI = {
+    79,        /* lineNo */
+    "maximum", /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/minOrMax.m" /* pathName
+                                                                       */
+};
+
+static emlrtRSInfo gd_emlrtRSI = {
+    186,             /* lineNo */
+    "unaryMinOrMax", /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/unaryMinOrMax.m" /* pathName
+                                                                            */
+};
+
+static emlrtRSInfo hd_emlrtRSI = {
+    897,                    /* lineNo */
+    "maxRealVectorOmitNaN", /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/unaryMinOrMax.m" /* pathName
+                                                                            */
 };
 
 static emlrtRTEInfo emlrtRTEI = {
@@ -211,6 +293,16 @@ static emlrtBCInfo
             "/home/andrew/OneDrive/PathFinder/src/rootFinding/"
             "get_r_given_theta.m", /* pName */
             0                      /* checkKind */
+};
+
+static emlrtDCInfo emlrtDCI =
+    {
+        3,                          /* lineNo */
+        19,                         /* colNo */
+        "get_smallest_supset_ball", /* fName */
+        "/home/andrew/OneDrive/PathFinder/src/covers/"
+        "get_smallest_supset_ball.m", /* pName */
+        1                             /* checkKind */
 };
 
 static emlrtBCInfo
@@ -297,7 +389,30 @@ static emlrtBCInfo
             0                      /* checkKind */
 };
 
-static emlrtRTEInfo q_emlrtRTEI = {
+static emlrtBCInfo l_emlrtBCI =
+    {
+        -1,                         /* iFirst */
+        -1,                         /* iLast */
+        7,                          /* lineNo */
+        15,                         /* colNo */
+        "radii",                    /* aName */
+        "get_smallest_supset_ball", /* fName */
+        "/home/andrew/OneDrive/PathFinder/src/covers/"
+        "get_smallest_supset_ball.m", /* pName */
+        0                             /* checkKind */
+};
+
+static emlrtRTEInfo
+    q_emlrtRTEI =
+        {
+            3,                          /* lineNo */
+            13,                         /* colNo */
+            "get_smallest_supset_ball", /* fName */
+            "/home/andrew/OneDrive/PathFinder/src/covers/"
+            "get_smallest_supset_ball.m" /* pName */
+};
+
+static emlrtRTEInfo r_emlrtRTEI = {
     14,                  /* lineNo */
     5,                   /* colNo */
     "get_r_given_theta", /* fName */
@@ -305,7 +420,7 @@ static emlrtRTEInfo q_emlrtRTEI = {
                                                                             */
 };
 
-static emlrtRTEInfo r_emlrtRTEI = {
+static emlrtRTEInfo s_emlrtRTEI = {
     15,                  /* lineNo */
     5,                   /* colNo */
     "get_r_given_theta", /* fName */
@@ -313,7 +428,7 @@ static emlrtRTEInfo r_emlrtRTEI = {
                                                                             */
 };
 
-static emlrtRTEInfo s_emlrtRTEI = {
+static emlrtRTEInfo t_emlrtRTEI = {
     22,                  /* lineNo */
     5,                   /* colNo */
     "get_r_given_theta", /* fName */
@@ -321,21 +436,12 @@ static emlrtRTEInfo s_emlrtRTEI = {
                                                                             */
 };
 
-static emlrtRTEInfo t_emlrtRTEI = {
+static emlrtRTEInfo u_emlrtRTEI = {
     38,                  /* lineNo */
     27,                  /* colNo */
     "get_r_given_theta", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pName
                                                                             */
-};
-
-static emlrtRTEInfo u_emlrtRTEI =
-    {
-        30,                    /* lineNo */
-        21,                    /* colNo */
-        "applyScalarFunction", /* fName */
-        "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/"
-        "applyScalarFunction.m" /* pName */
 };
 
 static emlrtRTEInfo v_emlrtRTEI = {
@@ -349,7 +455,7 @@ static emlrtRTEInfo v_emlrtRTEI = {
 static emlrtRTEInfo
     w_emlrtRTEI =
         {
-            8,                          /* lineNo */
+            7,                          /* lineNo */
             20,                         /* colNo */
             "get_smallest_supset_ball", /* fName */
             "/home/andrew/OneDrive/PathFinder/src/covers/"
@@ -364,7 +470,17 @@ static emlrtRTEInfo x_emlrtRTEI = {
                                                                             */
 };
 
-static emlrtRTEInfo y_emlrtRTEI = {
+static emlrtRTEInfo
+    y_emlrtRTEI =
+        {
+            3,                          /* lineNo */
+            5,                          /* colNo */
+            "get_smallest_supset_ball", /* fName */
+            "/home/andrew/OneDrive/PathFinder/src/covers/"
+            "get_smallest_supset_ball.m" /* pName */
+};
+
+static emlrtRTEInfo ab_emlrtRTEI = {
     31,                  /* lineNo */
     5,                   /* colNo */
     "get_r_given_theta", /* fName */
@@ -375,48 +491,54 @@ static emlrtRTEInfo y_emlrtRTEI = {
 /* Function Definitions */
 real_T get_smallest_supset_ball(const emlrtStack *sp,
                                 const emxArray_creal_T *g_coeffs, real_T freq,
-                                const creal_T xi, real_T Cosc)
+                                const creal_T xi, real_T Cosc,
+                                uint32_T num_rays)
 {
   emlrtStack b_st;
   emlrtStack c_st;
   emlrtStack d_st;
   emlrtStack e_st;
+  emlrtStack f_st;
+  emlrtStack g_st;
+  emlrtStack h_st;
+  emlrtStack i_st;
+  emlrtStack j_st;
   emlrtStack st;
   emxArray_boolean_T *b_r;
+  emxArray_creal_T *a;
   emxArray_creal_T *a_;
-  emxArray_creal_T *b_a;
   emxArray_creal_T *coeffs;
   emxArray_creal_T *d;
-  emxArray_real_T *x;
-  emxArray_real_T *y;
+  emxArray_real_T *b_d;
+  emxArray_real_T *radii;
+  emxArray_real_T *varargin_1;
   const creal_T *g_coeffs_data;
   creal_T dc;
   creal_T *a__data;
   creal_T *a_data;
   creal_T *d_data;
-  real_T radii[16];
-  real_T a;
+  real_T b;
+  real_T b_a;
+  real_T d_im;
   real_T d_im_tmp;
   real_T d_re;
   real_T d_re_tmp;
+  real_T d_theta;
   real_T r;
-  real_T varargout_1_im;
-  real_T varargout_1_re;
-  real_T xi_im;
-  real_T xi_re;
-  real_T *x_data;
-  real_T *y_data;
+  real_T theta;
+  real_T y_im;
+  real_T y_re;
+  real_T y_re_tmp;
+  real_T *b_d_data;
+  real_T *radii_data;
   int32_T b_i;
-  int32_T b_loop_ub;
   int32_T i;
+  int32_T idx;
   int32_T k;
   int32_T last;
-  int32_T loop_ub;
   int32_T n;
-  int32_T nx;
+  int32_T trueCount;
   uint32_T j;
-  boolean_T b;
-  boolean_T b1;
   boolean_T exitg1;
   boolean_T *r1;
   st.prev = sp;
@@ -429,40 +551,62 @@ real_T get_smallest_supset_ball(const emlrtStack *sp,
   d_st.tls = c_st.tls;
   e_st.prev = &d_st;
   e_st.tls = d_st.tls;
+  f_st.prev = &e_st;
+  f_st.tls = e_st.tls;
+  g_st.prev = &f_st;
+  g_st.tls = f_st.tls;
+  h_st.prev = &g_st;
+  h_st.tls = g_st.tls;
+  i_st.prev = &h_st;
+  i_st.tls = h_st.tls;
+  j_st.prev = &i_st;
+  j_st.tls = i_st.tls;
   g_coeffs_data = g_coeffs->data;
   emlrtHeapReferenceStackEnterFcnR2012b((emlrtCTX)sp);
-  emxInit_real_T(sp, &y, &v_emlrtRTEI);
   /* find the smallest ball containing the blob such that freq*|g(z)-g(\xi)|<C
    */
-  a = Cosc / freq;
-  loop_ub = g_coeffs->size[0];
-  b = (g_coeffs->size[0] == 0);
-  b1 = (g_coeffs->size[0] == 0);
-  b_loop_ub = g_coeffs->size[0];
-  i = g_coeffs->size[0];
-  emxInit_creal_T(sp, &b_a, 1, &q_emlrtRTEI);
-  emxInit_creal_T(sp, &a_, 1, &r_emlrtRTEI);
-  emxInit_creal_T(sp, &d, 1, &s_emlrtRTEI);
-  emxInit_creal_T(sp, &coeffs, 1, &y_emlrtRTEI);
+  if ((real_T)num_rays != (int32_T)num_rays) {
+    emlrtIntegerCheckR2012b(num_rays, &emlrtDCI, (emlrtCTX)sp);
+  }
+  emxInit_real_T(sp, &radii, &y_emlrtRTEI);
+  i = radii->size[0];
+  radii->size[0] = (int32_T)num_rays;
+  emxEnsureCapacity_real_T(sp, radii, i, &q_emlrtRTEI);
+  radii_data = radii->data;
+  d_theta = 6.2831853071795862 / (real_T)num_rays;
+  st.site = &emlrtRSI;
+  if ((1U <= num_rays) && (num_rays > 4294967294U)) {
+    b_st.site = &d_emlrtRSI;
+    check_forloop_overflow_error(&b_st);
+  }
+  i = (int32_T)num_rays;
+  emxInit_creal_T(sp, &a, 1, &r_emlrtRTEI);
+  emxInit_creal_T(sp, &a_, 1, &s_emlrtRTEI);
+  emxInit_creal_T(sp, &d, 1, &t_emlrtRTEI);
+  emxInit_creal_T(sp, &coeffs, 1, &ab_emlrtRTEI);
   emxInit_boolean_T(sp, &b_r, &v_emlrtRTEI);
-  emxInit_real_T(sp, &x, &t_emlrtRTEI);
-  for (n = 0; n < 16; n++) {
-    st.site = &emlrtRSI;
+  emxInit_real_T(sp, &varargin_1, &x_emlrtRTEI);
+  emxInit_real_T(sp, &b_d, &u_emlrtRTEI);
+  for (n = 0; n < i; n++) {
+    theta = d_theta * (real_T)num_rays;
+    st.site = &b_emlrtRSI;
+    b_a = Cosc / freq;
     /* given a ray from \xi, in direction theta, find r at which the ray */
     /* intersects the boundary of the blob |g(\xi)-g(\xi+r*exp(i*theta)|=C */
     /*  threshold for negligable imaginary part */
     /*  set the function g. I could just pass it, but not sure how MEX feels */
     /*  about that. */
     /*  pre-allocate stuff */
-    b_i = b_a->size[0];
-    b_a->size[0] = g_coeffs->size[0];
-    emxEnsureCapacity_creal_T(&st, b_a, b_i, &q_emlrtRTEI);
-    a_data = b_a->data;
+    last = g_coeffs->size[0];
+    b_i = a->size[0];
+    a->size[0] = g_coeffs->size[0];
+    emxEnsureCapacity_creal_T(&st, a, b_i, &r_emlrtRTEI);
+    a_data = a->data;
     b_i = a_->size[0];
     a_->size[0] = g_coeffs->size[0];
-    emxEnsureCapacity_creal_T(&st, a_, b_i, &r_emlrtRTEI);
+    emxEnsureCapacity_creal_T(&st, a_, b_i, &s_emlrtRTEI);
     a__data = a_->data;
-    for (b_i = 0; b_i < loop_ub; b_i++) {
+    for (b_i = 0; b_i < last; b_i++) {
       a_data[b_i].re = 0.0;
       a_data[b_i].im = 0.0;
       a__data[b_i].re = 0.0;
@@ -472,113 +616,95 @@ real_T get_smallest_supset_ball(const emlrtStack *sp,
      */
     /*  remember that the indexing of the polynomial coefficients is the */
     /*  opposite in my notes as in Matlab */
-    if (1 > b_a->size[0]) {
-      emlrtDynamicBoundsCheckR2012b(1, 1, b_a->size[0], &e_emlrtBCI, &st);
+    if (1 > a->size[0]) {
+      emlrtDynamicBoundsCheckR2012b(1, 1, a->size[0], &e_emlrtBCI, &st);
     }
-    if (!b) {
-      varargout_1_re = g_coeffs_data[0].re;
-      varargout_1_im = g_coeffs_data[0].im;
-      b_i = g_coeffs->size[0];
-      for (k = 0; k <= b_i - 2; k++) {
-        xi_re = xi.re * varargout_1_re - xi.im * varargout_1_im;
-        xi_im = xi.re * varargout_1_im + xi.im * varargout_1_re;
-        varargout_1_re = xi_re + g_coeffs_data[k + 1].re;
-        varargout_1_im = xi_im + g_coeffs_data[k + 1].im;
-      }
-    }
-    a_data[0].re = -varargout_1_re;
-    a_data[0].im = -varargout_1_im;
+    dc = polyval(g_coeffs, xi);
+    a_data[0].re = -dc.re;
+    a_data[0].im = -dc.im;
     if (1 > a_->size[0]) {
       emlrtDynamicBoundsCheckR2012b(1, 1, a_->size[0], &c_emlrtBCI, &st);
     }
-    if (!b1) {
-      varargout_1_re = g_coeffs_data[0].re;
-      varargout_1_im = g_coeffs_data[0].im;
-      b_i = g_coeffs->size[0];
-      for (k = 0; k <= b_i - 2; k++) {
-        xi_re = xi.re * varargout_1_re - xi.im * varargout_1_im;
-        xi_im = xi.re * varargout_1_im + xi.im * varargout_1_re;
-        varargout_1_re = xi_re + g_coeffs_data[k + 1].re;
-        varargout_1_im = xi_im + g_coeffs_data[k + 1].im;
-      }
-    }
-    a__data[0].re = -varargout_1_re;
-    a__data[0].im = varargout_1_im;
+    a__data[0].re = -dc.re;
+    a__data[0].im = dc.im;
+    last = g_coeffs->size[0];
     b_i = d->size[0];
     d->size[0] = g_coeffs->size[0];
-    emxEnsureCapacity_creal_T(&st, d, b_i, &s_emlrtRTEI);
+    emxEnsureCapacity_creal_T(&st, d, b_i, &t_emlrtRTEI);
     d_data = d->data;
-    for (b_i = 0; b_i < b_loop_ub; b_i++) {
+    for (b_i = 0; b_i < last; b_i++) {
       d_data[b_i] = g_coeffs_data[b_i];
     }
-    b_st.site = &b_emlrtRSI;
+    b_st.site = &e_emlrtRSI;
     flip(d);
     d_data = d->data;
-    for (k = 0; k < i; k++) {
-      b_i = g_coeffs->size[0] - k;
-      for (nx = 0; nx < b_i; nx++) {
-        j = (uint32_T)k + nx;
+    b_i = g_coeffs->size[0];
+    for (k = 0; k < b_i; k++) {
+      last = g_coeffs->size[0] - k;
+      for (idx = 0; idx < last; idx++) {
+        j = (uint32_T)k + idx;
         if (((int32_T)((real_T)j + 1.0) < 1) ||
             ((int32_T)((real_T)j + 1.0) > d->size[0])) {
           emlrtDynamicBoundsCheckR2012b((int32_T)((real_T)j + 1.0), 1,
                                         d->size[0], &d_emlrtBCI, &st);
         }
-        b_st.site = &c_emlrtRSI;
-        xi_im = nchoosek(&b_st, j, k);
-        varargout_1_im = 6.2831853071795862 * (real_T)k;
-        if (varargout_1_im == 0.0) {
-          varargout_1_re = 1.0;
-          varargout_1_im = 0.0;
+        b_st.site = &f_emlrtRSI;
+        b = nchoosek(&b_st, j, k);
+        y_re_tmp = theta * 0.0;
+        y_im = theta * (real_T)k;
+        if (y_im == 0.0) {
+          y_re = muDoubleScalarExp(y_re_tmp);
+          y_im = 0.0;
         } else {
-          varargout_1_re = muDoubleScalarCos(varargout_1_im);
-          varargout_1_im = muDoubleScalarSin(varargout_1_im);
+          r = muDoubleScalarExp(y_re_tmp / 2.0);
+          y_re = r * (r * muDoubleScalarCos(y_im));
+          y_im = r * (r * muDoubleScalarSin(y_im));
         }
         dc = mpower(xi, (real_T)j - (real_T)k);
         d_re_tmp = d_data[(int32_T)((real_T)j + 1.0) - 1].re;
-        d_re = xi_im * d_re_tmp;
+        d_re = b * d_re_tmp;
         d_im_tmp = d_data[(int32_T)((real_T)j + 1.0) - 1].im;
-        xi_im *= d_im_tmp;
-        xi_re = d_re * dc.re - xi_im * dc.im;
-        xi_im = d_re * dc.im + xi_im * dc.re;
-        if (k + 1 > b_a->size[0]) {
-          emlrtDynamicBoundsCheckR2012b(k + 1, 1, b_a->size[0], &g_emlrtBCI,
-                                        &st);
+        d_im = b * d_im_tmp;
+        b = d_re * dc.re - d_im * dc.im;
+        d_im = d_re * dc.im + d_im * dc.re;
+        if (k + 1 > a->size[0]) {
+          emlrtDynamicBoundsCheckR2012b(k + 1, 1, a->size[0], &g_emlrtBCI, &st);
         }
-        a_data[k].re += xi_re * varargout_1_re - xi_im * varargout_1_im;
-        if (k + 1 > b_a->size[0]) {
-          emlrtDynamicBoundsCheckR2012b(k + 1, 1, b_a->size[0], &f_emlrtBCI,
-                                        &st);
+        a_data[k].re += b * y_re - d_im * y_im;
+        if (k + 1 > a->size[0]) {
+          emlrtDynamicBoundsCheckR2012b(k + 1, 1, a->size[0], &f_emlrtBCI, &st);
         }
-        a_data[k].im += xi_re * varargout_1_im + xi_im * varargout_1_re;
+        a_data[k].im += b * y_im + d_im * y_re;
         if (((int32_T)((real_T)j + 1.0) < 1) ||
             ((int32_T)((real_T)j + 1.0) > d->size[0])) {
           emlrtDynamicBoundsCheckR2012b((int32_T)((real_T)j + 1.0), 1,
                                         d->size[0], &b_emlrtBCI, &st);
         }
-        b_st.site = &d_emlrtRSI;
-        xi_im = nchoosek(&b_st, j, k);
-        varargout_1_im = 6.2831853071795862 * -(real_T)k;
-        if (varargout_1_im == 0.0) {
-          varargout_1_re = 1.0;
-          varargout_1_im = 0.0;
+        b_st.site = &g_emlrtRSI;
+        b = nchoosek(&b_st, j, k);
+        y_im = theta * -(real_T)k;
+        if (y_im == 0.0) {
+          y_re = muDoubleScalarExp(y_re_tmp);
+          y_im = 0.0;
         } else {
-          varargout_1_re = muDoubleScalarCos(varargout_1_im);
-          varargout_1_im = muDoubleScalarSin(varargout_1_im);
+          r = muDoubleScalarExp(y_re_tmp / 2.0);
+          y_re = r * (r * muDoubleScalarCos(y_im));
+          y_im = r * (r * muDoubleScalarSin(y_im));
         }
-        d_re = xi_im * d_re_tmp;
-        xi_im *= -d_im_tmp;
-        xi_re = d_re * dc.re - xi_im * -dc.im;
-        xi_im = d_re * -dc.im + xi_im * dc.re;
+        d_re = b * d_re_tmp;
+        d_im = b * -d_im_tmp;
+        b = d_re * dc.re - d_im * -dc.im;
+        d_im = d_re * -dc.im + d_im * dc.re;
         if (k + 1 > a_->size[0]) {
           emlrtDynamicBoundsCheckR2012b(k + 1, 1, a_->size[0], &i_emlrtBCI,
                                         &st);
         }
-        a__data[k].re += xi_re * varargout_1_re - xi_im * varargout_1_im;
+        a__data[k].re += b * y_re - d_im * y_im;
         if (k + 1 > a_->size[0]) {
           emlrtDynamicBoundsCheckR2012b(k + 1, 1, a_->size[0], &h_emlrtBCI,
                                         &st);
         }
-        a__data[k].im += xi_re * varargout_1_im + xi_im * varargout_1_re;
+        a__data[k].im += b * y_im + d_im * y_re;
         if (*emlrtBreakCheckR2012bFlagVar != 0) {
           emlrtBreakCheckR2012b(&st);
         }
@@ -588,205 +714,265 @@ real_T get_smallest_supset_ball(const emlrtStack *sp,
       }
     }
     /*  multiply the polynomials together, aka Cauchy product */
-    b_st.site = &e_emlrtRSI;
-    conv(&b_st, b_a, a_, coeffs);
+    b_st.site = &h_emlrtRSI;
+    conv(&b_st, a, a_, coeffs);
     a_data = coeffs->data;
     if (1 > coeffs->size[0]) {
       emlrtDynamicBoundsCheckR2012b(1, 1, coeffs->size[0], &emlrtBCI, &st);
     }
-    b_st.site = &f_emlrtRSI;
-    c_st.site = &db_emlrtRSI;
-    d_st.site = &eb_emlrtRSI;
-    a_data[0].re -= a * a;
+    b_st.site = &i_emlrtRSI;
+    c_st.site = &fb_emlrtRSI;
+    d_st.site = &gb_emlrtRSI;
+    a_data[0].re -= b_a * b_a;
     /*     %% filter out the roots we care about */
-    b_st.site = &g_emlrtRSI;
+    b_st.site = &j_emlrtRSI;
     flip(coeffs);
-    b_st.site = &g_emlrtRSI;
+    b_st.site = &j_emlrtRSI;
     roots(&b_st, coeffs, d);
     d_data = d->data;
     /*  remove the roots with significant imaginary bits */
-    b_st.site = &h_emlrtRSI;
-    b_i = x->size[0];
-    x->size[0] = d->size[0];
-    emxEnsureCapacity_real_T(&b_st, x, b_i, &t_emlrtRTEI);
-    x_data = x->data;
-    nx = d->size[0];
-    for (b_i = 0; b_i < nx; b_i++) {
-      x_data[b_i] = d_data[b_i].im;
+    b_i = b_d->size[0];
+    b_d->size[0] = d->size[0];
+    emxEnsureCapacity_real_T(&st, b_d, b_i, &u_emlrtRTEI);
+    b_d_data = b_d->data;
+    last = d->size[0];
+    for (b_i = 0; b_i < last; b_i++) {
+      b_d_data[b_i] = d_data[b_i].im;
     }
-    c_st.site = &pc_emlrtRSI;
-    nx = x->size[0];
-    b_i = y->size[0];
-    y->size[0] = x->size[0];
-    emxEnsureCapacity_real_T(&c_st, y, b_i, &u_emlrtRTEI);
-    y_data = y->data;
-    d_st.site = &qc_emlrtRSI;
-    if ((1 <= x->size[0]) && (x->size[0] > 2147483646)) {
-      e_st.site = &m_emlrtRSI;
-      check_forloop_overflow_error(&e_st);
-    }
-    for (k = 0; k < nx; k++) {
-      y_data[k] = muDoubleScalarAbs(x_data[k]);
-    }
+    b_st.site = &k_emlrtRSI;
+    b_abs(&b_st, b_d, varargin_1);
+    b_d_data = varargin_1->data;
     b_i = b_r->size[0];
-    b_r->size[0] = y->size[0];
+    b_r->size[0] = varargin_1->size[0];
     emxEnsureCapacity_boolean_T(&st, b_r, b_i, &v_emlrtRTEI);
     r1 = b_r->data;
-    nx = y->size[0];
-    for (b_i = 0; b_i < nx; b_i++) {
-      r1[b_i] = (y_data[b_i] < 1.0E-8);
+    last = varargin_1->size[0];
+    for (b_i = 0; b_i < last; b_i++) {
+      r1[b_i] = (b_d_data[b_i] < 1.0E-8);
     }
-    nx = b_r->size[0] - 1;
-    k = 0;
-    for (b_i = 0; b_i <= nx; b_i++) {
+    last = b_r->size[0] - 1;
+    trueCount = 0;
+    for (b_i = 0; b_i <= last; b_i++) {
       if (r1[b_i]) {
-        k++;
+        trueCount++;
       }
     }
-    last = 0;
-    for (b_i = 0; b_i <= nx; b_i++) {
+    idx = 0;
+    for (b_i = 0; b_i <= last; b_i++) {
       if (r1[b_i]) {
         if (b_i + 1 > d->size[0]) {
           emlrtDynamicBoundsCheckR2012b(b_i + 1, 1, d->size[0], &j_emlrtBCI,
                                         &st);
         }
-        d_data[last].re = d_data[b_i].re;
+        d_data[idx].re = d_data[b_i].re;
         if (b_i + 1 > d->size[0]) {
           emlrtDynamicBoundsCheckR2012b(b_i + 1, 1, d->size[0], &j_emlrtBCI,
                                         &st);
         }
-        d_data[last].im = d_data[b_i].im;
-        last++;
+        d_data[idx].im = d_data[b_i].im;
+        idx++;
       }
     }
     b_i = d->size[0];
-    d->size[0] = k;
+    d->size[0] = trueCount;
     emxEnsureCapacity_creal_T(&st, d, b_i, &w_emlrtRTEI);
     d_data = d->data;
     /* remove the roots with negative real bits */
-    nx = k - 1;
-    k = 0;
-    for (b_i = 0; b_i <= nx; b_i++) {
+    last = trueCount - 1;
+    trueCount = 0;
+    for (b_i = 0; b_i <= last; b_i++) {
       if (d_data[b_i].re > 0.0) {
-        k++;
+        trueCount++;
       }
     }
-    last = 0;
-    for (b_i = 0; b_i <= nx; b_i++) {
+    idx = 0;
+    for (b_i = 0; b_i <= last; b_i++) {
       if (d_data[b_i].re > 0.0) {
         if ((b_i + 1 < 1) || (b_i + 1 > d->size[0])) {
           emlrtDynamicBoundsCheckR2012b(b_i + 1, 1, d->size[0], &k_emlrtBCI,
                                         &st);
         }
-        d_data[last].re = d_data[b_i].re;
+        d_data[idx].re = d_data[b_i].re;
         if ((b_i + 1 < 1) || (b_i + 1 > d->size[0])) {
           emlrtDynamicBoundsCheckR2012b(b_i + 1, 1, d->size[0], &k_emlrtBCI,
                                         &st);
         }
-        d_data[last].im = d_data[b_i].im;
-        last++;
+        d_data[idx].im = d_data[b_i].im;
+        idx++;
       }
     }
     b_i = d->size[0];
-    d->size[0] = k;
+    d->size[0] = trueCount;
     emxEnsureCapacity_creal_T(&st, d, b_i, &w_emlrtRTEI);
     d_data = d->data;
     /* take the smallest value */
-    b_st.site = &i_emlrtRSI;
-    b_i = y->size[0];
-    y->size[0] = k;
-    emxEnsureCapacity_real_T(&b_st, y, b_i, &x_emlrtRTEI);
-    y_data = y->data;
-    for (b_i = 0; b_i < k; b_i++) {
-      y_data[b_i] = d_data[b_i].re;
+    b_st.site = &l_emlrtRSI;
+    b_i = varargin_1->size[0];
+    varargin_1->size[0] = trueCount;
+    emxEnsureCapacity_real_T(&b_st, varargin_1, b_i, &x_emlrtRTEI);
+    b_d_data = varargin_1->data;
+    for (b_i = 0; b_i < trueCount; b_i++) {
+      b_d_data[b_i] = d_data[b_i].re;
     }
-    c_st.site = &rc_emlrtRSI;
-    d_st.site = &sc_emlrtRSI;
-    e_st.site = &tc_emlrtRSI;
-    if (y->size[0] < 1) {
+    c_st.site = &tc_emlrtRSI;
+    d_st.site = &uc_emlrtRSI;
+    e_st.site = &vc_emlrtRSI;
+    if (varargin_1->size[0] < 1) {
       emlrtErrorWithMessageIdR2018a(
           &e_st, &emlrtRTEI, "Coder:toolbox:eml_min_or_max_varDimZero",
           "Coder:toolbox:eml_min_or_max_varDimZero", 0);
     }
-    last = y->size[0];
-    if (y->size[0] <= 2) {
-      if (y->size[0] == 1) {
-        radii[n] = y_data[0];
-      } else if ((y_data[0] > y_data[1]) ||
-                 (muDoubleScalarIsNaN(y_data[0]) &&
-                  (!muDoubleScalarIsNaN(y_data[1])))) {
-        radii[n] = y_data[1];
+    f_st.site = &wc_emlrtRSI;
+    g_st.site = &xc_emlrtRSI;
+    last = varargin_1->size[0];
+    if (varargin_1->size[0] <= 2) {
+      if (varargin_1->size[0] == 1) {
+        if (((int32_T)(n + 1U) < 1) || ((int32_T)(n + 1U) > radii->size[0])) {
+          emlrtDynamicBoundsCheckR2012b((int32_T)(n + 1U), 1, radii->size[0],
+                                        &l_emlrtBCI, &g_st);
+        }
+        radii_data[n] = b_d_data[0];
+      } else if ((b_d_data[0] > b_d_data[1]) ||
+                 (muDoubleScalarIsNaN(b_d_data[0]) &&
+                  (!muDoubleScalarIsNaN(b_d_data[1])))) {
+        if (((int32_T)(n + 1U) < 1) || ((int32_T)(n + 1U) > radii->size[0])) {
+          emlrtDynamicBoundsCheckR2012b((int32_T)(n + 1U), 1, radii->size[0],
+                                        &l_emlrtBCI, &g_st);
+        }
+        radii_data[n] = b_d_data[1];
       } else {
-        radii[n] = y_data[0];
+        if (((int32_T)(n + 1U) < 1) || ((int32_T)(n + 1U) > radii->size[0])) {
+          emlrtDynamicBoundsCheckR2012b((int32_T)(n + 1U), 1, radii->size[0],
+                                        &l_emlrtBCI, &g_st);
+        }
+        radii_data[n] = b_d_data[0];
       }
     } else {
-      if (!muDoubleScalarIsNaN(y_data[0])) {
-        nx = 1;
+      h_st.site = &ad_emlrtRSI;
+      if (!muDoubleScalarIsNaN(b_d_data[0])) {
+        idx = 1;
       } else {
-        nx = 0;
+        idx = 0;
+        i_st.site = &bd_emlrtRSI;
+        if (varargin_1->size[0] > 2147483646) {
+          j_st.site = &d_emlrtRSI;
+          b_check_forloop_overflow_error(&j_st);
+        }
         k = 2;
         exitg1 = false;
         while ((!exitg1) && (k <= last)) {
-          if (!muDoubleScalarIsNaN(y_data[k - 1])) {
-            nx = k;
+          if (!muDoubleScalarIsNaN(b_d_data[k - 1])) {
+            idx = k;
             exitg1 = true;
           } else {
             k++;
           }
         }
       }
-      if (nx == 0) {
-        radii[n] = y_data[0];
+      if (idx == 0) {
+        if (((int32_T)(n + 1U) < 1) || ((int32_T)(n + 1U) > radii->size[0])) {
+          emlrtDynamicBoundsCheckR2012b((int32_T)(n + 1U), 1, radii->size[0],
+                                        &l_emlrtBCI, &g_st);
+        }
+        radii_data[n] = b_d_data[0];
       } else {
-        xi_im = y_data[nx - 1];
-        b_i = nx + 1;
-        for (k = b_i; k <= last; k++) {
-          xi_re = y_data[k - 1];
-          if (xi_im > xi_re) {
-            xi_im = xi_re;
+        h_st.site = &yc_emlrtRSI;
+        b = b_d_data[idx - 1];
+        trueCount = idx + 1;
+        i_st.site = &cd_emlrtRSI;
+        if ((idx + 1 <= varargin_1->size[0]) &&
+            (varargin_1->size[0] > 2147483646)) {
+          j_st.site = &d_emlrtRSI;
+          b_check_forloop_overflow_error(&j_st);
+        }
+        for (k = trueCount; k <= last; k++) {
+          d_im = b_d_data[k - 1];
+          if (b > d_im) {
+            b = d_im;
           }
         }
-        radii[n] = xi_im;
+        if (((int32_T)(n + 1U) < 1) || ((int32_T)(n + 1U) > radii->size[0])) {
+          emlrtDynamicBoundsCheckR2012b((int32_T)(n + 1U), 1, radii->size[0],
+                                        &l_emlrtBCI, &g_st);
+        }
+        radii_data[n] = b;
       }
     }
     if (*emlrtBreakCheckR2012bFlagVar != 0) {
       emlrtBreakCheckR2012b((emlrtCTX)sp);
     }
   }
-  emxFree_real_T(sp, &x);
-  emxFree_real_T(sp, &y);
+  emxFree_real_T(sp, &b_d);
+  emxFree_real_T(sp, &varargin_1);
   emxFree_boolean_T(sp, &b_r);
   emxFree_creal_T(sp, &coeffs);
   emxFree_creal_T(sp, &d);
   emxFree_creal_T(sp, &a_);
-  emxFree_creal_T(sp, &b_a);
-  if (!muDoubleScalarIsNaN(radii[0])) {
-    nx = 1;
+  emxFree_creal_T(sp, &a);
+  st.site = &c_emlrtRSI;
+  b_st.site = &dd_emlrtRSI;
+  c_st.site = &ed_emlrtRSI;
+  d_st.site = &fd_emlrtRSI;
+  if (radii->size[0] < 1) {
+    emlrtErrorWithMessageIdR2018a(&d_st, &emlrtRTEI,
+                                  "Coder:toolbox:eml_min_or_max_varDimZero",
+                                  "Coder:toolbox:eml_min_or_max_varDimZero", 0);
+  }
+  e_st.site = &gd_emlrtRSI;
+  f_st.site = &hd_emlrtRSI;
+  last = radii->size[0];
+  if (radii->size[0] <= 2) {
+    if (radii->size[0] == 1) {
+      r = radii_data[0];
+    } else if ((radii_data[0] < radii_data[1]) ||
+               (muDoubleScalarIsNaN(radii_data[0]) &&
+                (!muDoubleScalarIsNaN(radii_data[1])))) {
+      r = radii_data[1];
+    } else {
+      r = radii_data[0];
+    }
   } else {
-    nx = 0;
-    k = 2;
-    exitg1 = false;
-    while ((!exitg1) && (k < 17)) {
-      if (!muDoubleScalarIsNaN(radii[k - 1])) {
-        nx = k;
-        exitg1 = true;
-      } else {
-        k++;
+    g_st.site = &ad_emlrtRSI;
+    if (!muDoubleScalarIsNaN(radii_data[0])) {
+      idx = 1;
+    } else {
+      idx = 0;
+      h_st.site = &bd_emlrtRSI;
+      if (radii->size[0] > 2147483646) {
+        i_st.site = &d_emlrtRSI;
+        b_check_forloop_overflow_error(&i_st);
+      }
+      k = 2;
+      exitg1 = false;
+      while ((!exitg1) && (k <= last)) {
+        if (!muDoubleScalarIsNaN(radii_data[k - 1])) {
+          idx = k;
+          exitg1 = true;
+        } else {
+          k++;
+        }
+      }
+    }
+    if (idx == 0) {
+      r = radii_data[0];
+    } else {
+      g_st.site = &yc_emlrtRSI;
+      r = radii_data[idx - 1];
+      trueCount = idx + 1;
+      h_st.site = &cd_emlrtRSI;
+      if ((idx + 1 <= radii->size[0]) && (radii->size[0] > 2147483646)) {
+        i_st.site = &d_emlrtRSI;
+        b_check_forloop_overflow_error(&i_st);
+      }
+      for (k = trueCount; k <= last; k++) {
+        d_im = radii_data[k - 1];
+        if (r < d_im) {
+          r = d_im;
+        }
       }
     }
   }
-  if (nx == 0) {
-    r = radii[0];
-  } else {
-    r = radii[nx - 1];
-    i = nx + 1;
-    for (k = i; k < 17; k++) {
-      xi_re = radii[k - 1];
-      if (r > xi_re) {
-        r = xi_re;
-      }
-    }
-  }
+  emxFree_real_T(&f_st, &radii);
   emlrtHeapReferenceStackLeaveFcnR2012b((emlrtCTX)sp);
   return r;
 }

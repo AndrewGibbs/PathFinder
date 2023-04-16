@@ -78,7 +78,7 @@ function [p_log_out, h_log_out, valley_index, ball_index, success] = ...
             Newton_method();
         end
 
-        if mod(n,n_max)==0 % need to add more points
+        if mod(int64(n),int64(n_max))==0 % need to add more points
 %             success = false;
 %             break
             p_log_copy = p_log;

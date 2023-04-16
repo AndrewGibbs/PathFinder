@@ -4,6 +4,7 @@ function [value,v_index] = beyondNoReturn_v2(h,V,g_coeffs,r_star)
 
     % the 'no return test'
     value = false;
+    v_index = [];
     order = length(V);
     R = abs(h);
     if R>r_star % first test, based on length of z

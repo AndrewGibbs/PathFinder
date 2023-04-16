@@ -31,6 +31,12 @@
   },
   {
     "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/get_smallest_supset_ball",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=get_smallest_supset_ball_mex -c  polyval.c -o build/glnxa64/polyval.o",
+    "file": "polyval.c",
+    "output": "build/glnxa64/polyval.o"
+  },
+  {
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/get_smallest_supset_ball",
     "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=get_smallest_supset_ball_mex -c  nchoosek.c -o build/glnxa64/nchoosek.o",
     "file": "nchoosek.c",
     "output": "build/glnxa64/nchoosek.o"
@@ -70,6 +76,12 @@
     "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=get_smallest_supset_ball_mex -c  indexShapeCheck.c -o build/glnxa64/indexShapeCheck.o",
     "file": "indexShapeCheck.c",
     "output": "build/glnxa64/indexShapeCheck.o"
+  },
+  {
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/get_smallest_supset_ball",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=get_smallest_supset_ball_mex -c  abs.c -o build/glnxa64/abs.o",
+    "file": "abs.c",
+    "output": "build/glnxa64/abs.o"
   },
   {
     "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/get_smallest_supset_ball",

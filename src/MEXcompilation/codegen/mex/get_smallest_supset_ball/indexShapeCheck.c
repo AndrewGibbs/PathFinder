@@ -15,7 +15,7 @@
 
 /* Variable Definitions */
 static emlrtRSInfo
-    nb_emlrtRSI =
+    pb_emlrtRSI =
         {
             42,                /* lineNo */
             "indexShapeCheck", /* fcnName */
@@ -46,7 +46,7 @@ void indexShapeCheck(const emlrtStack *sp, int32_T matrixSize,
   } else {
     c = false;
   }
-  st.site = &nb_emlrtRSI;
+  st.site = &pb_emlrtRSI;
   if (c) {
     emlrtErrorWithMessageIdR2018a(&st, &n_emlrtRTEI,
                                   "Coder:FE:PotentialVectorVector",

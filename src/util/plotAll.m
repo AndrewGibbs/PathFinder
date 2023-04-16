@@ -84,9 +84,9 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeff
 %     plot(exp(1i*theta).*R','Color',grayColor,'LineWidth',2);
 
 
-    plot(z+eps*1i,'r.','MarkerSize',4.5);
+    plot(z+eps*1i,'r.','MarkerSize',6.5);
     %plot stationary points:
-    plot(SPs+eps*1i,'k.');
+    plot(SPs+eps*1i,'k*');
     
     %now adjust the margins a bit
     axis equal;
