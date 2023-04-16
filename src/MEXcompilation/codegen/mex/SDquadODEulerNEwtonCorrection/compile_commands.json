@@ -1,67 +1,67 @@
 [
   {
-    "directory": "/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
-    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  SDquadODEulerNEwtonCorrection_data.c -o build/glnxa64/SDquadODEulerNEwtonCorrection_data.o",
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  SDquadODEulerNEwtonCorrection_data.c -o build/glnxa64/SDquadODEulerNEwtonCorrection_data.o",
     "file": "SDquadODEulerNEwtonCorrection_data.c",
     "output": "build/glnxa64/SDquadODEulerNEwtonCorrection_data.o"
   },
   {
-    "directory": "/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
-    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  rt_nonfinite.c -o build/glnxa64/rt_nonfinite.o",
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  rt_nonfinite.c -o build/glnxa64/rt_nonfinite.o",
     "file": "rt_nonfinite.c",
     "output": "build/glnxa64/rt_nonfinite.o"
   },
   {
-    "directory": "/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
-    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  SDquadODEulerNEwtonCorrection_initialize.c -o build/glnxa64/SDquadODEulerNEwtonCorrection_initialize.o",
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  SDquadODEulerNEwtonCorrection_initialize.c -o build/glnxa64/SDquadODEulerNEwtonCorrection_initialize.o",
     "file": "SDquadODEulerNEwtonCorrection_initialize.c",
     "output": "build/glnxa64/SDquadODEulerNEwtonCorrection_initialize.o"
   },
   {
-    "directory": "/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
-    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  SDquadODEulerNEwtonCorrection_terminate.c -o build/glnxa64/SDquadODEulerNEwtonCorrection_terminate.o",
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  SDquadODEulerNEwtonCorrection_terminate.c -o build/glnxa64/SDquadODEulerNEwtonCorrection_terminate.o",
     "file": "SDquadODEulerNEwtonCorrection_terminate.c",
     "output": "build/glnxa64/SDquadODEulerNEwtonCorrection_terminate.o"
   },
   {
-    "directory": "/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
-    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  SDquadODEulerNEwtonCorrection.c -o build/glnxa64/SDquadODEulerNEwtonCorrection.o",
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  SDquadODEulerNEwtonCorrection.c -o build/glnxa64/SDquadODEulerNEwtonCorrection.o",
     "file": "SDquadODEulerNEwtonCorrection.c",
     "output": "build/glnxa64/SDquadODEulerNEwtonCorrection.o"
   },
   {
-    "directory": "/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
-    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  interface/_coder_SDquadODEulerNEwtonCorrection_api.c -o build/glnxa64/_coder_SDquadODEulerNEwtonCorrection_api.o",
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  interface/_coder_SDquadODEulerNEwtonCorrection_api.c -o build/glnxa64/_coder_SDquadODEulerNEwtonCorrection_api.o",
     "file": "interface/_coder_SDquadODEulerNEwtonCorrection_api.c",
     "output": "build/glnxa64/_coder_SDquadODEulerNEwtonCorrection_api.o"
   },
   {
-    "directory": "/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
-    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  interface/_coder_SDquadODEulerNEwtonCorrection_mex.c -o build/glnxa64/_coder_SDquadODEulerNEwtonCorrection_mex.o",
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  interface/_coder_SDquadODEulerNEwtonCorrection_mex.c -o build/glnxa64/_coder_SDquadODEulerNEwtonCorrection_mex.o",
     "file": "interface/_coder_SDquadODEulerNEwtonCorrection_mex.c",
     "output": "build/glnxa64/_coder_SDquadODEulerNEwtonCorrection_mex.o"
   },
   {
-    "directory": "/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
-    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  eml_int_forloop_overflow_check.c -o build/glnxa64/eml_int_forloop_overflow_check.o",
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  eml_int_forloop_overflow_check.c -o build/glnxa64/eml_int_forloop_overflow_check.o",
     "file": "eml_int_forloop_overflow_check.c",
     "output": "build/glnxa64/eml_int_forloop_overflow_check.o"
   },
   {
-    "directory": "/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
-    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  SDquadODEulerNEwtonCorrection_emxutil.c -o build/glnxa64/SDquadODEulerNEwtonCorrection_emxutil.o",
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  SDquadODEulerNEwtonCorrection_emxutil.c -o build/glnxa64/SDquadODEulerNEwtonCorrection_emxutil.o",
     "file": "SDquadODEulerNEwtonCorrection_emxutil.c",
     "output": "build/glnxa64/SDquadODEulerNEwtonCorrection_emxutil.o"
   },
   {
-    "directory": "/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
-    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  interface/_coder_SDquadODEulerNEwtonCorrection_info.c -o build/glnxa64/_coder_SDquadODEulerNEwtonCorrection_info.o",
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  interface/_coder_SDquadODEulerNEwtonCorrection_info.c -o build/glnxa64/_coder_SDquadODEulerNEwtonCorrection_info.o",
     "file": "interface/_coder_SDquadODEulerNEwtonCorrection_info.c",
     "output": "build/glnxa64/_coder_SDquadODEulerNEwtonCorrection_info.o"
   },
   {
-    "directory": "/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
-    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/Dropbox/PathFinderInf/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  /home/andrew/matlab/extern/version/c_mexapi_version.c -o build/glnxa64/c_mexapi_version.o",
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDquadODEulerNEwtonCorrection",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDquadODEulerNEwtonCorrection_mex -c  /home/andrew/matlab/extern/version/c_mexapi_version.c -o build/glnxa64/c_mexapi_version.o",
     "file": "/home/andrew/matlab/extern/version/c_mexapi_version.c",
     "output": "build/glnxa64/c_mexapi_version.o"
   }

@@ -21,6 +21,8 @@
 #include <string.h>
 
 /* Function Declarations */
+void b_check_forloop_overflow_error(const emlrtStack *sp);
+
 void check_forloop_overflow_error(const emlrtStack *sp);
 
 /* End of code generation (eml_int_forloop_overflow_check.h) */

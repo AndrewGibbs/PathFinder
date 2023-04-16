@@ -94,7 +94,7 @@ function Q = shortestInfinitePathV4(a,b,contours, covers, valleys, params)
             SExs_to_SEns_adj(SEx_index,num_SEns) = 1; % this is a special 1! could change to a 2?
             % below 2xN matrix records that this is a special link, via a finite
             % contour:
-            finite_path_indices = [finite_path_indices; SEx_index num_SEns];
+            finite_path_indices = [finite_path_indices; SEx_index num_SEns]; % should be two per row
             end_CP_index = contour.endCoverIndex;
             SEns_to_CPs_adj(num_SEns,end_CP_index) = 1;
             % now link to every steepest exit that the stationary point linked to 
@@ -244,7 +244,7 @@ function Q = shortestInfinitePathV4(a,b,contours, covers, valleys, params)
 %                 rho_est = 1/bma_scaled *(r+sqrt(r^2-bma_scaled^2));
 %                 Q{n}.Nscale = log(2+sqrt(3))/log(rho_est);
 
-                Q{n}.Nscale = max(1,abs(Q{n}.a-Q{n}.b)/r_min);
+                Q{n}.Nscale = 1;%max(1,abs(Q{n}.a-Q{n}.b)/r_min);
 %                 for B = covers
 %                     if (ismember(Q{n}.a,B{1}.steepestExits) && ismember(Q{n}.b,B{1}.steepestExits) ) 
 %                             Q{n}.Nscale = max(1,abs(Q{n}.a-Q{n}.b)/B{1}.radius);

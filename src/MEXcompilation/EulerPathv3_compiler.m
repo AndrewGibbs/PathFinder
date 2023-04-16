@@ -1,6 +1,6 @@
-clear all;
-close all;
-cd src/MEXcompilation/;
+% clear all;
+% close all;
+% cd src/MEXcompilation/;
 % cd /home/andrew/Dropbox/PathFinderInf/src/MEXcompilation;
 % cd MEXcompilation;
 %SDpathODEuler(h0, gCoeffs, SPs, cover_radii, valleys, base_step_size)

@@ -18,7 +18,7 @@
 #include "rt_nonfinite.h"
 
 /* Variable Definitions */
-static emlrtRTEInfo pb_emlrtRTEI = {
+static emlrtRTEInfo rb_emlrtRTEI = {
     1,                                     /* lineNo */
     1,                                     /* colNo */
     "_coder_get_smallest_supset_ball_api", /* fName */
@@ -47,22 +47,32 @@ static const mxArray *emlrt_marshallOut(const real_T u);
 static creal_T f_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u,
                                   const emlrtMsgIdentifier *parentId);
 
-static void g_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+static uint32_T g_emlrt_marshallIn(const emlrtStack *sp,
+                                   const mxArray *num_rays,
+                                   const char_T *identifier);
+
+static uint32_T h_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u,
+                                   const emlrtMsgIdentifier *parentId);
+
+static void i_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
                                const emlrtMsgIdentifier *msgId,
                                emxArray_creal_T *ret);
 
-static real_T h_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+static real_T j_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
                                  const emlrtMsgIdentifier *msgId);
 
-static creal_T i_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+static creal_T k_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
                                   const emlrtMsgIdentifier *msgId);
+
+static uint32_T l_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+                                   const emlrtMsgIdentifier *msgId);
 
 /* Function Definitions */
 static void b_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u,
                                const emlrtMsgIdentifier *parentId,
                                emxArray_creal_T *y)
 {
-  g_emlrt_marshallIn(sp, emlrtAlias(u), parentId, y);
+  i_emlrt_marshallIn(sp, emlrtAlias(u), parentId, y);
   emlrtDestroyArray(&u);
 }
 
@@ -83,7 +93,7 @@ static real_T d_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u,
                                  const emlrtMsgIdentifier *parentId)
 {
   real_T y;
-  y = h_emlrt_marshallIn(sp, emlrtAlias(u), parentId);
+  y = j_emlrt_marshallIn(sp, emlrtAlias(u), parentId);
   emlrtDestroyArray(&u);
   return y;
 }
@@ -126,12 +136,35 @@ static creal_T f_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u,
                                   const emlrtMsgIdentifier *parentId)
 {
   creal_T y;
-  y = i_emlrt_marshallIn(sp, emlrtAlias(u), parentId);
+  y = k_emlrt_marshallIn(sp, emlrtAlias(u), parentId);
   emlrtDestroyArray(&u);
   return y;
 }
 
-static void g_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+static uint32_T g_emlrt_marshallIn(const emlrtStack *sp,
+                                   const mxArray *num_rays,
+                                   const char_T *identifier)
+{
+  emlrtMsgIdentifier thisId;
+  uint32_T y;
+  thisId.fIdentifier = (const char_T *)identifier;
+  thisId.fParent = NULL;
+  thisId.bParentIsCell = false;
+  y = h_emlrt_marshallIn(sp, emlrtAlias(num_rays), &thisId);
+  emlrtDestroyArray(&num_rays);
+  return y;
+}
+
+static uint32_T h_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u,
+                                   const emlrtMsgIdentifier *parentId)
+{
+  uint32_T y;
+  y = l_emlrt_marshallIn(sp, emlrtAlias(u), parentId);
+  emlrtDestroyArray(&u);
+  return y;
+}
+
+static void i_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
                                const emlrtMsgIdentifier *msgId,
                                emxArray_creal_T *ret)
 {
@@ -150,7 +183,7 @@ static void g_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
   emlrtDestroyArray(&src);
 }
 
-static real_T h_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+static real_T j_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
                                  const emlrtMsgIdentifier *msgId)
 {
   static const int32_T dims = 0;
@@ -162,7 +195,7 @@ static real_T h_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
   return ret;
 }
 
-static creal_T i_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+static creal_T k_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
                                   const emlrtMsgIdentifier *msgId)
 {
   static const int32_T dims = 0;
@@ -174,7 +207,19 @@ static creal_T i_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
   return ret;
 }
 
-void get_smallest_supset_ball_api(const mxArray *const prhs[4],
+static uint32_T l_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
+                                   const emlrtMsgIdentifier *msgId)
+{
+  static const int32_T dims = 0;
+  uint32_T ret;
+  emlrtCheckBuiltInR2012b((emlrtCTX)sp, msgId, src, (const char_T *)"uint32",
+                          false, 0U, (void *)&dims);
+  ret = *(uint32_T *)emlrtMxGetData(src);
+  emlrtDestroyArray(&src);
+  return ret;
+}
+
+void get_smallest_supset_ball_api(const mxArray *const prhs[5],
                                   const mxArray **plhs)
 {
   emlrtStack st = {
@@ -186,16 +231,18 @@ void get_smallest_supset_ball_api(const mxArray *const prhs[4],
   creal_T xi;
   real_T Cosc;
   real_T freq;
+  uint32_T num_rays;
   st.tls = emlrtRootTLSGlobal;
   emlrtHeapReferenceStackEnterFcnR2012b(&st);
-  emxInit_creal_T(&st, &g_coeffs, 1, &pb_emlrtRTEI);
+  emxInit_creal_T(&st, &g_coeffs, 1, &rb_emlrtRTEI);
   /* Marshall function inputs */
   emlrt_marshallIn(&st, emlrtAliasP(prhs[0]), "g_coeffs", g_coeffs);
   freq = c_emlrt_marshallIn(&st, emlrtAliasP(prhs[1]), "freq");
   xi = e_emlrt_marshallIn(&st, emlrtAliasP(prhs[2]), "xi");
   Cosc = c_emlrt_marshallIn(&st, emlrtAliasP(prhs[3]), "Cosc");
+  num_rays = g_emlrt_marshallIn(&st, emlrtAliasP(prhs[4]), "num_rays");
   /* Invoke the target function */
-  freq = get_smallest_supset_ball(&st, g_coeffs, freq, xi, Cosc);
+  freq = get_smallest_supset_ball(&st, g_coeffs, freq, xi, Cosc, num_rays);
   /* Marshall function outputs */
   *plhs = emlrt_marshallOut(freq);
   emxFree_creal_T(&st, &g_coeffs);

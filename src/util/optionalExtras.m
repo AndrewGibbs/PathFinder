@@ -1,4 +1,4 @@
-function options = optionalExtras(varargin,freq)
+function options = optionalExtras(freq,varargin)
     %allows user to manually adjust default parameters, like plotting etc
     
      if length(varargin)==1 && ~ischar(varargin{1})
@@ -8,13 +8,14 @@ function options = optionalExtras(varargin,freq)
     end
     
     %set defaults:
-    options = struct('plot', false, 'infContour', [false false], 'numOscs', 1, ...
-        'turbo', true,'plotCovers',false,'plotContours',false,'plotSpecial',false,...
-        'contourStartThresh',1e-16,'Hermite',false,'truncation',1.0,...
-        'global_solver','Euler','global_step_size',0.1,'max_number_of_ODE_steps',50000,...
-        'quad_solver','Euler','quad_step_size',1e-13,'Taylor_terms',4, ...
+    options = struct('plot', false, 'infContour', [false false], 'numOscs', 50, ...
+        'contourStartThresh',1e-16,'num_rays',uint32(16),...
+        'global_step_size',0.1,'max_number_of_ODE_steps',50000,...
+        'quad_step_size',1e-13, 'inf_quad_rule','laguerre',...
         'NewtonThresh',min(1e-4/freq,1e-10),'NewtonBigThresh',1e-2,'NewtonIts',50,...
         'ball_clump_thresh',0, 'finitePathTruncL',10.0);
+    options.log.take = false;
+    options.log.Newton_its = 0;
     
     %now adjust them, if requested to
     N = length(varargin);
@@ -34,20 +35,10 @@ function options = optionalExtras(varargin,freq)
                    options.infContour = varargin{n+1};
                case 'numoscs'
                    options.numOscs = varargin{n+1};
-               case 'turbo on'
-                   options.turbo = true;
-               case 'turbo off'
-                   options.turbo = false;
                case 'contour thresh'
                    options.contourStartThresh = varargin{n+1};
-               case 'hermite'
-                   options.Hermite = varargin{n+1};
-               case 'global solver'
-                   options.global_solver = varargin{n+1};
                case 'global step size'
                    options.global_step_size = varargin{n+1};
-               case 'quad solver'
-                   options.quad_solver = varargin{n+1};
                case 'quad step size'
                    options.quad_step_size = varargin{n+1};
                case 'taylor terms'
@@ -60,6 +51,18 @@ function options = optionalExtras(varargin,freq)
                    options.NewtonBigThresh = varargin{n+1};
                case 'max newton steps'
                    options.NewtonIts = varargin{n+1};
+               case 'log'
+                   options.log = init_log();
+               case 'log name'
+                   its = options.log.Newton_its;
+                   options.log = init_log(varargin{n+1});
+                   options.log.Newton_its = its;
+               case 'num rays'
+                   options.num_rays = uint32(varargin{n+1});
+               case 'inf quad rule'
+                   options.inf_quad_rule = varargin{n+1};
+               case 'log newton'
+                   options.log.Newton_its = varargin{n+1};
            end
         end
     end

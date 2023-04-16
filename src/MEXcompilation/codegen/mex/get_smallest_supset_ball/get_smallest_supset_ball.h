@@ -24,6 +24,7 @@
 /* Function Declarations */
 real_T get_smallest_supset_ball(const emlrtStack *sp,
                                 const emxArray_creal_T *g_coeffs, real_T freq,
-                                const creal_T xi, real_T Cosc);
+                                const creal_T xi, real_T Cosc,
+                                uint32_T num_rays);
 
 /* End of code generation (get_smallest_supset_ball.h) */
