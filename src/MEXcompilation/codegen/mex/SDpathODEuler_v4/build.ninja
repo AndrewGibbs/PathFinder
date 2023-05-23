@@ -41,14 +41,18 @@ build $builddir/SDpathODEuler_v4_terminate.o : cc $root/SDpathODEuler_v4_termina
 build $builddir/SDpathODEuler_v4.o : cc $root/SDpathODEuler_v4.c
 build $builddir/polyval.o : cc $root/polyval.c
 build $builddir/abs.o : cc $root/abs.c
-build $builddir/mod.o : cc $root/mod.c
+build $builddir/eml_i64relops.o : cc $root/eml_i64relops.c
+build $builddir/angle.o : cc $root/angle.c
 build $builddir/indexShapeCheck.o : cc $root/indexShapeCheck.c
+build $builddir/mod.o : cc $root/mod.c
 build $builddir/_coder_SDpathODEuler_v4_api.o : cc $root/interface/_coder_SDpathODEuler_v4_api.c
 build $builddir/_coder_SDpathODEuler_v4_mex.o : cc $root/interface/_coder_SDpathODEuler_v4_mex.c
 build $builddir/eml_int_forloop_overflow_check.o : cc $root/eml_int_forloop_overflow_check.c
+build $builddir/exp.o : cc $root/exp.c
 build $builddir/SDpathODEuler_v4_emxutil.o : cc $root/SDpathODEuler_v4_emxutil.c
+build $builddir/ifWhileCond.o : cc $root/ifWhileCond.c
 build $builddir/_coder_SDpathODEuler_v4_info.o : cc $root/interface/_coder_SDpathODEuler_v4_info.c
 build $builddir/c_mexapi_version.o : cc $matlabdir/extern/version/c_mexapi_version.c
 
 # Link
-build $root/SDpathODEuler_v4_mex.mexa64 : link $builddir/SDpathODEuler_v4_data.o $builddir/rt_nonfinite.o $builddir/SDpathODEuler_v4_initialize.o $builddir/SDpathODEuler_v4_terminate.o $builddir/SDpathODEuler_v4.o $builddir/polyval.o $builddir/abs.o $builddir/mod.o $builddir/indexShapeCheck.o $builddir/_coder_SDpathODEuler_v4_api.o $builddir/_coder_SDpathODEuler_v4_mex.o $builddir/eml_int_forloop_overflow_check.o $builddir/SDpathODEuler_v4_emxutil.o $builddir/_coder_SDpathODEuler_v4_info.o $builddir/c_mexapi_version.o 
+build $root/SDpathODEuler_v4_mex.mexa64 : link $builddir/SDpathODEuler_v4_data.o $builddir/rt_nonfinite.o $builddir/SDpathODEuler_v4_initialize.o $builddir/SDpathODEuler_v4_terminate.o $builddir/SDpathODEuler_v4.o $builddir/polyval.o $builddir/abs.o $builddir/eml_i64relops.o $builddir/angle.o $builddir/indexShapeCheck.o $builddir/mod.o $builddir/_coder_SDpathODEuler_v4_api.o $builddir/_coder_SDpathODEuler_v4_mex.o $builddir/eml_int_forloop_overflow_check.o $builddir/exp.o $builddir/SDpathODEuler_v4_emxutil.o $builddir/ifWhileCond.o $builddir/_coder_SDpathODEuler_v4_info.o $builddir/c_mexapi_version.o 

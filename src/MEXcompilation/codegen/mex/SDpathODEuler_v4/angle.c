@@ -3,14 +3,14 @@
  * course requirements at degree granting institutions only.  Not for
  * government, commercial, or other organizational use.
  *
- * abs.c
+ * angle.c
  *
- * Code generation for function 'abs'
+ * Code generation for function 'angle'
  *
  */
 
 /* Include files */
-#include "abs.h"
+#include "angle.h"
 #include "SDpathODEuler_v4_data.h"
 #include "SDpathODEuler_v4_emxutil.h"
 #include "SDpathODEuler_v4_types.h"
@@ -19,7 +19,7 @@
 #include "mwmathutil.h"
 
 /* Function Definitions */
-void b_abs(const emlrtStack *sp, const emxArray_creal_T *x, emxArray_real_T *y)
+void angle(const emlrtStack *sp, const emxArray_creal_T *x, emxArray_real_T *y)
 {
   emlrtStack b_st;
   emlrtStack c_st;
@@ -35,7 +35,7 @@ void b_abs(const emlrtStack *sp, const emxArray_creal_T *x, emxArray_real_T *y)
   c_st.prev = &b_st;
   c_st.tls = b_st.tls;
   x_data = x->data;
-  st.site = &s_emlrtRSI;
+  st.site = &wb_emlrtRSI;
   nx = x->size[0];
   k = y->size[0];
   y->size[0] = x->size[0];
@@ -47,8 +47,8 @@ void b_abs(const emlrtStack *sp, const emxArray_creal_T *x, emxArray_real_T *y)
     check_forloop_overflow_error(&c_st);
   }
   for (k = 0; k < nx; k++) {
-    y_data[k] = muDoubleScalarHypot(x_data[k].re, x_data[k].im);
+    y_data[k] = muDoubleScalarAtan2(x_data[k].im, x_data[k].re);
   }
 }
 
-/* End of code generation (abs.c) */
+/* End of code generation (angle.c) */

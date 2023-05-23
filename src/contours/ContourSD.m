@@ -37,7 +37,7 @@
     end
     
     methods
-        function self = ContourSD(startPoint, G, startCover, otherCovers, valleys, clusterIndices, clusterEndpoints, global_contour_params)
+        function self = ContourSD(startPoint, G, startCover, otherCovers, valleys, global_contour_params)
             
             %quick check
             if iscell(G)
@@ -67,13 +67,13 @@
             [CPs, CPs_radii] = getBallDeets(otherCovers);
             max_steps_before_fail = global_contour_params.max_number_of_ODE_steps;
 
-            [p_, h_, valley_index_, ball_index_] = SDpathODEuler_v3_mex(self.ICs(1), G, CPs, CPs_radii, valleys.', ...
-            global_contour_params.step_size, int64(max_steps_before_fail), global_contour_params.r_star,...
-            global_contour_params.NewtonBigThresh, global_contour_params.NewtonThresh);
+%             [p_, h_, valley_index_, ball_index_] = SDpathODEuler_v3_mex(self.ICs(1), G, CPs, CPs_radii, valleys.', ...
+%             global_contour_params.step_size, int64(max_steps_before_fail), global_contour_params.r_star,...
+%             global_contour_params.NewtonBigThresh, global_contour_params.NewtonThresh);
 
-            [p, self.coarsePath, valley_index, ball_index, Newton_points, Newton_its, Newton_fineal_pt_its] = SDpathODEuler_v4(self.ICs(1), G, CPs, CPs_radii, valleys.',...
+            [p, self.coarsePath, valley_index, ball_index, Newton_points, Newton_its, Newton_fineal_pt_its] = SDpathODEuler_v4_mex(self.ICs(1), G, CPs, CPs_radii, valleys.',...
             global_contour_params.step_size, int64(max_steps_before_fail), global_contour_params.r_star,...
-            global_contour_params.NewtonBigThresh, global_contour_params.NewtonThresh, global_contour_params.log.Newton_its);
+            global_contour_params.NewtonBigThresh, global_contour_params.NewtonThresh, int64(global_contour_params.log.Newton_its));
             
             % logging of Newton info:
             if global_contour_params.log.take && (global_contour_params.log.Newton_its>0)

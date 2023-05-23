@@ -18,7 +18,7 @@
 #include "rt_nonfinite.h"
 
 /* Variable Definitions */
-static emlrtRTEInfo eb_emlrtRTEI = {
+static emlrtRTEInfo hb_emlrtRTEI = {
     1,                             /* lineNo */
     1,                             /* colNo */
     "_coder_SDpathODEuler_v4_api", /* fName */
@@ -35,14 +35,19 @@ static const mxArray *b_emlrt_marshallOut(const emlrtStack *sp,
 static void c_emlrt_marshallIn(const emlrtStack *sp, const mxArray *gCoeffs,
                                const char_T *identifier, emxArray_creal_T *y);
 
-static const mxArray *c_emlrt_marshallOut(void);
+static const mxArray *c_emlrt_marshallOut(const real_T u_data[],
+                                          const int32_T u_size[2]);
 
 static void d_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u,
                                const emlrtMsgIdentifier *parentId,
                                emxArray_creal_T *y);
 
+static const mxArray *d_emlrt_marshallOut(const emxArray_int64_T *u);
+
 static void e_emlrt_marshallIn(const emlrtStack *sp, const mxArray *SPs,
                                const char_T *identifier, emxArray_creal_T *y);
+
+static const mxArray *e_emlrt_marshallOut(const real_T u);
 
 static creal_T emlrt_marshallIn(const emlrtStack *sp, const mxArray *h0,
                                 const char_T *identifier);
@@ -129,16 +134,16 @@ static void c_emlrt_marshallIn(const emlrtStack *sp, const mxArray *gCoeffs,
   emlrtDestroyArray(&gCoeffs);
 }
 
-static const mxArray *c_emlrt_marshallOut(void)
+static const mxArray *c_emlrt_marshallOut(const real_T u_data[],
+                                          const int32_T u_size[2])
 {
   static const int32_T iv[2] = {0, 0};
-  static const int32_T iv1[2] = {0, 0};
   const mxArray *m;
   const mxArray *y;
   y = NULL;
   m = emlrtCreateNumericArray(2, (const void *)&iv[0], mxDOUBLE_CLASS, mxREAL);
-  emlrtMxSetData((mxArray *)m, NULL);
-  emlrtSetDimensions((mxArray *)m, &iv1[0], 2);
+  emlrtMxSetData((mxArray *)m, (void *)&u_data[0]);
+  emlrtSetDimensions((mxArray *)m, &u_size[0], 2);
   emlrtAssign(&y, m);
   return y;
 }
@@ -151,6 +156,21 @@ static void d_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u,
   emlrtDestroyArray(&u);
 }
 
+static const mxArray *d_emlrt_marshallOut(const emxArray_int64_T *u)
+{
+  static const int32_T i = 0;
+  const mxArray *m;
+  const mxArray *y;
+  const int64_T *u_data;
+  u_data = u->data;
+  y = NULL;
+  m = emlrtCreateNumericArray(1, (const void *)&i, mxINT64_CLASS, mxREAL);
+  emlrtMxSetData((mxArray *)m, (void *)&u_data[0]);
+  emlrtSetDimensions((mxArray *)m, &u->size[0], 1);
+  emlrtAssign(&y, m);
+  return y;
+}
+
 static void e_emlrt_marshallIn(const emlrtStack *sp, const mxArray *SPs,
                                const char_T *identifier, emxArray_creal_T *y)
 {
@@ -160,6 +180,16 @@ static void e_emlrt_marshallIn(const emlrtStack *sp, const mxArray *SPs,
   thisId.bParentIsCell = false;
   f_emlrt_marshallIn(sp, emlrtAlias(SPs), &thisId, y);
   emlrtDestroyArray(&SPs);
+}
+
+static const mxArray *e_emlrt_marshallOut(const real_T u)
+{
+  const mxArray *m;
+  const mxArray *y;
+  y = NULL;
+  m = emlrtCreateDoubleScalar(u);
+  emlrtAssign(&y, m);
+  return y;
 }
 
 static creal_T emlrt_marshallIn(const emlrtStack *sp, const mxArray *h0,
@@ -356,36 +386,46 @@ static int64_T r_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
   return ret;
 }
 
-void SDpathODEuler_v4_api(const mxArray *const prhs[10], int32_T nlhs,
-                          const mxArray *plhs[4])
+void SDpathODEuler_v4_api(const mxArray *const prhs[11], int32_T nlhs,
+                          const mxArray *plhs[7])
 {
   emlrtStack st = {
       NULL, /* site */
       NULL, /* tls */
       NULL  /* prev */
   };
+  emxArray_creal_T *Newton_points;
   emxArray_creal_T *SPs;
   emxArray_creal_T *gCoeffs;
   emxArray_creal_T *h_log_out;
   emxArray_creal_T *valleys;
+  emxArray_int64_T *Newton_its;
   emxArray_real_T *cover_radii;
   emxArray_real_T *p_log_out;
   creal_T h0;
+  int64_T Newton_point_count_max;
   int64_T n_max;
   real_T Newton_big_threshold;
+  real_T Newton_fineal_pt_its;
   real_T Newton_small_threshold;
   real_T base_step_size;
   real_T r_star;
+  real_T *ball_index_data;
+  real_T *valley_index_data;
+  int32_T ball_index_size[2];
+  int32_T valley_index_size[2];
   st.tls = emlrtRootTLSGlobal;
-  mxMalloc(0U);
-  mxMalloc(0U);
+  valley_index_data = &(*(real_T(*)[1])mxMalloc(sizeof(real_T)))[0];
+  ball_index_data = &(*(real_T(*)[1])mxMalloc(sizeof(real_T)))[0];
   emlrtHeapReferenceStackEnterFcnR2012b(&st);
-  emxInit_creal_T(&st, &gCoeffs, 2, &eb_emlrtRTEI);
-  emxInit_creal_T(&st, &SPs, 1, &eb_emlrtRTEI);
-  emxInit_real_T(&st, &cover_radii, 1, &eb_emlrtRTEI);
-  emxInit_creal_T(&st, &valleys, 1, &eb_emlrtRTEI);
-  emxInit_real_T(&st, &p_log_out, 1, &eb_emlrtRTEI);
-  emxInit_creal_T(&st, &h_log_out, 1, &eb_emlrtRTEI);
+  emxInit_creal_T(&st, &gCoeffs, 2, &hb_emlrtRTEI);
+  emxInit_creal_T(&st, &SPs, 1, &hb_emlrtRTEI);
+  emxInit_real_T(&st, &cover_radii, 1, &hb_emlrtRTEI);
+  emxInit_creal_T(&st, &valleys, 1, &hb_emlrtRTEI);
+  emxInit_real_T(&st, &p_log_out, 1, &hb_emlrtRTEI);
+  emxInit_creal_T(&st, &h_log_out, 1, &hb_emlrtRTEI);
+  emxInit_creal_T(&st, &Newton_points, 1, &hb_emlrtRTEI);
+  emxInit_int64_T(&st, &Newton_its, &hb_emlrtRTEI);
   /* Marshall function inputs */
   h0 = emlrt_marshallIn(&st, emlrtAliasP(prhs[0]), "h0");
   c_emlrt_marshallIn(&st, emlrtAliasP(prhs[1]), "gCoeffs", gCoeffs);
@@ -401,10 +441,15 @@ void SDpathODEuler_v4_api(const mxArray *const prhs[10], int32_T nlhs,
       i_emlrt_marshallIn(&st, emlrtAliasP(prhs[8]), "Newton_small_threshold");
   Newton_big_threshold =
       i_emlrt_marshallIn(&st, emlrtAliasP(prhs[9]), "Newton_big_threshold");
+  Newton_point_count_max =
+      k_emlrt_marshallIn(&st, emlrtAliasP(prhs[10]), "Newton_point_count_max");
   /* Invoke the target function */
   SDpathODEuler_v4(&st, h0, gCoeffs, SPs, cover_radii, valleys, base_step_size,
                    n_max, r_star, Newton_small_threshold, Newton_big_threshold,
-                   p_log_out, h_log_out);
+                   Newton_point_count_max, p_log_out, h_log_out,
+                   (real_T *)valley_index_data, valley_index_size,
+                   (real_T *)ball_index_data, ball_index_size, Newton_points,
+                   Newton_its, &Newton_fineal_pt_its);
   /* Marshall function outputs */
   p_log_out->canFreeData = false;
   plhs[0] = emlrt_marshallOut(p_log_out);
@@ -418,10 +463,23 @@ void SDpathODEuler_v4_api(const mxArray *const prhs[10], int32_T nlhs,
   }
   emxFree_creal_T(&st, &h_log_out);
   if (nlhs > 2) {
-    plhs[2] = c_emlrt_marshallOut();
+    plhs[2] =
+        c_emlrt_marshallOut((real_T *)valley_index_data, valley_index_size);
   }
   if (nlhs > 3) {
-    plhs[3] = c_emlrt_marshallOut();
+    plhs[3] = c_emlrt_marshallOut((real_T *)ball_index_data, ball_index_size);
+  }
+  if (nlhs > 4) {
+    plhs[4] = b_emlrt_marshallOut(&st, Newton_points);
+  }
+  emxFree_creal_T(&st, &Newton_points);
+  if (nlhs > 5) {
+    Newton_its->canFreeData = false;
+    plhs[5] = d_emlrt_marshallOut(Newton_its);
+  }
+  emxFree_int64_T(&st, &Newton_its);
+  if (nlhs > 6) {
+    plhs[6] = e_emlrt_marshallOut(Newton_fineal_pt_its);
   }
   emlrtHeapReferenceStackLeaveFcnR2012b(&st);
 }

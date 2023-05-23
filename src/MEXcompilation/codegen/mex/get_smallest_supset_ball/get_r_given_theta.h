@@ -3,9 +3,9 @@
  * course requirements at degree granting institutions only.  Not for
  * government, commercial, or other organizational use.
  *
- * polyval.h
+ * get_r_given_theta.h
  *
- * Code generation for function 'polyval'
+ * Code generation for function 'get_r_given_theta'
  *
  */
 
@@ -22,6 +22,7 @@
 #include <string.h>
 
 /* Function Declarations */
-creal_T polyval(const emxArray_creal_T *p, const creal_T x);
+real_T get_r_given_theta(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
+                         const creal_T xi, real_T C_over_omega, real_T theta);
 
-/* End of code generation (polyval.h) */
+/* End of code generation (get_r_given_theta.h) */
