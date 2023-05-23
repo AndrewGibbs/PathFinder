@@ -18,21 +18,21 @@
 #include "mwmathutil.h"
 
 /* Variable Definitions */
-static emlrtRSInfo v_emlrtRSI = {
+static emlrtRSInfo w_emlrtRSI = {
     29,             /* lineNo */
     "anyNonFinite", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/anyNonFinite.m" /* pathName
                                                                            */
 };
 
-static emlrtRSInfo w_emlrtRSI = {
+static emlrtRSInfo x_emlrtRSI = {
     44,          /* lineNo */
     "vAllOrAny", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/vAllOrAny.m" /* pathName
                                                                         */
 };
 
-static emlrtRSInfo x_emlrtRSI = {
+static emlrtRSInfo y_emlrtRSI = {
     103,                  /* lineNo */
     "flatVectorAllOrAny", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/vAllOrAny.m" /* pathName
@@ -59,13 +59,13 @@ boolean_T anyNonFinite(const emlrtStack *sp, const emxArray_creal_T *x)
   d_st.prev = &c_st;
   d_st.tls = c_st.tls;
   x_data = x->data;
-  st.site = &v_emlrtRSI;
-  b_st.site = &w_emlrtRSI;
+  st.site = &w_emlrtRSI;
+  b_st.site = &x_emlrtRSI;
   nx = x->size[0];
   p = true;
-  c_st.site = &x_emlrtRSI;
+  c_st.site = &y_emlrtRSI;
   if ((1 <= x->size[0]) && (x->size[0] > 2147483646)) {
-    d_st.site = &d_emlrtRSI;
+    d_st.site = &e_emlrtRSI;
     b_check_forloop_overflow_error(&d_st);
   }
   for (k = 0; k < nx; k++) {
@@ -98,13 +98,13 @@ boolean_T b_anyNonFinite(const emlrtStack *sp, const emxArray_creal_T *x)
   d_st.prev = &c_st;
   d_st.tls = c_st.tls;
   x_data = x->data;
-  st.site = &v_emlrtRSI;
-  b_st.site = &w_emlrtRSI;
+  st.site = &w_emlrtRSI;
+  b_st.site = &x_emlrtRSI;
   nx = x->size[0] * x->size[1];
   p = true;
-  c_st.site = &x_emlrtRSI;
+  c_st.site = &y_emlrtRSI;
   if ((1 <= nx) && (nx > 2147483646)) {
-    d_st.site = &d_emlrtRSI;
+    d_st.site = &e_emlrtRSI;
     b_check_forloop_overflow_error(&d_st);
   }
   for (k = 0; k < nx; k++) {

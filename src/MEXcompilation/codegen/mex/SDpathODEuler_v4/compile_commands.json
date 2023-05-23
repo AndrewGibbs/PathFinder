@@ -43,15 +43,27 @@
   },
   {
     "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDpathODEuler_v4",
-    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDpathODEuler_v4_mex -c  mod.c -o build/glnxa64/mod.o",
-    "file": "mod.c",
-    "output": "build/glnxa64/mod.o"
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDpathODEuler_v4_mex -c  eml_i64relops.c -o build/glnxa64/eml_i64relops.o",
+    "file": "eml_i64relops.c",
+    "output": "build/glnxa64/eml_i64relops.o"
+  },
+  {
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDpathODEuler_v4",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDpathODEuler_v4_mex -c  angle.c -o build/glnxa64/angle.o",
+    "file": "angle.c",
+    "output": "build/glnxa64/angle.o"
   },
   {
     "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDpathODEuler_v4",
     "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDpathODEuler_v4_mex -c  indexShapeCheck.c -o build/glnxa64/indexShapeCheck.o",
     "file": "indexShapeCheck.c",
     "output": "build/glnxa64/indexShapeCheck.o"
+  },
+  {
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDpathODEuler_v4",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDpathODEuler_v4_mex -c  mod.c -o build/glnxa64/mod.o",
+    "file": "mod.c",
+    "output": "build/glnxa64/mod.o"
   },
   {
     "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDpathODEuler_v4",
@@ -73,9 +85,21 @@
   },
   {
     "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDpathODEuler_v4",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDpathODEuler_v4_mex -c  exp.c -o build/glnxa64/exp.o",
+    "file": "exp.c",
+    "output": "build/glnxa64/exp.o"
+  },
+  {
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDpathODEuler_v4",
     "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDpathODEuler_v4_mex -c  SDpathODEuler_v4_emxutil.c -o build/glnxa64/SDpathODEuler_v4_emxutil.o",
     "file": "SDpathODEuler_v4_emxutil.c",
     "output": "build/glnxa64/SDpathODEuler_v4_emxutil.o"
+  },
+  {
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDpathODEuler_v4",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DMODEL=SDpathODEuler_v4_mex -c  ifWhileCond.c -o build/glnxa64/ifWhileCond.o",
+    "file": "ifWhileCond.c",
+    "output": "build/glnxa64/ifWhileCond.o"
   },
   {
     "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/SDpathODEuler_v4",

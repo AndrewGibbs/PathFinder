@@ -1,9 +1,10 @@
 function [covers, endPointIndices]...
-                = getExteriorBalls(g, freq, SPs, infContour, a, b, Cosc,g_coeffs,ball_clump_thresh,num_rays)
+                = getExteriorBalls(g, freq, SPs, infContour, a, b, Cosc,g_coeffs,ball_clump_thresh,num_rays,int_balls_yn)
 
     coverIndex = 0;
     endPointBalls = [];
     endPointIndices = [];
+    DH = 1;%(1/2);
     
     maybzEndpoints = [a b];
     for m = [1 2]
@@ -14,31 +15,33 @@ function [covers, endPointIndices]...
        end
     end
     
-    if ~isempty(SPs)>0
+    if ~isempty(SPs)
         radii = zeros(length(SPs),1);
         centres = SPs;
         for n = 1:length(SPs)
 %             coverIndex = coverIndex + 1;
 %             radii(n) = get_interior_ball_mex(g_coeffs.', freq, SPs(n), uint32(SPorders(n)), Cosc);
             % DH wants factor of two...
-            radii(n) = (1/2)*get_smallest_supset_ball_mex(g_coeffs.', freq, SPs(n), Cosc, num_rays);
+            radii(n) = DH*get_smallest_supset_ball_mex(g_coeffs.', freq, SPs(n), Cosc, num_rays,~int_balls_yn);
         end
 
 %             coversInit(n) = Ball(r_min,SPs(n),g_coeffs,coverIndex,sum(SPorders+1));
         % DH also wants a matrix here, instead of the below loop
         
         num_SP_balls = length(SPs);
-        D = zeros(num_SP_balls);
-        min_m = 0;
-        min_n = 0;
-        min_val = inf;
         continue_loop = true;
 
         while num_SP_balls>1 && continue_loop
+
+            D = zeros(num_SP_balls);
+            min_m = 0;
+            min_n = 0;
+            min_val = inf;
+
             % construct DH's matrix
             for m=1:num_SP_balls
                 for n=(m+1):num_SP_balls
-                    D(m,n) = abs(SPs(m)-SPs(n))/max(radii(m),radii(n));
+                    D(m,n) = abs(centres(m)-centres(n))/max(radii(m),radii(n));
                     if D(m,n)<min_val
                         min_val = D(m,n);
                         min_m = m;

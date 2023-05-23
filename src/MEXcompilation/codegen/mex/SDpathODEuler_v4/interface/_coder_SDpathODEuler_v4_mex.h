@@ -21,8 +21,8 @@
 #include <string.h>
 
 /* Function Declarations */
-void SDpathODEuler_v4_mexFunction(int32_T nlhs, mxArray *plhs[4], int32_T nrhs,
-                                  const mxArray *prhs[10]);
+void SDpathODEuler_v4_mexFunction(int32_T nlhs, mxArray *plhs[7], int32_T nrhs,
+                                  const mxArray *prhs[11]);
 
 MEXFUNCTION_LINKAGE void mexFunction(int32_T nlhs, mxArray *plhs[],
                                      int32_T nrhs, const mxArray *prhs[]);

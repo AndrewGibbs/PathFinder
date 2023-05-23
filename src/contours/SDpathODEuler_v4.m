@@ -25,6 +25,10 @@ function [p_log_out, h_log_out, valley_index, ball_index, Newton_points, Newton_
         end
     end
 
+%     [inball_yn, index] = inAball(h0, SPs, cover_radii);
+%     if inball_yn
+
+
     g_se = polyval(gCoeffs,h0); % value of g at steepest exit
 
     %ODE for path of steepest descent:

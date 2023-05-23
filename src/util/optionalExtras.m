@@ -1,4 +1,4 @@
-function options = optionalExtras(freq,varargin)
+function options = optionalExtras(freq,order,varargin)
     %allows user to manually adjust default parameters, like plotting etc
     
      if length(varargin)==1 && ~ischar(varargin{1})
@@ -8,12 +8,13 @@ function options = optionalExtras(freq,varargin)
     end
     
     %set defaults:
-    options = struct('plot', false, 'infContour', [false false], 'numOscs', 50, ...
+    options = struct('plot', false, 'plot_graph',false,...
+        'infContour', [false false], 'numOscs', 2*pi, ...
         'contourStartThresh',1e-16,'num_rays',uint32(16),...
         'global_step_size',0.1,'max_number_of_ODE_steps',50000,...
         'quad_step_size',1e-13, 'inf_quad_rule','laguerre',...
         'NewtonThresh',min(1e-4/freq,1e-10),'NewtonBigThresh',1e-2,'NewtonIts',50,...
-        'ball_clump_thresh',0, 'finitePathTruncL',10.0);
+        'ball_clump_thresh',0.001/(2*max(order-2,1)), 'finitePathTruncL',10.0, 'interior_balls', true);
     options.log.take = false;
     options.log.Newton_its = 0;
     
@@ -63,6 +64,10 @@ function options = optionalExtras(freq,varargin)
                    options.inf_quad_rule = varargin{n+1};
                case 'log newton'
                    options.log.Newton_its = varargin{n+1};
+               case 'use interior balls'
+                   options.interior_balls = varargin{n+1};
+               case 'plot graph'
+                   options.plot_graph = true;
            end
         end
     end

@@ -1,4 +1,4 @@
-function contours = getContours(G, covers, valleys, clusters, clusterEndpoints, endPointIndices, params)
+function contours = getContours(G, covers, valleys, endPointIndices, params)
 % G can be phase handles, or the original coefficients
     global_contour_params = struct( ...
         'step_size', params.global_step_size, 'max_number_of_ODE_steps', params.max_number_of_ODE_steps,...
@@ -12,7 +12,12 @@ function contours = getContours(G, covers, valleys, clusters, clusterEndpoints, 
             intervalEndpoint = [];
         end
         for xi = covers{n}.steepestExits
-            contours = [contours ContourSD(xi,G,covers{n},coversComplement(n),valleys,clusters,clusterEndpoints,global_contour_params)];
+            [CPs, CPs_radii] = getBallDeets(coversComplement(n));
+            SPs = CPs(CPs_radii>0);
+            cover_radii = CPs_radii(CPs_radii>0);
+            if ~inAball(xi, SPs, cover_radii)
+                contours = [contours ContourSD(xi,G,covers{n},coversComplement(n),valleys,global_contour_params)];
+            end
         end
      end
      

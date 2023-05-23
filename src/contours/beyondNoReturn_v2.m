@@ -14,7 +14,7 @@ function [value,v_index] = beyondNoReturn_v2(h,V,g_coeffs,r_star)
         v = mod(angle(V(v_index)),2*pi);
     
         theta = mod(angle(h),2*pi);
-        theta_diff = min(abs([theta-v, theta-v-2*pi theta-v+2*pi]));
+        theta_diff = min(abs([theta-v theta-v-2*pi theta-v+2*pi]),[],2);
 %         theta_diff = max(theta_in_diff,pi/(4*order));
 
         if theta_diff < pi/(2*order)

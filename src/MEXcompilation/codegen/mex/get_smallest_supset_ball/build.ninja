@@ -39,7 +39,7 @@ build $builddir/rt_nonfinite.o : cc $root/rt_nonfinite.c
 build $builddir/get_smallest_supset_ball_initialize.o : cc $root/get_smallest_supset_ball_initialize.c
 build $builddir/get_smallest_supset_ball_terminate.o : cc $root/get_smallest_supset_ball_terminate.c
 build $builddir/get_smallest_supset_ball.o : cc $root/get_smallest_supset_ball.c
-build $builddir/polyval.o : cc $root/polyval.c
+build $builddir/get_r_given_theta.o : cc $root/get_r_given_theta.c
 build $builddir/nchoosek.o : cc $root/nchoosek.c
 build $builddir/warning.o : cc $root/warning.c
 build $builddir/mpower.o : cc $root/mpower.c
@@ -47,7 +47,6 @@ build $builddir/conv.o : cc $root/conv.c
 build $builddir/anyNonFinite.o : cc $root/anyNonFinite.c
 build $builddir/roots.o : cc $root/roots.c
 build $builddir/indexShapeCheck.o : cc $root/indexShapeCheck.c
-build $builddir/abs.o : cc $root/abs.c
 build $builddir/_coder_get_smallest_supset_ball_api.o : cc $root/interface/_coder_get_smallest_supset_ball_api.c
 build $builddir/_coder_get_smallest_supset_ball_mex.o : cc $root/interface/_coder_get_smallest_supset_ball_mex.c
 build $builddir/eml_int_forloop_overflow_check.o : cc $root/eml_int_forloop_overflow_check.c
@@ -58,4 +57,4 @@ build $builddir/_coder_get_smallest_supset_ball_info.o : cc $root/interface/_cod
 build $builddir/c_mexapi_version.o : cc $matlabdir/extern/version/c_mexapi_version.c
 
 # Link
-build $root/get_smallest_supset_ball_mex.mexa64 : link $builddir/get_smallest_supset_ball_data.o $builddir/rt_nonfinite.o $builddir/get_smallest_supset_ball_initialize.o $builddir/get_smallest_supset_ball_terminate.o $builddir/get_smallest_supset_ball.o $builddir/polyval.o $builddir/nchoosek.o $builddir/warning.o $builddir/mpower.o $builddir/conv.o $builddir/anyNonFinite.o $builddir/roots.o $builddir/indexShapeCheck.o $builddir/abs.o $builddir/_coder_get_smallest_supset_ball_api.o $builddir/_coder_get_smallest_supset_ball_mex.o $builddir/eml_int_forloop_overflow_check.o $builddir/flip.o $builddir/schur.o $builddir/get_smallest_supset_ball_emxutil.o $builddir/_coder_get_smallest_supset_ball_info.o $builddir/c_mexapi_version.o 
+build $root/get_smallest_supset_ball_mex.mexa64 : link $builddir/get_smallest_supset_ball_data.o $builddir/rt_nonfinite.o $builddir/get_smallest_supset_ball_initialize.o $builddir/get_smallest_supset_ball_terminate.o $builddir/get_smallest_supset_ball.o $builddir/get_r_given_theta.o $builddir/nchoosek.o $builddir/warning.o $builddir/mpower.o $builddir/conv.o $builddir/anyNonFinite.o $builddir/roots.o $builddir/indexShapeCheck.o $builddir/_coder_get_smallest_supset_ball_api.o $builddir/_coder_get_smallest_supset_ball_mex.o $builddir/eml_int_forloop_overflow_check.o $builddir/flip.o $builddir/schur.o $builddir/get_smallest_supset_ball_emxutil.o $builddir/_coder_get_smallest_supset_ball_info.o $builddir/c_mexapi_version.o 

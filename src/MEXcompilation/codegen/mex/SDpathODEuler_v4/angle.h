@@ -3,15 +3,16 @@
  * course requirements at degree granting institutions only.  Not for
  * government, commercial, or other organizational use.
  *
- * indexShapeCheck.h
+ * angle.h
  *
- * Code generation for function 'indexShapeCheck'
+ * Code generation for function 'angle'
  *
  */
 
 #pragma once
 
 /* Include files */
+#include "SDpathODEuler_v4_types.h"
 #include "rtwtypes.h"
 #include "emlrt.h"
 #include "mex.h"
@@ -21,10 +22,6 @@
 #include <string.h>
 
 /* Function Declarations */
-void b_indexShapeCheck(const emlrtStack *sp, int32_T matrixSize,
-                       const int32_T indexSize[2]);
+void angle(const emlrtStack *sp, const emxArray_creal_T *x, emxArray_real_T *y);
 
-void indexShapeCheck(const emlrtStack *sp, int32_T matrixSize,
-                     const int32_T indexSize[2]);
-
-/* End of code generation (indexShapeCheck.h) */
+/* End of code generation (angle.h) */
