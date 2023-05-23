@@ -30,14 +30,20 @@ emlrtContext emlrtContextGlobal = {
     NULL                                                  /* fSigMem */
 };
 
-emlrtRSInfo m_emlrtRSI = {
+emlrtRSInfo r_emlrtRSI = {
     21,                               /* lineNo */
     "eml_int_forloop_overflow_check", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/eml/"
     "eml_int_forloop_overflow_check.m" /* pathName */
 };
 
-emlrtRSInfo o_emlrtRSI =
+emlrtRSInfo s_emlrtRSI = {
+    18,                                                      /* lineNo */
+    "abs",                                                   /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/lib/matlab/elfun/abs.m" /* pathName */
+};
+
+emlrtRSInfo t_emlrtRSI =
     {
         74,                    /* lineNo */
         "applyScalarFunction", /* fcnName */
@@ -45,7 +51,20 @@ emlrtRSInfo o_emlrtRSI =
         "applyScalarFunction.m" /* pathName */
 };
 
-emlrtRTEInfo v_emlrtRTEI =
+emlrtRSInfo wb_emlrtRSI = {
+    9,                                                         /* lineNo */
+    "angle",                                                   /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/lib/matlab/elfun/angle.m" /* pathName */
+};
+
+emlrtRSInfo yb_emlrtRSI = {
+    33,                           /* lineNo */
+    "applyScalarFunctionInPlace", /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/"
+    "applyScalarFunctionInPlace.m" /* pathName */
+};
+
+emlrtRTEInfo ab_emlrtRTEI =
     {
         30,                    /* lineNo */
         21,                    /* colNo */

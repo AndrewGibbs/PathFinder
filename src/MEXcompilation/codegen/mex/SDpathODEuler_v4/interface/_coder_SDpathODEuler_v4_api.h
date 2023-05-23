@@ -21,7 +21,7 @@
 #include <string.h>
 
 /* Function Declarations */
-void SDpathODEuler_v4_api(const mxArray *const prhs[10], int32_T nlhs,
-                          const mxArray *plhs[4]);
+void SDpathODEuler_v4_api(const mxArray *const prhs[11], int32_T nlhs,
+                          const mxArray *plhs[7]);
 
 /* End of code generation (_coder_SDpathODEuler_v4_api.h) */

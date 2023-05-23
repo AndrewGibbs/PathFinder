@@ -1,4 +1,4 @@
-function Q = shortestInfinitePathV4(a,b,contours, covers, valleys, params)
+function [Q, graph_data] = shortestInfinitePathV4(a,b,contours, covers, valleys, params)
 % TO DO:
 % * Super special case of two steepest entrances in the same ball.
 
@@ -196,7 +196,12 @@ function Q = shortestInfinitePathV4(a,b,contours, covers, valleys, params)
 
      CPs_submatrix = adj_mat(1:num_CPs,1:(num_CPs+num_SExs+num_SEns));
 
-    % turn the path into instructions for quadrature
+     % store this stuff in a struct for plotting later, if desired:
+     graph_data = struct('adj_mat',adj_mat,'points',CPs_and_SExs_and_SEns,...
+                        'CPs', CPs, 'SExs', SExs, 'SEns', SEns,...
+                        'valleys',valleys,'shortest_path',seq);
+    
+     % turn the path into instructions for quadrature
     for n=1:(length(seq)-1)
         % now categorise every type of interaction
         start_index = seq(n);

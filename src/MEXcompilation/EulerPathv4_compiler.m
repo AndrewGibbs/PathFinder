@@ -17,5 +17,6 @@ n_max_type = coder.typeof(int64(1));
 excluded_SPs_indices_type = coder.typeof(int64(1),[Inf 1],[true false]);
 r_star_type = coder.typeof(1.0);
 Newton_threshold_type = coder.typeof(1.0);
+Newton_point_count_max = coder.typeof(int64(1));
 
-codegen SDpathODEuler_v4 -args {h0_type, gCoeffs_type, SPs_type, cover_radii_type, valleys_type, base_step_size, n_max_type, r_star_type, Newton_threshold_type, Newton_threshold_type}
+codegen SDpathODEuler_v4 -args {h0_type, gCoeffs_type, SPs_type, cover_radii_type, valleys_type, base_step_size, n_max_type, r_star_type, Newton_threshold_type, Newton_threshold_type, Newton_point_count_max}

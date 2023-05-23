@@ -20,7 +20,7 @@ function I = PathFinder(a, b, f, phaseIn, freq, Npts, varargin)
 %see
 %<a href="matlab:web('www.github.com/AndrewGibbs/PathFinder','-browser')">github.com/AndrewGibbs/PathFinder</a>
 
-    [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin);
+    [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin{:});
 
     if isempty(f)
         I = sum(w);
