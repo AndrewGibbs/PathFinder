@@ -3,9 +3,9 @@
  * course requirements at degree granting institutions only.  Not for
  * government, commercial, or other organizational use.
  *
- * indexShapeCheck.h
+ * ifWhileCond.h
  *
- * Code generation for function 'indexShapeCheck'
+ * Code generation for function 'ifWhileCond'
  *
  */
 
@@ -21,10 +21,6 @@
 #include <string.h>
 
 /* Function Declarations */
-void b_indexShapeCheck(const emlrtStack *sp, int32_T matrixSize,
-                       const int32_T indexSize[2]);
+boolean_T ifWhileCond(const boolean_T x_data[]);
 
-void indexShapeCheck(const emlrtStack *sp, int32_T matrixSize,
-                     const int32_T indexSize[2]);
-
-/* End of code generation (indexShapeCheck.h) */
+/* End of code generation (ifWhileCond.h) */

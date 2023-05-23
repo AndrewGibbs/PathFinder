@@ -35,7 +35,7 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeff
         if iscell(C)
             C=C{1};
         end
-        plot(C);
+%         plot(C);
         if C.radius>0 && ~ismember(C.index,HermiteInds)
            fillCircle(C.centre,C.radius,lightGrayColor);
            % plot(C.steepestExits,'ob','MarkerSize',18);

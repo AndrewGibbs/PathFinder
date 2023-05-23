@@ -24,8 +24,11 @@
 extern emlrtCTX emlrtRootTLSGlobal;
 extern const volatile char_T *emlrtBreakCheckR2012bFlagVar;
 extern emlrtContext emlrtContextGlobal;
-extern emlrtRSInfo m_emlrtRSI;
-extern emlrtRSInfo o_emlrtRSI;
-extern emlrtRTEInfo v_emlrtRTEI;
+extern emlrtRSInfo r_emlrtRSI;
+extern emlrtRSInfo s_emlrtRSI;
+extern emlrtRSInfo t_emlrtRSI;
+extern emlrtRSInfo wb_emlrtRSI;
+extern emlrtRSInfo yb_emlrtRSI;
+extern emlrtRTEInfo ab_emlrtRTEI;
 
 /* End of code generation (SDpathODEuler_v4_data.h) */
