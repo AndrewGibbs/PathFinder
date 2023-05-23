@@ -18,23 +18,23 @@
 #include "rt_nonfinite.h"
 
 /* Function Definitions */
-void SDpathODEuler_v4_mexFunction(int32_T nlhs, mxArray *plhs[4], int32_T nrhs,
-                                  const mxArray *prhs[10])
+void SDpathODEuler_v4_mexFunction(int32_T nlhs, mxArray *plhs[7], int32_T nrhs,
+                                  const mxArray *prhs[11])
 {
   emlrtStack st = {
       NULL, /* site */
       NULL, /* tls */
       NULL  /* prev */
   };
-  const mxArray *outputs[4];
+  const mxArray *outputs[7];
   int32_T b_nlhs;
   st.tls = emlrtRootTLSGlobal;
   /* Check for proper number of arguments. */
-  if (nrhs != 10) {
-    emlrtErrMsgIdAndTxt(&st, "EMLRT:runTime:WrongNumberOfInputs", 5, 12, 10, 4,
+  if (nrhs != 11) {
+    emlrtErrMsgIdAndTxt(&st, "EMLRT:runTime:WrongNumberOfInputs", 5, 12, 11, 4,
                         16, "SDpathODEuler_v4");
   }
-  if (nlhs > 4) {
+  if (nlhs > 7) {
     emlrtErrMsgIdAndTxt(&st, "EMLRT:runTime:TooManyOutputArguments", 3, 4, 16,
                         "SDpathODEuler_v4");
   }

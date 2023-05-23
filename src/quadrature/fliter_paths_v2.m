@@ -2,6 +2,7 @@ function [quadIngredients_out, max_val] = fliter_paths_v2(quadIngredients,g,freq
     used_points = [];
     quad_ingredient_index = [];
     count = 0;
+    num_strln_samples = 15;
     for q = quadIngredients
         count = count + 1;
         if ~isempty(q{1})
@@ -13,8 +14,8 @@ function [quadIngredients_out, max_val] = fliter_paths_v2(quadIngredients,g,freq
                 used_points = [used_points q{1}.contour.startPoint q{1}.contour.endPoint];
                 quad_ingredient_index = [quad_ingredient_index count count];
             elseif strcmp(q{1}.type,'strLn')
-                used_points = [used_points q{1}.a q{1}.b];
-                quad_ingredient_index = [quad_ingredient_index count count];
+                used_points = [used_points linspace(q{1}.a, q{1}.b, num_strln_samples)];
+                quad_ingredient_index = [quad_ingredient_index count*ones(1,num_strln_samples)];
             end
         end
     end

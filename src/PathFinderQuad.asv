@@ -83,8 +83,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
     end
 
     if params.plot_graph
-        finite_endpoints = [a b];
-        finite_endpoints = finite_endpoints(~params.infContour)+1i*eps;
+        finite_endpoints = a, b, params.infContour
         plotGraph(graph_data, covers, finite_endpoints);
     end
 end

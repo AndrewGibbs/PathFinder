@@ -15,7 +15,16 @@
 
 /* Variable Definitions */
 static emlrtRSInfo
-    ob_emlrtRSI =
+    ec_emlrtRSI =
+        {
+            38,                /* lineNo */
+            "indexShapeCheck", /* fcnName */
+            "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/"
+            "indexShapeCheck.m" /* pathName */
+};
+
+static emlrtRSInfo
+    oc_emlrtRSI =
         {
             42,                /* lineNo */
             "indexShapeCheck", /* fcnName */
@@ -34,8 +43,8 @@ static emlrtRTEInfo
 };
 
 /* Function Definitions */
-void indexShapeCheck(const emlrtStack *sp, int32_T matrixSize,
-                     const int32_T indexSize[2])
+void b_indexShapeCheck(const emlrtStack *sp, int32_T matrixSize,
+                       const int32_T indexSize[2])
 {
   emlrtStack st;
   boolean_T c;
@@ -46,11 +55,31 @@ void indexShapeCheck(const emlrtStack *sp, int32_T matrixSize,
   } else {
     c = false;
   }
-  st.site = &ob_emlrtRSI;
+  st.site = &oc_emlrtRSI;
   if (c) {
     emlrtErrorWithMessageIdR2018a(&st, &c_emlrtRTEI,
                                   "Coder:FE:PotentialVectorVector",
                                   "Coder:FE:PotentialVectorVector", 0);
+  }
+}
+
+void indexShapeCheck(const emlrtStack *sp, int32_T matrixSize,
+                     const int32_T indexSize[2])
+{
+  emlrtStack st;
+  boolean_T c;
+  st.prev = sp;
+  st.tls = sp->tls;
+  if ((matrixSize != 1) && (indexSize[1] != 1) && (matrixSize != 1)) {
+    c = true;
+  } else {
+    c = false;
+  }
+  st.site = &ec_emlrtRSI;
+  if (c) {
+    emlrtErrorWithMessageIdR2018a(&st, &c_emlrtRTEI,
+                                  "Coder:FE:PotentialMatrixMatrix_VM",
+                                  "Coder:FE:PotentialMatrixMatrix_VM", 0);
   }
 }
 

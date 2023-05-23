@@ -3,16 +3,15 @@
  * course requirements at degree granting institutions only.  Not for
  * government, commercial, or other organizational use.
  *
- * abs.h
+ * eml_i64relops.h
  *
- * Code generation for function 'abs'
+ * Code generation for function 'eml_i64relops'
  *
  */
 
 #pragma once
 
 /* Include files */
-#include "get_smallest_supset_ball_types.h"
 #include "rtwtypes.h"
 #include "emlrt.h"
 #include "mex.h"
@@ -22,6 +21,6 @@
 #include <string.h>
 
 /* Function Declarations */
-void b_abs(const emlrtStack *sp, const emxArray_real_T *x, emxArray_real_T *y);
+boolean_T eml_i64relops(real_T a, int64_T b);
 
-/* End of code generation (abs.h) */
+/* End of code generation (eml_i64relops.h) */
