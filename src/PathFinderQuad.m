@@ -63,11 +63,11 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
         params.log.add_to_log(sprintf("Dijkstra shortest path:\t%fs",toc));
     end
     
-    % filter out SD contours which are of much smaller value, or empty
-    [quadIngredients, params.max_SP_integrand_val] = fliter_paths_v2(quadIngredients, phase_handles{1}, freq, params.contourStartThresh);
-
     if params.contourStartThresh==0
         params.max_SP_integrand_val = inf;
+    else
+        % filter out SD contours which are of much smaller value, or empty
+        [quadIngredients, params.max_SP_integrand_val] = fliter_paths_v2(quadIngredients, phase_handles{1}, freq, params.contourStartThresh);
     end
 
     %get quadrature points
