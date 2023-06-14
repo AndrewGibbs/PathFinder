@@ -1,4 +1,4 @@
- classdef ContourSD < handle
+ classdef ContourSD %<handle
     %Steepest descent contour object
     
     properties
@@ -22,15 +22,15 @@
         %some parameters with default settings:
 %         coarseTol = 1e-3;
 %         fineTol = 1e-13;
-        paramPathLength = 100
+%         paramPathLength = 100
         minArgDist = pi/2;
 %         leavesAnalyticRegion = false
         ICs %intiial conditions
         %quad bits:
-        P0
-        h = []
-        dhdp
-        Wgauss
+%         P0
+%         h = []
+%         dhdp
+%         Wgauss
         quadFreq
         polynomial = false
 %         finitePathTrunc = 1.0
@@ -73,7 +73,7 @@
 
             [p, self.coarsePath, valley_index, ball_index, Newton_points, Newton_its, Newton_fineal_pt_its] = SDpathODEuler_v4_mex(self.ICs(1), G, CPs, CPs_radii, valleys.',...
             global_contour_params.step_size, int64(max_steps_before_fail), global_contour_params.r_star,...
-            global_contour_params.NewtonBigThresh, global_contour_params.NewtonThresh, int64(global_contour_params.log.Newton_its));
+            global_contour_params.NewtonThresh, global_contour_params.NewtonBigThresh, int64(global_contour_params.log.Newton_its));
             
             % logging of Newton info:
             if global_contour_params.log.take && (global_contour_params.log.Newton_its>0)
@@ -119,7 +119,7 @@
             if isinf(self.length)
                 %get relevant weighted Gauss quad rule:
                 if strcmp(quad_params.inf_quad_rule,'laguerre')
-                    [self.P0, self.Wgauss] = quad_gauss_exp(self.ODEorder, Npts);
+                    [P0, Wgauss] = quad_gauss_exp(self.ODEorder, Npts);
                 elseif strcmp(quad_params.inf_quad_rule,'legendre')
                     % COPIED CODE FROM BELOW, MAKE THIS INTO A FUNCTION 
                     IG_start_size = abs(exp(1i*freq*polyval(self.phaseCoeffs,self.startPoint)));
@@ -128,7 +128,7 @@
                     % truncation vs discretisation of GauLeg:
                     optimal_truncation = quad_params.finitePathTruncL*Npts/freq;
                     trunc = freq*min(optimal_truncation, machine_precision_length);
-                    [self.P0, self.Wgauss] = gauss_quad(0,trunc,Npts);
+                    [P0, Wgauss] = gauss_quad(0,trunc,Npts);
                 else
                     error("Optional argument 'inf quad rule' must be either 'laguerre' or 'legendre'");
                 end
@@ -144,8 +144,8 @@
                 % now combine all of these, accounting for p/\omega
                 % scaling:
                 trunc = freq*min([self.length, optimal_truncation, machine_precision_length]);
-                [self.P0, self.Wgauss] = gauss_quad(0,trunc,Npts);
-                self.P0=flipud(self.P0);
+                [P0, Wgauss] = gauss_quad(0,trunc,Npts);
+                P0=flipud(P0);
             end
 %            
                 % get SPs again (could just store them if they're going to
@@ -155,75 +155,75 @@
 
                 % if largest p value of coarse solve is less than
                 % largest p value of quad, trace further
-                if max(self.P0) > freq*max(self.coarseParam)% global_contour_params.step_size, int64(max_steps_before_fail)
+                if max(P0) > freq*max(self.coarseParam)% global_contour_params.step_size, int64(max_steps_before_fail)
                     SPs = roots(Dpolycoeffs);
                     max_steps_before_fail = quad_params.max_number_of_ODE_steps;
                     [self.coarseParam, self.coarsePath, success] = ...
-                        SDpathODEuler_extend_coarse_path_mex(self.coarseParam, self.coarsePath, self.phaseCoeffs, SPs, quad_params.global_step_size, int64(max_steps_before_fail), max(self.P0)/freq);
+                        SDpathODEuler_extend_coarse_path_mex(self.coarseParam, self.coarsePath, self.phaseCoeffs, SPs, quad_params.global_step_size, int64(max_steps_before_fail), max(P0)/freq);
                     if ~success
                         warning('failed to converge extended contour');
                     end
                 end
 
-                [self.h, self.dhdp, Newton_success] = SDquadODEulerNEwtonCorrection_mex(self.P0, freq*self.coarseParam, self.ICs(1), self.coarsePath, self.phaseCoeffs, freq, quad_params.NewtonThresh, uint32(quad_params.NewtonIts));
+                [h, dhdp, Newton_success] = SDquadODEulerNEwtonCorrection_mex(P0, freq*self.coarseParam, self.ICs(1), self.coarsePath, self.phaseCoeffs, freq, quad_params.NewtonThresh, uint32(quad_params.NewtonIts));
 
-                weightWatchers = ones(length(self.h),1);
-                for n = 1:length(self.h)
+                weightWatchers = ones(length(h),1);
+                for n = 1:length(h)
                     if Newton_success(n) > quad_params.NewtonIts
                         warning(['Newton did not converge in ',num2str(quad_params.NewtonIts),' steps']);
-                        weightWatchers(n) = exp(1i*(freq*self.phaseDerivs{1}(self.h(n))-1i*self.P0(n).^self.ODEorder - freq*self.phaseDerivs{1}(self.startPoint)));
+                        weightWatchers(n) = exp(1i*(freq*self.phaseDerivs{1}(h(n))-1i*P0(n).^self.ODEorder - freq*self.phaseDerivs{1}(self.startPoint)));
                     end
                 end
                 weightWatchers = 1;
             
             if isinf(self.length) && strcmp(quad_params.inf_quad_rule,'laguerre')
                 %absorb h'(p) and other constants into weights.
-                W= exp(1i*freq*self.phaseDerivs{1}(self.startPoint)).*self.dhdp.*self.Wgauss.*weightWatchers;
+                W= exp(1i*freq*self.phaseDerivs{1}(self.startPoint)).*dhdp.*Wgauss.*weightWatchers;
             else
-               W = self.dhdp.*self.Wgauss.*exp(1i*freq*self.phaseDerivs{1}(self.h)).*weightWatchers;
+               W = dhdp.*Wgauss.*exp(1i*freq*self.phaseDerivs{1}(h)).*weightWatchers;
             end
-            Z=self.h;
+            Z=h;
         end
          
-        function [Z, W] = reuseQuad(self, G, errThresh)
-            if nargin == 2
-                errThresh = inf;
-            end
-            if ~isinf(errThresh) %tweak old SD path using Newton iteration
-                Zold=self.h;
-                p = self.P0;
-                Z = NaN(size(Zold));
-                dZdp = Z;
-                for n = 1:length(Zold) %#ok<CPROPLC> %iterate over all quad points
-                    [success, z_new] = NewtonSD(Zold(n),G,p(n),1,self.startPoint,1,errThresh);
-                    if success
-                        Z(n) = z_new;
-                        dZdp(n) =  1i./G{2}(Z(n));
-                    else
-                        Z = Zold;
-                        dZdp = self.dhdp;
-                        warning('Failed to iterate to true SD path');
-                        n = length(Zold) +1;
-                        break;
-                    end
-                    clear z_new;
-                end
-            else
-                Z = self.h;
-                dZdp = self.dhdp;
-            end
-            g = G{1};
-            if isinf(self.length)
-                weightWatchers = exp(1i*(self.quadFreq*g(Z)-1i*self.P0.^self.ODEorder - self.quadFreq*g(self.startPoint)));
-                %absorb h'(p) and other constants into weights.
-%                 W = (1/(self.quadFreq^(1/self.ODEorder)))*exp(1i*self.quadFreq*g(self.startPoint))...
-%                     .*dZdp.*self.Wgauss.*weightWatchers;
-                W = exp(1i*self.quadFreq*g(self.startPoint)).*dZdp.*self.Wgauss.*weightWatchers;
-            else
-                W = dZdp.*self.Wgauss.*exp(1i*self.quadFreq*g(Z)) ;
-            end
-            
-        end
+%         function [Z, W] = reuseQuad(self, G, errThresh)
+%             if nargin == 2
+%                 errThresh = inf;
+%             end
+%             if ~isinf(errThresh) %tweak old SD path using Newton iteration
+%                 Zold=self.h;
+%                 p = self.P0;
+%                 Z = NaN(size(Zold));
+%                 dZdp = Z;
+%                 for n = 1:length(Zold) %#ok<CPROPLC> %iterate over all quad points
+%                     [success, z_new] = NewtonSD(Zold(n),G,p(n),1,self.startPoint,1,errThresh);
+%                     if success
+%                         Z(n) = z_new;
+%                         dZdp(n) =  1i./G{2}(Z(n));
+%                     else
+%                         Z = Zold;
+%                         dZdp = self.dhdp;
+%                         warning('Failed to iterate to true SD path');
+%                         n = length(Zold) +1;
+%                         break;
+%                     end
+%                     clear z_new;
+%                 end
+%             else
+%                 Z = self.h;
+%                 dZdp = self.dhdp;
+%             end
+%             g = G{1};
+%             if isinf(self.length)
+%                 weightWatchers = exp(1i*(self.quadFreq*g(Z)-1i*self.P0.^self.ODEorder - self.quadFreq*g(self.startPoint)));
+%                 %absorb h'(p) and other constants into weights.
+% %                 W = (1/(self.quadFreq^(1/self.ODEorder)))*exp(1i*self.quadFreq*g(self.startPoint))...
+% %                     .*dZdp.*self.Wgauss.*weightWatchers;
+%                 W = exp(1i*self.quadFreq*g(self.startPoint)).*dZdp.*self.Wgauss.*weightWatchers;
+%             else
+%                 W = dZdp.*self.Wgauss.*exp(1i*self.quadFreq*g(Z)) ;
+%             end
+%             
+%         end
     end
 end
 

@@ -64,7 +64,7 @@ function plotGraph(graph_data, covers, finite_endpoints)
     plot(graph_data.CPs,'.r','MarkerSize',markerSize,'Color', cols{2});
 %     legend('Valleys','Critical points','Steepest exits','Steepest Entrances');
 
-    legend('','Location', 'southoutside');
+    legend('','Location', 'eastoutside');
     plot(NaN,NaN,'.k','MarkerSize',markerSize,'DisplayName','Valleys','Color', cols{1});
     plot(NaN,NaN,'.r','MarkerSize',markerSize,'DisplayName','Stationary points','Color', cols{2});
     if length(finite_endpoints)>1
@@ -77,6 +77,8 @@ function plotGraph(graph_data, covers, finite_endpoints)
     plot(NaN,NaN,':k','DisplayName','Ball subgraphs')
 %     legend('Valleys','Critical points','Steepest exits','Steepest Entrances');
 
+    xlim(1.1*[min(real(valley_nodes)) max(real(valley_nodes))]);
+    ylim(1.1*[min(imag(valley_nodes)) max(imag(valley_nodes))]);
     set(gca,'fontsize', fontSize);
     set(gcf, 'Position', [0 0 800 800]);
     axis equal;
