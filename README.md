@@ -21,6 +21,9 @@ Steepest descent contours are directed complex contours, along which $\Re g$ is 
 * Quadrature points are allocated along these contours
 
 ## Basic usage
+
+After downloading from GitHub, open Matlab and navigate to the PathFinder folder. Then run ```addPaths()``` to add all necessary paths to the Matlab search path.
+
 Typical syntax, when a and b are finite:
 ```matlab
  [z,w] = PathFinderQuad(a, b, poly_coeffs, freq, num_pts);
