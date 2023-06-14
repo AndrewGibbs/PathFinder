@@ -20,9 +20,13 @@ Steepest descent contours are directed complex contours, along which $\Re g$ is 
 * A ssuitable sequence of these paths is chosen via Dijkstra's algorithm
 * Quadrature points are allocated along these contours
 
-## Basic usage
+## Setup
 
-After downloading from GitHub, open Matlab and navigate to the PathFinder folder. Then run ```addPaths()``` to add all necessary paths to the Matlab search path.
+After downloading from GitHub, open Matlab and navigate to the PathFinder folder. Then run ```addPaths.m``` to add all necessary paths to the Matlab search path.
+
+If you have the Matlab Coder package installed, you can also run ```compile_all.m```, to produce MEX code optimised for your operating system.
+
+## Basic usage
 
 Typical syntax, when a and b are finite:
 ```matlab
