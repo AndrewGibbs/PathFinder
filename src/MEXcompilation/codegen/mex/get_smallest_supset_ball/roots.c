@@ -25,128 +25,128 @@
 #include <stddef.h>
 
 /* Variable Definitions */
-static emlrtRSInfo ib_emlrtRSI = {
+static emlrtRSInfo jb_emlrtRSI = {
     74,                                                          /* lineNo */
     "roots",                                                     /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/polyfun/roots.m" /* pathName */
 };
 
-static emlrtRSInfo jb_emlrtRSI = {
+static emlrtRSInfo kb_emlrtRSI = {
     100,                                                         /* lineNo */
     "roots",                                                     /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/polyfun/roots.m" /* pathName */
 };
 
-static emlrtRSInfo kb_emlrtRSI = {
+static emlrtRSInfo lb_emlrtRSI = {
     95,                                                          /* lineNo */
     "roots",                                                     /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/polyfun/roots.m" /* pathName */
 };
 
-static emlrtRSInfo lb_emlrtRSI = {
+static emlrtRSInfo mb_emlrtRSI = {
     94,                                                          /* lineNo */
     "roots",                                                     /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/polyfun/roots.m" /* pathName */
 };
 
-static emlrtRSInfo mb_emlrtRSI = {
+static emlrtRSInfo nb_emlrtRSI = {
     91,                                                          /* lineNo */
     "roots",                                                     /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/polyfun/roots.m" /* pathName */
 };
 
-static emlrtRSInfo nb_emlrtRSI = {
+static emlrtRSInfo ob_emlrtRSI = {
     85,                                                          /* lineNo */
     "roots",                                                     /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/polyfun/roots.m" /* pathName */
 };
 
-static emlrtRSInfo ob_emlrtRSI = {
+static emlrtRSInfo pb_emlrtRSI = {
     79,                                                          /* lineNo */
     "roots",                                                     /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/polyfun/roots.m" /* pathName */
 };
 
-static emlrtRSInfo pb_emlrtRSI = {
+static emlrtRSInfo qb_emlrtRSI = {
     23,                                                          /* lineNo */
     "roots",                                                     /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/polyfun/roots.m" /* pathName */
 };
 
-static emlrtRSInfo rb_emlrtRSI = {
+static emlrtRSInfo sb_emlrtRSI = {
     155,                                                      /* lineNo */
     "eig",                                                    /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/matfun/eig.m" /* pathName */
 };
 
-static emlrtRSInfo sb_emlrtRSI = {
+static emlrtRSInfo tb_emlrtRSI = {
     147,                                                      /* lineNo */
     "eig",                                                    /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/matfun/eig.m" /* pathName */
 };
 
-static emlrtRSInfo tb_emlrtRSI = {
+static emlrtRSInfo ub_emlrtRSI = {
     139,                                                      /* lineNo */
     "eig",                                                    /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/matfun/eig.m" /* pathName */
 };
 
-static emlrtRSInfo ub_emlrtRSI = {
+static emlrtRSInfo vb_emlrtRSI = {
     93,                                                       /* lineNo */
     "eig",                                                    /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/matfun/eig.m" /* pathName */
 };
 
-static emlrtRSInfo vb_emlrtRSI = {
+static emlrtRSInfo wb_emlrtRSI = {
     21,                     /* lineNo */
     "eigHermitianStandard", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/matfun/private/"
     "eigHermitianStandard.m" /* pathName */
 };
 
-static emlrtRSInfo wb_emlrtRSI = {
+static emlrtRSInfo xb_emlrtRSI = {
     22,                     /* lineNo */
     "eigHermitianStandard", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/matfun/private/"
     "eigHermitianStandard.m" /* pathName */
 };
 
-static emlrtRSInfo jc_emlrtRSI = {
+static emlrtRSInfo kc_emlrtRSI = {
     47,                 /* lineNo */
     "mainDiagZeroImag", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/matfun/private/"
     "eigHermitianStandard.m" /* pathName */
 };
 
-static emlrtRSInfo kc_emlrtRSI = {
+static emlrtRSInfo lc_emlrtRSI = {
     18,                         /* lineNo */
     "eigSkewHermitianStandard", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/matfun/private/"
     "eigSkewHermitianStandard.m" /* pathName */
 };
 
-static emlrtRSInfo lc_emlrtRSI = {
+static emlrtRSInfo mc_emlrtRSI = {
     18,                                /* lineNo */
     "eigComplexSkewHermitianStandard", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/matfun/private/"
     "eigComplexSkewHermitianStandard.m" /* pathName */
 };
 
-static emlrtRSInfo mc_emlrtRSI = {
+static emlrtRSInfo nc_emlrtRSI = {
     19,                                /* lineNo */
     "eigComplexSkewHermitianStandard", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/matfun/private/"
     "eigComplexSkewHermitianStandard.m" /* pathName */
 };
 
-static emlrtRSInfo nc_emlrtRSI = {
+static emlrtRSInfo oc_emlrtRSI = {
     41,                 /* lineNo */
     "makeEigValVector", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/matfun/private/"
     "eigComplexSkewHermitianStandard.m" /* pathName */
 };
 
-static emlrtRSInfo oc_emlrtRSI =
+static emlrtRSInfo pc_emlrtRSI =
     {
         59,            /* lineNo */
         "eigStandard", /* fcnName */
@@ -154,7 +154,7 @@ static emlrtRSInfo oc_emlrtRSI =
         "eigStandard.m" /* pathName */
 };
 
-static emlrtRSInfo pc_emlrtRSI =
+static emlrtRSInfo qc_emlrtRSI =
     {
         44,            /* lineNo */
         "eigStandard", /* fcnName */
@@ -162,14 +162,14 @@ static emlrtRSInfo pc_emlrtRSI =
         "eigStandard.m" /* pathName */
 };
 
-static emlrtRSInfo qc_emlrtRSI = {
+static emlrtRSInfo rc_emlrtRSI = {
     38,      /* lineNo */
     "xgeev", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/+lapack/xgeev.m" /* pathName
                                                                             */
 };
 
-static emlrtRSInfo rc_emlrtRSI = {
+static emlrtRSInfo sc_emlrtRSI = {
     182,           /* lineNo */
     "ceval_xgeev", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/+lapack/xgeev.m" /* pathName
@@ -377,7 +377,7 @@ void roots(const emlrtStack *sp, const emxArray_creal_T *c, emxArray_creal_T *r)
   f_st.tls = e_st.tls;
   c_data = c->data;
   emlrtHeapReferenceStackEnterFcnR2012b((emlrtCTX)sp);
-  st.site = &pb_emlrtRSI;
+  st.site = &qb_emlrtRSI;
   if (anyNonFinite(&st, c)) {
     emlrtErrorWithMessageIdR2018a(sp, &i_emlrtRTEI,
                                   "MATLAB:roots:NonFiniteInput",
@@ -508,7 +508,7 @@ void roots(const emlrtStack *sp, const emxArray_creal_T *c, emxArray_creal_T *r)
       }
       iv[0] = 1;
       iv[1] = j;
-      st.site = &ob_emlrtRSI;
+      st.site = &pb_emlrtRSI;
       indexShapeCheck(&st, r->size[0], iv);
       k2 = r->size[0];
       r->size[0] = j;
@@ -530,7 +530,7 @@ void roots(const emlrtStack *sp, const emxArray_creal_T *c, emxArray_creal_T *r)
         a_data[j].re = 0.0;
         a_data[j].im = 0.0;
       }
-      st.site = &nb_emlrtRSI;
+      st.site = &ob_emlrtRSI;
       for (j = 0; j <= companDim - 2; j++) {
         a_data[a->size[0] * j].re = -ctmp_data[j].re;
         a_data[a->size[0] * j].im = -ctmp_data[j].im;
@@ -539,7 +539,7 @@ void roots(const emlrtStack *sp, const emxArray_creal_T *c, emxArray_creal_T *r)
       }
       a_data[a->size[0] * (companDim - 1)].re = -ctmp_data[companDim - 1].re;
       a_data[a->size[0] * (companDim - 1)].im = -ctmp_data[companDim - 1].im;
-      st.site = &mb_emlrtRSI;
+      st.site = &nb_emlrtRSI;
       if ((1 <= nTrailingZeros) && (nTrailingZeros > 2147483646)) {
         b_st.site = &e_emlrtRSI;
         b_check_forloop_overflow_error(&b_st);
@@ -548,13 +548,13 @@ void roots(const emlrtStack *sp, const emxArray_creal_T *c, emxArray_creal_T *r)
         r_data[j].re = 0.0;
         r_data[j].im = 0.0;
       }
-      st.site = &lb_emlrtRSI;
+      st.site = &mb_emlrtRSI;
       if (a->size[0] != a->size[1]) {
         emlrtErrorWithMessageIdR2018a(
             &st, &h_emlrtRTEI, "MATLAB:eig:inputMustBeSquareStandard",
             "MATLAB:eig:inputMustBeSquareStandard", 0);
       }
-      b_st.site = &ub_emlrtRSI;
+      b_st.site = &vb_emlrtRSI;
       if (b_anyNonFinite(&b_st, a)) {
         j = ctmp->size[0];
         ctmp->size[0] = a->size[0];
@@ -595,17 +595,17 @@ void roots(const emlrtStack *sp, const emxArray_creal_T *c, emxArray_creal_T *r)
           }
         }
         if (p) {
-          b_st.site = &tb_emlrtRSI;
-          c_st.site = &vb_emlrtRSI;
+          b_st.site = &ub_emlrtRSI;
+          c_st.site = &wb_emlrtRSI;
           schur(&c_st, a);
           a_data = a->data;
-          c_st.site = &wb_emlrtRSI;
+          c_st.site = &xb_emlrtRSI;
           k2 = a->size[0];
           j = ctmp->size[0];
           ctmp->size[0] = a->size[0];
           emxEnsureCapacity_creal_T(&c_st, ctmp, j, &kb_emlrtRTEI);
           ctmp_data = ctmp->data;
-          d_st.site = &jc_emlrtRSI;
+          d_st.site = &kc_emlrtRSI;
           if ((1 <= a->size[0]) && (a->size[0] > 2147483646)) {
             e_st.site = &e_emlrtRSI;
             b_check_forloop_overflow_error(&e_st);
@@ -644,8 +644,8 @@ void roots(const emlrtStack *sp, const emxArray_creal_T *c, emxArray_creal_T *r)
             }
           }
           if (p) {
-            b_st.site = &sb_emlrtRSI;
-            c_st.site = &kc_emlrtRSI;
+            b_st.site = &tb_emlrtRSI;
+            c_st.site = &lc_emlrtRSI;
             k2 = a->size[0] * a->size[1];
             for (j = 0; j < k2; j++) {
               abnrm = a_data[j].im;
@@ -653,16 +653,16 @@ void roots(const emlrtStack *sp, const emxArray_creal_T *c, emxArray_creal_T *r)
               a_data[j].re = 0.0 * rconde - abnrm;
               a_data[j].im = 0.0 * abnrm + rconde;
             }
-            d_st.site = &lc_emlrtRSI;
+            d_st.site = &mc_emlrtRSI;
             schur(&d_st, a);
             a_data = a->data;
-            d_st.site = &mc_emlrtRSI;
+            d_st.site = &nc_emlrtRSI;
             k2 = a->size[0];
             j = ctmp->size[0];
             ctmp->size[0] = a->size[0];
             emxEnsureCapacity_creal_T(&d_st, ctmp, j, &ob_emlrtRTEI);
             ctmp_data = ctmp->data;
-            e_st.site = &nc_emlrtRSI;
+            e_st.site = &oc_emlrtRSI;
             if ((1 <= a->size[0]) && (a->size[0] > 2147483646)) {
               f_st.site = &e_emlrtRSI;
               b_check_forloop_overflow_error(&f_st);
@@ -673,9 +673,9 @@ void roots(const emlrtStack *sp, const emxArray_creal_T *c, emxArray_creal_T *r)
             }
           } else {
             emxInit_real_T(&st, &scale, &qb_emlrtRTEI);
-            b_st.site = &rb_emlrtRSI;
-            c_st.site = &pc_emlrtRSI;
-            d_st.site = &qc_emlrtRSI;
+            b_st.site = &sb_emlrtRSI;
+            c_st.site = &qc_emlrtRSI;
+            d_st.site = &rc_emlrtRSI;
             j = scale->size[0];
             scale->size[0] = a->size[1];
             emxEnsureCapacity_real_T(&d_st, scale, j, &lb_emlrtRTEI);
@@ -692,7 +692,7 @@ void roots(const emlrtStack *sp, const emxArray_creal_T *c, emxArray_creal_T *r)
                 (lapack_complex_double *)&vr, (ptrdiff_t)1, &ilo_t, &ihi_t,
                 &scale_data[0], &abnrm, &rconde, &rcondv);
             k2 = (int32_T)info_t;
-            e_st.site = &rc_emlrtRSI;
+            e_st.site = &sc_emlrtRSI;
             emxFree_real_T(&e_st, &scale);
             if (k2 < 0) {
               if (k2 == -1010) {
@@ -706,14 +706,14 @@ void roots(const emlrtStack *sp, const emxArray_creal_T *c, emxArray_creal_T *r)
               }
             }
             if (k2 != 0) {
-              c_st.site = &oc_emlrtRSI;
+              c_st.site = &pc_emlrtRSI;
               c_warning(&c_st);
             }
           }
         }
       }
       emxFree_creal_T(&st, &a);
-      st.site = &kb_emlrtRSI;
+      st.site = &lb_emlrtRSI;
       for (j = 0; j < companDim; j++) {
         r_data[j + nTrailingZeros] = ctmp_data[j];
       }
@@ -730,7 +730,7 @@ void roots(const emlrtStack *sp, const emxArray_creal_T *c, emxArray_creal_T *r)
       }
       iv[0] = 1;
       iv[1] = j;
-      st.site = &jb_emlrtRSI;
+      st.site = &kb_emlrtRSI;
       indexShapeCheck(&st, r->size[0], iv);
       k2 = r->size[0];
       r->size[0] = j;
@@ -745,7 +745,7 @@ void roots(const emlrtStack *sp, const emxArray_creal_T *c, emxArray_creal_T *r)
     }
     iv[0] = 1;
     iv[1] = j;
-    st.site = &ib_emlrtRSI;
+    st.site = &jb_emlrtRSI;
     indexShapeCheck(&st, r->size[0], iv);
     k2 = r->size[0];
     r->size[0] = j;

@@ -56,34 +56,34 @@ static emlrtRSInfo
             "get_smallest_supset_ball.m" /* pathName */
 };
 
-static emlrtRSInfo ed_emlrtRSI = {
+static emlrtRSInfo fd_emlrtRSI = {
     15,                                                        /* lineNo */
     "max",                                                     /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/datafun/max.m" /* pathName */
 };
 
-static emlrtRSInfo fd_emlrtRSI = {
+static emlrtRSInfo gd_emlrtRSI = {
     44,         /* lineNo */
     "minOrMax", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/minOrMax.m" /* pathName
                                                                        */
 };
 
-static emlrtRSInfo gd_emlrtRSI = {
+static emlrtRSInfo hd_emlrtRSI = {
     79,        /* lineNo */
     "maximum", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/minOrMax.m" /* pathName
                                                                        */
 };
 
-static emlrtRSInfo hd_emlrtRSI = {
+static emlrtRSInfo id_emlrtRSI = {
     186,             /* lineNo */
     "unaryMinOrMax", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/unaryMinOrMax.m" /* pathName
                                                                             */
 };
 
-static emlrtRSInfo id_emlrtRSI = {
+static emlrtRSInfo jd_emlrtRSI = {
     897,                    /* lineNo */
     "maxRealVectorOmitNaN", /* fcnName */
     "/home/andrew/matlab/toolbox/eml/eml/+coder/+internal/unaryMinOrMax.m" /* pathName
@@ -137,7 +137,8 @@ static emlrtRTEInfo
 real_T get_smallest_supset_ball(const emlrtStack *sp,
                                 const emxArray_creal_T *g_coeffs, real_T freq,
                                 const creal_T xi, real_T Cosc,
-                                uint32_T num_rays, boolean_T take_max)
+                                uint32_T num_rays, boolean_T take_max,
+                                real_T imag_thresh)
 {
   emlrtStack b_st;
   emlrtStack c_st;
@@ -199,24 +200,25 @@ real_T get_smallest_supset_ball(const emlrtStack *sp,
                                     &emlrtBCI, (emlrtCTX)sp);
     }
     st.site = &b_emlrtRSI;
-    radii_data[idx] = get_r_given_theta(&st, g_coeffs, xi, Cosc / freq,
-                                        d_theta * ((real_T)idx + 1.0));
+    radii_data[idx] =
+        get_r_given_theta(&st, g_coeffs, xi, Cosc / freq,
+                          d_theta * ((real_T)idx + 1.0), imag_thresh);
     if (*emlrtBreakCheckR2012bFlagVar != 0) {
       emlrtBreakCheckR2012b((emlrtCTX)sp);
     }
   }
   if (take_max) {
     st.site = &c_emlrtRSI;
-    b_st.site = &ed_emlrtRSI;
-    c_st.site = &fd_emlrtRSI;
-    d_st.site = &gd_emlrtRSI;
+    b_st.site = &fd_emlrtRSI;
+    c_st.site = &gd_emlrtRSI;
+    d_st.site = &hd_emlrtRSI;
     if (radii->size[0] < 1) {
       emlrtErrorWithMessageIdR2018a(
           &d_st, &emlrtRTEI, "Coder:toolbox:eml_min_or_max_varDimZero",
           "Coder:toolbox:eml_min_or_max_varDimZero", 0);
     }
-    e_st.site = &hd_emlrtRSI;
-    f_st.site = &id_emlrtRSI;
+    e_st.site = &id_emlrtRSI;
+    f_st.site = &jd_emlrtRSI;
     last = radii->size[0];
     if (radii->size[0] <= 2) {
       if (radii->size[0] == 1) {
@@ -229,12 +231,12 @@ real_T get_smallest_supset_ball(const emlrtStack *sp,
         r = radii_data[0];
       }
     } else {
-      g_st.site = &bd_emlrtRSI;
+      g_st.site = &cd_emlrtRSI;
       if (!muDoubleScalarIsNaN(radii_data[0])) {
         idx = 1;
       } else {
         idx = 0;
-        h_st.site = &cd_emlrtRSI;
+        h_st.site = &dd_emlrtRSI;
         if (radii->size[0] > 2147483646) {
           i_st.site = &e_emlrtRSI;
           b_check_forloop_overflow_error(&i_st);
@@ -253,10 +255,10 @@ real_T get_smallest_supset_ball(const emlrtStack *sp,
       if (idx == 0) {
         r = radii_data[0];
       } else {
-        g_st.site = &ad_emlrtRSI;
+        g_st.site = &bd_emlrtRSI;
         r = radii_data[idx - 1];
         a = idx + 1;
-        h_st.site = &dd_emlrtRSI;
+        h_st.site = &ed_emlrtRSI;
         if ((idx + 1 <= radii->size[0]) && (radii->size[0] > 2147483646)) {
           i_st.site = &e_emlrtRSI;
           b_check_forloop_overflow_error(&i_st);
@@ -271,16 +273,16 @@ real_T get_smallest_supset_ball(const emlrtStack *sp,
     }
   } else {
     st.site = &d_emlrtRSI;
-    b_st.site = &uc_emlrtRSI;
-    c_st.site = &vc_emlrtRSI;
-    d_st.site = &wc_emlrtRSI;
+    b_st.site = &vc_emlrtRSI;
+    c_st.site = &wc_emlrtRSI;
+    d_st.site = &xc_emlrtRSI;
     if (radii->size[0] < 1) {
       emlrtErrorWithMessageIdR2018a(
           &d_st, &emlrtRTEI, "Coder:toolbox:eml_min_or_max_varDimZero",
           "Coder:toolbox:eml_min_or_max_varDimZero", 0);
     }
-    e_st.site = &xc_emlrtRSI;
-    f_st.site = &yc_emlrtRSI;
+    e_st.site = &yc_emlrtRSI;
+    f_st.site = &ad_emlrtRSI;
     last = radii->size[0];
     if (radii->size[0] <= 2) {
       if (radii->size[0] == 1) {
@@ -293,12 +295,12 @@ real_T get_smallest_supset_ball(const emlrtStack *sp,
         r = radii_data[0];
       }
     } else {
-      g_st.site = &bd_emlrtRSI;
+      g_st.site = &cd_emlrtRSI;
       if (!muDoubleScalarIsNaN(radii_data[0])) {
         idx = 1;
       } else {
         idx = 0;
-        h_st.site = &cd_emlrtRSI;
+        h_st.site = &dd_emlrtRSI;
         if (radii->size[0] > 2147483646) {
           i_st.site = &e_emlrtRSI;
           b_check_forloop_overflow_error(&i_st);
@@ -317,10 +319,10 @@ real_T get_smallest_supset_ball(const emlrtStack *sp,
       if (idx == 0) {
         r = radii_data[0];
       } else {
-        g_st.site = &ad_emlrtRSI;
+        g_st.site = &bd_emlrtRSI;
         r = radii_data[idx - 1];
         a = idx + 1;
-        h_st.site = &dd_emlrtRSI;
+        h_st.site = &ed_emlrtRSI;
         if ((idx + 1 <= radii->size[0]) && (radii->size[0] > 2147483646)) {
           i_st.site = &e_emlrtRSI;
           b_check_forloop_overflow_error(&i_st);
