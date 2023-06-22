@@ -264,7 +264,7 @@ static boolean_T o_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
   return ret;
 }
 
-void get_smallest_supset_ball_api(const mxArray *const prhs[6],
+void get_smallest_supset_ball_api(const mxArray *const prhs[7],
                                   const mxArray **plhs)
 {
   emlrtStack st = {
@@ -276,6 +276,7 @@ void get_smallest_supset_ball_api(const mxArray *const prhs[6],
   creal_T xi;
   real_T Cosc;
   real_T freq;
+  real_T imag_thresh;
   uint32_T num_rays;
   boolean_T take_max;
   st.tls = emlrtRootTLSGlobal;
@@ -288,9 +289,10 @@ void get_smallest_supset_ball_api(const mxArray *const prhs[6],
   Cosc = c_emlrt_marshallIn(&st, emlrtAliasP(prhs[3]), "Cosc");
   num_rays = g_emlrt_marshallIn(&st, emlrtAliasP(prhs[4]), "num_rays");
   take_max = i_emlrt_marshallIn(&st, emlrtAliasP(prhs[5]), "take_max");
+  imag_thresh = c_emlrt_marshallIn(&st, emlrtAliasP(prhs[6]), "imag_thresh");
   /* Invoke the target function */
   freq = get_smallest_supset_ball(&st, g_coeffs, freq, xi, Cosc, num_rays,
-                                  take_max);
+                                  take_max, imag_thresh);
   /* Marshall function outputs */
   *plhs = emlrt_marshallOut(freq);
   emxFree_creal_T(&st, &g_coeffs);

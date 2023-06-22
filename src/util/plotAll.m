@@ -42,8 +42,9 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeff
         end
         hold on;
     end
+    grayColor = [.1 .1 .1];
     for C=contours
-        plot(C);
+        plot(C,'.:','Color',grayColor,'MarkerSize',4.5);
         hold on;
     end
 
@@ -97,7 +98,9 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeff
     ylabel('Imaginary');
     set(gca,'fontsize', fontSize);
     set(gcf, 'Position', [0 0 800 800]);
-    title(['$g(x)=',latex(poly2sym(g_coeffs)),'$'],'Interpreter','latex');
+    if license('test','symbolic_toolbox')
+        title(['$g(x)=',latex(poly2sym(g_coeffs)),'$'],'Interpreter','latex');
+    end
     hold off;
     
 end
