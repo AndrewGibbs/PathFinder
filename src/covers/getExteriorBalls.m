@@ -1,5 +1,6 @@
 function [covers, endPointIndices]...
-                = getExteriorBalls(g, freq, SPs, infContour, a, b, Cosc,g_coeffs,ball_clump_thresh,num_rays,int_balls_yn)
+                = getExteriorBalls(g, freq, SPs, infContour, a, b, Cosc,g_coeffs,...
+                    ball_clump_thresh,num_rays,int_balls_yn,imag_thresh)
 
     coverIndex = 0;
     endPointBalls = [];
@@ -22,7 +23,7 @@ function [covers, endPointIndices]...
 %             coverIndex = coverIndex + 1;
 %             radii(n) = get_interior_ball_mex(g_coeffs.', freq, SPs(n), uint32(SPorders(n)), Cosc);
             % DH wants factor of two...
-            radii(n) = DH*get_smallest_supset_ball_mex(g_coeffs.', freq, SPs(n), Cosc, num_rays,~int_balls_yn);
+            radii(n) = DH*get_smallest_supset_ball_mex(g_coeffs.', freq, SPs(n), Cosc, num_rays,~int_balls_yn,imag_thresh);
         end
 
 %             coversInit(n) = Ball(r_min,SPs(n),g_coeffs,coverIndex,sum(SPorders+1));

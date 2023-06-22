@@ -21,7 +21,7 @@
 #include <string.h>
 
 /* Function Declarations */
-void get_smallest_supset_ball_api(const mxArray *const prhs[6],
+void get_smallest_supset_ball_api(const mxArray *const prhs[7],
                                   const mxArray **plhs);
 
 /* End of code generation (_coder_get_smallest_supset_ball_api.h) */

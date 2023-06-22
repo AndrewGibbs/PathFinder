@@ -109,9 +109,8 @@
             self.coarseParam = p;
         end
         
-        function plot(self)
-            grayColor = [.7 .7 .7];
-            plot(self.coarsePath,'.:','Color',grayColor,'MarkerSize',4.5);
+        function plot(self,varargin)
+            plot(self.coarsePath, varargin{:});
         end
         
         function [Z, W] = getQuad(self,freq,Npts,quad_params)

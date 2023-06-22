@@ -23,6 +23,7 @@
 
 /* Function Declarations */
 real_T get_r_given_theta(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
-                         const creal_T xi, real_T C_over_omega, real_T theta);
+                         const creal_T xi, real_T C_over_omega, real_T theta,
+                         real_T imag_thresh);
 
 /* End of code generation (get_r_given_theta.h) */

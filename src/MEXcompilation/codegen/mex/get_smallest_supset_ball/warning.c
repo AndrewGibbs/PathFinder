@@ -30,7 +30,7 @@ static emlrtMCInfo b_emlrtMCI = {
     "warning.m" /* pName */
 };
 
-static emlrtRSInfo jd_emlrtRSI = {
+static emlrtRSInfo kd_emlrtRSI = {
     14,        /* lineNo */
     "warning", /* fcnName */
     "/home/andrew/matlab/toolbox/shared/coder/coder/lib/+coder/+internal/"
@@ -95,7 +95,7 @@ void b_warning(const emlrtStack *sp)
   m = emlrtCreateCharArray(2, &iv2[0]);
   emlrtInitCharArrayR2013a((emlrtCTX)sp, 26, m, &msgID[0]);
   emlrtAssign(&c_y, m);
-  st.site = &jd_emlrtRSI;
+  st.site = &kd_emlrtRSI;
   b_feval(&st, y, feval(&st, b_y, c_y, &emlrtMCI), &b_emlrtMCI);
 }
 
@@ -128,7 +128,7 @@ void c_warning(const emlrtStack *sp)
   m = emlrtCreateCharArray(2, &iv2[0]);
   emlrtInitCharArrayR2013a((emlrtCTX)sp, 24, m, &msgID[0]);
   emlrtAssign(&c_y, m);
-  st.site = &jd_emlrtRSI;
+  st.site = &kd_emlrtRSI;
   b_feval(&st, y, feval(&st, b_y, c_y, &emlrtMCI), &b_emlrtMCI);
 }
 
@@ -162,7 +162,7 @@ void warning(const emlrtStack *sp)
   m = emlrtCreateCharArray(2, &iv2[0]);
   emlrtInitCharArrayR2013a((emlrtCTX)sp, 38, m, &msgID[0]);
   emlrtAssign(&c_y, m);
-  st.site = &jd_emlrtRSI;
+  st.site = &kd_emlrtRSI;
   b_feval(&st, y, feval(&st, b_y, c_y, &emlrtMCI), &b_emlrtMCI);
 }
 

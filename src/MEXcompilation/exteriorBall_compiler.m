@@ -10,5 +10,6 @@ order_type = coder.typeof(uint32(1));
 C_type = coder.typeof(1.0);
 num_rays_type = coder.typeof(uint32(1));
 int_ext_yn_type = coder.typeof(true);
+imag_thresh_type = coder.typeof(1.0);
 
-codegen get_smallest_supset_ball -args {g_coeffs_type, freq_type, SP_type, C_type, num_rays_type, int_ext_yn_type}
+codegen get_smallest_supset_ball -args {g_coeffs_type, freq_type, SP_type, C_type, num_rays_type, int_ext_yn_type, imag_thresh_type}
