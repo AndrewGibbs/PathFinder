@@ -14,8 +14,9 @@ function options = optionalExtras(freq,order,varargin)
         'contourStartThresh',1e-16,'num_rays',uint32(16),...
         'global_step_size',0.1,'max_number_of_ODE_steps',50000,...
         'inf_quad_rule','laguerre',...
-        'NewtonThresh',min(1e-4/freq,1e-10),'NewtonBigThresh',1e-2,'NewtonIts',50,...
-        'ball_clump_thresh',0.001/(2*max(order-2,1)), 'finitePathTruncL',10.0, 'interior_balls', true);
+        'NewtonThresh',10^(-12),'NewtonBigThresh',1e-2,'NewtonIts',50,...
+        'ball_clump_thresh',0.001/(2*max(order-2,1)), 'finitePathTruncL',10.0,...
+        'interior_balls', true,'imag_thresh', 1e-8);
     options.log.take = false;
     options.log.Newton_its = 0;
     
@@ -69,6 +70,8 @@ function options = optionalExtras(freq,order,varargin)
                    options.interior_balls = varargin{n+1};
                case 'plot graph'
                    options.plot_graph = true;
+               case 'imag thresh'
+                   options.imag_thresh = varargin{n+1};
            end
         end
     end
