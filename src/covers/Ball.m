@@ -23,7 +23,7 @@ classdef Ball < ComplexCover
                 if nargin>2
                     %self.steepestExits = self.getSteepestExits(@(x) polyval(g_coeffs,x)); % used
                     %to be polyval g, now it's just coeffs
-                    self.steepestExits = get_stepest_exits_on_ball_mex(g_coeffs.',c,r).';
+                    self.steepestExits = unique(get_stepest_exits_on_ball_mex(g_coeffs.',c,r).');
                 end
             else
                 self.steepestExits = c;
