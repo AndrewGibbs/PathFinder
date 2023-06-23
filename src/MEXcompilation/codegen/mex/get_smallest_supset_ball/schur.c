@@ -22,50 +22,50 @@
 #include <stddef.h>
 
 /* Variable Definitions */
-static emlrtRSInfo yb_emlrtRSI = {
+static emlrtRSInfo bc_emlrtRSI = {
     35,                                                         /* lineNo */
     "schur",                                                    /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/matfun/schur.m" /* pathName */
 };
 
-static emlrtRSInfo ac_emlrtRSI = {
+static emlrtRSInfo cc_emlrtRSI = {
     43,                                                         /* lineNo */
     "schur",                                                    /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/matfun/schur.m" /* pathName */
 };
 
-static emlrtRSInfo bc_emlrtRSI = {
+static emlrtRSInfo dc_emlrtRSI = {
     60,                                                         /* lineNo */
     "schur",                                                    /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/matfun/schur.m" /* pathName */
 };
 
-static emlrtRSInfo cc_emlrtRSI = {
+static emlrtRSInfo ec_emlrtRSI = {
     61,                                                         /* lineNo */
     "schur",                                                    /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/matfun/schur.m" /* pathName */
 };
 
-static emlrtRSInfo dc_emlrtRSI = {
+static emlrtRSInfo fc_emlrtRSI = {
     83,                                                         /* lineNo */
     "schur",                                                    /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/matfun/schur.m" /* pathName */
 };
 
-static emlrtRSInfo ec_emlrtRSI = {
+static emlrtRSInfo gc_emlrtRSI = {
     48,                                                       /* lineNo */
     "triu",                                                   /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/elmat/triu.m" /* pathName */
 };
 
-static emlrtRSInfo fc_emlrtRSI = {
+static emlrtRSInfo hc_emlrtRSI = {
     47,                                                       /* lineNo */
     "triu",                                                   /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/elmat/triu.m" /* pathName */
 };
 
 static emlrtRSInfo
-    gc_emlrtRSI =
+    ic_emlrtRSI =
         {
             15,       /* lineNo */
             "xgehrd", /* fcnName */
@@ -74,7 +74,7 @@ static emlrtRSInfo
 };
 
 static emlrtRSInfo
-    hc_emlrtRSI =
+    jc_emlrtRSI =
         {
             85,             /* lineNo */
             "ceval_xgehrd", /* fcnName */
@@ -83,7 +83,7 @@ static emlrtRSInfo
 };
 
 static emlrtRSInfo
-    ic_emlrtRSI =
+    kc_emlrtRSI =
         {
             28,       /* lineNo */
             "xhseqr", /* fcnName */
@@ -92,7 +92,7 @@ static emlrtRSInfo
 };
 
 static emlrtRSInfo
-    jc_emlrtRSI =
+    lc_emlrtRSI =
         {
             128,            /* lineNo */
             "ceval_xhseqr", /* fcnName */
@@ -108,7 +108,7 @@ static emlrtRTEInfo p_emlrtRTEI = {
 };
 
 static emlrtRTEInfo
-    sb_emlrtRTEI =
+    xb_emlrtRTEI =
         {
             76,       /* lineNo */
             22,       /* colNo */
@@ -117,7 +117,7 @@ static emlrtRTEInfo
             "xgehrd.m" /* pName */
 };
 
-static emlrtRTEInfo tb_emlrtRTEI = {
+static emlrtRTEInfo yb_emlrtRTEI = {
     42,                                                         /* lineNo */
     9,                                                          /* colNo */
     "schur",                                                    /* fName */
@@ -125,7 +125,7 @@ static emlrtRTEInfo tb_emlrtRTEI = {
 };
 
 static emlrtRTEInfo
-    ub_emlrtRTEI =
+    ac_emlrtRTEI =
         {
             86,       /* lineNo */
             9,        /* colNo */
@@ -135,7 +135,7 @@ static emlrtRTEInfo
 };
 
 static emlrtRTEInfo
-    vb_emlrtRTEI =
+    bc_emlrtRTEI =
         {
             101,      /* lineNo */
             28,       /* colNo */
@@ -145,7 +145,7 @@ static emlrtRTEInfo
 };
 
 static emlrtRTEInfo
-    wb_emlrtRTEI =
+    cc_emlrtRTEI =
         {
             129,      /* lineNo */
             9,        /* colNo */
@@ -154,7 +154,7 @@ static emlrtRTEInfo
             "xhseqr.m" /* pName */
 };
 
-static emlrtRTEInfo xb_emlrtRTEI = {
+static emlrtRTEInfo dc_emlrtRTEI = {
     1,                                                          /* lineNo */
     18,                                                         /* colNo */
     "schur",                                                    /* fName */
@@ -162,7 +162,7 @@ static emlrtRTEInfo xb_emlrtRTEI = {
 };
 
 static emlrtRTEInfo
-    yb_emlrtRTEI =
+    ec_emlrtRTEI =
         {
             101,      /* lineNo */
             9,        /* colNo */
@@ -206,14 +206,14 @@ void schur(const emlrtStack *sp, emxArray_creal_T *A)
     emlrtErrorWithMessageIdR2018a(sp, &p_emlrtRTEI, "Coder:MATLAB:square",
                                   "Coder:MATLAB:square", 0);
   }
-  st.site = &yb_emlrtRSI;
+  st.site = &bc_emlrtRSI;
   if (b_anyNonFinite(&st, A)) {
     m = A->size[0];
     istart = A->size[1];
     j = A->size[0] * A->size[1];
     A->size[0] = m;
     A->size[1] = istart;
-    emxEnsureCapacity_creal_T(sp, A, j, &tb_emlrtRTEI);
+    emxEnsureCapacity_creal_T(sp, A, j, &yb_emlrtRTEI);
     A_data = A->data;
     for (j = 0; j < istart; j++) {
       for (i = 0; i < m; i++) {
@@ -221,7 +221,7 @@ void schur(const emlrtStack *sp, emxArray_creal_T *A)
         A_data[i + A->size[0] * j].im = 0.0;
       }
     }
-    st.site = &ac_emlrtRSI;
+    st.site = &cc_emlrtRSI;
     m = A->size[0];
     if (1 < A->size[0]) {
       istart = 2;
@@ -230,15 +230,15 @@ void schur(const emlrtStack *sp, emxArray_creal_T *A)
       } else {
         jend = A->size[1];
       }
-      b_st.site = &fc_emlrtRSI;
+      b_st.site = &hc_emlrtRSI;
       if ((1 <= jend) && (jend > 2147483646)) {
-        c_st.site = &e_emlrtRSI;
+        c_st.site = &f_emlrtRSI;
         b_check_forloop_overflow_error(&c_st);
       }
       for (j = 0; j < jend; j++) {
-        b_st.site = &ec_emlrtRSI;
+        b_st.site = &gc_emlrtRSI;
         if ((istart <= m) && (m > 2147483646)) {
-          c_st.site = &e_emlrtRSI;
+          c_st.site = &f_emlrtRSI;
           b_check_forloop_overflow_error(&c_st);
         }
         for (i = istart; i <= m; i++) {
@@ -249,12 +249,12 @@ void schur(const emlrtStack *sp, emxArray_creal_T *A)
       }
     }
   } else {
-    emxInit_creal_T(sp, &tau, 1, &xb_emlrtRTEI);
-    st.site = &bc_emlrtRSI;
-    b_st.site = &gc_emlrtRSI;
+    emxInit_creal_T(sp, &tau, 1, &dc_emlrtRTEI);
+    st.site = &dc_emlrtRSI;
+    b_st.site = &ic_emlrtRSI;
     j = tau->size[0];
     tau->size[0] = A->size[0] - 1;
-    emxEnsureCapacity_creal_T(&b_st, tau, j, &sb_emlrtRTEI);
+    emxEnsureCapacity_creal_T(&b_st, tau, j, &xb_emlrtRTEI);
     w_data = tau->data;
     if (A->size[0] > 1) {
       info_t = LAPACKE_zgehrd(
@@ -262,7 +262,7 @@ void schur(const emlrtStack *sp, emxArray_creal_T *A)
           (lapack_complex_double *)&A_data[0], (ptrdiff_t)A->size[0],
           (lapack_complex_double *)&w_data[0]);
       m = (int32_T)info_t;
-      c_st.site = &hc_emlrtRSI;
+      c_st.site = &jc_emlrtRSI;
       if (m != 0) {
         p = true;
         if (m != -5) {
@@ -285,7 +285,7 @@ void schur(const emlrtStack *sp, emxArray_creal_T *A)
         j = A->size[0] * A->size[1];
         A->size[0] = istart;
         A->size[1] = jend;
-        emxEnsureCapacity_creal_T(&b_st, A, j, &ub_emlrtRTEI);
+        emxEnsureCapacity_creal_T(&b_st, A, j, &ac_emlrtRTEI);
         A_data = A->data;
         for (j = 0; j < jend; j++) {
           for (i = 0; i < istart; i++) {
@@ -296,16 +296,16 @@ void schur(const emlrtStack *sp, emxArray_creal_T *A)
       }
     }
     emxFree_creal_T(&b_st, &tau);
-    emxInit_creal_T(&b_st, &w, 2, &yb_emlrtRTEI);
-    st.site = &cc_emlrtRSI;
-    b_st.site = &ic_emlrtRSI;
+    emxInit_creal_T(&b_st, &w, 2, &ec_emlrtRTEI);
+    st.site = &ec_emlrtRSI;
+    b_st.site = &kc_emlrtRSI;
     z.re = 0.0;
     z.im = 0.0;
     info_t = (ptrdiff_t)A->size[0];
     j = w->size[0] * w->size[1];
     w->size[0] = 1;
     w->size[1] = A->size[0];
-    emxEnsureCapacity_creal_T(&b_st, w, j, &vb_emlrtRTEI);
+    emxEnsureCapacity_creal_T(&b_st, w, j, &bc_emlrtRTEI);
     w_data = w->data;
     info_t = LAPACKE_zhseqr(102, 'S', 'N', info_t, (ptrdiff_t)1,
                             (ptrdiff_t)A->size[0],
@@ -313,7 +313,7 @@ void schur(const emlrtStack *sp, emxArray_creal_T *A)
                             (lapack_complex_double *)&w_data[0],
                             (lapack_complex_double *)&z, (ptrdiff_t)A->size[0]);
     m = (int32_T)info_t;
-    c_st.site = &jc_emlrtRSI;
+    c_st.site = &lc_emlrtRSI;
     emxFree_creal_T(&c_st, &w);
     if (m < 0) {
       p = true;
@@ -343,7 +343,7 @@ void schur(const emlrtStack *sp, emxArray_creal_T *A)
       j = A->size[0] * A->size[1];
       A->size[0] = istart;
       A->size[1] = jend;
-      emxEnsureCapacity_creal_T(&b_st, A, j, &wb_emlrtRTEI);
+      emxEnsureCapacity_creal_T(&b_st, A, j, &cc_emlrtRTEI);
       A_data = A->data;
       for (j = 0; j < jend; j++) {
         for (i = 0; i < istart; i++) {
@@ -353,7 +353,7 @@ void schur(const emlrtStack *sp, emxArray_creal_T *A)
       }
     }
     if (m != 0) {
-      st.site = &dc_emlrtRSI;
+      st.site = &fc_emlrtRSI;
       b_warning(&st);
     }
   }
