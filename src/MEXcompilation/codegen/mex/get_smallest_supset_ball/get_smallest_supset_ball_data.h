@@ -24,18 +24,25 @@
 extern emlrtCTX emlrtRootTLSGlobal;
 extern const volatile char_T *emlrtBreakCheckR2012bFlagVar;
 extern emlrtContext emlrtContextGlobal;
-extern emlrtRSInfo e_emlrtRSI;
-extern emlrtRSInfo vc_emlrtRSI;
-extern emlrtRSInfo wc_emlrtRSI;
-extern emlrtRSInfo xc_emlrtRSI;
-extern emlrtRSInfo yc_emlrtRSI;
-extern emlrtRSInfo ad_emlrtRSI;
-extern emlrtRSInfo bd_emlrtRSI;
-extern emlrtRSInfo cd_emlrtRSI;
-extern emlrtRSInfo dd_emlrtRSI;
-extern emlrtRSInfo ed_emlrtRSI;
+extern emlrtRSInfo f_emlrtRSI;
+extern emlrtRSInfo be_emlrtRSI;
+extern emlrtRSInfo ce_emlrtRSI;
+extern emlrtRSInfo de_emlrtRSI;
+extern emlrtRSInfo ee_emlrtRSI;
+extern emlrtRSInfo fe_emlrtRSI;
+extern emlrtRSInfo ge_emlrtRSI;
+extern emlrtRSInfo he_emlrtRSI;
+extern emlrtRSInfo ie_emlrtRSI;
+extern emlrtRSInfo je_emlrtRSI;
+extern emlrtRSInfo se_emlrtRSI;
+extern emlrtRSInfo te_emlrtRSI;
+extern emlrtRSInfo ue_emlrtRSI;
+extern emlrtRSInfo ve_emlrtRSI;
+extern emlrtRSInfo we_emlrtRSI;
+extern emlrtMCInfo c_emlrtMCI;
 extern emlrtRTEInfo emlrtRTEI;
 extern emlrtRTEInfo f_emlrtRTEI;
 extern emlrtRTEInfo g_emlrtRTEI;
+extern emlrtRSInfo ye_emlrtRSI;
 
 /* End of code generation (get_smallest_supset_ball_data.h) */

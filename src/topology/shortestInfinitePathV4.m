@@ -8,7 +8,7 @@ function [Q, graph_data] = shortestInfinitePathV4(a,b,contours, covers, valleys,
     CPs_adj_mat = eye(length(covers));
     num_CPs = length(covers);
     CPs = zeros(1,num_CPs);
-    num_valleys = length(valleys);
+    num_valleys = length(valleys);  
 
     for n = 1:num_CPs
         CPs(n) = covers{n}.centre;
