@@ -18,7 +18,7 @@
 #include "rt_nonfinite.h"
 
 /* Variable Definitions */
-static emlrtRTEInfo rb_emlrtRTEI = {
+static emlrtRTEInfo wb_emlrtRTEI = {
     1,                                     /* lineNo */
     1,                                     /* colNo */
     "_coder_get_smallest_supset_ball_api", /* fName */
@@ -281,7 +281,7 @@ void get_smallest_supset_ball_api(const mxArray *const prhs[7],
   boolean_T take_max;
   st.tls = emlrtRootTLSGlobal;
   emlrtHeapReferenceStackEnterFcnR2012b(&st);
-  emxInit_creal_T(&st, &g_coeffs, 1, &rb_emlrtRTEI);
+  emxInit_creal_T(&st, &g_coeffs, 1, &wb_emlrtRTEI);
   /* Marshall function inputs */
   emlrt_marshallIn(&st, emlrtAliasP(prhs[0]), "g_coeffs", g_coeffs);
   freq = c_emlrt_marshallIn(&st, emlrtAliasP(prhs[1]), "freq");

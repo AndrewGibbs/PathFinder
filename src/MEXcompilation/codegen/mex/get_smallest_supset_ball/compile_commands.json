@@ -79,6 +79,12 @@
   },
   {
     "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/get_smallest_supset_ball",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=get_smallest_supset_ball_mex -c  plan_b_isection.c -o build/glnxa64/plan_b_isection.o",
+    "file": "plan_b_isection.c",
+    "output": "build/glnxa64/plan_b_isection.o"
+  },
+  {
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/get_smallest_supset_ball",
     "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=get_smallest_supset_ball_mex -c  interface/_coder_get_smallest_supset_ball_api.c -o build/glnxa64/_coder_get_smallest_supset_ball_api.o",
     "file": "interface/_coder_get_smallest_supset_ball_api.c",
     "output": "build/glnxa64/_coder_get_smallest_supset_ball_api.o"
@@ -109,9 +115,27 @@
   },
   {
     "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/get_smallest_supset_ball",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=get_smallest_supset_ball_mex -c  sort.c -o build/glnxa64/sort.o",
+    "file": "sort.c",
+    "output": "build/glnxa64/sort.o"
+  },
+  {
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/get_smallest_supset_ball",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=get_smallest_supset_ball_mex -c  sortIdx.c -o build/glnxa64/sortIdx.o",
+    "file": "sortIdx.c",
+    "output": "build/glnxa64/sortIdx.o"
+  },
+  {
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/get_smallest_supset_ball",
     "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=get_smallest_supset_ball_mex -c  get_smallest_supset_ball_emxutil.c -o build/glnxa64/get_smallest_supset_ball_emxutil.o",
     "file": "get_smallest_supset_ball_emxutil.c",
     "output": "build/glnxa64/get_smallest_supset_ball_emxutil.o"
+  },
+  {
+    "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/get_smallest_supset_ball",
+    "command": "/usr/bin/gcc -fexceptions -fPIC -fno-omit-frame-pointer -pthread -D_GNU_SOURCE -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -std=c99 -I \".\" -I \"/home/andrew/OneDrive/PathFinder/src/MEXcompilation\" -I \"./interface\" -I \"/home/andrew/matlab/extern/include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=get_smallest_supset_ball_mex -c  get_smallest_supset_ball_mexutil.c -o build/glnxa64/get_smallest_supset_ball_mexutil.o",
+    "file": "get_smallest_supset_ball_mexutil.c",
+    "output": "build/glnxa64/get_smallest_supset_ball_mexutil.o"
   },
   {
     "directory": "/home/andrew/OneDrive/PathFinder/src/MEXcompilation/codegen/mex/get_smallest_supset_ball",

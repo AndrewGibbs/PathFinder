@@ -1,6 +1,6 @@
 function [r] = get_r_given_theta(g_coeffs,xi,C_over_omega,theta,imag_thresh)
 %given a ray from \xi, in direction theta, find r at which the ray
-%intersects the boundary of the blob |g(\xi)-g(\xi+r*exp(i*theta)|=C
+%intersects the boundary of the blob |g(\xi)-g(\xi+r*exp(i*theta)|=C/omega
 
     % set the function g. I could just pass it, but not sure how MEX feels
     % about that.
@@ -31,15 +31,20 @@ function [r] = get_r_given_theta(g_coeffs,xi,C_over_omega,theta,imag_thresh)
     %% filter out the roots we care about
     r_roots = roots(flip(coeffs));
 
+    %remove the roots with negative real bits       
+    roots_with_positive_real_part = r_roots(real(r_roots)>0);
+
     % remove the roots with significant imaginary bits
-    r_roots = r_roots(abs(imag(r_roots))<imag_thresh);
+    real_and_positive_roots = roots_with_positive_real_part(abs(imag(roots_with_positive_real_part))<imag_thresh);
 
-    %remove the roots with negative real bits
-    r_roots = r_roots(real(r_roots)>0);
-
-    if isempty(r_roots)
-        error("No suitable radii found - try increasing 'imag thresh' parameter above its current value (default is 1e-8)")
+    if isempty(real_and_positive_roots)
+%         print("Warning - no suitable radii found with current 'imag thresh' parameter (default is 1e-8), attempting a bisection")
+    
+        guesses = real(sort(real(roots_with_positive_real_part)));
+        % no obvious canditates for roots.
+        r = plan_b_isection(g_coeffs, xi, C_over_omega, theta, guesses);
+    else
+        %take the smallest value
+        r = min(real(real_and_positive_roots));
     end
-    %take the smallest value
-    r = min(real(r_roots));
 end
