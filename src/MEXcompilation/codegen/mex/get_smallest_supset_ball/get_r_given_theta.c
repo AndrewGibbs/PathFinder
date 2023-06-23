@@ -19,93 +19,102 @@
 #include "get_smallest_supset_ball_types.h"
 #include "mpower.h"
 #include "nchoosek.h"
+#include "plan_b_isection.h"
 #include "roots.h"
 #include "rt_nonfinite.h"
+#include "sort.h"
 #include "mwmathutil.h"
 
 /* Variable Definitions */
-static emlrtRSInfo f_emlrtRSI = {
+static emlrtRSInfo g_emlrtRSI = {
     19,                  /* lineNo */
     "get_r_given_theta", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
                                                                             */
 };
 
-static emlrtRSInfo g_emlrtRSI = {
+static emlrtRSInfo h_emlrtRSI = {
     22,                  /* lineNo */
     "get_r_given_theta", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
                                                                             */
 };
 
-static emlrtRSInfo h_emlrtRSI = {
+static emlrtRSInfo i_emlrtRSI = {
     23,                  /* lineNo */
     "get_r_given_theta", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
                                                                             */
 };
 
-static emlrtRSInfo i_emlrtRSI = {
+static emlrtRSInfo j_emlrtRSI = {
     28,                  /* lineNo */
     "get_r_given_theta", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
                                                                             */
 };
 
-static emlrtRSInfo j_emlrtRSI = {
+static emlrtRSInfo k_emlrtRSI = {
     29,                  /* lineNo */
     "get_r_given_theta", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
                                                                             */
 };
 
-static emlrtRSInfo k_emlrtRSI = {
+static emlrtRSInfo l_emlrtRSI = {
     32,                  /* lineNo */
     "get_r_given_theta", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
                                                                             */
 };
 
-static emlrtRSInfo l_emlrtRSI = {
-    35,                  /* lineNo */
-    "get_r_given_theta", /* fcnName */
-    "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
-                                                                            */
-};
-
 static emlrtRSInfo m_emlrtRSI = {
-    41,                  /* lineNo */
+    38,                  /* lineNo */
     "get_r_given_theta", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
                                                                             */
 };
 
 static emlrtRSInfo n_emlrtRSI = {
-    44,                  /* lineNo */
+    43,                  /* lineNo */
     "get_r_given_theta", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
                                                                             */
 };
 
-static emlrtRSInfo hb_emlrtRSI = {
+static emlrtRSInfo o_emlrtRSI = {
+    45,                  /* lineNo */
+    "get_r_given_theta", /* fcnName */
+    "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
+                                                                            */
+};
+
+static emlrtRSInfo p_emlrtRSI = {
+    48,                  /* lineNo */
+    "get_r_given_theta", /* fcnName */
+    "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pathName
+                                                                            */
+};
+
+static emlrtRSInfo jb_emlrtRSI = {
     44,                                                          /* lineNo */
     "mpower",                                                    /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/matfun/mpower.m" /* pathName */
 };
 
-static emlrtRSInfo ib_emlrtRSI = {
+static emlrtRSInfo kb_emlrtRSI = {
     71,                                                      /* lineNo */
     "power",                                                 /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/ops/power.m" /* pathName */
 };
 
-static emlrtRSInfo tc_emlrtRSI = {
+static emlrtRSInfo vc_emlrtRSI = {
     18,                                                      /* lineNo */
     "abs",                                                   /* fcnName */
     "/home/andrew/matlab/toolbox/eml/lib/matlab/elfun/abs.m" /* pathName */
 };
 
-static emlrtRSInfo uc_emlrtRSI =
+static emlrtRSInfo wc_emlrtRSI =
     {
         74,                    /* lineNo */
         "applyScalarFunction", /* fcnName */
@@ -113,50 +122,21 @@ static emlrtRSInfo uc_emlrtRSI =
         "applyScalarFunction.m" /* pathName */
 };
 
-static emlrtMCInfo c_emlrtMCI = {
-    27,                                                       /* lineNo */
-    5,                                                        /* colNo */
-    "error",                                                  /* fName */
-    "/home/andrew/matlab/toolbox/eml/lib/matlab/lang/error.m" /* pName */
-};
-
-static emlrtBCInfo
-    b_emlrtBCI =
-        {
-            -1,                  /* iFirst */
-            -1,                  /* iLast */
-            29,                  /* lineNo */
-            12,                  /* colNo */
-            "coeffs",            /* aName */
-            "get_r_given_theta", /* fName */
-            "/home/andrew/OneDrive/PathFinder/src/rootFinding/"
-            "get_r_given_theta.m", /* pName */
-            0                      /* checkKind */
-};
-
-static emlrtBCInfo
-    c_emlrtBCI =
-        {
-            -1,                  /* iFirst */
-            -1,                  /* iLast */
-            23,                  /* lineNo */
-            40,                  /* colNo */
-            "d",                 /* aName */
-            "get_r_given_theta", /* fName */
-            "/home/andrew/OneDrive/PathFinder/src/rootFinding/"
-            "get_r_given_theta.m", /* pName */
-            0                      /* checkKind */
+static emlrtRSInfo xc_emlrtRSI = {
+    32,                                                         /* lineNo */
+    "sort",                                                     /* fcnName */
+    "/home/andrew/matlab/toolbox/eml/lib/matlab/datafun/sort.m" /* pathName */
 };
 
 static emlrtBCInfo
     d_emlrtBCI =
         {
-            -1,                  /* iFirst */
-            -1,                  /* iLast */
-            18,                  /* lineNo */
-            8,                   /* colNo */
-            "a_",                /* aName */
-            "get_r_given_theta", /* fName */
+            -1,                              /* iFirst */
+            -1,                              /* iLast */
+            38,                              /* lineNo */
+            61,                              /* colNo */
+            "roots_with_positive_real_part", /* aName */
+            "get_r_given_theta",             /* fName */
             "/home/andrew/OneDrive/PathFinder/src/rootFinding/"
             "get_r_given_theta.m", /* pName */
             0                      /* checkKind */
@@ -167,9 +147,9 @@ static emlrtBCInfo
         {
             -1,                  /* iFirst */
             -1,                  /* iLast */
-            22,                  /* lineNo */
-            33,                  /* colNo */
-            "d",                 /* aName */
+            35,                  /* lineNo */
+            45,                  /* colNo */
+            "r_roots",           /* aName */
             "get_r_given_theta", /* fName */
             "/home/andrew/OneDrive/PathFinder/src/rootFinding/"
             "get_r_given_theta.m", /* pName */
@@ -178,62 +158,6 @@ static emlrtBCInfo
 
 static emlrtBCInfo
     f_emlrtBCI =
-        {
-            -1,                  /* iFirst */
-            -1,                  /* iLast */
-            17,                  /* lineNo */
-            7,                   /* colNo */
-            "a",                 /* aName */
-            "get_r_given_theta", /* fName */
-            "/home/andrew/OneDrive/PathFinder/src/rootFinding/"
-            "get_r_given_theta.m", /* pName */
-            0                      /* checkKind */
-};
-
-static emlrtBCInfo
-    g_emlrtBCI =
-        {
-            -1,                  /* iFirst */
-            -1,                  /* iLast */
-            22,                  /* lineNo */
-            24,                  /* colNo */
-            "a",                 /* aName */
-            "get_r_given_theta", /* fName */
-            "/home/andrew/OneDrive/PathFinder/src/rootFinding/"
-            "get_r_given_theta.m", /* pName */
-            0                      /* checkKind */
-};
-
-static emlrtBCInfo
-    h_emlrtBCI =
-        {
-            -1,                  /* iFirst */
-            -1,                  /* iLast */
-            22,                  /* lineNo */
-            15,                  /* colNo */
-            "a",                 /* aName */
-            "get_r_given_theta", /* fName */
-            "/home/andrew/OneDrive/PathFinder/src/rootFinding/"
-            "get_r_given_theta.m", /* pName */
-            0                      /* checkKind */
-};
-
-static emlrtBCInfo
-    i_emlrtBCI =
-        {
-            -1,                  /* iFirst */
-            -1,                  /* iLast */
-            23,                  /* lineNo */
-            26,                  /* colNo */
-            "a_",                /* aName */
-            "get_r_given_theta", /* fName */
-            "/home/andrew/OneDrive/PathFinder/src/rootFinding/"
-            "get_r_given_theta.m", /* pName */
-            0                      /* checkKind */
-};
-
-static emlrtBCInfo
-    j_emlrtBCI =
         {
             -1,                  /* iFirst */
             -1,                  /* iLast */
@@ -247,13 +171,69 @@ static emlrtBCInfo
 };
 
 static emlrtBCInfo
+    g_emlrtBCI =
+        {
+            -1,                  /* iFirst */
+            -1,                  /* iLast */
+            22,                  /* lineNo */
+            15,                  /* colNo */
+            "a",                 /* aName */
+            "get_r_given_theta", /* fName */
+            "/home/andrew/OneDrive/PathFinder/src/rootFinding/"
+            "get_r_given_theta.m", /* pName */
+            0                      /* checkKind */
+};
+
+static emlrtBCInfo
+    h_emlrtBCI =
+        {
+            -1,                  /* iFirst */
+            -1,                  /* iLast */
+            17,                  /* lineNo */
+            7,                   /* colNo */
+            "a",                 /* aName */
+            "get_r_given_theta", /* fName */
+            "/home/andrew/OneDrive/PathFinder/src/rootFinding/"
+            "get_r_given_theta.m", /* pName */
+            0                      /* checkKind */
+};
+
+static emlrtBCInfo
+    i_emlrtBCI =
+        {
+            -1,                  /* iFirst */
+            -1,                  /* iLast */
+            22,                  /* lineNo */
+            33,                  /* colNo */
+            "d",                 /* aName */
+            "get_r_given_theta", /* fName */
+            "/home/andrew/OneDrive/PathFinder/src/rootFinding/"
+            "get_r_given_theta.m", /* pName */
+            0                      /* checkKind */
+};
+
+static emlrtBCInfo
+    j_emlrtBCI =
+        {
+            -1,                  /* iFirst */
+            -1,                  /* iLast */
+            18,                  /* lineNo */
+            8,                   /* colNo */
+            "a_",                /* aName */
+            "get_r_given_theta", /* fName */
+            "/home/andrew/OneDrive/PathFinder/src/rootFinding/"
+            "get_r_given_theta.m", /* pName */
+            0                      /* checkKind */
+};
+
+static emlrtBCInfo
     k_emlrtBCI =
         {
             -1,                  /* iFirst */
             -1,                  /* iLast */
-            35,                  /* lineNo */
-            23,                  /* colNo */
-            "r_roots",           /* aName */
+            23,                  /* lineNo */
+            40,                  /* colNo */
+            "d",                 /* aName */
             "get_r_given_theta", /* fName */
             "/home/andrew/OneDrive/PathFinder/src/rootFinding/"
             "get_r_given_theta.m", /* pName */
@@ -265,9 +245,9 @@ static emlrtBCInfo
         {
             -1,                  /* iFirst */
             -1,                  /* iLast */
-            38,                  /* lineNo */
-            23,                  /* colNo */
-            "r_roots",           /* aName */
+            29,                  /* lineNo */
+            12,                  /* colNo */
+            "coeffs",            /* aName */
             "get_r_given_theta", /* fName */
             "/home/andrew/OneDrive/PathFinder/src/rootFinding/"
             "get_r_given_theta.m", /* pName */
@@ -299,14 +279,22 @@ static emlrtRTEInfo u_emlrtRTEI = {
 };
 
 static emlrtRTEInfo v_emlrtRTEI = {
-    35,                  /* lineNo */
-    27,                  /* colNo */
+    1,                   /* lineNo */
+    16,                  /* colNo */
     "get_r_given_theta", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pName
                                                                             */
 };
 
-static emlrtRTEInfo w_emlrtRTEI =
+static emlrtRTEInfo w_emlrtRTEI = {
+    38,                  /* lineNo */
+    65,                  /* colNo */
+    "get_r_given_theta", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pName
+                                                                            */
+};
+
+static emlrtRTEInfo x_emlrtRTEI =
     {
         30,                    /* lineNo */
         21,                    /* colNo */
@@ -315,31 +303,31 @@ static emlrtRTEInfo w_emlrtRTEI =
         "applyScalarFunction.m" /* pName */
 };
 
-static emlrtRTEInfo x_emlrtRTEI = {
-    35,                  /* lineNo */
-    23,                  /* colNo */
-    "get_r_given_theta", /* fName */
-    "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pName
-                                                                            */
-};
-
 static emlrtRTEInfo y_emlrtRTEI = {
-    1,                   /* lineNo */
-    16,                  /* colNo */
+    38,                  /* lineNo */
+    61,                  /* colNo */
     "get_r_given_theta", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pName
                                                                             */
 };
 
 static emlrtRTEInfo ab_emlrtRTEI = {
-    44,                  /* lineNo */
-    13,                  /* colNo */
+    48,                  /* lineNo */
+    17,                  /* colNo */
     "get_r_given_theta", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pName
                                                                             */
 };
 
 static emlrtRTEInfo bb_emlrtRTEI = {
+    43,                  /* lineNo */
+    9,                   /* colNo */
+    "get_r_given_theta", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pName
+                                                                            */
+};
+
+static emlrtRTEInfo cb_emlrtRTEI = {
     28,                  /* lineNo */
     5,                   /* colNo */
     "get_r_given_theta", /* fName */
@@ -347,40 +335,27 @@ static emlrtRTEInfo bb_emlrtRTEI = {
                                                                             */
 };
 
-static emlrtRSInfo ld_emlrtRSI = {
-    27,                                                       /* lineNo */
-    "error",                                                  /* fcnName */
-    "/home/andrew/matlab/toolbox/eml/lib/matlab/lang/error.m" /* pathName */
+static emlrtRTEInfo db_emlrtRTEI = {
+    35,                  /* lineNo */
+    5,                   /* colNo */
+    "get_r_given_theta", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pName
+                                                                            */
 };
 
-/* Function Declarations */
-static void b_error(const emlrtStack *sp, const mxArray *m,
-                    emlrtMCInfo *location);
+static emlrtRTEInfo eb_emlrtRTEI = {
+    38,                  /* lineNo */
+    5,                   /* colNo */
+    "get_r_given_theta", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/rootFinding/get_r_given_theta.m" /* pName
+                                                                            */
+};
 
 /* Function Definitions */
-static void b_error(const emlrtStack *sp, const mxArray *m,
-                    emlrtMCInfo *location)
-{
-  const mxArray *pArray;
-  pArray = m;
-  emlrtCallMATLABR2012b((emlrtCTX)sp, 0, NULL, 1, &pArray,
-                        (const char_T *)"error", true, location);
-}
-
 real_T get_r_given_theta(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
                          const creal_T xi, real_T C_over_omega, real_T theta,
                          real_T imag_thresh)
 {
-  static const int32_T iv[2] = {1, 106};
-  static const char_T u[106] = {
-      'N', 'o', ' ', 's', 'u', 'i', 't', 'a', 'b', 'l', 'e', ' ',  'r', 'a',
-      'd', 'i', 'i', ' ', 'f', 'o', 'u', 'n', 'd', ' ', '-', ' ',  't', 'r',
-      'y', ' ', 'i', 'n', 'c', 'r', 'e', 'a', 's', 'i', 'n', 'g',  ' ', '\'',
-      'i', 'm', 'a', 'g', ' ', 't', 'h', 'r', 'e', 's', 'h', '\'', ' ', 'p',
-      'a', 'r', 'a', 'm', 'e', 't', 'e', 'r', ' ', 'a', 'b', 'o',  'v', 'e',
-      ' ', 'i', 't', 's', ' ', 'c', 'u', 'r', 'r', 'e', 'n', 't',  ' ', 'v',
-      'a', 'l', 'u', 'e', ' ', '(', 'd', 'e', 'f', 'a', 'u', 'l',  't', ' ',
-      'i', 's', ' ', '1', 'e', '-', '8', ')'};
   emlrtStack b_st;
   emlrtStack c_st;
   emlrtStack d_st;
@@ -395,12 +370,10 @@ real_T get_r_given_theta(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
   emxArray_creal_T *a_;
   emxArray_creal_T *coeffs;
   emxArray_creal_T *d;
+  emxArray_creal_T *real_and_positive_roots;
+  emxArray_creal_T *roots_with_positive_real_part;
+  emxArray_real_T *guesses;
   emxArray_real_T *x;
-  emxArray_real_T *y;
-  const mxArray *b_y;
-  const mxArray *c_y;
-  const mxArray *m;
-  const mxArray *propValues;
   const creal_T *g_coeffs_data;
   creal_T dc;
   creal_T *a__data;
@@ -415,16 +388,13 @@ real_T get_r_given_theta(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
   real_T varargout_1_re_tmp;
   real_T xi_im;
   real_T xi_re;
+  real_T *guesses_data;
   real_T *x_data;
-  real_T *y_data;
   int32_T i;
   int32_T idx;
   int32_T k;
   int32_T nx;
-  int32_T trueCount;
   uint32_T j;
-  const char_T *propClasses = "coder.internal.string";
-  const char_T *propNames = "Value";
   boolean_T exitg1;
   boolean_T *r1;
   st.prev = sp;
@@ -449,7 +419,8 @@ real_T get_r_given_theta(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
   emlrtHeapReferenceStackEnterFcnR2012b((emlrtCTX)sp);
   emxInit_creal_T(sp, &a, 1, &s_emlrtRTEI);
   /* given a ray from \xi, in direction theta, find r at which the ray */
-  /* intersects the boundary of the blob |g(\xi)-g(\xi+r*exp(i*theta)|=C */
+  /* intersects the boundary of the blob |g(\xi)-g(\xi+r*exp(i*theta)|=C/omega
+   */
   /*  set the function g. I could just pass it, but not sure how MEX feels */
   /*  about that. */
   /*  pre-allocate stuff */
@@ -477,7 +448,7 @@ real_T get_r_given_theta(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
   /*  remember that the indexing of the polynomial coefficients is the */
   /*  opposite in my notes as in Matlab */
   if (1 > a->size[0]) {
-    emlrtDynamicBoundsCheckR2012b(1, 1, a->size[0], &f_emlrtBCI, (emlrtCTX)sp);
+    emlrtDynamicBoundsCheckR2012b(1, 1, a->size[0], &h_emlrtBCI, (emlrtCTX)sp);
   }
   if (g_coeffs->size[0] != 0) {
     varargout_1_re = g_coeffs_data[0].re;
@@ -493,7 +464,7 @@ real_T get_r_given_theta(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
   a_data[0].re = -varargout_1_re;
   a_data[0].im = -varargout_1_im;
   if (1 > a_->size[0]) {
-    emlrtDynamicBoundsCheckR2012b(1, 1, a_->size[0], &d_emlrtBCI, (emlrtCTX)sp);
+    emlrtDynamicBoundsCheckR2012b(1, 1, a_->size[0], &j_emlrtBCI, (emlrtCTX)sp);
   }
   if (g_coeffs->size[0] != 0) {
     varargout_1_re = g_coeffs_data[0].re;
@@ -517,7 +488,7 @@ real_T get_r_given_theta(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
   for (i = 0; i < nx; i++) {
     d_data[i] = g_coeffs_data[i];
   }
-  st.site = &f_emlrtRSI;
+  st.site = &g_emlrtRSI;
   flip(d);
   d_data = d->data;
   i = g_coeffs->size[0];
@@ -528,9 +499,9 @@ real_T get_r_given_theta(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
       if (((int32_T)((real_T)j + 1.0) < 1) ||
           ((int32_T)((real_T)j + 1.0) > d->size[0])) {
         emlrtDynamicBoundsCheckR2012b((int32_T)((real_T)j + 1.0), 1, d->size[0],
-                                      &e_emlrtBCI, (emlrtCTX)sp);
+                                      &i_emlrtBCI, (emlrtCTX)sp);
       }
-      st.site = &g_emlrtRSI;
+      st.site = &h_emlrtRSI;
       xi_im = nchoosek(&st, j, k);
       varargout_1_re_tmp = theta * 0.0;
       varargout_1_im = theta * (real_T)k;
@@ -550,7 +521,7 @@ real_T get_r_given_theta(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
       xi_re = d_re * dc.re - xi_im * dc.im;
       xi_im = d_re * dc.im + xi_im * dc.re;
       if (k + 1 > a->size[0]) {
-        emlrtDynamicBoundsCheckR2012b(k + 1, 1, a->size[0], &h_emlrtBCI,
+        emlrtDynamicBoundsCheckR2012b(k + 1, 1, a->size[0], &g_emlrtBCI,
                                       (emlrtCTX)sp);
       }
       a_data[k].re += xi_re * varargout_1_re - xi_im * varargout_1_im;
@@ -562,9 +533,9 @@ real_T get_r_given_theta(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
       if (((int32_T)((real_T)j + 1.0) < 1) ||
           ((int32_T)((real_T)j + 1.0) > d->size[0])) {
         emlrtDynamicBoundsCheckR2012b((int32_T)((real_T)j + 1.0), 1, d->size[0],
-                                      &c_emlrtBCI, (emlrtCTX)sp);
+                                      &k_emlrtBCI, (emlrtCTX)sp);
       }
-      st.site = &h_emlrtRSI;
+      st.site = &i_emlrtRSI;
       xi_im = nchoosek(&st, j, k);
       varargout_1_im = theta * -(real_T)k;
       if (varargout_1_im == 0.0) {
@@ -580,12 +551,12 @@ real_T get_r_given_theta(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
       xi_re = d_re * dc.re - xi_im * -dc.im;
       xi_im = d_re * -dc.im + xi_im * dc.re;
       if (k + 1 > a_->size[0]) {
-        emlrtDynamicBoundsCheckR2012b(k + 1, 1, a_->size[0], &j_emlrtBCI,
+        emlrtDynamicBoundsCheckR2012b(k + 1, 1, a_->size[0], &f_emlrtBCI,
                                       (emlrtCTX)sp);
       }
       a__data[k].re += xi_re * varargout_1_re - xi_im * varargout_1_im;
       if (k + 1 > a_->size[0]) {
-        emlrtDynamicBoundsCheckR2012b(k + 1, 1, a_->size[0], &i_emlrtBCI,
+        emlrtDynamicBoundsCheckR2012b(k + 1, 1, a_->size[0], &f_emlrtBCI,
                                       (emlrtCTX)sp);
       }
       a__data[k].im += xi_re * varargout_1_im + xi_im * varargout_1_re;
@@ -597,213 +568,214 @@ real_T get_r_given_theta(const emlrtStack *sp, const emxArray_creal_T *g_coeffs,
       emlrtBreakCheckR2012b((emlrtCTX)sp);
     }
   }
-  emxInit_creal_T(sp, &coeffs, 1, &bb_emlrtRTEI);
+  emxInit_creal_T(sp, &coeffs, 1, &cb_emlrtRTEI);
   /*  multiply the polynomials together, aka Cauchy product */
-  st.site = &i_emlrtRSI;
+  st.site = &j_emlrtRSI;
   conv(&st, a, a_, coeffs);
   a_data = coeffs->data;
   emxFree_creal_T(sp, &a_);
   emxFree_creal_T(sp, &a);
   if (1 > coeffs->size[0]) {
-    emlrtDynamicBoundsCheckR2012b(1, 1, coeffs->size[0], &b_emlrtBCI,
+    emlrtDynamicBoundsCheckR2012b(1, 1, coeffs->size[0], &l_emlrtBCI,
                                   (emlrtCTX)sp);
   }
-  emxInit_real_T(sp, &y, &x_emlrtRTEI);
-  emxInit_real_T(sp, &x, &v_emlrtRTEI);
-  st.site = &j_emlrtRSI;
-  b_st.site = &hb_emlrtRSI;
-  c_st.site = &ib_emlrtRSI;
+  st.site = &k_emlrtRSI;
+  b_st.site = &jb_emlrtRSI;
+  c_st.site = &kb_emlrtRSI;
   a_data[0].re -= C_over_omega * C_over_omega;
   /*     %% filter out the roots we care about */
-  st.site = &k_emlrtRSI;
+  st.site = &l_emlrtRSI;
   flip(coeffs);
-  st.site = &k_emlrtRSI;
+  st.site = &l_emlrtRSI;
   roots(&st, coeffs, d);
   d_data = d->data;
-  /*  remove the roots with significant imaginary bits */
-  st.site = &l_emlrtRSI;
-  i = x->size[0];
-  x->size[0] = d->size[0];
-  emxEnsureCapacity_real_T(&st, x, i, &v_emlrtRTEI);
-  x_data = x->data;
-  nx = d->size[0];
-  emxFree_creal_T(&st, &coeffs);
-  for (i = 0; i < nx; i++) {
-    x_data[i] = d_data[i].im;
+  /* remove the roots with negative real bits        */
+  idx = d->size[0] - 1;
+  nx = 0;
+  emxFree_creal_T(sp, &coeffs);
+  for (i = 0; i <= idx; i++) {
+    if (d_data[i].re > 0.0) {
+      nx++;
+    }
   }
-  b_st.site = &tc_emlrtRSI;
+  emxInit_creal_T(sp, &roots_with_positive_real_part, 1, &db_emlrtRTEI);
+  i = roots_with_positive_real_part->size[0];
+  roots_with_positive_real_part->size[0] = nx;
+  emxEnsureCapacity_creal_T(sp, roots_with_positive_real_part, i, &v_emlrtRTEI);
+  a__data = roots_with_positive_real_part->data;
+  nx = 0;
+  for (i = 0; i <= idx; i++) {
+    if (d_data[i].re > 0.0) {
+      if (i + 1 > d->size[0]) {
+        emlrtDynamicBoundsCheckR2012b(i + 1, 1, d->size[0], &e_emlrtBCI,
+                                      (emlrtCTX)sp);
+      }
+      a__data[nx].re = d_data[i].re;
+      if (i + 1 > d->size[0]) {
+        emlrtDynamicBoundsCheckR2012b(i + 1, 1, d->size[0], &e_emlrtBCI,
+                                      (emlrtCTX)sp);
+      }
+      a__data[nx].im = d_data[i].im;
+      nx++;
+    }
+  }
+  emxFree_creal_T(sp, &d);
+  emxInit_real_T(sp, &guesses, &bb_emlrtRTEI);
+  emxInit_real_T(sp, &x, &w_emlrtRTEI);
+  /*  remove the roots with significant imaginary bits */
+  st.site = &m_emlrtRSI;
+  i = x->size[0];
+  x->size[0] = roots_with_positive_real_part->size[0];
+  emxEnsureCapacity_real_T(&st, x, i, &w_emlrtRTEI);
+  x_data = x->data;
+  nx = roots_with_positive_real_part->size[0];
+  for (i = 0; i < nx; i++) {
+    x_data[i] = a__data[i].im;
+  }
+  b_st.site = &vc_emlrtRSI;
   nx = x->size[0];
-  i = y->size[0];
-  y->size[0] = x->size[0];
-  emxEnsureCapacity_real_T(&b_st, y, i, &w_emlrtRTEI);
-  y_data = y->data;
-  c_st.site = &uc_emlrtRSI;
+  i = guesses->size[0];
+  guesses->size[0] = x->size[0];
+  emxEnsureCapacity_real_T(&b_st, guesses, i, &x_emlrtRTEI);
+  guesses_data = guesses->data;
+  c_st.site = &wc_emlrtRSI;
   if ((1 <= x->size[0]) && (x->size[0] > 2147483646)) {
-    d_st.site = &e_emlrtRSI;
+    d_st.site = &f_emlrtRSI;
     b_check_forloop_overflow_error(&d_st);
   }
   for (k = 0; k < nx; k++) {
-    y_data[k] = muDoubleScalarAbs(x_data[k]);
+    guesses_data[k] = muDoubleScalarAbs(x_data[k]);
   }
   emxFree_real_T(&b_st, &x);
-  emxInit_boolean_T(&b_st, &b_r, &x_emlrtRTEI);
+  emxInit_boolean_T(&b_st, &b_r, &y_emlrtRTEI);
   i = b_r->size[0];
-  b_r->size[0] = y->size[0];
-  emxEnsureCapacity_boolean_T(sp, b_r, i, &x_emlrtRTEI);
+  b_r->size[0] = guesses->size[0];
+  emxEnsureCapacity_boolean_T(sp, b_r, i, &y_emlrtRTEI);
   r1 = b_r->data;
-  nx = y->size[0];
+  nx = guesses->size[0];
   for (i = 0; i < nx; i++) {
-    r1[i] = (y_data[i] < imag_thresh);
+    r1[i] = (guesses_data[i] < imag_thresh);
   }
-  nx = b_r->size[0] - 1;
-  trueCount = 0;
-  for (i = 0; i <= nx; i++) {
+  idx = b_r->size[0] - 1;
+  nx = 0;
+  for (i = 0; i <= idx; i++) {
     if (r1[i]) {
-      trueCount++;
+      nx++;
     }
   }
-  idx = 0;
-  for (i = 0; i <= nx; i++) {
+  emxInit_creal_T(sp, &real_and_positive_roots, 1, &eb_emlrtRTEI);
+  i = real_and_positive_roots->size[0];
+  real_and_positive_roots->size[0] = nx;
+  emxEnsureCapacity_creal_T(sp, real_and_positive_roots, i, &v_emlrtRTEI);
+  a_data = real_and_positive_roots->data;
+  nx = 0;
+  for (i = 0; i <= idx; i++) {
     if (r1[i]) {
-      if (i + 1 > d->size[0]) {
-        emlrtDynamicBoundsCheckR2012b(i + 1, 1, d->size[0], &k_emlrtBCI,
-                                      (emlrtCTX)sp);
+      if (i + 1 > roots_with_positive_real_part->size[0]) {
+        emlrtDynamicBoundsCheckR2012b(i + 1, 1,
+                                      roots_with_positive_real_part->size[0],
+                                      &d_emlrtBCI, (emlrtCTX)sp);
       }
-      d_data[idx].re = d_data[i].re;
-      if (i + 1 > d->size[0]) {
-        emlrtDynamicBoundsCheckR2012b(i + 1, 1, d->size[0], &k_emlrtBCI,
-                                      (emlrtCTX)sp);
+      a_data[nx].re = a__data[i].re;
+      if (i + 1 > roots_with_positive_real_part->size[0]) {
+        emlrtDynamicBoundsCheckR2012b(i + 1, 1,
+                                      roots_with_positive_real_part->size[0],
+                                      &d_emlrtBCI, (emlrtCTX)sp);
       }
-      d_data[idx].im = d_data[i].im;
-      idx++;
+      a_data[nx].im = a__data[i].im;
+      nx++;
     }
   }
   emxFree_boolean_T(sp, &b_r);
-  i = d->size[0];
-  d->size[0] = trueCount;
-  emxEnsureCapacity_creal_T(sp, d, i, &y_emlrtRTEI);
-  d_data = d->data;
-  /* remove the roots with negative real bits */
-  nx = trueCount - 1;
-  trueCount = 0;
-  for (i = 0; i <= nx; i++) {
-    if (d_data[i].re > 0.0) {
-      trueCount++;
+  if (real_and_positive_roots->size[0] == 0) {
+    /*          print("Warning - no suitable radii found with current 'imag
+     * thresh' parameter (default is 1e-8), attempting a bisection") */
+    st.site = &n_emlrtRSI;
+    i = guesses->size[0];
+    guesses->size[0] = roots_with_positive_real_part->size[0];
+    emxEnsureCapacity_real_T(&st, guesses, i, &bb_emlrtRTEI);
+    guesses_data = guesses->data;
+    nx = roots_with_positive_real_part->size[0];
+    for (i = 0; i < nx; i++) {
+      guesses_data[i] = a__data[i].re;
     }
-  }
-  idx = 0;
-  for (i = 0; i <= nx; i++) {
-    if (d_data[i].re > 0.0) {
-      if ((i + 1 < 1) || (i + 1 > d->size[0])) {
-        emlrtDynamicBoundsCheckR2012b(i + 1, 1, d->size[0], &l_emlrtBCI,
-                                      (emlrtCTX)sp);
-      }
-      d_data[idx].re = d_data[i].re;
-      if ((i + 1 < 1) || (i + 1 > d->size[0])) {
-        emlrtDynamicBoundsCheckR2012b(i + 1, 1, d->size[0], &l_emlrtBCI,
-                                      (emlrtCTX)sp);
-      }
-      d_data[idx].im = d_data[i].im;
-      idx++;
-    }
-  }
-  i = d->size[0];
-  d->size[0] = trueCount;
-  emxEnsureCapacity_creal_T(sp, d, i, &y_emlrtRTEI);
-  d_data = d->data;
-  if (trueCount == 0) {
-    st.site = &m_emlrtRSI;
-    b_y = NULL;
-    m = NULL;
-    emlrtAssign(&b_y, emlrtCreateClassInstance(
-                          (const char_T *)"coder.internal.string"));
-    m = NULL;
-    c_y = NULL;
-    propValues = emlrtCreateCharArray(2, &iv[0]);
-    emlrtInitCharArrayR2013a(&st, 106, propValues, &u[0]);
-    emlrtAssign(&c_y, propValues);
-    emlrtAssign(&m, c_y);
-    propValues = m;
-    emlrtSetAllProperties(&st, &b_y, 0, 1, (const char_T **)&propNames,
-                          (const char_T **)&propClasses, &propValues);
-    emlrtAssign(&b_y,
-                emlrtConvertInstanceToRedirectSource(
-                    &st, b_y, 0, (const char_T *)"coder.internal.string"));
-    b_st.site = &ld_emlrtRSI;
-    b_error(&b_st, b_y, &c_emlrtMCI);
-  }
-  /* take the smallest value */
-  st.site = &n_emlrtRSI;
-  i = y->size[0];
-  y->size[0] = trueCount;
-  emxEnsureCapacity_real_T(&st, y, i, &ab_emlrtRTEI);
-  y_data = y->data;
-  for (i = 0; i < trueCount; i++) {
-    y_data[i] = d_data[i].re;
-  }
-  emxFree_creal_T(&st, &d);
-  b_st.site = &vc_emlrtRSI;
-  c_st.site = &wc_emlrtRSI;
-  d_st.site = &xc_emlrtRSI;
-  if (y->size[0] < 1) {
-    emlrtErrorWithMessageIdR2018a(&d_st, &emlrtRTEI,
-                                  "Coder:toolbox:eml_min_or_max_varDimZero",
-                                  "Coder:toolbox:eml_min_or_max_varDimZero", 0);
-  }
-  e_st.site = &yc_emlrtRSI;
-  f_st.site = &ad_emlrtRSI;
-  nx = y->size[0];
-  if (y->size[0] <= 2) {
-    if (y->size[0] == 1) {
-      r = y_data[0];
-    } else if ((y_data[0] > y_data[1]) || (muDoubleScalarIsNaN(y_data[0]) &&
-                                           (!muDoubleScalarIsNaN(y_data[1])))) {
-      r = y_data[1];
-    } else {
-      r = y_data[0];
-    }
+    b_st.site = &xc_emlrtRSI;
+    sort(&b_st, guesses);
+    /*  no obvious canditates for roots. */
+    st.site = &o_emlrtRSI;
+    r = plan_b_isection(&st, g_coeffs, xi, C_over_omega, theta, guesses);
   } else {
-    g_st.site = &cd_emlrtRSI;
-    if (!muDoubleScalarIsNaN(y_data[0])) {
-      idx = 1;
-    } else {
-      idx = 0;
-      h_st.site = &dd_emlrtRSI;
-      if (y->size[0] > 2147483646) {
-        i_st.site = &e_emlrtRSI;
-        b_check_forloop_overflow_error(&i_st);
+    /* take the smallest value */
+    st.site = &p_emlrtRSI;
+    i = guesses->size[0];
+    guesses->size[0] = real_and_positive_roots->size[0];
+    emxEnsureCapacity_real_T(&st, guesses, i, &ab_emlrtRTEI);
+    guesses_data = guesses->data;
+    nx = real_and_positive_roots->size[0];
+    for (i = 0; i < nx; i++) {
+      guesses_data[i] = a_data[i].re;
+    }
+    b_st.site = &se_emlrtRSI;
+    c_st.site = &te_emlrtRSI;
+    d_st.site = &ue_emlrtRSI;
+    e_st.site = &ve_emlrtRSI;
+    f_st.site = &we_emlrtRSI;
+    nx = guesses->size[0];
+    if (guesses->size[0] <= 2) {
+      if (guesses->size[0] == 1) {
+        r = guesses_data[0];
+      } else if ((guesses_data[0] > guesses_data[1]) ||
+                 (muDoubleScalarIsNaN(guesses_data[0]) &&
+                  (!muDoubleScalarIsNaN(guesses_data[1])))) {
+        r = guesses_data[1];
+      } else {
+        r = guesses_data[0];
       }
-      k = 2;
-      exitg1 = false;
-      while ((!exitg1) && (k <= nx)) {
-        if (!muDoubleScalarIsNaN(y_data[k - 1])) {
-          idx = k;
-          exitg1 = true;
-        } else {
-          k++;
+    } else {
+      g_st.site = &he_emlrtRSI;
+      if (!muDoubleScalarIsNaN(guesses_data[0])) {
+        idx = 1;
+      } else {
+        idx = 0;
+        h_st.site = &ie_emlrtRSI;
+        if (guesses->size[0] > 2147483646) {
+          i_st.site = &f_emlrtRSI;
+          b_check_forloop_overflow_error(&i_st);
+        }
+        k = 2;
+        exitg1 = false;
+        while ((!exitg1) && (k <= nx)) {
+          if (!muDoubleScalarIsNaN(guesses_data[k - 1])) {
+            idx = k;
+            exitg1 = true;
+          } else {
+            k++;
+          }
         }
       }
-    }
-    if (idx == 0) {
-      r = y_data[0];
-    } else {
-      g_st.site = &bd_emlrtRSI;
-      r = y_data[idx - 1];
-      trueCount = idx + 1;
-      h_st.site = &ed_emlrtRSI;
-      if ((idx + 1 <= y->size[0]) && (y->size[0] > 2147483646)) {
-        i_st.site = &e_emlrtRSI;
-        b_check_forloop_overflow_error(&i_st);
-      }
-      for (k = trueCount; k <= nx; k++) {
-        xi_im = y_data[k - 1];
-        if (r > xi_im) {
-          r = xi_im;
+      if (idx == 0) {
+        r = guesses_data[0];
+      } else {
+        g_st.site = &ge_emlrtRSI;
+        r = guesses_data[idx - 1];
+        i = idx + 1;
+        h_st.site = &je_emlrtRSI;
+        if ((idx + 1 <= guesses->size[0]) && (guesses->size[0] > 2147483646)) {
+          i_st.site = &f_emlrtRSI;
+          b_check_forloop_overflow_error(&i_st);
+        }
+        for (k = i; k <= nx; k++) {
+          xi_im = guesses_data[k - 1];
+          if (r > xi_im) {
+            r = xi_im;
+          }
         }
       }
     }
   }
-  emxFree_real_T(&f_st, &y);
+  emxFree_real_T(sp, &guesses);
+  emxFree_creal_T(sp, &real_and_positive_roots);
+  emxFree_creal_T(sp, &roots_with_positive_real_part);
   emlrtHeapReferenceStackLeaveFcnR2012b((emlrtCTX)sp);
   return r;
 }
