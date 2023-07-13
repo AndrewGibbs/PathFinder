@@ -21,8 +21,13 @@ function [z, w, HermiteInds] = makeQuadV4(quadInfo, freq, Npts, g, params)
                    [z_, w__] = quadInfo{n}.contour.getQuad(freq,Npts, quad_params);
                    w_ = w__*quadInfo{n}.inOut;
                 case 'strLn'
-                   [z_, w__, dh_] = gauss_quad_complex(quadInfo{n}.a,quadInfo{n}.b,ceil(quadInfo{n}.Nscale*Npts));
-                   w_ = w__.*sgw(z_).*dh_;
+                    [z_, w__, dh_] = gauss_quad_complex(quadInfo{n}.a,quadInfo{n}.b,ceil(quadInfo{n}.Nscale*Npts));
+                    if params.DH_bodge
+                        sgw_DH = @(z) exp(1i*freq*(g(z)-g(quadInfo{n}.a)));
+                        w_ = exp(1i*freq*g(quadInfo{n}.a))*w__.*sgw_DH(z_).*dh_;
+                    else
+                        w_ = w__.*sgw(z_).*dh_;
+                    end
             end
         end
 

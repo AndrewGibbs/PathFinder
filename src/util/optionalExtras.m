@@ -14,9 +14,9 @@ function options = optionalExtras(freq,order,varargin)
         'contourStartThresh',1e-16,'num_rays',uint32(16),...
         'global_step_size',0.1,'max_number_of_ODE_steps',50000,...
         'inf_quad_rule','laguerre',...
-        'NewtonThresh',10^(-12),'NewtonBigThresh',1e-2,'NewtonIts',50,...
-        'ball_clump_thresh',0.001/(2*max(order-2,1)), 'finitePathTruncL',10.0,...
-        'interior_balls', true,'imag_thresh', 1e-8);
+        'NewtonThresh',10^(-13),'NewtonBigThresh',1e-2,'NewtonIts',50,...
+        'ball_clump_thresh',0.1/(2*max(order-2,1)), 'finitePathTruncL',10.0,...
+        'interior_balls', true,'imag_thresh', 1e-8,'DH_bodge',false);
     options.log.take = false;
     options.log.Newton_its = 0;
     
@@ -34,13 +34,13 @@ function options = optionalExtras(freq,order,varargin)
                    options.plotContours = true;
                case 'plotspecial'
                    options.plotSpecial = true;
-               case 'infcontour'
+               case 'inf contour'
                    options.infContour = varargin{n+1};
-               case 'numoscs'
+               case 'c_ball'
                    options.numOscs = varargin{n+1};
-               case 'contour thresh'
+               case 'delta_quad'
                    options.contourStartThresh = varargin{n+1};
-               case 'global step size'
+               case 'delta_ode'
                    options.global_step_size = varargin{n+1};
                case 'quad step size'
                    options.quad_step_size = varargin{n+1};
@@ -48,9 +48,9 @@ function options = optionalExtras(freq,order,varargin)
                    options.Taylor_terms = varargin{n+1};
                case 'finite path truncation'
                    options.finitePathTruncL = varargin{n+1};
-               case 'newton thresh'
+               case 'delta_fine'
                    options.NewtonThresh = varargin{n+1};
-               case 'newton big thresh'
+               case 'delta_coarse'
                    options.NewtonBigThresh = varargin{n+1};
                case 'max newton steps'
                    options.NewtonIts = varargin{n+1};
@@ -60,7 +60,7 @@ function options = optionalExtras(freq,order,varargin)
                    its = options.log.Newton_its;
                    options.log = init_log(varargin{n+1});
                    options.log.Newton_its = its;
-               case 'num rays'
+               case 'n_ball'
                    options.num_rays = uint32(varargin{n+1});
                case 'inf quad rule'
                    options.inf_quad_rule = varargin{n+1};
@@ -72,6 +72,8 @@ function options = optionalExtras(freq,order,varargin)
                    options.plot_graph = true;
                case 'imag thresh'
                    options.imag_thresh = varargin{n+1};
+               case 'delta_ball'
+                   options.ball_clump_thresh = varargin{n+1};
            end
         end
     end
