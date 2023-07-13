@@ -6,8 +6,10 @@ PathFinder is a Matlab toolbox for the automatic evaluation of highly oscillator
 Specifically, these are assumed to have the following form:
 
 $$
-I[f] = \int_{a}^b f(z)\exp(\mathrm{i}\omega g(z)) \mathrm{d}z,
+I = \int_{a}^b f(z)\exp(\mathrm{i}\omega g(z)) \mathrm{d}z,
 $$
+
+It is assumed that $f$ doesn't grow too fast, and that the integral $I$  converges.
 
 where $g$ is a polynomial, $f$ is analytic, $\omega>0$ is a large frequency parameter. The endpoints $a$ and $b$ may be finite or infinite (at a complex valley).
 
@@ -15,10 +17,12 @@ where $g$ is a polynomial, $f$ is analytic, $\omega>0$ is a large frequency para
 
 Steepest descent contours are directed complex contours, along which $\Re g$ is constant and $\Im g$ is strictly increasing. This corresponds to zero oscillation and exponential decay of the integrand. Compared with oscillatory integrals, exponentially decaying integrals are much easier to evaluate numerically. The idea behind steepest descent is to deform the original contour (from $a$ to $b$) onto a series of steepest descent contours. The value of $I[f]$ will remain the same after this deformation, by Cauchy's Theorem.
 
-* Close to stationary points of $g$, that is $\xi$ where $g'(\xi)=0$, the integrand of $I[f]$ is non-oscillatory, so *PathFinder* uses standard quadrature along straight line contours.
+* Close to stationary points of $g$, that is $\xi$ where $g'(\xi)=0$, the integrand of $I[f]$ is non-oscillatory, so in this region, *PathFinder* uses standard quadrature along straight line contours.
 * Away from stationary points, *PathFinder* constructs steepest descent contours using an ODE solve.
-* A ssuitable sequence of these paths is chosen via Dijkstra's algorithm
-* Quadrature points are allocated along these contours
+* A suitable sequence of these paths is chosen via Dijkstra's algorithm.
+* Quadrature points are allocated along these contours.
+
+![Example](intro_eg_CROP.png)
 
 ## Setup
 
@@ -26,30 +30,44 @@ After downloading from GitHub, open Matlab and navigate to the PathFinder folder
 
 If you have the Matlab Coder package installed, you can also run ```compile_all.m```, to produce MEX code optimised for your operating system.
 
-## Basic usage
+## Usage
 
-Typical syntax, when a and b are finite:
+Typical syntax, when a and b are finite, and f is a matlab function handle:
+```matlab
+I = PathFinder(a, b,f, poly_coeffs, freq, num_pts)
+ ```
+To access the quadrature weights and nodes:
 ```matlab
  [z,w] = PathFinderQuad(a, b, poly_coeffs, freq, num_pts);
  ```
  ### Allowing $a$ and/or $b$ to be infinite
- If, for example, a is infinite, and b is finite, replace a by the argument of the contour at infinity, and write
+ If, for example, $a=\exp(\mathrm{i}\theta)\infty$, and $b\in\mathbb{C}$ is finite, use the following:
  ```matlab
- [z,w] = PathFinderQuad(a, b, poly_coeffs, freq, num_pts,'infContour', [true false]);
+ PathFinder(theta, b, f, poly_coeffs, freq, num_pts,'inf contour', [true false])
  ```
 
  ### Plotting
- To produce a plot of the steepest descent deformation, use
+ To produce a plot of the steepest descent deformation (similar to the one above, without the colouring), use
 ```matlab
- [z,w] = PathFinderQuad(a, b, poly_coeffs, freq, num_pts,'plot');
+PathFinderQuad(a, b, f, poly_coeffs, freq, num_pts,'plot')
+ ```
+ To produce the graph of the deformation, use
+```matlab
+ PathFinder(a, b, f, poly_coeffs, freq, num_pts,'plot')
  ```
 
+ Further examples can be found in [1].
  ## Adjustable parameters
 
-### The non-oscillatory parameter $C$
- The _non-oscillatory_ regions are defined to be the smallest ball centred at $\xi$, which contains the region $$\omega|g(\xi)-g(z)|\leq C.$$ The parameter $C$ can be adjusted, as follows:
- ```matlab
- C = 2;
- [z,w] = PathFinderQuad(a, b, poly_coeffs, freq, num_pts,'numOscs',C);
- ```
- The default is $C=1$. Increasing $C$ means that standard quadrature (Gauss Legendre) will be used to evaluate an increased number of wavelengths in each integral.
+In a similar sytax to the ```'inf contour'`````` is an optional input, many of the parameters in the PathFinder algorithm are adjustable. Details of what each parameter does can be found in [1].
+
+|  Parameter |  Meaning |  Default | 
+|---|---|---|
+|  ```C_ball``` | Governs maximum number of oscillations across each non-oscillatory ball (and hence the ball radius)  |  $2\pi$ |
+```N_ball```| Number of rays used when determining the ball radius |  16 |
+|```delta_ball```|  Governs when overlapping balls should be amalgamated |  $10^{-3}/(2\max(J-2,1))$, where $J$ is the degree of the polynomial $g$ | 
+```delta_ODE```|  Governs the local step size in the ODE solver for SD path tracing | $10^{-1}$ | 
+```delta_coarse```|  Tolerance for the increment in the Newton iteration in the SD path tracing | $10^{-2}$   | 
+```delta_fine```|  Tolerance for the increment in the Newton iteration in the quadrature | $10^{-13}$  | 
+```delta_quad```|  Governs when the contribution from an integral on the quasi-SD deformation is computed | $10^{-16}$  | 
+```inf quad rule```|  Determines which quadrature rule is used for the SD contours, from a choice of Gauss-Laguerre ```'laguerre'```, or truncated Gauss-Legendre ```'legendre'``` |  ```'laguerre'``` | 

@@ -118,9 +118,9 @@ static emlrtRSInfo n_emlrtRSI = {
 static emlrtBCInfo emlrtBCI = {
     -1,                                              /* iFirst */
     -1,                                              /* iLast */
-    50,                                              /* lineNo */
-    79,                                              /* colNo */
-    "h_quad",                                        /* aName */
+    51,                                              /* lineNo */
+    82,                                              /* colNo */
+    "p_quad",                                        /* aName */
     "SDquadODEulerNEwtonCorrection/get_Newton_step", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/contours/"
     "SDquadODEulerNEwtonCorrection.m", /* pName */
@@ -130,9 +130,9 @@ static emlrtBCInfo emlrtBCI = {
 static emlrtBCInfo b_emlrtBCI = {
     -1,                                              /* iFirst */
     -1,                                              /* iLast */
-    50,                                              /* lineNo */
-    46,                                              /* colNo */
-    "p_quad",                                        /* aName */
+    51,                                              /* lineNo */
+    65,                                              /* colNo */
+    "h_quad",                                        /* aName */
     "SDquadODEulerNEwtonCorrection/get_Newton_step", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/contours/"
     "SDquadODEulerNEwtonCorrection.m", /* pName */
@@ -817,12 +817,10 @@ void SDquadODEulerNEwtonCorrection(
         }
       }
       st.site = &d_emlrtRSI;
-      if (N + 1 > p_quad->size[0]) {
-        emlrtDynamicBoundsCheckR2012b(N + 1, 1, p_quad->size[0], &b_emlrtBCI,
-                                      &st);
-      }
+      /*          s = (-freq_times_g_at_se - 1i*p_quad(N) +
+       * freq*polyval(gCoeffs,h_quad(N)))/(freq*dh_N); */
       if (N + 1 > h_quad->size[0]) {
-        emlrtDynamicBoundsCheckR2012b(N + 1, 1, h_quad->size[0], &emlrtBCI,
+        emlrtDynamicBoundsCheckR2012b(N + 1, 1, h_quad->size[0], &b_emlrtBCI,
                                       &st);
       }
       if (gCoeffs->size[1] != 0) {
@@ -838,11 +836,15 @@ void SDquadODEulerNEwtonCorrection(
           Newton_step_im = h0_im + gCoeffs_data[k + 1].im;
         }
       }
+      if (N + 1 > p_quad->size[0]) {
+        emlrtDynamicBoundsCheckR2012b(N + 1, 1, p_quad->size[0], &emlrtBCI,
+                                      &st);
+      }
       Newton_step_re =
-          (-freq_times_g_at_se_contents_re - 0.0 * p_quad_data[N]) +
-          freq * Newton_step_re;
-      ex = (-freq_times_g_at_se_contents_im - p_quad_data[N]) +
-           freq * Newton_step_im;
+          (-freq_times_g_at_se_contents_re + freq * Newton_step_re) -
+          0.0 * p_quad_data[N];
+      ex = (-freq_times_g_at_se_contents_im + freq * Newton_step_im) -
+           p_quad_data[N];
       h0_re = freq * re;
       h_coarse_re = freq * im;
       if (h_coarse_re == 0.0) {

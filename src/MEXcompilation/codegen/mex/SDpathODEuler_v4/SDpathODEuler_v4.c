@@ -43,28 +43,28 @@ typedef struct {
 
 /* Variable Definitions */
 static emlrtRSInfo emlrtRSI = {
-    132,                /* lineNo */
+    133,                /* lineNo */
     "SDpathODEuler_v4", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pathName
                                                                         */
 };
 
 static emlrtRSInfo b_emlrtRSI = {
-    131,                /* lineNo */
+    132,                /* lineNo */
     "SDpathODEuler_v4", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pathName
                                                                         */
 };
 
 static emlrtRSInfo c_emlrtRSI = {
-    128,                /* lineNo */
+    129,                /* lineNo */
     "SDpathODEuler_v4", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pathName
                                                                         */
 };
 
 static emlrtRSInfo d_emlrtRSI = {
-    127,                /* lineNo */
+    128,                /* lineNo */
     "SDpathODEuler_v4", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pathName
                                                                         */
@@ -235,14 +235,14 @@ static emlrtRSInfo lb_emlrtRSI = {
 };
 
 static emlrtRSInfo mb_emlrtRSI = {
-    143,                           /* lineNo */
+    144,                           /* lineNo */
     "SDpathODEuler_v4/halt_euler", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pathName
                                                                         */
 };
 
 static emlrtRSInfo nb_emlrtRSI = {
-    147,                           /* lineNo */
+    148,                           /* lineNo */
     "SDpathODEuler_v4/halt_euler", /* fcnName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pathName
                                                                         */
@@ -373,7 +373,7 @@ static emlrtRSInfo nc_emlrtRSI = {
 static emlrtBCInfo emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    132,                /* lineNo */
+    133,                /* lineNo */
     36,                 /* colNo */
     "Newton_its",       /* aName */
     "SDpathODEuler_v4", /* fName */
@@ -385,7 +385,7 @@ static emlrtBCInfo emlrtBCI = {
 static emlrtBCInfo b_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    132,                /* lineNo */
+    133,                /* lineNo */
     33,                 /* colNo */
     "Newton_its",       /* aName */
     "SDpathODEuler_v4", /* fName */
@@ -397,7 +397,7 @@ static emlrtBCInfo b_emlrtBCI = {
 static emlrtBCInfo c_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    131,                /* lineNo */
+    132,                /* lineNo */
     42,                 /* colNo */
     "Newton_points",    /* aName */
     "SDpathODEuler_v4", /* fName */
@@ -409,7 +409,7 @@ static emlrtBCInfo c_emlrtBCI = {
 static emlrtBCInfo d_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    131,                /* lineNo */
+    132,                /* lineNo */
     39,                 /* colNo */
     "Newton_points",    /* aName */
     "SDpathODEuler_v4", /* fName */
@@ -421,7 +421,7 @@ static emlrtBCInfo d_emlrtBCI = {
 static emlrtBCInfo e_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    128,                /* lineNo */
+    129,                /* lineNo */
     25,                 /* colNo */
     "h_log",            /* aName */
     "SDpathODEuler_v4", /* fName */
@@ -433,7 +433,7 @@ static emlrtBCInfo e_emlrtBCI = {
 static emlrtBCInfo f_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    128,                /* lineNo */
+    129,                /* lineNo */
     23,                 /* colNo */
     "h_log",            /* aName */
     "SDpathODEuler_v4", /* fName */
@@ -445,7 +445,7 @@ static emlrtBCInfo f_emlrtBCI = {
 static emlrtBCInfo g_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    127,                /* lineNo */
+    128,                /* lineNo */
     25,                 /* colNo */
     "p_log",            /* aName */
     "SDpathODEuler_v4", /* fName */
@@ -457,7 +457,7 @@ static emlrtBCInfo g_emlrtBCI = {
 static emlrtBCInfo h_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    127,                /* lineNo */
+    128,                /* lineNo */
     23,                 /* colNo */
     "p_log",            /* aName */
     "SDpathODEuler_v4", /* fName */
@@ -468,7 +468,7 @@ static emlrtBCInfo h_emlrtBCI = {
 
 static emlrtECInfo emlrtECI = {
     -1,                 /* nDims */
-    124,                /* lineNo */
+    125,                /* lineNo */
     13,                 /* colNo */
     "SDpathODEuler_v4", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pName
@@ -478,7 +478,7 @@ static emlrtECInfo emlrtECI = {
 static emlrtBCInfo i_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    124,                /* lineNo */
+    125,                /* lineNo */
     21,                 /* colNo */
     "h_log",            /* aName */
     "SDpathODEuler_v4", /* fName */
@@ -490,7 +490,7 @@ static emlrtBCInfo i_emlrtBCI = {
 static emlrtBCInfo j_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    124,                /* lineNo */
+    125,                /* lineNo */
     19,                 /* colNo */
     "h_log",            /* aName */
     "SDpathODEuler_v4", /* fName */
@@ -501,7 +501,7 @@ static emlrtBCInfo j_emlrtBCI = {
 
 static emlrtECInfo b_emlrtECI = {
     -1,                 /* nDims */
-    123,                /* lineNo */
+    124,                /* lineNo */
     13,                 /* colNo */
     "SDpathODEuler_v4", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pName
@@ -511,7 +511,7 @@ static emlrtECInfo b_emlrtECI = {
 static emlrtBCInfo k_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    123,                /* lineNo */
+    124,                /* lineNo */
     21,                 /* colNo */
     "p_log",            /* aName */
     "SDpathODEuler_v4", /* fName */
@@ -523,7 +523,7 @@ static emlrtBCInfo k_emlrtBCI = {
 static emlrtBCInfo l_emlrtBCI = {
     -1,                 /* iFirst */
     -1,                 /* iLast */
-    123,                /* lineNo */
+    124,                /* lineNo */
     19,                 /* colNo */
     "p_log",            /* aName */
     "SDpathODEuler_v4", /* fName */
@@ -786,8 +786,20 @@ static emlrtBCInfo y_emlrtBCI = {
     0 /* checkKind */
 };
 
+static emlrtBCInfo ab_emlrtBCI = {
+    -1,                 /* iFirst */
+    -1,                 /* iLast */
+    111,                /* lineNo */
+    19,                 /* colNo */
+    "h_log",            /* aName */
+    "SDpathODEuler_v4", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m", /* pName
+                                                                         */
+    0 /* checkKind */
+};
+
 static emlrtDCInfo i_emlrtDCI = {
-    121,                /* lineNo */
+    122,                /* lineNo */
     13,                 /* colNo */
     "SDpathODEuler_v4", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m", /* pName
@@ -796,7 +808,7 @@ static emlrtDCInfo i_emlrtDCI = {
 };
 
 static emlrtDCInfo j_emlrtDCI = {
-    121,                /* lineNo */
+    122,                /* lineNo */
     13,                 /* colNo */
     "SDpathODEuler_v4", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m", /* pName
@@ -805,7 +817,7 @@ static emlrtDCInfo j_emlrtDCI = {
 };
 
 static emlrtDCInfo k_emlrtDCI = {
-    122,                /* lineNo */
+    123,                /* lineNo */
     13,                 /* colNo */
     "SDpathODEuler_v4", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m", /* pName
@@ -814,7 +826,7 @@ static emlrtDCInfo k_emlrtDCI = {
 };
 
 static emlrtDCInfo l_emlrtDCI = {
-    122,                /* lineNo */
+    123,                /* lineNo */
     13,                 /* colNo */
     "SDpathODEuler_v4", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m", /* pName
@@ -822,7 +834,7 @@ static emlrtDCInfo l_emlrtDCI = {
     4 /* checkKind */
 };
 
-static emlrtBCInfo ab_emlrtBCI = {
+static emlrtBCInfo bb_emlrtBCI = {
     -1,                  /* iFirst */
     -1,                  /* iLast */
     22,                  /* lineNo */
@@ -834,7 +846,7 @@ static emlrtBCInfo ab_emlrtBCI = {
     0 /* checkKind */
 };
 
-static emlrtBCInfo bb_emlrtBCI = {
+static emlrtBCInfo cb_emlrtBCI = {
     -1,                                                        /* iFirst */
     -1,                                                        /* iLast */
     6,                                                         /* lineNo */
@@ -845,7 +857,7 @@ static emlrtBCInfo bb_emlrtBCI = {
     0                                                          /* checkKind */
 };
 
-static emlrtBCInfo cb_emlrtBCI = {
+static emlrtBCInfo db_emlrtBCI = {
     -1,                                                        /* iFirst */
     -1,                                                        /* iLast */
     6,                                                         /* lineNo */
@@ -856,7 +868,7 @@ static emlrtBCInfo cb_emlrtBCI = {
     0                                                          /* checkKind */
 };
 
-static emlrtBCInfo db_emlrtBCI = {
+static emlrtBCInfo eb_emlrtBCI = {
     -1,                  /* iFirst */
     -1,                  /* iLast */
     14,                  /* lineNo */
@@ -868,7 +880,7 @@ static emlrtBCInfo db_emlrtBCI = {
     0 /* checkKind */
 };
 
-static emlrtBCInfo eb_emlrtBCI = {
+static emlrtBCInfo fb_emlrtBCI = {
     -1,                  /* iFirst */
     -1,                  /* iLast */
     24,                  /* lineNo */
@@ -968,7 +980,7 @@ static emlrtRTEInfo o_emlrtRTEI = {
 };
 
 static emlrtRTEInfo p_emlrtRTEI = {
-    127,                /* lineNo */
+    128,                /* lineNo */
     5,                  /* colNo */
     "SDpathODEuler_v4", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pName
@@ -976,7 +988,7 @@ static emlrtRTEInfo p_emlrtRTEI = {
 };
 
 static emlrtRTEInfo q_emlrtRTEI = {
-    128,                /* lineNo */
+    129,                /* lineNo */
     5,                  /* colNo */
     "SDpathODEuler_v4", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pName
@@ -992,14 +1004,6 @@ static emlrtRTEInfo r_emlrtRTEI = {
 };
 
 static emlrtRTEInfo s_emlrtRTEI = {
-    131,                /* lineNo */
-    9,                  /* colNo */
-    "SDpathODEuler_v4", /* fName */
-    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pName
-                                                                        */
-};
-
-static emlrtRTEInfo t_emlrtRTEI = {
     132,                /* lineNo */
     9,                  /* colNo */
     "SDpathODEuler_v4", /* fName */
@@ -1007,15 +1011,15 @@ static emlrtRTEInfo t_emlrtRTEI = {
                                                                         */
 };
 
-static emlrtRTEInfo u_emlrtRTEI = {
-    119,                /* lineNo */
-    13,                 /* colNo */
+static emlrtRTEInfo t_emlrtRTEI = {
+    133,                /* lineNo */
+    9,                  /* colNo */
     "SDpathODEuler_v4", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pName
                                                                         */
 };
 
-static emlrtRTEInfo v_emlrtRTEI = {
+static emlrtRTEInfo u_emlrtRTEI = {
     120,                /* lineNo */
     13,                 /* colNo */
     "SDpathODEuler_v4", /* fName */
@@ -1023,7 +1027,7 @@ static emlrtRTEInfo v_emlrtRTEI = {
                                                                         */
 };
 
-static emlrtRTEInfo w_emlrtRTEI = {
+static emlrtRTEInfo v_emlrtRTEI = {
     121,                /* lineNo */
     13,                 /* colNo */
     "SDpathODEuler_v4", /* fName */
@@ -1031,8 +1035,16 @@ static emlrtRTEInfo w_emlrtRTEI = {
                                                                         */
 };
 
-static emlrtRTEInfo x_emlrtRTEI = {
+static emlrtRTEInfo w_emlrtRTEI = {
     122,                /* lineNo */
+    13,                 /* colNo */
+    "SDpathODEuler_v4", /* fName */
+    "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pName
+                                                                        */
+};
+
+static emlrtRTEInfo x_emlrtRTEI = {
+    123,                /* lineNo */
     13,                 /* colNo */
     "SDpathODEuler_v4", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pName
@@ -1048,7 +1060,7 @@ static emlrtRTEInfo y_emlrtRTEI = {
 };
 
 static emlrtRTEInfo bb_emlrtRTEI = {
-    137,                /* lineNo */
+    138,                /* lineNo */
     23,                 /* colNo */
     "SDpathODEuler_v4", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pName
@@ -1056,7 +1068,7 @@ static emlrtRTEInfo bb_emlrtRTEI = {
 };
 
 static emlrtRTEInfo cb_emlrtRTEI = {
-    138,                /* lineNo */
+    139,                /* lineNo */
     24,                 /* colNo */
     "SDpathODEuler_v4", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pName
@@ -1064,7 +1076,7 @@ static emlrtRTEInfo cb_emlrtRTEI = {
 };
 
 static emlrtRTEInfo db_emlrtRTEI = {
-    143,                /* lineNo */
+    144,                /* lineNo */
     41,                 /* colNo */
     "SDpathODEuler_v4", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pName
@@ -1072,7 +1084,7 @@ static emlrtRTEInfo db_emlrtRTEI = {
 };
 
 static emlrtRTEInfo eb_emlrtRTEI = {
-    143,                /* lineNo */
+    144,                /* lineNo */
     46,                 /* colNo */
     "SDpathODEuler_v4", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pName
@@ -1080,7 +1092,7 @@ static emlrtRTEInfo eb_emlrtRTEI = {
 };
 
 static emlrtRTEInfo fb_emlrtRTEI = {
-    147,                /* lineNo */
+    148,                /* lineNo */
     60,                 /* colNo */
     "SDpathODEuler_v4", /* fName */
     "/home/andrew/OneDrive/PathFinder/src/contours/SDpathODEuler_v4.m" /* pName
@@ -1448,11 +1460,11 @@ static void halt_euler(const emlrtStack *sp, const b_captured_var *h,
   while ((!exitg1) && (last <= cover_centres->size[0] - 1)) {
     if (last + 1 > cover_centres->size[0]) {
       emlrtDynamicBoundsCheckR2012b(last + 1, 1, cover_centres->size[0],
-                                    &bb_emlrtBCI, &st);
+                                    &cb_emlrtBCI, &st);
     }
     if (last + 1 > b_cover_radii->size[0]) {
       emlrtDynamicBoundsCheckR2012b(last + 1, 1, b_cover_radii->size[0],
-                                    &cb_emlrtBCI, &st);
+                                    &db_emlrtBCI, &st);
     }
     if (muDoubleScalarHypot(h_re_tmp - cover_centres_data[last].re,
                             h_im_tmp - cover_centres_data[last].im) <
@@ -1602,12 +1614,12 @@ static void halt_euler(const emlrtStack *sp, const b_captured_var *h,
       b_st.site = &pb_emlrtRSI;
       if ((idx < 1) || (idx > cover_centres->size[0])) {
         emlrtDynamicBoundsCheckR2012b(idx, 1, cover_centres->size[0],
-                                      &db_emlrtBCI, &b_st);
+                                      &eb_emlrtBCI, &b_st);
       }
       h_re_tmp = cover_centres_data[idx - 1].re;
       if (idx > cover_centres->size[0]) {
         emlrtDynamicBoundsCheckR2012b(idx, 1, cover_centres->size[0],
-                                      &db_emlrtBCI, &b_st);
+                                      &eb_emlrtBCI, &b_st);
       }
       h_im_tmp = cover_centres_data[idx - 1].im;
       c_st.site = &wb_emlrtRSI;
@@ -1657,7 +1669,7 @@ static void halt_euler(const emlrtStack *sp, const b_captured_var *h,
         /*  now check Dave's refined polynomial condition */
         k = gCoeffs->contents->size[1];
         if (1 > k) {
-          emlrtDynamicBoundsCheckR2012b(1, 1, k, &ab_emlrtBCI, &st);
+          emlrtDynamicBoundsCheckR2012b(1, 1, k, &bb_emlrtBCI, &st);
         }
         r *= (real_T)cover_centres->size[0];
         b_st.site = &sb_emlrtRSI;
@@ -1678,12 +1690,12 @@ static void halt_euler(const emlrtStack *sp, const b_captured_var *h,
           k = gCoeffs->contents->size[1];
           idx = (gCoeffs->contents->size[1] - last) - 1;
           if ((idx < 1) || (idx > k)) {
-            emlrtDynamicBoundsCheckR2012b(idx, 1, k, &eb_emlrtBCI, &st);
+            emlrtDynamicBoundsCheckR2012b(idx, 1, k, &fb_emlrtBCI, &st);
           }
           k = gCoeffs->contents->size[1];
           a = (gCoeffs->contents->size[1] - last) - 1;
           if ((a < 1) || (a > k)) {
-            emlrtDynamicBoundsCheckR2012b(a, 1, k, &eb_emlrtBCI, &st);
+            emlrtDynamicBoundsCheckR2012b(a, 1, k, &fb_emlrtBCI, &st);
           }
           b_st.site = &tb_emlrtRSI;
           c_st.site = &kb_emlrtRSI;
@@ -2405,8 +2417,17 @@ void SDpathODEuler_v4(
         }
       }
       /*  might as well apply Newton once more */
-      h.contents.re -= F_h.re;
-      h.contents.im -= F_h.im;
+      /*              h = h-Newton_step; */
+      if (((int32_T)n < 1) || ((int32_T)n > h_log->size[0])) {
+        emlrtDynamicBoundsCheckR2012b((int32_T)n, 1, h_log->size[0],
+                                      &ab_emlrtBCI, (emlrtCTX)sp);
+      }
+      h_log_data[(int32_T)n - 1].re = h.contents.re - F_h.re;
+      if (((int32_T)n < 1) || ((int32_T)n > h_log->size[0])) {
+        emlrtDynamicBoundsCheckR2012b((int32_T)n, 1, h_log->size[0],
+                                      &ab_emlrtBCI, (emlrtCTX)sp);
+      }
+      h_log_data[(int32_T)n - 1].im = h.contents.im - F_h.im;
       ball_index_size[0] = endex_size[0];
       ball_index_size[1] = endex_size[1];
       last = endex_size[0] * endex_size[1];

@@ -107,7 +107,8 @@ function [p_log_out, h_log_out, valley_index, ball_index, Newton_points, Newton_
                 end
             end
             % might as well apply Newton once more
-            h = h-Newton_step;
+%             h = h-Newton_step;
+            h_log(n) = h-Newton_step;
             ball_index = endex;
         else
             valley_index = endex;

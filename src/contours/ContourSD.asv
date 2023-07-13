@@ -71,7 +71,6 @@
 %             global_contour_params.step_size, int64(max_steps_before_fail), global_contour_params.r_star,...
 %             global_contour_params.NewtonBigThresh, global_contour_params.NewtonThresh);
 
-            %mex
             [p, self.coarsePath, valley_index, ball_index, Newton_points, Newton_its, Newton_fineal_pt_its] = SDpathODEuler_v4_mex(self.ICs(1), G, CPs, CPs_radii, valleys.',...
             global_contour_params.step_size, int64(max_steps_before_fail), global_contour_params.r_star,...
             global_contour_params.NewtonThresh, global_contour_params.NewtonBigThresh, int64(global_contour_params.log.Newton_its));
@@ -165,8 +164,7 @@
                         warning('failed to converge extended contour');
                     end
                 end
-                
-                %_mex
+
                 [h, dhdp, Newton_success] = SDquadODEulerNEwtonCorrection_mex(P0, freq*self.coarseParam, self.ICs(1), self.coarsePath, self.phaseCoeffs, freq, quad_params.NewtonThresh, uint32(quad_params.NewtonIts));
 
                 weightWatchers = ones(length(h),1);
