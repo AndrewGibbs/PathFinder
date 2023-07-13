@@ -16,6 +16,19 @@ function plotGraph(graph_data, covers, finite_endpoints)
     thick_width = 3.0;
 
 
+    for C=covers
+        if iscell(C)
+            C=C{1};
+        end
+        hold on;
+%         plot(C);
+        if C.radius>0
+           fillCircle(C.centre,C.radius,lightGrayColor);
+%            C.plot(':k');
+        end
+        hold on;
+    end
+    
     for n = 1:length(graph_data.points)
         for m=1:length(graph_data.points)
              if graph_data.adj_mat(m,n)
@@ -42,20 +55,6 @@ function plotGraph(graph_data, covers, finite_endpoints)
             end
         end
     end
-
-
-    for C=covers
-        if iscell(C)
-            C=C{1};
-        end
-        hold on;
-%         plot(C);
-        if C.radius>0
-%            fillCircle(C.centre,C.radius,lightGrayColor);
-           C.plot(':k');
-        end
-        hold on;
-    end
     
     plot(valley_nodes,'.k','MarkerSize',markerSize, 'Color',cols{1});
 
@@ -74,7 +73,7 @@ function plotGraph(graph_data, covers, finite_endpoints)
     plot(NaN,NaN,'.g','MarkerSize',markerSize,'DisplayName','Entrances','Color', cols{5});
     plot(NaN,NaN,'-k','DisplayName','Edges')
     plot(NaN,NaN,'-k','LineWidth',thick_width,'DisplayName','Edges in shortest path')
-    plot(NaN,NaN,':k','DisplayName','Ball subgraphs')
+%     plot(NaN,NaN,':k','DisplayName','Ball subgraphs')
 %     legend('Valleys','Critical points','Steepest exits','Steepest Entrances');
 
     xlim(1.1*[min(real(valley_nodes)) max(real(valley_nodes))]);

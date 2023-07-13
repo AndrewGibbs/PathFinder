@@ -47,6 +47,7 @@ function [h_quad, dhdp_quad, Newton_success] = SDquadODEulerNEwtonCorrection(p_q
     dhdp_quad = F(h_quad);
 
     function s = get_Newton_step()
-        s = (-freq_times_g_at_se - 1i*p_quad(N) + freq*polyval(gCoeffs,h_quad(N)))/(freq*dh_N);
+%         s = (-freq_times_g_at_se - 1i*p_quad(N) + freq*polyval(gCoeffs,h_quad(N)))/(freq*dh_N);
+        s = ((-freq_times_g_at_se + freq*polyval(gCoeffs,h_quad(N))) - 1i*p_quad(N))/(freq*dh_N);
     end
 end

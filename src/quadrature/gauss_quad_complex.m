@@ -8,10 +8,12 @@ function [z,w,dz] = gauss_quad_complex(a,b,N)
         return;
     end
     L = abs(b-a);
-    [s, w] = gauss_quad(0, L, N);
-    s = flipud(s);
+%     [s, w] = gauss_quad(0, L, N);
+    [s,w] = gausLegHC(N);
+%     s = flipud(s);
     dz = (b - a)/L;
-    z = a + s*dz;
+    z = a + L*(s+1)*dz/2;
+    w = L*w/2;
     dz = repmat(dz,size(z));
 end
 
