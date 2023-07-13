@@ -8,7 +8,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
 %G is either the coefficients of a polynomial, in standard Matlab
 %format: G(1)*X^N + ... + G(N)*X + phaseIn(N+1)
 %
-%a and b are either finite enpoints, or (in the case where the integral is an infinite contour)
+%a and b are either finite endpoints, or (in the case where the integral is an infinite contour)
 %angles of valleys in the complex plane. The entries of (optional) two-dimensional
 %flag infContour flag if the endpoint of the integral is infinite.
 %
@@ -20,7 +20,30 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
 %see
 %<a href="matlab:web('www.github.com/AndrewGibbs/PathFinder','-browser')">github.com/AndrewGibbs/PathFinder</a>
 
+    %% preprocessing
+    % get first nonzero entry
+    first_nonzero_index = find(phaseIn~=0,1,'first');
+    phaseIn = phaseIn(first_nonzero_index:end);
+
+    %% set parameters
     params = optionalExtras(freq,length(phaseIn)-1,varargin);
+
+    %% special cases
+    % check if standard quadrature is appropriate, if so, do that & terminate early
+    if ((~params.infContour(1)) && (~params.infContour(2)) ...
+        && check_endpoint_width(a, b, phaseIn, freq, params.numOscs,...
+            params.num_rays, params.interior_balls, params.imag_thresh)) ||...
+            (length(phaseIn)==1)
+
+        [z, w_, dh_] = gauss_quad_complex(a,b,Npts);
+        sgw = @(z) exp(1i*freq*polyval(phaseIn,z));
+        w = w_.*dh_.*sgw(z);
+
+       if params.plot
+            plotAll([], [], z, a, b, params.infContour, [], [], [], []);
+        end
+       return
+    end
 
     if length(phaseIn)<=2 % if linear phase
         % contour can be computed instantly without approximation, reduce to this
@@ -30,6 +53,8 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
         end
         return;
     end
+
+    %% main algorithm
 
     %get info about stationary points:
     [phase_handles, stationaryPoints, valleys] = getInfoFromPhase(phaseIn);
@@ -68,6 +93,13 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
     else
         % filter out SD contours which are of much smaller value, or empty
         [quadIngredients, params.max_SP_integrand_val] = fliter_paths_v2(quadIngredients, phase_handles{1}, freq, params.contourStartThresh);
+        if isinf(params.max_SP_integrand_val)
+            error("Integral is infinite");
+        elseif params.max_SP_integrand_val>1E16
+            warning("Integral is greater than 1e16");
+        elseif params.max_SP_integrand_val<1E-16
+            warning("Integral is greater than 1e-16");
+        end
     end
 
     %get quadrature points
