@@ -1,19 +1,23 @@
 function [a,b,params] = Jordan_rotate(a,b,valleys,params)
+    J = length(valleys);
+    safety_width = (1+100*eps)*pi/(2*J);
 %rotates endpoints so they are exactly at valley
-    if isinf(a) || params.infContour(1)
-        [~,a_mindex] = min(abs(exp(1i*angle(valleys))-exp(1i*angle(a))));
+    if params.infContour(1)
+        % swap back to old format
+        a = exp(1i*a);
+        [a_min_dist,a_mindex] = min(abs(exp(1i*angle(valleys))-exp(1i*angle(a))));
         a = valleys(a_mindex);
-        params.infContour(1) = true;
-        if isinf(a) % map back to unit circle
-            a = exp(1i*angle(a));
+        if abs(a_min_dist)>safety_width
+            error('First endpoint is in a complex hill');
         end
     end
-    if isinf(b) || params.infContour(2)
-        [~,b_mindex] = min(abs(exp(1i*angle(valleys))-exp(1i*angle(b))));
+    if params.infContour(2)
+        % swap back to old format
+        b = exp(1i*b);
+        [b_min_dist,b_mindex] = min(abs(exp(1i*angle(valleys))-exp(1i*angle(b))));
         b = valleys(b_mindex);
-        params.infContour(2) = true;
-        if isinf(a) % map back to unit circle
-            b = exp(1i*angle(b));
+       if abs(b_min_dist)>safety_width
+            error('Second endpoint is in a complex hill');
         end
     end
 end
