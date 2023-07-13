@@ -59,7 +59,7 @@ PathFinderQuad(a, b, f, poly_coeffs, freq, num_pts,'plot')
  Further examples can be found in [1].
  ## Adjustable parameters
 
-In a similar sytax to the ```'inf contour'`````` is an optional input, many of the parameters in the PathFinder algorithm are adjustable. Details of what each parameter does can be found in [1].
+In a similar sytax to the ```'inf contour'``` is an optional input, many of the parameters in the PathFinder algorithm are adjustable. Details of what each parameter does can be found in [1].
 
 |  Parameter |  Meaning |  Default | 
 |---|---|---|
