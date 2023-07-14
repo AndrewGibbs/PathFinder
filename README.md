@@ -30,6 +30,16 @@ After downloading from GitHub, open Matlab and navigate to the PathFinder folder
 
 If you have the Matlab Coder package installed, you can also run ```compile_all.m```, to produce MEX code optimised for your operating system.
 
+To test the code works, try running
+```matlab
+PathFinder(-1,1,@(x) sin(x),[2 0 0],100,10,'plot')
+```
+This approximates the integral
+$$
+\int_{-1}^1\sin(x)\exp(\mathrm{i}100x^2)\mathrm{d}x,
+$$
+and will produce a simple plot of the contour deformation. If it doesn't work, please raise an issue.
+
 ## Usage
 
 Typical syntax, when a and b are finite, and f is a matlab function handle:
