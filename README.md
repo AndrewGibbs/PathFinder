@@ -9,9 +9,9 @@ $$
 I = \int_{a}^b f(z)\exp(\mathrm{i}\omega g(z)) \mathrm{d}z,
 $$
 
-It is assumed that $f$ doesn't grow too fast, and that the integral $I$  converges.
-
 where $g$ is a polynomial, $f$ is analytic, $\omega>0$ is a large frequency parameter. The endpoints $a$ and $b$ may be finite or infinite (at a complex valley).
+
+It is assumed that $f$ doesn't grow too fast, and that the integral $I$  converges.
 
 ## Idea behind Numerical steepest descent and PathFinder
 
