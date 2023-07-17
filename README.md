@@ -2,7 +2,10 @@
 
 PathFinder is a Matlab toolbox for the automatic evaluation of highly oscillatory integrals, where the phase is a polynomial.
 
+Full details of the algorithm, along with examples, can be found in [[1]](#references).
+
 ## Integrals which can be approximated by PathFinder
+
 Specifically, these are assumed to have the following form:
 
 $$
@@ -81,3 +84,6 @@ In a similar sytax to the ```'inf contour'``` is an optional input, many of the 
 ```delta_fine```|  Tolerance for the increment in the Newton iteration in the quadrature | $10^{-13}$  | 
 ```delta_quad```|  Governs when the contribution from an integral on the quasi-SD deformation is computed | $10^{-16}$  | 
 ```inf quad rule```|  Determines which quadrature rule is used for the SD contours, from a choice of Gauss-Laguerre ```'laguerre'```, or truncated Gauss-Legendre ```'legendre'``` |  ```'laguerre'``` | 
+
+# References
+[1] [Numerical evaluation of oscillatory integrals via automated steepest descent contour deformation, _A. Gibbs, D. P. Hewett, D. Huybrechs_, 2023](https://arxiv.org/abs/2307.07261)
