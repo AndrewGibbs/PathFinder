@@ -38,9 +38,11 @@ To test the code works, try running
 PathFinder(-1,1,@(x) sin(x),[2 0 0],100,10,'plot')
 ```
 This approximates the integral
+
 $$
-\int_{-1}^1\sin(x)\exp(\mathrm{i}100x^2)\mathrm{d}x,
+\int_{-1}^1\sin(x)\exp(\mathrm{i}100x^2)\mathrm{d}x=0,
 $$
+
 and will produce a simple plot of the contour deformation. If it doesn't work, please raise an issue.
 
 ## Usage
