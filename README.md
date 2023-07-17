@@ -1,37 +1,37 @@
 # PathFinder
 
-PathFinder is a Matlab toolbox for the automatic evaluation of highly oscillatory integrals, where the phase is a polynomial.
+PathFinder is a Matlab toolbox for the numerical evaluation of highly oscillatory integrals.
 
-Full details of the algorithm, along with examples, can be found in [[1]](#references).
+Currently, PathFinder can evaluate one-dimensional integrals where the phase is a polynomial.
+
+PathFinder is based on automated steepest descent contour deformation, combined with Gauss quadrature. Full details of the algorithm, along with examples, can be found in [[1]](#references).
 
 ## Integrals which can be approximated by PathFinder
 
-Specifically, these are assumed to have the following form:
+PathFinder can approximate integrals of the form:
 
 $$
 I = \int_{a}^b f(z)\exp(\mathrm{i}\omega g(z)) \mathrm{d}z,
 $$
 
-where $g$ is a polynomial, $f$ is analytic, $\omega>0$ is a large frequency parameter. The endpoints $a$ and $b$ may be finite or infinite (at a complex valley).
+where $g$ is a polynomial, $f$ is analytic, $\omega>0$ is a frequency parameter, and the endpoints $a$ and $b$ may be finite or infinite (at a complex valley).
 
-It is assumed that $f$ doesn't grow too fast, and that the integral $I$  converges.
+It is assumed that $f$ doesn't grow too fast, and that the integral $I$ converges.
 
-## Idea behind Numerical steepest descent and PathFinder
+## The idea behind the Numerical Steepest Descent (NSD) method and PathFinder
 
-Steepest descent contours are directed complex contours, along which $\Re g$ is constant and $\Im g$ is strictly increasing. This corresponds to zero oscillation and exponential decay of the integrand. Compared with oscillatory integrals, exponentially decaying integrals are much easier to evaluate numerically. The idea behind steepest descent is to deform the original contour (from $a$ to $b$) onto a series of steepest descent contours. The value of $I[f]$ will remain the same after this deformation, by Cauchy's Theorem.
+Steepest descent contours are directed complex contours, along which $\Re g$ is constant and $\Im g$ is strictly increasing. This corresponds to zero oscillation and exponential decay of the integrand. Compared with oscillatory integrals, exponentially decaying integrals are much easier to evaluate numerically. The idea behind the Numerical Steepest Descent is to deform the original contour (from $a$ to $b$) onto a series of steepest descent contours. Typically these pass through stationary points of $g$, that is $\xi$ where $g'(\xi)=0$. The value of $I[f]$ will remain the same after this deformation, by Cauchy's Theorem. In principle one can then apply suitable numerical quadrature rules to evaluate the contributions from the steepest descent contours. However, in practice, determining the steepest descent deformation for a given phase function can be complicated, and standard numerical quadrature rules may be inaccurate when multiple coalescing stationary points are present. PathFinder solves both these difficulties, by automating the deformation process and enclosing stationary points in a "non-oscillatory region" in which the integrand undergoes at most a bounded number of oscillations, and in which we do not attempt to trace or integrate along steepest descent contours. 
 
-* Close to stationary points of $g$, that is $\xi$ where $g'(\xi)=0$, the integrand of $I[f]$ is non-oscillatory, so in this region, *PathFinder* uses standard quadrature along straight line contours.
-* Away from stationary points, *PathFinder* constructs steepest descent contours using an ODE solve.
-* A suitable sequence of these paths is chosen via Dijkstra's algorithm.
-* Quadrature points are allocated along these contours.
+* Away from stationary points, PathFinder constructs steepest descent contours using an ODE solver combined with a Newton correction.
+* Close to stationary points, where the integrand is non-oscillatory, PathFinder connects the endpoints of different steepest descent contours using straight line contours.
+* The contours obtained are used to build a graph, the shortest path through which (connecting the endpoints $a$ and $b$) is chosen via Dijkstra's algorithm.
+* Quadrature points are allocated along the contours in the shortest path (Gauss-Legendre for the straight-line contours near the stationary points and Gauss-Laguerre for the steepest descent contours). 
 
 ![Example](intro_eg_CROP.png)
 
 ## Setup
 
 After downloading from GitHub, open Matlab and navigate to the PathFinder folder. Then run ```addPaths.m``` to add all necessary paths to the Matlab search path.
-
-If you have the Matlab Coder package installed, you can also run ```compile_all.m```, to produce MEX code optimised for your operating system.
 
 To test the code works, try running
 ```matlab
@@ -43,7 +43,11 @@ $$
 \int_{-1}^1\sin(x)\exp(\mathrm{i}100x^2)\mathrm{d}x=0,
 $$
 
-and will produce a simple plot of the contour deformation. If it doesn't work, please raise an issue.
+and will produce a simple plot of the contour deformation. 
+
+PathFinder uses MEX codes to improve performance. MEX codes for Windows, Mac and Linux operating systems are provided in the src/MEXcompilation folder, and if the appropriate MEX files are compatible with your operating system then they should run without problems. However, if the above test fails and you get an error message like "```Unrecognized function or variable 'get_smallest_supset_ball_mex'```" then you will need to run ```compile_all.m``` to produce MEX code optimised for your operating system. For this you need to have the Matlab Coder package installed.
+
+If you encounter problems, please raise an issue and we will try to help!
 
 ## Usage
 
