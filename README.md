@@ -28,6 +28,7 @@ Steepest descent contours are directed complex contours, along which $\Re g$ is 
 * Quadrature points are allocated along the contours in the shortest path (Gauss-Legendre for the straight-line contours near the stationary points and Gauss-Laguerre for the steepest descent contours). 
 
 ![Example](intro_eg_CROP.png)
+![Example](intro_eg_graph_CROP.png)
 
 ## Setup
 
@@ -72,7 +73,7 @@ PathFinderQuad(a, b, f, poly_coeffs, freq, num_pts,'plot')
  ```
  To produce the graph of the deformation, use
 ```matlab
- PathFinder(a, b, f, poly_coeffs, freq, num_pts,'plot')
+ PathFinder(a, b, f, poly_coeffs, freq, num_pts,'plot graph')
  ```
 
  Further examples can be found in [1].
