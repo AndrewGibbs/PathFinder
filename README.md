@@ -31,7 +31,7 @@ Steepest descent contours are directed complex contours, along which $\Re g$ is 
 
 ## Setup
 
-After downloading from GitHub, open Matlab and navigate to the PathFinder folder. Then run ```addPaths.m``` to add all necessary paths to the Matlab search path.
+After downloading the source code from GitHub, open Matlab and navigate to the PathFinder folder. Then run ```addPaths.m``` to add all necessary paths to the Matlab search path.
 
 To test the code works, try running
 ```matlab
