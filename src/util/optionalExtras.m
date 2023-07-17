@@ -34,6 +34,8 @@ function options = optionalExtras(freq,order,varargin)
                    options.plotContours = true;
                case 'plotspecial'
                    options.plotSpecial = true;
+               case 'infcontour'
+                   options.infContour = varargin{n+1};
                case 'inf contour'
                    options.infContour = varargin{n+1};
                case 'c_ball'

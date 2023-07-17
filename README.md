@@ -58,7 +58,7 @@ To access the quadrature weights and nodes:
  ### Allowing $a$ and/or $b$ to be infinite
  If, for example, $a=\exp(\mathrm{i}\theta)\infty$, and $b\in\mathbb{C}$ is finite, use the following:
  ```matlab
- PathFinder(theta, b, f, poly_coeffs, freq, num_pts,'inf contour', [true false])
+ PathFinder(theta, b, f, poly_coeffs, freq, num_pts,'infcontour', [true false])
  ```
 
  ### Plotting
@@ -74,7 +74,7 @@ PathFinderQuad(a, b, f, poly_coeffs, freq, num_pts,'plot')
  Further examples can be found in [1].
  ## Adjustable parameters
 
-In a similar sytax to the ```'inf contour'``` is an optional input, many of the parameters in the PathFinder algorithm are adjustable. Details of what each parameter does can be found in [1].
+In a similar sytax to the ```'infcontour'``` is an optional input, many of the parameters in the PathFinder algorithm are adjustable. Details of what each parameter does can be found in [1].
 
 |  Parameter |  Meaning |  Default | 
 |---|---|---|
