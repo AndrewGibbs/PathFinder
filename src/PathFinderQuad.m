@@ -32,7 +32,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
     % check if standard quadrature is appropriate, if so, do that & terminate early
     if ((~params.infContour(1)) && (~params.infContour(2)) ...
         && check_endpoint_width(a, b, phaseIn, freq, params.numOscs,...
-            params.num_rays, params.interior_balls, params.imag_thresh)) ||...
+            params.num_rays, params.interior_balls, params.imag_thresh, params.use_mex)) ||...
             (length(phaseIn)==1)
 
         [z, w_, dh_] = gauss_quad_complex(a,b,Npts);
@@ -69,7 +69,8 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
     %cover each stationary point:
     [covers, endPointIndices]...
             = getExteriorBalls(phase_handles{1},freq,stationaryPoints,params.infContour,a,b, ...
-            params.numOscs, phaseIn, params.ball_clump_thresh,params.num_rays, params.interior_balls, params.imag_thresh);
+            params.numOscs, phaseIn, params.ball_clump_thresh,params.num_rays, ...
+            params.interior_balls, params.imag_thresh, params.use_mex);
     if params.log.take
         params.log.add_to_log(sprintf("Ball construction:\t%fs",toc));
     end
@@ -98,7 +99,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
         elseif params.max_SP_integrand_val>1E16
             warning("Integral is greater than 1e16");
         elseif params.max_SP_integrand_val<1E-16
-            warning("Integral is greater than 1e-16");
+            warning("Integral is less than 1e-16");
         end
     end
 

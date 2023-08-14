@@ -10,12 +10,12 @@ numCovers = length(coversIn);
 coversOut = coversIn;
 
     for m=1:numCovers
-        for x = coversIn(m).steepestExits
+        for x = coversIn{m}.steepestExits
             %checking all exits of all covers
             for n=[1:(m-1) (m+1):numCovers]
-                if coversIn(n).isIn(x)
+                if coversIn{n}.isIn(x)
                     %delete this exit, if it's in another cover
-                    coversOut(m).steepestExits(coversOut(m).steepestExits==x) = [];
+                    coversOut{m}.steepestExits(coversOut{m}.steepestExits==x) = [];
                 end
             end
         end

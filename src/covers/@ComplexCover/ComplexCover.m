@@ -18,8 +18,6 @@ classdef (Abstract) ComplexCover
     end
     
     methods
-        yn = isIn(self,point)
-        point = boundaryTrace(self,paramVal)
         
         function exits = getSteepestExits(self,g)
             s = linspace(0,1,self.exitGrad);
@@ -48,9 +46,10 @@ classdef (Abstract) ComplexCover
             end
         end
         
-        function plot(self,varargin)
-            s = linspace(0,1,self.exitGrad);
-            plot(self.boundaryTrace(s), varargin{:});
-        end
+
+    end
+    methods (Abstract)
+        yn = isIn(self,point)
+        point = boundaryTrace(self,paramVal)
     end
 end

@@ -7,7 +7,7 @@ classdef Ball < ComplexCover
     end
     
     methods
-        function self = Ball(r,c,g_coeffs,index,orderSum)
+        function self = Ball(r,c,g_coeffs,index,orderSum,mex)
             self.radius = r;
             self.centre = c;
             self.pseudoCentre = c;
@@ -23,7 +23,11 @@ classdef Ball < ComplexCover
                 if nargin>2
                     %self.steepestExits = self.getSteepestExits(@(x) polyval(g_coeffs,x)); % used
                     %to be polyval g, now it's just coeffs
-                    self.steepestExits = unique(get_stepest_exits_on_ball_mex(g_coeffs.',c,r).');
+                    if mex
+                        self.steepestExits = unique(get_stepest_exits_on_ball_mex(g_coeffs.',c,r).');
+                    else
+                        self.steepestExits = unique(get_stepest_exits_on_ball(g_coeffs.',c,r).');
+                    end
                 end
             else
                 self.steepestExits = c;
@@ -31,20 +35,10 @@ classdef Ball < ComplexCover
             s = linspace(0,1,self.exitGrad);
             self.boundaryComplex = self.boundaryTrace(s);
         end
-        
-        function yn = isIn(self,point)
-            yn = abs(point-self.centre)<self.radius;
-        end
-        
-        function point = boundaryTrace(self,paramVal)
-            if self.radius>0
-                point = self.centre + ...
-                        self.radius*cos(paramVal*2*pi) + ...
-                        self.radius*1i*sin(paramVal*2*pi);
-            else
-                point = self.centre+1i*eps;
-            end
-        end
+
+        % methods defined elsewhere
+        yn = isIn(self,point)
+        point = boundaryTrace(self,paramVal)
         
     end
 end

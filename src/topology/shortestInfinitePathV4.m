@@ -71,7 +71,8 @@ function [Q, graph_data] = shortestInfinitePathV4(a,b,contours, covers, valleys,
 
     num_SEns = 0;
     % get number of steepest entrances
-    for contour = contours
+    for contour_count_ = 1:length(contours)
+      contour = contours(contour_count_);
         if ~isinf(contour.length) % each finite contour will have one steepest entrance
             num_SEns = num_SEns + 1;
         end
@@ -81,7 +82,8 @@ function [Q, graph_data] = shortestInfinitePathV4(a,b,contours, covers, valleys,
     SExs_to_SEns_adj = zeros(num_SExs,num_SEns);
 
     num_SEns = 0;
-    for contour = contours
+    for contour_count_ = 1:length(contours)
+      contour = contours(contour_count_);
         contour_count = contour_count + 1;
         if isinf(contour.length) % infinite contour
             SEx_index = find(SExs==contour.startPoint);

@@ -43,7 +43,8 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeff
         hold on;
     end
     grayColor = [.1 .1 .1];
-    for C=contours
+    for count = 1:length(contours)
+        C=contours(count);
         plot(C,'.:','Color',grayColor,'MarkerSize',4.5);
         hold on;
     end

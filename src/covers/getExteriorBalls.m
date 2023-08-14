@@ -1,17 +1,20 @@
 function [covers, endPointIndices]...
                 = getExteriorBalls(g, freq, SPs, infContour, a, b, Cosc,g_coeffs,...
-                    ball_clump_thresh,num_rays,int_balls_yn,imag_thresh)
+                    ball_clump_thresh,num_rays,int_balls_yn,imag_thresh, use_mex)
 
     coverIndex = 0;
-    endPointBalls = [];
+%     endPointBalls = [];
     endPointIndices = [];
     DH = 1;%(1/2);
     
     maybzEndpoints = [a b];
+    ep_count = 0;
     for m = [1 2]
        if ~infContour(m)
            coverIndex = coverIndex + 1;
-           endPointBalls = [endPointBalls Ball(0,maybzEndpoints(m),g,coverIndex,0)];
+           ep_count = ep_count + 1;
+           endPointBalls{ep_count} = Ball(0,maybzEndpoints(m),g,coverIndex,0);
+%            endPointBalls = [endPointBalls Ball(0,maybzEndpoints(m),g,coverIndex,0)];
            endPointIndices = [endPointIndices coverIndex];
        end
     end
@@ -23,7 +26,11 @@ function [covers, endPointIndices]...
 %             coverIndex = coverIndex + 1;
 %             radii(n) = get_interior_ball_mex(g_coeffs.', freq, SPs(n), uint32(SPorders(n)), Cosc);
             % DH wants factor of two...
-            radii(n) = DH*get_smallest_supset_ball_mex(g_coeffs.', freq, SPs(n), Cosc, num_rays,~int_balls_yn,imag_thresh);
+            if use_mex
+                radii(n) = DH*get_smallest_supset_ball_mex(g_coeffs.', freq, SPs(n), Cosc, num_rays,~int_balls_yn,imag_thresh);
+            else
+                radii(n) = DH*get_smallest_supset_ball(g_coeffs.', freq, SPs(n), Cosc, num_rays,~int_balls_yn,imag_thresh);
+            end
         end
 
 %             coversInit(n) = Ball(r_min,SPs(n),g_coeffs,coverIndex,sum(SPorders+1));
@@ -96,14 +103,14 @@ function [covers, endPointIndices]...
 
         for n=1:num_SP_balls
             coverIndex = coverIndex + 1;
-            coversInit(n) = Ball(radii(n),centres(n),g_coeffs,coverIndex,length(g_coeffs)-1);
+            coversInit{n} = Ball(radii(n),centres(n),g_coeffs,coverIndex,length(g_coeffs)-1,use_mex);
         end
 
         %delete exits inside a cover from another mother:
 
-        covers = [num2cell(endPointBalls) num2cell(deleteRedundantExits(coversInit))];
+        covers = [endPointBalls deleteRedundantExits(coversInit)];
     else
-        covers = num2cell(endPointBalls);
+        covers = endPointBalls;
     end
 
 %     %now determine which covers overlap:

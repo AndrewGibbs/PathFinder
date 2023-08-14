@@ -82,34 +82,22 @@ function options = optionalExtras(freq,order,varargin)
                    found_options(n:(n+1)) = 1;
                case 'n_ball'
                    options.num_rays = uint32(varargin{n+1});
-                   found_options(n:(n+1)) = 1;
                case 'inf quad rule'
                    options.inf_quad_rule = varargin{n+1};
-                   found_options(n:(n+1)) = 1;
                case 'log newton'
                    options.log.Newton_its = varargin{n+1};
-                   found_options(n:(n+1)) = 1;
                case 'use interior balls'
                    options.interior_balls = varargin{n+1};
-                   found_options(n:(n+1)) = 1;
                case 'plot graph'
                    options.plot_graph = true;
-                   found_options(n) = 1;
                case 'imag thresh'
                    options.imag_thresh = varargin{n+1};
-                   found_options(n:(n+1)) = 1;
                case 'delta_ball'
                    options.ball_clump_thresh = varargin{n+1};
-                   found_options(n:(n+1)) = 1;
-               case 'use mex'
+               case 'mex'
                    options.use_mex = varargin{n+1};
-                   found_options(n:(n+1)) = 1;
            end
         end
-    end
-
-    if sum(found_options)<N
-        error(sprintf("Optional input '%s' not found",varargin{find(found_options==0,1)}));
     end
 end
 

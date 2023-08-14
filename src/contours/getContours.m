@@ -3,8 +3,9 @@ function contours = getContours(G, covers, valleys, endPointIndices, params)
     global_contour_params = struct( ...
         'step_size', params.global_step_size, 'max_number_of_ODE_steps', params.max_number_of_ODE_steps,...
         'NewtonThresh',params.NewtonThresh, 'NewtonIts', params.NewtonIts,'r_star',params.r_star,...
-        'NewtonBigThresh',params.NewtonBigThresh,'log',params.log) ;
-    contours = [];
+        'NewtonBigThresh',params.NewtonBigThresh,'log',params.log,'mex',params.use_mex) ;
+    %contours = [];
+    contour_count = 0;
      for n = 1:length(covers)
         if ismember(n,endPointIndices)%~infContour && ismember(n,[1 2])
             intervalEndpoint = covers{n}.centre;
@@ -16,7 +17,9 @@ function contours = getContours(G, covers, valleys, endPointIndices, params)
             SPs = CPs(CPs_radii>0);
             cover_radii = CPs_radii(CPs_radii>0);
             if ~inAball(xi, SPs, cover_radii)
-                contours = [contours ContourSD(xi,G,covers{n},coversComplement(n),valleys,global_contour_params)];
+                contour_count = contour_count + 1;
+                %contours = [contours ContourSD(xi,G,covers{n},coversComplement(n),valleys,global_contour_params)];
+                contours(contour_count) = ContourSD(xi,G,covers{n},coversComplement(n),valleys,global_contour_params);
             end
         end
      end
