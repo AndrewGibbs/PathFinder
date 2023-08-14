@@ -3,7 +3,7 @@ function [covers, endPointIndices]...
                     ball_clump_thresh,num_rays,int_balls_yn,imag_thresh, use_mex)
 
     coverIndex = 0;
-%     endPointBalls = [];
+    endPointBalls = [];
     endPointIndices = [];
     DH = 1;%(1/2);
     
