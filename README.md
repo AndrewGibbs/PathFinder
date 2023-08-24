@@ -1,5 +1,7 @@
 # PathFinder
 
+[![CI](https://github.com/AndrewGibbs/PathFinder/actions/workflows/CI.yml/badge.svg)](https://github.com/AndrewGibbs/PathFinder/actions/workflows/CI.yml)
+
 PathFinder is a Matlab toolbox for the numerical evaluation of highly oscillatory integrals.
 
 Currently, PathFinder can evaluate one-dimensional integrals where the phase is a polynomial.
