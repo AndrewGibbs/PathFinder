@@ -1,4 +1,4 @@
-name: Run MATLAB Tests on GitHub-Hosted Runner
+name: CI
 on: [push]
 jobs:
   my-job:
