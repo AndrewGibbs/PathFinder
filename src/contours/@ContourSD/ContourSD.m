@@ -64,7 +64,7 @@
             
             %new streamlined version of ODE solver, much simpler than orig
             %PathFinder:
-            [CPs, CPs_radii] = getBallDeets(otherCovers);
+            [other_CPs, other_CPs_radii] = getBallDeets(otherCovers);
             max_steps_before_fail = global_contour_params.max_number_of_ODE_steps;
 
 %             [p_, h_, valley_index_, ball_index_] = SDpathODEuler_v3_mex(self.ICs(1), G, CPs, CPs_radii, valleys.', ...
@@ -73,11 +73,11 @@
 
             %mex]
             if global_contour_params.mex
-                [p, self.coarsePath, valley_index, ball_index, Newton_points, Newton_its, Newton_fineal_pt_its] = SDpathODEuler_v4_mex(self.ICs(1), G, CPs, CPs_radii, valleys.',...
+                [p, self.coarsePath, valley_index, other_ball_index, Newton_points, Newton_its, Newton_fineal_pt_its] = SDpathODEuler_v4_mex(self.ICs(1), G, other_CPs, other_CPs_radii, valleys.',...
                 global_contour_params.step_size, int64(max_steps_before_fail), global_contour_params.r_star,...
                 global_contour_params.NewtonThresh, global_contour_params.NewtonBigThresh, int64(global_contour_params.log.Newton_its));
             else
-                [p, self.coarsePath, valley_index, ball_index, Newton_points, Newton_its, Newton_fineal_pt_its] = SDpathODEuler_v4(self.ICs(1), G, CPs, CPs_radii, valleys.',...
+                [p, self.coarsePath, valley_index, other_ball_index, Newton_points, Newton_its, Newton_fineal_pt_its] = SDpathODEuler_v4(self.ICs(1), G, other_CPs, other_CPs_radii, valleys.',...
                 global_contour_params.step_size, int64(max_steps_before_fail), global_contour_params.r_star,...
                 global_contour_params.NewtonThresh, global_contour_params.NewtonBigThresh, int64(global_contour_params.log.Newton_its));
             end
@@ -88,18 +88,27 @@
                 for n=1:length(Newton_its)
                     global_contour_params.log.add_to_log(sprintf('\tPoint %.2f + %.2fi had %d Newton iterations',real(Newton_points(n)),imag(Newton_points(n)),Newton_its(n)));
                 end
-                if ~isempty(ball_index)
+                if ~isempty(other_ball_index)
                     global_contour_params.log.add_to_log(sprintf('\tFinal point %.2f + %.2fi had %d Newton iterations',real(h_(end)),imag(h_(end)),Newton_fineal_pt_its));
                 end
             end
 
-            if isempty(ball_index) %infinite contour
+            if isempty(other_ball_index) %infinite contour
                 self.length = inf;
                 self.endValley = valleys(valley_index);
             else    %finite 
                 self.length = p(end);
 %                     end
                 self.endValley = [];
+                % adjust for possible index shift of 'other' balls:
+                if other_ball_index>=self.startCoverIndex
+                    % add one
+                    self.endCoverIndex = other_ball_index + 1;
+                else
+                    % they're the same
+                    self.endCoverIndex = other_ball_index;
+                end
+
                 self.endPoint = self.coarsePath(end); % should have
 %                     been taken care of further up
             end
