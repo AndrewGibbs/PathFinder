@@ -30,3 +30,9 @@ debug/
 log/
 
 .git.bfg-report/
+
+*.asv
+
+*.mat
+
+myMex/old_tests/

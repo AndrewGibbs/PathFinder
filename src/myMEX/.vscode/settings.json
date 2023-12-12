@@ -1,0 +1,21 @@
+{
+    "files.associations": {
+        "complex": "cpp",
+        "pathfinder.h": "c",
+        "algorithm": "c",
+        "random": "c",
+        "array": "c",
+        "string_view": "c",
+        "optional": "c",
+        "system_error": "c",
+        "functional": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c",
+        "istream": "c",
+        "ostream": "c",
+        "cmath": "c",
+        "numbers": "c",
+        "interface.h": "c"
+    }
+}

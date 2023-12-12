@@ -1,4 +1,4 @@
-function [p_log_out, h_log_out, valley_index, ball_index, Newton_points, Newton_its, Newton_fineal_pt_its] = ...
+function [p_log_out, h_log_out, valley_index, ball_index, Newton_points, Newton_its, Newton_final_pt_its] = ...
     SDpathODEuler_v4(h0, gCoeffs, SPs, cover_radii, valleys, base_step_size, n_max, r_star,...
     Newton_small_threshold, Newton_big_threshold, Newton_point_count_max) %#codegen
 
@@ -18,16 +18,12 @@ function [p_log_out, h_log_out, valley_index, ball_index, Newton_points, Newton_
         cover_radii = 0;
     end
     for n=1:length(SPs)
-        % another bodge to stop stationary points being treated like critical
+        % another bodge to stop endpoints being treated like stationary
         % points
         if cover_radii(n)==0% || ismember(n,excluded_SPs_indices)
             SPs(n) = inf;
         end
     end
-
-%     [inball_yn, index] = inAball(h0, SPs, cover_radii);
-%     if inball_yn
-
 
     g_se = polyval(gCoeffs,h0); % value of g at steepest exit
 
@@ -47,7 +43,7 @@ function [p_log_out, h_log_out, valley_index, ball_index, Newton_points, Newton_
     Newton_points = complex(zeros(Newton_point_count_max,1));
     Newton_its = int64(zeros(Newton_point_count_max,1));
     Newton_log_count = 0;
-    Newton_fineal_pt_its = 0;
+    Newton_final_pt_its = 0;
     
     dg_h = polyval(dgCoeffs,h);
     continue_loop = true;
@@ -57,6 +53,9 @@ function [p_log_out, h_log_out, valley_index, ball_index, Newton_points, Newton_
         % get ingreidents which will be used multiple times
         n = n+1;
         ddg_h = polyval(ddgCoeffs,h);
+
+        % PREVIOUSLY MISSING THIS UPDATE:
+        dg_h = polyval(dgCoeffs,h);
 
         % Forward Euler step
         F_h = 1i/dg_h;
@@ -97,17 +96,16 @@ function [p_log_out, h_log_out, valley_index, ball_index, Newton_points, Newton_
         continue_loop = ~(inball_yn || in_no_return_yn);
 
         if inball_yn % only refine endpoint to fine level if in a ball
-            % beyore actually halting the process, refine this endpoint
+            % before actually halting the process, refine this endpoint
             Newton_step = get_Newton_step();
             while abs(Newton_step)>Newton_small_threshold
                 h = h-Newton_step;
                 Newton_step = get_Newton_step();
                 if Newton_log
-                    Newton_fineal_pt_its = Newton_fineal_pt_its + 1;
+                    Newton_final_pt_its = Newton_final_pt_its + 1;
                 end
             end
             % might as well apply Newton once more
-%             h = h-Newton_step;
             h_log(n) = h-Newton_step;
             ball_index = endex;
         else
@@ -115,8 +113,6 @@ function [p_log_out, h_log_out, valley_index, ball_index, Newton_points, Newton_
         end
 
         if mod(int64(n),int64(n_max))==0 % need to add more points
-%             success = false;
-%             break
             p_log_copy = p_log;
             h_log_copy = h_log;
             p_log = zeros(n_max+n,1);
@@ -133,7 +129,7 @@ function [p_log_out, h_log_out, valley_index, ball_index, Newton_points, Newton_
         Newton_its = Newton_its(1:(Newton_log_count-1));
     end
 
-    %% indended functions
+    %% indented functions
     function step = get_Newton_step()
         g_h = polyval(gCoeffs,h);
         dg_h = polyval(dgCoeffs,h);
