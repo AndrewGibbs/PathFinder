@@ -74,4 +74,12 @@ void mexFunction(int nlhs, mxArray *plhs[],
     convert_c_to_mxvec(dhdp_quad,plhs[1]);
     convert_intvec_to_mxvec(Newton_success,plhs[2]);
 
+    /* deallocate memory */
+    free(p_quad);
+    p_quad = NULL;
+    free(p_coarse);
+    p_coarse = NULL;
+    free(h_coarse);
+    h_coarse = NULL;
+
 }

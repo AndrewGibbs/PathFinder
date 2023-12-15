@@ -57,9 +57,9 @@ void mexFunction(int nlhs, mxArray *plhs[],
 
     // prep output variables, as C variables
 
-    double *p_out = malloc(sizeof(double)*n_max);
+    double *p_out = (double*) malloc(sizeof(double)*n_max);
 
-    double complex *h_out = malloc(sizeof(double complex)*n_max);
+    double complex *h_out = (double complex*) malloc(sizeof(double complex)*n_max);
 
     int valley_index = -1;
     int ball_index = -1;
@@ -105,4 +105,16 @@ void mexFunction(int nlhs, mxArray *plhs[],
         // add one to convert to matlab's indexing
         {ball_index++;
         convert_int_to_mxsca(&ball_index, plhs[3]);}
+
+    /* deallocate memory - I'm sure this would happen anyway*/
+    free(p_out);
+    p_out = NULL;
+    free(h_out);
+    h_out = NULL;
+    // free(gCoeffs);
+    // gCoeffs = NULL;
+    // free(SPs);
+    // SPs = NULL;
+
+
 }

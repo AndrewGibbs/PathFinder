@@ -272,6 +272,12 @@ double get_r_given_theta(   const double complex *g_coeffs,
         }
     }
 
+    /* deallocate memory */
+    free(valid_roots);
+    valid_roots = NULL;
+    free(real_guesses);
+    real_guesses = NULL;
+
     return r;
 
 }

@@ -80,6 +80,8 @@ void mexFunction(int nlhs, mxArray *plhs[],
     convert_int_to_mxsca(&yn, plhs[2]);
 
     free(p_log);
+    p_log = NULL;
     free(h_log);
+    h_log = NULL;
 
 }
