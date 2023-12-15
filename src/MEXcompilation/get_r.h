@@ -1,5 +1,72 @@
 #include <lapacke.h>
-#include "PathFinder.h"
+#include "PathFinder.h" // needed for utility functions therein
+
+/* ---------------------------- function prototypes ----------------------------*/
+// main functions - in separate file due to extra header file 'lapacke' required
+double get_r_given_theta(   const double complex *g_coeffs,
+                            const double complex xi,
+                            const double C_over_omega, 
+                            const double theta, 
+                            const double imag_thresh,
+                            const int len_g_coeffs);
+
+double get_smallest_supset_ball(const double complex *g_coeffs,
+                                const double freq,
+                                const double complex xi,
+                                const double Cosc,
+                                const int num_rays,
+                                const bool take_max,
+                                const double imag_thresh,
+                                const int g_coeffs_len);
+
+// utility subroutines
+// roots requires LApack for balancing/eigenvalue solve
+void roots( 
+    const double complex *g_coeffs,
+    const int g_len,
+    double complex *root_vals);
+
+void multiplyPolynomials(   
+    double complex poly1[],
+    double complex poly2[],
+    int m,
+    int n,
+    double complex result[]);
+
+int factorial(int n);
+
+int nchoosek(int n, int k);
+
+// bisection subroutines
+int compare_fn(const void *a, const void *b);
+
+double bisec_fn_r(
+    const double complex *g_coeffs,
+    const double g_len,
+    const double r,
+    const double complex xi,
+    const double theta,
+    const double C_over_omega);
+
+double bisection_r(
+        const double complex *g_coeffs,
+        const double g_len,
+        const double complex xi,
+        const double theta,
+        const double C_over_omega,
+        double a, double b, double tolerance);
+
+double plan_b_isection( const double complex *g_coeffs,
+                        const double complex xi,
+                        const double C_over_omega,
+                        const double theta,
+                        const double *guesses,
+                        const int num_guesses,
+                        const int g_coeffs_len);
+
+
+
+/* ---------------------------- function definitions ---------------------------*/
 
 /* utility functions for getting ball sizes */
 void roots( const double complex *g_coeffs,
@@ -7,7 +74,6 @@ void roots( const double complex *g_coeffs,
             double complex *root_vals)
 {
     // construct Frobenius matrix
-
     int n = g_len - 1; // size of matrix
     lapack_complex_double A[n][n];
             // fill zeros
@@ -59,6 +125,7 @@ void multiplyPolynomials(   double complex poly1[],
     }
 }
 
+// functions for bisection algorithm
 int compare_fn(const void *a, const void *b) {
     double difference = *(const double *)a - *(const double *)b;
     

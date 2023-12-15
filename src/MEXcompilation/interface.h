@@ -1,9 +1,26 @@
-/* ----------------- interface functions -------------------*/
+/* -------------------- interface functions ----------------------*/
+/* for converting Matlab variables to C variables, and back again */
+/* ---------------------------------------------------------------*/
 
+/* --------- function prototypes ---------------------------------*/
+void convert_mxsca_to_int(const mxArray *in_z, int * out_z);
+void convert_mxint_to_int(const mxArray *in_z, int * out_z);
+void convert_int_to_mxsca(int *in_z, const mxArray * out_z);
+void convert_double_to_mxsca(double *in_x, const mxArray * out_x);
+void convert_int_to_mxsca(int *in_z, const mxArray * out_z);
+void convert_intvec_to_mxvec(int *in_z, const mxArray * out_z);
+void convert_mxsca_to_c(const mxArray *in_z, complex double * out_z);
+void convert_c_to_mxsca(const double complex input_val, mxArray *output_val);
+void convert_mxvec_to_c(const mxArray *inputArray, double complex *outputArray);
+void convert_c_to_mxvec(const double complex *inputArray, mxArray *outputArray);
+void convert_double_to_mxvec(const double *input_double, mxArray *outputArray);
+void convert_mxvec_to_double(const mxArray *inputArray, double *outputArray);
+void convert_mxsca_to_double(const mxArray *in_z, double * out_z);
+
+/* ----------function definitions --------------------------------*/
 // convert mx to int
 void convert_mxsca_to_int(const mxArray *in_z, int * out_z)
 {
-    // *out_z = (int) mxGetPr(in_z);
     double *realData = mxGetPr(in_z);
     *out_z = (int) *realData;
 }
@@ -11,7 +28,6 @@ void convert_mxsca_to_int(const mxArray *in_z, int * out_z)
 // convert mxint to int
 void convert_mxint_to_int(const mxArray *in_z, int * out_z)
 {
-    // *out_z = (int) mxGetPr(in_z);
     int *realData = mxGetData(in_z);
     *out_z = (int) *realData;
 }
@@ -50,10 +66,6 @@ void convert_intvec_to_mxvec(int *in_z, const mxArray * out_z)
     const int vec_len = mxGetM(out_z);
     double *H0r;
     H0r = mxGetPr(out_z);
-    // double dz = (double) *in_z;
-    // H0r[0] = creal(dz);
-
-    // H0r = mxGetPr(outputArray);
     for(int j=0;j<vec_len;j++)
     {
         H0r[j] =(double) creal(in_z[j]);
@@ -77,13 +89,11 @@ void convert_mxsca_to_c(const mxArray *in_z, complex double * out_z)
 // function to convert single matlab complex input to C scalar
 void convert_c_to_mxsca(const double complex input_val, mxArray *output_val)
 {
-    // mxArray output_val = mxCreateDoubleMatrix(1,1,mxCOMPLEX);
     double *H0r, *H0i;
     H0r = mxGetPr(output_val);
     H0i = mxGetPi(output_val);
     H0r[0] = creal(input_val);
     H0i[0] = cimag(input_val);
-    // return output_val;
 }
 
 // function to convert matlab vector to complex double C vector

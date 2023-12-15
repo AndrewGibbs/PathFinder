@@ -7,8 +7,102 @@
 #define sqrt2 1.414213562373095
 #define PI 3.141592653589793
 
-/* ----------------- common complex functions -------------------*/
-// my impl
+/* ----------------- function prototypes ------------------------*/
+
+// mex functions
+void SDpathODEuler_extend_coarse_path(
+        int p_length,
+        double complex g_coeffs[],
+        double complex SPs[],
+        double base_step_size,
+        int n_max,
+        double P_new_max,
+        int g_order,
+        double* p_log,
+        double complex* h_log,
+        bool* success,
+        int *n);
+
+void SDquadODEulerNEwtonCorrection(
+        double *p_quad,
+        double *p_coarse,
+        double complex h0,
+        double complex *h_coarse,
+        double complex *gCoeffs,
+        double freq,
+        double NewtonThresh,
+        int NewtonIts,
+        int coarse_array_size,
+        int quad_array_size,
+        int gCoeffs_len,
+        double complex *h_quad,
+        double complex *dhdp_quad,
+        int *Newton_success);
+
+void SDpathODEuler(
+        const double complex h0,
+        double complex *gCoeffs,
+        double complex *SPs,
+        double *cover_radii,
+        double complex *valleys,
+        const double base_step_size,
+        const int n_max,
+        const double r_star,
+        const double Newton_small_threshold,
+        const double Newton_big_threshold,
+        const int SPs_len,
+        const int gCoeffs_len,
+        double *p_log,
+        double complex *h_log,
+        int *valley_index,
+        int *ball_index,
+        int *n
+        );
+        
+// utility functions
+double complex polyval(const double complex g_coeffs[], const double complex z, int order);
+void diff_poly_coeffs(const double complex g_coeffs[], double complex* dg_coeffs, int g_order);
+int imax(int a, int b);
+
+// subroutines used within main path tracing algorithm
+double complex get_Newton_step(
+    const double p,
+    const double complex g_h,
+    const double complex dg_h,
+    const double complex g_at_se,
+    // outputs
+    double complex *gCoeffs,
+    double complex *dgCoeffs);
+void inAball(                   
+    double complex h,
+    double complex * SPs,
+    double * cover_radii,
+    int length_SPs,
+    bool *yn,
+    int *index);
+void beyondNoReturn(            
+    double complex h,
+    double complex *valleys,
+    double complex *gCoeffs,
+    int order,
+    double r_star,
+    bool * in_no_return_yn,
+    int * index);
+void halt_euler(                
+    double complex h,
+    double complex *valleys,
+    double complex *gCoeffs,
+    const int order,
+    double complex *SPs,
+    double *cover_radii,
+    const double r_star,
+    bool *inball_yn,
+    bool *in_no_return_yn,
+    int *index);
+
+
+/* ----------function definitions --------------------------------*/
+/* ----------------- utility functions -------------------*/
 double complex polyval(const double complex g_coeffs[], const double complex z, int order)
 {
     // init with j=0 case, corresponding to constant coefficient
@@ -146,8 +240,6 @@ void SDquadODEulerNEwtonCorrection(// orig inputs
     double complex Newton_step, err, F;
 
     for (int N = 0; N < quad_array_size; N++) {
-
-        // [p_below,coarse_index] = max(p_coarse(p_coarse<=p_quad(N)));
         
         // get the largest coarse value of p that is less than this quad value of p
         // Linearly interpolate coarse solve for initial guess
@@ -168,8 +260,6 @@ void SDquadODEulerNEwtonCorrection(// orig inputs
 
         // Newton corrector step
         for (int n = 0; n < NewtonIts; ++n) {
-            // dh_N = polyval(dgCoeffs, h_quad[N], order-1);
-            // get_Newton_step(&Newton_step, freq_times_g_at_se, p_quad[N], gCoeffs, h_quad[N]);
             Newton_step = ((-freq_times_g_at_se + freq * polyval(gCoeffs, h_quad[N], order)) - 1.0I * p_quad[N]) / (freq * polyval(dgCoeffs, h_quad[N], order-1));
 
             // update quad node at this Newton step
@@ -196,8 +286,6 @@ void SDquadODEulerNEwtonCorrection(// orig inputs
 
 /* -------------------  main code for the SD path tracing ------------------------- */
 
-// ** learn about why people declare functions at the top of a file - does this achieve anything practical?
-
 // ex-indented functions
 double complex get_Newton_step(const double p,
                                 const double complex g_h,
@@ -207,9 +295,6 @@ double complex get_Newton_step(const double p,
                                 double complex *gCoeffs,
                                 double complex *dgCoeffs)
 {   double complex step;
-    // double complex g_h, dg_h;
-    // g_h = polyval(gCoeffs,h,order);
-    // dg_h = polyval(dgCoeffs,h,order-1);
     step = (g_h-g_at_se-1.0I*p)/dg_h;
     return step;
 }
@@ -282,8 +367,6 @@ void beyondNoReturn(double complex h,
         v_angle = carg(valleys[v_index]);
         double theta_diff = fmin(fmin(fabs(h_angle-v_angle),fabs(h_angle-v_angle-2*PI)),fabs(h_angle-v_angle+2*PI));
 
-        // ** could define sqrt2 as a constant? **
-        // sqrt2 = sqrt(2);
         if(theta_diff < PI/(2*order))
         { // now check Dave's refined polynomial condition
             G = order*cabs(gCoeffs[0])*pow(R,(order-1))*fmin(1/sqrt2,cos(order*theta_diff));
@@ -409,12 +492,6 @@ void SDpathODEuler( //inputs
             {min_SP_dist = SP_dists[j];}
         }
 
-        // min_SP_dist = cabs(SPs[0]-h);
-        // for(int j=1; j<SPs_len; j++)
-        // {
-        //     min_SP_dist = fmin(cabs(SPs[j]-h),min_SP_dist);
-        // }
-
         p_step_size = base_step_size*fmin(2*cabs(dg_h*dg_h/ddg_h),min_SP_dist/cabs(F_h));
         h = h + p_step_size*F_h;
 
@@ -448,7 +525,6 @@ void SDpathODEuler( //inputs
                     // outputs
                     &inball_yn, &in_no_return_yn, &endex);
 
-        // [inball_yn, in_no_return_yn, endex] = halt_euler();
         continue_loop = !(inball_yn || in_no_return_yn);
 
         if(!continue_loop)
