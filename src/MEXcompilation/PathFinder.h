@@ -58,11 +58,13 @@ void SDpathODEuler(
         int *ball_index,
         int *n
         );
-        
+
 // utility functions
 double complex polyval(const double complex g_coeffs[], const double complex z, int order);
 void diff_poly_coeffs(const double complex g_coeffs[], double complex* dg_coeffs, int g_order);
 int imax(int a, int b);
+double safe_pow(double x, double p, double X);
+double complex safe_cpow(const double complex x, const double complex p, const double complex X);
 
 // subroutines used within main path tracing algorithm
 double complex get_Newton_step(
@@ -148,6 +150,33 @@ int imax(int a, int b)
     if(a<b){c = b;}
     else{c=a;}
     return c;
+}
+
+double safe_pow(const double x, const double p, const double X)
+{
+    /* produces a backup value X when 0^0 is called */
+    double y;
+    if(p==0)
+    {
+        y = X;
+    }
+    else{
+        y = pow(x,p);
+    }
+    return y;
+}
+
+double complex safe_cpow(const double complex x, const double complex p, const double complex X)
+{
+    double y;
+    if(p==0)
+    {
+        y = X;
+    }
+    else{
+        y = cpow(x,p);
+    }
+    return y;
 }
 
 /* ------------- mexable functions -----------------------------*/
@@ -369,9 +398,9 @@ void beyondNoReturn(double complex h,
 
         if(theta_diff < PI/(2*order))
         { // now check Dave's refined polynomial condition
-            G = order*cabs(gCoeffs[0])*pow(R,(order-1))*fmin(1/sqrt2,cos(order*theta_diff));
+            G = order*cabs(gCoeffs[0])*safe_pow(R,(order-1),0.0)*fmin(1/sqrt2,cos(order*theta_diff));
             for (int j=1; j <order; j++)
-                {G -= j*cabs(gCoeffs[gCoeffs_len-j-1])*pow(R,(j-1));
+                {G -= j*cabs(gCoeffs[gCoeffs_len-j-1])*safe_pow(R,(j-1),0.0);
                 if(G<=0) // G isn't getting any bigger
                     {break;}
                 }
