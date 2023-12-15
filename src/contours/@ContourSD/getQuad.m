@@ -45,7 +45,7 @@ function [Z, W] = getQuad(self,freq,Npts,quad_params)
             max_steps_before_fail = quad_params.max_number_of_ODE_steps;
             if quad_params.mex
                 [self.coarseParam, self.coarsePath, success] = ...
-                    SDpathODEuler_extend_coarse_path_mex(self.coarseParam, self.coarsePath, self.phaseCoeffs, SPs, quad_params.global_step_size, int64(max_steps_before_fail), max(P0)/freq);
+                    SDpathODEuler_extend_coarse_path_mex(self.coarseParam, self.coarsePath, self.phaseCoeffs(:), SPs, quad_params.global_step_size, int64(max_steps_before_fail), max(P0)/freq);
             else
                 [self.coarseParam, self.coarsePath, success] = ...
                     SDpathODEuler_extend_coarse_path(self.coarseParam, self.coarsePath, self.phaseCoeffs, SPs, quad_params.global_step_size, int64(max_steps_before_fail), max(P0)/freq);
@@ -57,7 +57,7 @@ function [Z, W] = getQuad(self,freq,Npts,quad_params)
         
         %_mex
         if quad_params.mex
-            [h, dhdp, Newton_success] = SDquadODEulerNEwtonCorrection_mex(P0, freq*self.coarseParam, self.ICs(1), self.coarsePath, self.phaseCoeffs, freq, quad_params.NewtonThresh, uint32(quad_params.NewtonIts));
+            [h, dhdp, Newton_success] = SDquadODEulerNEwtonCorrection_mex(P0, freq*self.coarseParam, self.ICs(1), self.coarsePath, self.phaseCoeffs(:), freq, quad_params.NewtonThresh, uint32(quad_params.NewtonIts));
         else
             [h, dhdp, Newton_success] = SDquadODEulerNEwtonCorrection(P0, freq*self.coarseParam, self.ICs(1), self.coarsePath, self.phaseCoeffs, freq, quad_params.NewtonThresh, uint32(quad_params.NewtonIts));
         end

@@ -11,7 +11,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
     /* --------------- set inputs, by converting to C variables ----------------- */
 //     number of entries in main vectors, so far
     int n_max;
-    convert_mxsca_to_int(prhs[5], &n_max);
+    convert_mxint_to_int(prhs[5], &n_max);
 
     // p so far
     double *p_log = malloc(n_max * sizeof(double));
@@ -68,12 +68,12 @@ void mexFunction(int nlhs, mxArray *plhs[],
 
 //     /* ------------------ make the outputs for matlab ------------------------------- */
 //     // matlab outputs: [p_log_out, h_log_out, success]
-    plhs[0] = mxCreateDoubleMatrix(output_length,1,mxCOMPLEX);
+    plhs[0] = mxCreateDoubleMatrix(output_length,1,mxREAL);
     plhs[1] = mxCreateDoubleMatrix(output_length,1,mxCOMPLEX);
     convert_double_to_mxvec(p_log,plhs[0]);
     convert_c_to_mxvec(h_log,plhs[1]);
 
-    plhs[2] =  mxCreateDoubleMatrix(1,1,mxCOMPLEX);
+    plhs[2] =  mxCreateDoubleMatrix(1,1,mxREAL);
     int yn;
     if(success){yn = 1;}
     else {yn = 0;}

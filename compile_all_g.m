@@ -10,7 +10,7 @@ cd src/MEXcompilation/;
 mex -output SDpathODEuler_v4_mex -g SDpathODEuler.c; 
 
 % compile 'SDquadODEulerNEwtonCorrection'
-mex -output SDquadODEulerNEwtonCorrection -g SDquadODEulerNEwtonCorrection.c;
+mex -output SDquadODEulerNEwtonCorrection_mex -g SDquadODEulerNEwtonCorrection.c;
 
 % compile 'SDpathODEuler_extend_coarse_path'
 mex -output SDpathODEuler_extend_coarse_path_mex -g SDpathODEuler_extend_coarse_path.c;

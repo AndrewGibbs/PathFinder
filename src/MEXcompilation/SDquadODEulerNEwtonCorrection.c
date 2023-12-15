@@ -68,7 +68,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
 
     plhs[0] = mxCreateDoubleMatrix(quad_size,1,mxCOMPLEX);
     plhs[1] = mxCreateDoubleMatrix(quad_size,1,mxCOMPLEX);
-    plhs[2] = mxCreateDoubleMatrix(quad_size,1,mxCOMPLEX);
+    plhs[2] = mxCreateDoubleMatrix(quad_size,1,mxREAL);
     
     convert_c_to_mxvec(h_quad,plhs[0]);
     convert_c_to_mxvec(dhdp_quad,plhs[1]);
