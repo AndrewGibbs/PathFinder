@@ -27,15 +27,15 @@ void roots(
     double complex *root_vals);
 
 void multiplyPolynomials(   
-    double complex poly1[],
-    double complex poly2[],
-    int m,
-    int n,
+    const double complex poly1[],
+    const double complex poly2[],
+    const int m,
+    const int n,
     double complex result[]);
 
-int factorial(int n);
+int factorial(const int n);
 
-int nchoosek(int n, int k);
+int nchoosek(const int n, const int k);
 
 // bisection subroutines
 int compare_fn(const void *a, const void *b);
@@ -107,10 +107,10 @@ void roots( const double complex *g_coeffs,
 
 }
 
-void multiplyPolynomials(   double complex poly1[],
-                            double complex poly2[],
-                            int m,
-                            int n,
+void multiplyPolynomials(   const double complex poly1[],
+                            const double complex poly2[],
+                            const int m,
+                            const int n,
                             double complex result[]) {
     // Initialize the result array with zeros
     for (int i = 0; i < m + n - 1; i++) {

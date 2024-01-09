@@ -11,13 +11,13 @@
 
 // mex functions
 void SDpathODEuler_extend_coarse_path(
-        int p_length,
-        double complex g_coeffs[],
-        double complex SPs[],
-        double base_step_size,
-        int n_max,
-        double P_new_max,
-        int g_order,
+        const int p_length,
+        const double complex g_coeffs[],
+        const double complex SPs[],
+        const double base_step_size,
+        const int n_max,
+        const double P_new_max,
+        const int g_order,
         double* p_log,
         double complex* h_log,
         bool* success,
@@ -26,15 +26,15 @@ void SDpathODEuler_extend_coarse_path(
 void SDquadODEulerNEwtonCorrection(
         double *p_quad,
         double *p_coarse,
-        double complex h0,
+        const double complex h0,
         double complex *h_coarse,
         double complex *gCoeffs,
-        double freq,
-        double NewtonThresh,
-        int NewtonIts,
-        int coarse_array_size,
-        int quad_array_size,
-        int gCoeffs_len,
+        const double freq,
+        const double NewtonThresh,
+        const int NewtonIts,
+        const int coarse_array_size,
+        const int quad_array_size,
+        const int gCoeffs_len,
         double complex *h_quad,
         double complex *dhdp_quad,
         int *Newton_success);
@@ -60,11 +60,18 @@ void SDpathODEuler(
         );
 
 // utility functions
-double complex polyval(const double complex g_coeffs[], const double complex z, int order);
-void diff_poly_coeffs(const double complex g_coeffs[], double complex* dg_coeffs, int g_order);
-int imax(int a, int b);
-double safe_pow(double x, double p, double X);
-double complex safe_cpow(const double complex x, const double complex p, const double complex X);
+double complex polyval( const double complex g_coeffs[],
+                        const double complex z, int order);
+void diff_poly_coeffs(  const double complex g_coeffs[],
+                        double complex* dg_coeffs, int g_order);
+int imax(   const int a,
+            const int b);
+double safe_pow(    const double x,
+                    const double p,
+                    const double X);
+double complex safe_cpow(   const double complex x,
+                            const double complex p,
+                            const double complex X);
 
 // subroutines used within main path tracing algorithm
 double complex get_Newton_step(
@@ -76,25 +83,26 @@ double complex get_Newton_step(
     double complex *gCoeffs,
     double complex *dgCoeffs);
 void inAball(                   
-    double complex h,
+    const double complex h,
     double complex * SPs,
     double * cover_radii,
-    int length_SPs,
+    const int length_SPs,
     bool *yn,
     int *index);
 void beyondNoReturn(            
-    double complex h,
-    double complex *valleys,
-    double complex *gCoeffs,
-    int order,
-    double r_star,
+    const double complex h,
+    const double complex *valleys,
+    const double complex *gCoeffs,
+    const int order,
+    const double r_star,
     bool * in_no_return_yn,
     int * index);
 void halt_euler(                
-    double complex h,
+    const double complex h,
     double complex *valleys,
     double complex *gCoeffs,
     const int order,
+    const int length_SPs,
     double complex *SPs,
     double *cover_radii,
     const double r_star,
@@ -144,7 +152,7 @@ void diff_poly_coeffs(const double complex g_coeffs[], double complex* dg_coeffs
 }
 
 // simple function which takes the max of two integers
-int imax(int a, int b)
+int imax(const int a, const int b)
 {
     int c;
     if(a<b){c = b;}
@@ -156,7 +164,7 @@ double safe_pow(const double x, const double p, const double X)
 {
     /* produces a backup value X when 0^0 is called */
     double y;
-    if(p==0)
+    if(x==0 & p==0)
     {
         y = X;
     }
@@ -169,7 +177,7 @@ double safe_pow(const double x, const double p, const double X)
 double complex safe_cpow(const double complex x, const double complex p, const double complex X)
 {
     double y;
-    if(p==0)
+    if(x==0 & p==0)
     {
         y = X;
     }
@@ -184,13 +192,13 @@ double complex safe_cpow(const double complex x, const double complex p, const d
 /* Routine which extends the path*/
 void SDpathODEuler_extend_coarse_path(
         //inputs
-        int p_length,
-        double complex g_coeffs[],
-        double complex SPs[],
-        double base_step_size,
-        int n_max,
-        double P_new_max,
-        int g_order,
+        const int p_length,
+        const double complex g_coeffs[],
+        const double complex SPs[],
+        const double base_step_size,
+        const int n_max,
+        const double P_new_max,
+        const int g_order,
         //outputs (as pointers)
         double* p_log,
         double complex* h_log,
@@ -245,16 +253,16 @@ void SDpathODEuler_extend_coarse_path(
 void SDquadODEulerNEwtonCorrection(// orig inputs
                                 double *p_quad,
                                 double *p_coarse,
-                                double complex h0,
+                                const double complex h0,
                                 double complex *h_coarse,
                                 double complex *gCoeffs,
-                                double freq,
-                                double NewtonThresh,
+                                const double freq,
+                                const double NewtonThresh,
                                 // extra inputs for C code
-                                int NewtonIts,
-                                int coarse_array_size,
-                                int quad_array_size,
-                                int gCoeffs_len,
+                                const int NewtonIts,
+                                const int coarse_array_size,
+                                const int quad_array_size,
+                                const int gCoeffs_len,
                                 // outputs
                                 double complex *h_quad,
                                 double complex *dhdp_quad,
@@ -328,10 +336,10 @@ double complex get_Newton_step(const double p,
     return step;
 }
 
-void inAball(double complex h,
+void inAball(const double complex h,
             double complex * SPs,
             double * cover_radii,
-            int length_SPs,
+            const int length_SPs,
             // outputs
             bool *yn,
             int *index)
@@ -342,17 +350,18 @@ void inAball(double complex h,
         if(cover_radii[n]>0 & cabs(h-SPs[n])<cover_radii[n])
         {
             *yn = true;
+            *index = n;
             break;
         }
 
     }
 }
 
-void beyondNoReturn(double complex h,
-                    double complex *valleys,
-                    double complex *gCoeffs,
-                    int order,
-                    double r_star,
+void beyondNoReturn(const double complex h,
+                    const double complex *valleys,
+                    const double complex *gCoeffs,
+                    const int order,
+                    const double r_star,
                     // outputs
                     bool * in_no_return_yn,
                     int * index)
@@ -365,11 +374,16 @@ void beyondNoReturn(double complex h,
     int gCoeffs_len = order+1;
     double R = cabs(h);
     double complex h_on_circle;
-    double h_angle;
-    double v_angle;
+    double h_angle, v_angle, theta_diff;
     double G;
-    if(R>r_star) // first test, based on length of z
+    int v_index = 0;
+    double v_dist;
+    int v_count, j;
 
+    // mexPrintf("yn=%d\n",*in_no_return_yn);
+    // mexPrintf("r_star=%f\tR=%f\n",r_star,R);
+    if(R>r_star) // first test, based on length of z
+    {
         // now check that path is sufficiently close to monomial SD path
         if(R==0)
             {h_on_circle = 0.0+0.0I;}
@@ -378,10 +392,9 @@ void beyondNoReturn(double complex h,
 
         /* my feeling is that the following could be sped up,
         if there is some standard ordering of the valleys?*/
-        int v_index = 0;
-        double v_dist;
         double v_min_dist = cabs(cexp(1.0I*carg(valleys[v_index]))-h_on_circle);
-        for(int v_count = 1; v_count<order; v_count++)
+        // mexPrintf("v_min=%f",v_min_dist);
+        for(v_count = 1; v_count<order; v_count++)
         {
             v_dist = cabs(cexp(1.0I*carg(valleys[v_count]))-h_on_circle);
             if(v_dist<v_min_dist)
@@ -399,7 +412,7 @@ void beyondNoReturn(double complex h,
         if(theta_diff < PI/(2*order))
         { // now check Dave's refined polynomial condition
             G = order*cabs(gCoeffs[0])*safe_pow(R,(order-1),0.0)*fmin(1/sqrt2,cos(order*theta_diff));
-            for (int j=1; j <order; j++)
+            for (j=1; j <order; j++)
                 {G -= j*cabs(gCoeffs[gCoeffs_len-j-1])*safe_pow(R,(j-1),0.0);
                 if(G<=0) // G isn't getting any bigger
                     {break;}
@@ -408,12 +421,15 @@ void beyondNoReturn(double complex h,
                 {*in_no_return_yn = true;
                 *index = v_index;}
         }
+        // mexPrintf("yn=%d\n",*in_no_return_yn);
+    }
 }
 
-void halt_euler(double complex h,
+void halt_euler(const double complex h,
             double complex *valleys,
             double complex *gCoeffs,
             const int order,
+            const int length_SPs,
             double complex *SPs,
             double *cover_radii,
             const double r_star,
@@ -421,8 +437,13 @@ void halt_euler(double complex h,
             bool *inball_yn,
             bool *in_no_return_yn,
             int *index) 
-    {int length_SPs = order-1;
-    inAball(h, SPs, cover_radii, length_SPs, inball_yn, index);
+    {
+    inAball(h,
+            SPs,
+            cover_radii,
+            length_SPs,
+            inball_yn,
+            index);
     if (*inball_yn)
         {*in_no_return_yn = false;}
     else
@@ -550,7 +571,7 @@ void SDpathODEuler( //inputs
         inball_yn = false;
         in_no_return_yn = false;
         halt_euler(//inputs:
-                    h,valleys,gCoeffs,order,SPs,cover_radii,r_star,
+                    h,valleys,gCoeffs,order,SPs_len,SPs,cover_radii,r_star,
                     // outputs
                     &inball_yn, &in_no_return_yn, &endex);
 
