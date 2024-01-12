@@ -53,7 +53,7 @@
             
             %construct an instance of this class
             self.startPoint = startPoint;
-            self.paramOrder = startCover.orderSum;
+%             self.paramOrder = startCover.orderSum;
             self.startCoverIndex = startCover.index;
 %             [self.startClusterIndices, self.intervalEndpoint] = getClusterBuddies(clusterIndices, self.startCoverIndex, clusterEndpoints);
             

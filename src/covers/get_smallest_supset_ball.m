@@ -1,5 +1,8 @@
 function r = get_smallest_supset_ball(g_coeffs, freq, xi, Cosc,num_rays, take_max, imag_thresh)
-%find the smallest ball containing the blob such that freq*|g(z)-g(\xi)|<C
+%% find the smallest/largest ball enclosed by the closed contour such that
+% freq*|g(z)-g(\xi)|<C.
+
+% the default is to take
     radii = zeros(num_rays,1);
     d_theta = 2*pi/double(num_rays);
     for n=1:num_rays

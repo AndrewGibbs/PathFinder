@@ -11,7 +11,7 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeff
     
     lightGrayColor = [.85 .85 .85];
     for S = covers
-       marginSpace = max(marginSpace,S{1}.diameter);
+       marginSpace = max(marginSpace,S{1}.radius);
     end
     
     min_x = 0; min_y = 0; max_x = 0; max_y = 0;
@@ -87,6 +87,7 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeff
 
 
     plot(z+eps*1i,'r.','MarkerSize',6.5);
+    hold on;
     %plot stationary points:
     plot(SPs+eps*1i,'k*');
     

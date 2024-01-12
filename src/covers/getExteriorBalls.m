@@ -1,44 +1,54 @@
 function [covers, endPointIndices]...
                 = getExteriorBalls(g, freq, SPs, infContour, a, b, Cosc,g_coeffs,...
                     ball_clump_thresh,num_rays,int_balls_yn,imag_thresh, use_mex)
+    
+    %% put a ball of radius zero around the endpoints
 
+    % initialise variables
     coverIndex = 0;
     endPointBalls = [];
     endPointIndices = [];
-    DH = 1;%(1/2);
     
+    %not yet sure if endpoints are finite/infinite
     maybzEndpoints = [a b];
-    ep_count = 0;
+    ep_count = 0; %endpoint count, for number of infinite endpoints
     for m = [1 2]
        if ~infContour(m)
            coverIndex = coverIndex + 1;
            ep_count = ep_count + 1;
-           endPointBalls{ep_count} = Ball(0,maybzEndpoints(m),g,coverIndex,0);
-%            endPointBalls = [endPointBalls Ball(0,maybzEndpoints(m),g,coverIndex,0)];
+           % construct the ball of radius zero
+           endPointBalls{ep_count} = Ball(0,maybzEndpoints(m),g,coverIndex);
            endPointIndices = [endPointIndices coverIndex];
        end
     end
     
+    %% add non-zero radius around stationary points
+    % for the balls around the stationary points, we want to ensure there is
+    % a bounded number of oscillations. This is the smallest ball inside of
+    % which |g(z)-g(SP)|<numOscs, where g is the phase, z is any point in the
+    % ball, SP is the stationary point.
+
     if ~isempty(SPs)
+        % initialise radius variable
         radii = zeros(length(SPs),1);
+        % initialise ball centres as stationary points
         centres = SPs;
         for n = 1:length(SPs)
-%             coverIndex = coverIndex + 1;
-%             radii(n) = get_interior_ball_mex(g_coeffs.', freq, SPs(n), uint32(SPorders(n)), Cosc);
-            % DH wants factor of two...
+            % determine radius, so that it has a bounded number of
+            % oscillations
             if use_mex
-                radii(n) = DH*get_smallest_supset_ball_mex(g_coeffs.', freq, SPs(n), Cosc, num_rays,~int_balls_yn,imag_thresh);
+                radii(n) = get_smallest_supset_ball_mex(g_coeffs.', freq, SPs(n), Cosc, num_rays,~int_balls_yn,imag_thresh);
             else
-                radii(n) = DH*get_smallest_supset_ball(g_coeffs.', freq, SPs(n), Cosc, num_rays,~int_balls_yn,imag_thresh);
+                radii(n) = get_smallest_supset_ball(g_coeffs.', freq, SPs(n), Cosc, num_rays,~int_balls_yn,imag_thresh);
             end
         end
-
-%             coversInit(n) = Ball(r_min,SPs(n),g_coeffs,coverIndex,sum(SPorders+1));
-        % DH also wants a matrix here, instead of the below loop
         
+
+        %% merge balls which are close together
         num_SP_balls = length(SPs);
         continue_loop = true;
 
+        % continue process until all balls are sufficiently far apart
         while num_SP_balls>1 && continue_loop
 
             D = zeros(num_SP_balls);
@@ -46,10 +56,13 @@ function [covers, endPointIndices]...
             min_n = 0;
             min_val = inf;
 
-            % construct DH's matrix
+            % construct matrix describing distances between SPs
             for m=1:num_SP_balls
                 for n=(m+1):num_SP_balls
+                    % the condition for 'closeness' is the following:
                     D(m,n) = abs(centres(m)-centres(n))/max(radii(m),radii(n));
+                    % possibly merge the balls which are closest in the
+                    % above sense
                     if D(m,n)<min_val
                         min_val = D(m,n);
                         min_m = m;
@@ -58,15 +71,15 @@ function [covers, endPointIndices]...
                 end
             end
     
+            % if closest balls are sufficiently close, merge them
             if min_val<=ball_clump_thresh
+                % now remove extra index from the list
                 if radii(min_m) < radii(min_n)
                     remove_index = min_m;
-%                     keep_index = min_n;
                 else
                     remove_index = min_n;
-%                     keep_index = min_m;
                 end
-                % now remove this ball from the list
+                % and remove relevant data from other variables
                 radii = radii(1:num_SP_balls~=remove_index);
                 centres = centres(1:num_SP_balls~=remove_index);
                 num_SP_balls = num_SP_balls - 1;
@@ -75,107 +88,16 @@ function [covers, endPointIndices]...
             end
         end
 
-        % now loop over all balls and check they're not too close
-%         sparse_balls = false;
-%         num_SP_balls = length(SPs);
-%         while sparse_balls == false
-%             sparse_balls = true;
-%             for m=1:num_SP_balls
-%                 for m_ = (m+1):num_SP_balls
-%                     if abs(centres(m)-centres(m_))<=ball_clump_thresh
-%                         sparse_balls = false;
-%                         mergeSP = (centres(m)+centres(m_))/2;
-%                         merge_rad = (radii(m)+radii(m_))/2;
-% 
-%                         num_SP_balls = num_SP_balls - 1;
-%                         radii(m_)= [];
-%                         centres(m_) = [];
-%                         radii(m)= merge_rad;
-%                         centres(m) = mergeSP;
-%                         break;
-%                     end
-%                     if ~sparse_balls
-%                         break;
-%                     end
-%                 end
-%             end
-%         end
-
         for n=1:num_SP_balls
             coverIndex = coverIndex + 1;
-            coversInit{n} = Ball(radii(n),centres(n),g_coeffs,coverIndex,length(g_coeffs)-1,use_mex);
+            coversInit{n} = Ball(radii(n),centres(n),g_coeffs,coverIndex);
         end
 
-        %delete exits inside a cover from another mother:
-
+        %% delete redundant exits
+        % Some steepest exits will start inside another ball. This can be
+        % deleted now, saving work later on.
         covers = [endPointBalls deleteRedundantExits(coversInit)];
     else
         covers = endPointBalls;
     end
-
-%     %now determine which covers overlap:
-%     [intersectionMatrix, clusters, clusterEndpoints] = coverOverlapV2(covers);
-%     
-%     if Hermite
-%         HermiteCandidates = getHermiteCandidates(clusters, clusterEndpoints, covers);
-%     else
-%         HermiteCandidates = [];
-%     end
-% 
-%     nonOscFlag = false;
-%     if (~infContour(1)) && (~infContour(2))
-%         for n = 1:length(clusterEndpoints)
-%             if ismember(a,clusterEndpoints{n}) && ismember(b,clusterEndpoints{n})
-%                 nonOscFlag = true;
-%                 break;
-%             end
-%         end
-%     end
-    
-%     function minR = getInteriorRadius(xi)
-% 
-%         Nangles = 32;
-%         Nrads = 32;
-%         scale = 2/freq;
-%         G = @(z) freq*abs(g(z)-g(xi)) - Cosc;
-%         
-%         crappyGuess = true;
-%         theta = 2*pi*(1:Nangles)/Nangles;
-%         
-%         count = 0;
-%         while crappyGuess == true
-%             r = scale*linspace(0,1,Nrads);
-%             %r = r(2:end);
-%             guess = xi + r.'*exp(1i*theta);
-%             isNegative = G(guess) < 0;
-%             if sum(sum(isNegative)) == Nangles*Nrads
-%                 scale = scale*2;
-%             elseif sum(sum(isNegative)) == 0
-%                 scale = scale/2;
-%             else
-%                 crappyGuess = false;
-%             end
-%             count = count + 1;
-%             if count>100
-%                 error('failed to find a ray');
-%             end
-%         end
-%         
-%         Rinds = 1:Nrads;
-%         minR = inf;
-%         minInd = 0;
-%         
-%         for nn = 1:Nangles
-%             firstPositive{nn} = Rinds(~isNegative(:,nn)); % (n,:) indices might be wrong way around here
-%             if ~isempty(firstPositive{nn})
-%                 if r(firstPositive{nn}(1))<minR
-%                     minR = r(firstPositive{nn}(1));
-%                     minInd = nn;
-%                 end
-%             end
-%         end
-%         if isinf(minR)
-%             error('failed to find ball inside of contour');
-%         end
-%     end
 end

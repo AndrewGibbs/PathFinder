@@ -1,38 +1,39 @@
-classdef Ball < ComplexCover
+classdef Ball% < ComplexCover
     %Ball in complex plane
     
     properties
         radius
         centre
+        index
+        steepestExits
     end
     
     methods
-        function self = Ball(r,c,g_coeffs,index,orderSum,mex)
+        function self = Ball(r,c,g_coeffs,index)
             self.radius = r;
             self.centre = c;
-            self.pseudoCentre = c;
+%             self.pseudoCentre = c;
             self.index = index;
-            self.orderSum = orderSum;
-            self.boundaryLength = 2*pi*r;
-            self.diameter = r;
-            self.boundary.xdata = [c];
-            self.boundary.ydata = [c];
-            self.exitGrad = 32*max(self.orderSum,1);
+%             self.orderSum = orderSum;
+%             self.boundaryLength = 2*pi*r;
+%             self.diameter = r;
+%             self.boundary.xdata = [c];
+%             self.boundary.ydata = [c];
+%             self.exitGrad = 32*max(self.orderSum,1);
             
             if r>0
                 if nargin>2
-                    %self.steepestExits = self.getSteepestExits(@(x) polyval(g_coeffs,x)); % used
-                    %to be polyval g, now it's just coeffs
 
-                    % the below used to be (optionally) mex'd, but speedup was minimal
+                    % get steepest exits on the circumference of the ball
                     self.steepestExits = unique(get_stepest_exits_on_ball(g_coeffs.',c,r).');
 %                   
                 end
-            else
+            else % if zero radius
+                % default to steepest exit at centre
                 self.steepestExits = c;
             end
-            s = linspace(0,1,self.exitGrad);
-            self.boundaryComplex = self.boundaryTrace(s);
+%             s = linspace(0,1,self.exitGrad);
+%             self.boundaryComplex = self.boundaryTrace(s);
         end
 
         % methods defined elsewhere
