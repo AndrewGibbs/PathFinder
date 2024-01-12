@@ -10,6 +10,17 @@ r = get_smallest_supset_ball(g_coeffs, freq, xi, Cosc, num_rays, take_max, imag_
 void mexFunction(int nlhs, mxArray *plhs[],
                 int nrhs, const mxArray *prhs[])
 {
+    /* check number of inputs is correct*/
+    if(nrhs != 7) {
+    mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nrhs",
+                      "Seven inputs required.");
+    }
+    
+    /* check number of outputs is correct*/
+    if(nlhs != 1) {
+    mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nlhs",
+                      "One output required.");
+    }
 
     int g_coeffs_len = mxGetM(prhs[0]);
     double complex g_coeffs[g_coeffs_len];

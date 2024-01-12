@@ -34,11 +34,13 @@ void convert_mxint_to_int(const mxArray *in_z, int * out_z)
 
 void convert_mxsca_to_bool(const mxArray *in_z, bool * out_z)
 {
-    double *realData = mxGetData(in_z);
+    bool *realData = mxGetData(in_z);
     if(*realData!=0)
         {*out_z = true;}
     else{
         *out_z = false;}
+    
+    // mexPrintf("%d\n",*out_z);
 }
 
 

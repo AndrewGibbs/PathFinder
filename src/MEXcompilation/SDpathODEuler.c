@@ -78,6 +78,18 @@ void mexFunction(int nlhs, mxArray *plhs[],
                     &output_length
                     );
 
+    /* check number of inputs is correct*/
+    if(nrhs != 11) {
+    mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nrhs",
+                      "Eleven inputs required.");
+    }
+
+    /* check number of outputs is correct*/
+    if(nlhs != 4) {
+    mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nlhs",
+                      "Four outputs required.");
+    }
+
     
     plhs[0] = mxCreateDoubleMatrix(output_length+1, 1, mxREAL);
     /* need to deal with the fact this isn't complex */

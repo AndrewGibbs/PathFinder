@@ -8,6 +8,18 @@
 void mexFunction(int nlhs, mxArray *plhs[],
                 int nrhs, const mxArray *prhs[])
 {
+    /* check number of inputs is correct*/
+    if(nrhs != 7) {
+    mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nrhs",
+                      "Seven inputs required.");
+    }
+
+    /* check number of outputs is correct*/
+    if(nlhs != 3) {
+    mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nlhs",
+                      "Three outputs required.");
+    }
+
     /* --------------- set inputs, by converting to C variables ----------------- */
 //     number of entries in main vectors, so far
     int n_max;

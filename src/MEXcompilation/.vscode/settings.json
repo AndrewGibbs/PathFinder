@@ -17,6 +17,7 @@
         "cmath": "c",
         "numbers": "c",
         "interface.h": "c",
-        "get_r.h": "c"
+        "get_r.h": "c",
+        "lapacke.h": "c"
     }
 }

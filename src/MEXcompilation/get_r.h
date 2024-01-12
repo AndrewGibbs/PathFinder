@@ -99,10 +99,14 @@ void roots( const double complex *g_coeffs,
     // Balance the complex matrix A
     info_balance = LAPACKE_zgebal(LAPACK_COL_MAJOR, 'B', n,
                           (lapack_complex_double *)A, n, &ilo, &ihi, scale);
+        
+    // mexPrintf("\ninfo_balance: %d\n",info_balance); /* delete later*/
 
     info_eigs = LAPACKE_zgeev(LAPACK_COL_MAJOR, 'N', 'N', n,
                         (lapack_complex_double *)A, n, root_vals,
                         NULL, 1, NULL, 1);
+
+    // mexPrintf("\ninfo_eigs: %d\n",info_eigs); /* delete later*/
 
 
 }
@@ -160,7 +164,7 @@ double bisection_r(// g eval params:
     fb = bisec_fn_r(g_coeffs, g_len, b, xi, theta, C_over_omega);
 
     if (fa * fb >= 0) {
-        printf("The function has the same sign at both ends of the interval.\n");
+        // printf("The function has the same sign at both ends of the interval.\n");
         return NAN; // Return NaN (Not a Number) to indicate an error
     }
 
@@ -192,6 +196,7 @@ double plan_b_isection( const double complex *g_coeffs,
                         const int num_guesses,
                         const int g_coeffs_len)
 {
+    // mexPrintf("plan b"); /* delete later*/
     const double tol = 1e-8;
     bool found_a_root = false;
     double r;
@@ -304,6 +309,7 @@ double get_r_given_theta(   const double complex *g_coeffs,
         if(creal(r_roots[j])>0 && fabs(cimag(r_roots[j]))<imag_thresh)
         {
             valid_roots[num_valid_roots] = r_roots[j];
+            // mexPrintf("\n%.4f+%.4fi",creal(valid_roots[num_valid_roots]));
             num_valid_roots++;
         }
     }
@@ -345,6 +351,7 @@ double get_r_given_theta(   const double complex *g_coeffs,
     free(real_guesses);
     real_guesses = NULL;
 
+    // mexPrintf("\n%.4f+%.4fi",creal(r),cimag(r));
     return r;
 
 }
@@ -373,14 +380,19 @@ double get_smallest_supset_ball(const double complex *g_coeffs,
 
     // choose biggest/smallest radius
     r = radii[0];
+    // mexPrintf("tmval: %d\n",take_max);
+    // mexPrintf("%f\n",r);
     for(int n=1; n<num_rays; n++)
     {
         if(take_max){
-            r = fmax(r,creal(radii[n]));
+            r = fmax(r,radii[n]);
         }
         else{
-            r = fmin(r,creal(radii[n]));
+            r = fmin(r,radii[n]);
         }
+        // mexPrintf("%f\n",r);
     }
+    // mexPrintf("\n");
+    // mexPrintf("%f\n",r);
     return r;
 }

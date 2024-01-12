@@ -9,6 +9,18 @@
 void mexFunction(int nlhs, mxArray *plhs[],
                 int nrhs, const mxArray *prhs[])
 {
+    /* check number of inputs is correct*/
+    if(nrhs != 8) {
+    mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nrhs",
+                      "Eight inputs required.");
+    }
+
+    /* check number of outputs is correct*/
+    if(nlhs != 3) {
+    mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nlhs",
+                      "Three outputs required.");
+    }
+
     /* -------------- initialise input variables ---------------- */
     // convert inputs to appropriate types
     int quad_size = mxGetM(prhs[0]);
