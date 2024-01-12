@@ -1,4 +1,4 @@
-function I = PathFinder(a, b, f, phaseIn, freq, Npts, varargin)
+function I = PathFinder(a, b, f, phaseIn, freq, nPts, varargin)
 %Construct weights and nodes to numerically evaluate an oscillatory
 %integral.
 %[z,w] = PathFinder(a, b, f, G, k, N, infContour)
@@ -20,7 +20,7 @@ function I = PathFinder(a, b, f, phaseIn, freq, Npts, varargin)
 %see
 %<a href="matlab:web('www.github.com/AndrewGibbs/PathFinder','-browser')">github.com/AndrewGibbs/PathFinder</a>
 
-    [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin{:});
+    [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin{:});
 
     if isempty(f)
         I = sum(w);

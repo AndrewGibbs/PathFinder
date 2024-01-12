@@ -1,4 +1,4 @@
-function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
+function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
 %Construct weights and nodes to numerically evaluate an oscillatory
 %integral.
 %[z,w] = PathFinderQuad(a, b, G, k, N, infContour)
@@ -35,7 +35,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
             params.num_rays, params.interior_balls, params.imag_thresh, params.use_mex)) ||...
             (length(phaseIn)==1)
 
-        [z, w_, dh_] = gauss_quad_complex(a,b,Npts);
+        [z, w_, dh_] = gauss_quad_complex(a,b,nPts);
         sgw = @(z) exp(1i*freq*polyval(phaseIn,z));
         w = w_.*dh_.*sgw(z);
 
@@ -47,7 +47,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
 
     if length(phaseIn)<=2 % if linear phase
         % contour can be computed instantly without approximation, reduce to this
-        [z,w] = linear_phase_NSD(a,b,freq,phaseIn(1),phaseIn(2),Npts);
+        [z,w] = linear_phase_NSD(a,b,freq,phaseIn(1),phaseIn(2),nPts);
         if params.plot
             plotAll([], [], z, a, b, params.infContour, [], [], [], []);
         end
@@ -105,7 +105,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, Npts, varargin)
 
     %get quadrature points
     tic;
-    [z, w, HermiteInds] = makeQuadV4(quadIngredients, freq, Npts, phase_handles{1}, params);
+    [z, w, HermiteInds] = makeQuadV4(quadIngredients, freq, nPts, phase_handles{1}, params);
     if params.log.take
         params.log.add_to_log(sprintf("Quadrature allocation time:\t%fs",toc));
     end
