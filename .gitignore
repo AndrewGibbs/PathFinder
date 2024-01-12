@@ -7,7 +7,7 @@ old bits/
 
 PWE sols/
 
-old tests/
+src/MEXcompilation/old_tests/
 
 analExtension/
 
@@ -18,6 +18,8 @@ paper/
 Icon?
 
 Paper/
+
+*.asv
 
 private_tests/
 
@@ -32,3 +34,9 @@ log/
 .git.bfg-report/
 
 *.asv
+
+*.mat
+
+*.mex*
+
+myMex/old_tests/
