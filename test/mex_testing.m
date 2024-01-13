@@ -46,7 +46,7 @@ function pass_tf = mex_testing()
                 Ierr = abs(I_mex-I_nomex)/abs(I_nomex);
                 
                 % account for unavoidable rounding error as we increase freq
-                if Ierr>thresh*freq
+                if Ierr>err_thresh*freq
                     pass_tf = false;
                 end
             end

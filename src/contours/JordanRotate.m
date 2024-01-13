@@ -1,4 +1,4 @@
-function [a,b,params] = Jordan_rotate(a,b,valleys,params)
+function [a,b,params] = JordanRotate(a,b,valleys,params)
     J = length(valleys);
     safety_width = (1+100*eps)*pi/(2*J);
 %rotates endpoints so they are exactly at valley

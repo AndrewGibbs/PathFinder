@@ -63,7 +63,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
     params.r_star = get_r_star(phaseIn);
 
     % rotate inf valleys if required:
-    [a,b,params] = Jordan_rotate(a,b,valleys,params);
+    [a,b,params] = JordanRotate(a,b,valleys,params);
     
     tic;
     %cover each stationary point:

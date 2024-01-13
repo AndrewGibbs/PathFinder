@@ -40,3 +40,9 @@ log/
 *.mex*
 
 myMex/old_tests/
+
+.gitattributes
+
+resources/
+
+PathFinder.prj
