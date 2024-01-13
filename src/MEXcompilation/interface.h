@@ -108,6 +108,8 @@ void convert_mxvec_to_c(const mxArray *inputArray,
     
     // get real parts of mx array
     double *realData = mxGetPr(inputArray);
+    // best practice to initialise variables outside of 'if' statements:
+    double *imagData;
 
     if(mxIsComplex(inputArray)){// matlab data has imaginary parts
         double *imagData = mxGetPi(inputArray);
@@ -119,7 +121,7 @@ void convert_mxvec_to_c(const mxArray *inputArray,
     else{ // matlab data is purely real
         for(int j=0; j<vec_len; j++)
             {
-            outputArray[j] = realData[j] + (0.0 * I);
+            outputArray[j] = ((double) realData[j]) + 0I;
             }
         }
 }

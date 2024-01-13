@@ -27,12 +27,27 @@ void mexFunction(int nlhs, mxArray *plhs[],
     int order = gCoeffs_len-1;
 
     // Note that here 'SPs' also include endpoints
-    int SPs_len = mxGetM(prhs[2]);
-    double complex SPs[SPs_len];
-    convert_mxvec_to_c(prhs[2],SPs);
+    int other_SPs_len = mxGetM(prhs[2]);
 
-    double cover_radii[SPs_len];
-    convert_mxvec_to_double(prhs[3],cover_radii);
+    /* need to account for case where there are no other SPs -
+    can't initialise blank vector in C */
+    int max_1_or_other_SPs_len = imax(other_SPs_len,1);
+
+    // initialise these two vectors which may be blank in Matlab version
+    double complex otherSPs[max1or_other_SPs_len];
+    double otherSPs_radii[other_SPs_len];
+
+    if(otherSPs == 0)
+    {
+        // in the case where there are no other SPs, add fictitious SP at infinity,
+        // to keep things simple later on.
+        otherSPs[0] = DBL_MAX+0I;
+        otherSPs_radii[0] = 0.0;
+    }
+    else{
+        convert_mxvec_to_c(prhs[2],otherSPs);
+        convert_mxvec_to_double(prhs[3],otherSPs_radii);
+    }
 
     double complex valleys[order];
     convert_mxvec_to_c(prhs[4],valleys);
@@ -66,10 +81,10 @@ void mexFunction(int nlhs, mxArray *plhs[],
     int output_length;
 
     SDpathODEuler( //inputs
-                    h0, gCoeffs, SPs, cover_radii, valleys, base_step_size,
+                    h0, gCoeffs, otherSPs, otherSPs_radii, valleys, base_step_size,
                     n_max, r_star, Newton_small_threshold, Newton_big_threshold,
                     // extra inputs required to make this code work
-                    SPs_len, gCoeffs_len,
+                    other_SPs_len, gCoeffs_len,
                     //outputs
                     p_out,
                     h_out,
