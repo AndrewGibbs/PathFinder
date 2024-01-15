@@ -3,7 +3,8 @@ function [Z, W] = getQuad(self,freq,Npts,quad_params)
     if isinf(self.length)
         %get relevant weighted Gauss quad rule:
         if strcmp(quad_params.inf_quad_rule,'laguerre')
-            [P0, Wgauss] = quad_gauss_exp(self.ODEorder, Npts);
+%             [P0, Wgauss] = quad_gauss_exp(self.ODEorder, Npts);
+            [P0, Wgauss] = gausLagHC(Npts);
         elseif strcmp(quad_params.inf_quad_rule,'legendre')
             % COPIED CODE FROM BELOW, MAKE THIS INTO A FUNCTION 
             IG_start_size = abs(exp(1i*freq*polyval(self.phaseCoeffs,self.startPoint)));

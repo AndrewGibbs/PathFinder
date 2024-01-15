@@ -24,6 +24,5 @@ for n=1:N
     fprintf(FID,"].';\n");
 end
 fprintf(FID,'otherwise\n');
-fprintf(FID,'ab = r_jacobi(n, 0, 0);\n');
-fprintf(FID,'[x,w] = compute_gauss(n, ab(:,1), ab(:,2));\n');
+fprintf(FID,'[x,w] = quad_gauss_laguerre(n);\n');
 fprintf(FID,'end');
