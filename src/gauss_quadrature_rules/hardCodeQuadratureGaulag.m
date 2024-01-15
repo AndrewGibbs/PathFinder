@@ -9,7 +9,7 @@ fprintf(FID,'switch n\n');
 
 for n=1:N
     fprintf(FID,'case %d\n',n);
-    [x,w] = quad_gauss_laguerre(n);
+    [x,w] = quadGaussLaguerre(n);
     fprintf(FID,'\tx = [');
     for m = 1:length(x)
         fprintf(FID,'%.16f ',x(m));

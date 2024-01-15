@@ -73,11 +73,11 @@ function options = optionalExtras(freq,order,varargin)
                    options.NewtonIts = varargin{n+1};
                    found_options(n:(n+1)) = 1;
                case 'log'
-                   options.log = init_log();
+                   options.log = initLog();
                    found_options(n) = 1;
                case 'log name'
                    its = options.log.Newton_its;
-                   options.log = init_log(varargin{n+1});
+                   options.log = initLog(varargin{n+1});
                    options.log.Newton_its = its;
                    found_options(n:(n+1)) = 1;
                case 'n_ball'

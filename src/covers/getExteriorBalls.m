@@ -39,7 +39,7 @@ function [covers, endPointIndices]...
             if use_mex
                 radii(n) = get_smallest_supset_ball_mex(g_coeffs.', freq, SPs(n), Cosc, num_rays,~int_balls_yn,imag_thresh);
             else
-                radii(n) = get_smallest_supset_ball(g_coeffs.', freq, SPs(n), Cosc, num_rays,~int_balls_yn,imag_thresh);
+                radii(n) = getSmallestSupsetBall(g_coeffs.', freq, SPs(n), Cosc, num_rays,~int_balls_yn,imag_thresh);
             end
         end
         

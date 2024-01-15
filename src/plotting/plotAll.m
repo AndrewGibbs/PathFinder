@@ -70,7 +70,7 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeff
 %         v = mod(angle(V(v_index)),2*pi);
         theta_diff = min(abs([theta(n)-v, theta(n)-v-2*pi theta(n)-v+2*pi]));
 %         if theta_diff < pi/(2*order)
-         R(n) = get_r_star(g_coeffs,theta_diff);
+         R(n) = getRStar(g_coeffs,theta_diff);
 %         else
 %             R(n) = inf;
 %         end

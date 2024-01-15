@@ -1,7 +1,7 @@
 function [z,w,dz,centres] = GQfancy(covers,a,b,a_index,b_index,intersectionMatrix,N)
 % returns a sequence of Gaussian quadrature rules which avoid cutting
 % corners of non-convex covers
-    [z,w,dz] = gauss_quad_complex(a,b,N);
+    [z,w,dz] = gaussQuadComplex(a,b,N);
     
     % solve the shortest path problem
     Gr = graph(intersectionMatrix,'upper');
@@ -22,7 +22,7 @@ function [z,w,dz,centres] = GQfancy(covers,a,b,a_index,b_index,intersectionMatri
         z = []; w = []; dz = [];
         nodes = unique([a nodes b],'stable'); %can get endpoints of integration region appearing twice in here
         for n = 1:(length(nodes)-1)%x = nodes(2:end)
-            [z_,w_,dz_] = gauss_quad_complex(nodes(n),nodes(n+1),N);
+            [z_,w_,dz_] = gaussQuadComplex(nodes(n),nodes(n+1),N);
             z = [z; z_];
             w = [w; w_];
             dz = [dz; dz_];

@@ -25,7 +25,7 @@ classdef Ball% < ComplexCover
                 if nargin>2
 
                     % get steepest exits on the circumference of the ball
-                    self.steepestExits = unique(get_stepest_exits_on_ball(g_coeffs.',c,r).');
+                    self.steepestExits = unique(getSteepestExitsOnBall(g_coeffs.',c,r).');
 %                   
                 end
             else % if zero radius

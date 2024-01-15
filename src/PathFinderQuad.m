@@ -31,11 +31,11 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
     %% special cases
     % check if standard quadrature is appropriate, if so, do that & terminate early
     if ((~params.infContour(1)) && (~params.infContour(2)) ...
-        && check_endpoint_width(a, b, phaseIn, freq, params.numOscs,...
+        && checkEndpointWidth(a, b, phaseIn, freq, params.numOscs,...
             params.num_rays, params.interior_balls, params.imag_thresh, params.use_mex)) ||...
             (length(phaseIn)==1)
 
-        [z, w_, dh_] = gauss_quad_complex(a,b,nPts);
+        [z, w_, dh_] = gaussQuadComplex(a,b,nPts);
         sgw = @(z) exp(1i*freq*polyval(phaseIn,z));
         w = w_.*dh_.*sgw(z);
 
@@ -47,7 +47,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
 
     if length(phaseIn)<=2 % if linear phase
         % contour can be computed instantly without approximation, reduce to this
-        [z,w] = linear_phase_NSD(a,b,freq,phaseIn(1),phaseIn(2),nPts);
+        [z,w] = linearPhaseNSD(a,b,freq,phaseIn(1),phaseIn(2),nPts);
         if params.plot
             plotAll([], [], z, a, b, params.infContour, [], [], [], []);
         end
@@ -60,7 +60,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
     [phase_handles, stationaryPoints, valleys] = getInfoFromPhase(phaseIn);
 
     % get r* parameter used for determining regions of no return
-    params.r_star = get_r_star(phaseIn);
+    params.r_star = getRStar(phaseIn);
 
     % rotate inf valleys if required:
     [a,b,params] = JordanRotate(a,b,valleys,params);
@@ -93,7 +93,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
         params.max_SP_integrand_val = inf;
     else
         % filter out SD contours which are of much smaller value, or empty
-        [quadIngredients, params.max_SP_integrand_val] = fliter_paths_v2(quadIngredients, phase_handles{1}, freq, params.contourStartThresh);
+        [quadIngredients, params.max_SP_integrand_val] = fliterPaths(quadIngredients, phase_handles{1}, freq, params.contourStartThresh);
         if isinf(params.max_SP_integrand_val)
             error("Integral is infinite");
         elseif params.max_SP_integrand_val>1E16
@@ -105,7 +105,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
 
     %get quadrature points
     tic;
-    [z, w, HermiteInds] = makeQuadV4(quadIngredients, freq, nPts, phase_handles{1}, params);
+    [z, w, HermiteInds] = makeQuad(quadIngredients, freq, nPts, phase_handles{1}, params);
     if params.log.take
         params.log.add_to_log(sprintf("Quadrature allocation time:\t%fs",toc));
     end

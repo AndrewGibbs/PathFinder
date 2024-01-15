@@ -23,3 +23,6 @@ assert(1e-10>AiryTest(30,show_text));
 
 %% Test 2c: Same test, N so high the Laguerre rule must be derived from scratch
 assert(1e-10>AiryTest(101,show_text));
+
+%% Test 3: Test linear phase special case works
+assert(abs(PathFinder(-1,1,[],[1 0],100,100)--0.010127312822195)<1e-14);

@@ -141,7 +141,7 @@ function [p_log_out, h_log_out, valley_index, ball_index, Newton_points, Newton_
         if inball_yn
             in_no_return_yn = false;
         else
-            [in_no_return_yn, index] = beyondNoReturn_v2(h,valleys,gCoeffs,r_star);
+            [in_no_return_yn, index] = beyondNoReturn(h,valleys,gCoeffs,r_star);
         end
     end
 end
