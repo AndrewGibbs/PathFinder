@@ -34,7 +34,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
     int max_1_or_other_SPs_len = imax(other_SPs_len,1);
 
     // initialise these two vectors which may be blank in Matlab version
-    double complex otherSPs[max1or_other_SPs_len];
+    double complex otherSPs[max_1_or_other_SPs_len];
     double otherSPs_radii[other_SPs_len];
 
     if(otherSPs == 0)

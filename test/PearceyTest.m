@@ -1,4 +1,4 @@
-function maxErr = PearceyPig(Npts, output_text)
+function maxErr = PearceyTest(nQuadPts, output_text)
     if nargin == 1
         output_text = false;
     end
@@ -9,7 +9,7 @@ function maxErr = PearceyPig(Npts, output_text)
     end
     
     if nargin == 0
-        Npts = 20;
+        nQuadPts = 20;
     end
 
     X=[-8 -6 -4 -2 0 2 4 6 8]; Y=[0 2 4 6 8];
@@ -35,12 +35,12 @@ function maxErr = PearceyPig(Npts, output_text)
                 fprintf('\ty=%d ',y);
             end
             polyCoeffs = [1 0 x y 0];
-            [~,W]=PathFinderQuad(a, b, polyCoeffs, freq, Npts, 'infcontour', [true true]);
+            [~,W]=PathFinderQuad(a, b, polyCoeffs, freq, nQuadPts, 'infcontour', [true true]);
             I_GHH=sum(W); %Gibbs-Hewett-Huybrechs estimate
             I_CHK=KirkPearceyData(x,y); %Conor-Hobbs-Kirk estimate
             err(xCount,yCount)=abs(I_CHK-I_GHH)/abs(I_CHK);
             if output_text
-                fprintf('\tabs err=%e\n',err(xCount,yCount));
+                fprintf('\trel err=%e\n',err(xCount,yCount));
             end
         end
     end
