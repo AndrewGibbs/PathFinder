@@ -1,53 +1,73 @@
-function [h_quad, dhdp_quad, Newton_success] = SDquadODEulerNEwtonCorrection(p_quad, p_coarse, h0, h_coarse, gCoeffs, freq, NewtonThresh, NewtonIts)
+% This routine linearly interpolates the coarse solve, and applies a Newton
+% iteration to accurately compute the quadrature nodes along the steepest
+% descent path.
 
-%     p_coarse = p_coarse*freq;
+function [hQuadArray, dhdpQuadArray, newtonStepsToConverge] = ...
+            SDquadODEulerNEwtonCorrection(pQuad, pCoarse, h0, ...
+            hCoarse, phaseCoeffs, freq, newtonThresh, maxNumNewtonIts)
 
-    h_quad = zeros(size(p_quad))+1i*eps;
-    Newton_success = ones(size(p_quad));
-    freq_times_g_at_se = freq*polyval(gCoeffs,h0);
-    order = length(gCoeffs)-1;
-    dgCoeffs = gCoeffs(1:(end-1)).*(order:-1:1);
-    F = @(h) 1i./(polyval(dgCoeffs,h))/freq;
+    % initialise quadrature points along contour
+    hQuadArray = zeros(size(pQuad))+1i*eps;
+    newtonStepsToConverge = ones(size(pQuad));
+    freqTimesPhaseAtExit = freq*polyval(phaseCoeffs,h0);
 
-    for N=1:length(p_quad)
+    % get order from length of phase coefficients
+    order = length(phaseCoeffs)-1;
 
+    % get coefficients of derivative of phase function
+    dPhaseCoeffs = phaseCoeffs(1:(end-1)).*(order:-1:1);
+
+    % get function for (frequency-dependent) ODE at h
+    odeAt_h = @(h) 1i./(polyval(dPhaseCoeffs,h))/freq;
+
+    for iQuad=1:length(pQuad)
         % linearly interpolate coarse solve for initial guess
-        [p_below,coarse_index] = max(p_coarse(p_coarse<=p_quad(N)));
-        %p_coarse should always contain a zero, so this shouldn't return a
-        %blank.
+        [pBelow, coarseIndex] = max(pCoarse(pCoarse<=pQuad(iQuad)));
+
+        % here pBelow is the largest value of pCoarse that is below pQuad.
+        %pCoarse should always contain a zero at the first entry, so the
+        %above code cannot return an empty vector.
         
         % get intermediate step size
-        dp = p_quad(N)-p_below;
-        h_quad(N) = h_coarse(coarse_index) + dp*F(h_coarse(coarse_index));
+        pWidth = pQuad(iQuad)-pBelow;
 
-        % Newton corrector step
-        for n = 1:NewtonIts
-            dh_N = polyval(dgCoeffs,h_quad(N));
-            Newton_step = get_Newton_step();
-            h_quad(N) = h_quad(N) - Newton_step;
-%             err = abs(freq_times_g_at_se+ 1i*p_quad(N) - freq*polyval(gCoeffs,h_quad(N)));
-            err = abs(Newton_step);
-            if err < NewtonThresh
-                Newton_success(N) = n;
+        % linearly interpolate to get initial guess
+        hQuadArray(iQuad) = hCoarse(coarseIndex) ...
+                            + pWidth*odeAt_h(hCoarse(coarseIndex));
+
+        % apply Newton corrector to this initial guess
+        for iNewton = 1:maxNumNewtonIts
+
+            % update current value of h'_j
+            currentDiffAtQuadPoint = polyval(dPhaseCoeffs, hQuadArray(iQuad));
+
+            % ... which is needed for the Newton step below
+            newtonStep = getNewtonStep();
+
+            % adjust the quadrature point using the Newton step
+            hQuadArray(iQuad) = hQuadArray(iQuad) - newtonStep;
+
+            % calculate the error using the Newton step
+            err = abs(newtonStep);
+            if err < newtonThresh
+                newtonStepsToConverge(iQuad) = iNewton;
                 break;
-            elseif n==NewtonIts
-                Newton_success(N) = n+1;
-%                 n = uint32(inf);
+            elseif iNewton == maxNumNewtonIts
+                newtonStepsToConverge(iQuad) = iNewton+1;
                 break;
             end
         end
-%         if newton_fail
-%             Newton_success(N) = uint32(inf);
-%         else
-%             Newton_success(N) = n;
-%         end
     end
 
-    % now get Jacobian
-    dhdp_quad = F(h_quad);
+    % now get Jacobian at each quadrature point, also needed for quadrature
+    dhdpQuadArray = odeAt_h(hQuadArray);
 
-    function s = get_Newton_step()
-%         s = (-freq_times_g_at_se - 1i*p_quad(N) + freq*polyval(gCoeffs,h_quad(N)))/(freq*dh_N);
-        s = ((-freq_times_g_at_se + freq*polyval(gCoeffs,h_quad(N))) - 1i*p_quad(N))/(freq*dh_N);
+    % indented function to compute the Newton step
+    function s = getNewtonStep()
+        s = ((-freqTimesPhaseAtExit + ...
+                freq*polyval(phaseCoeffs,hQuadArray(iQuad)))...
+                - 1i*pQuad(iQuad))/(freq*currentDiffAtQuadPoint);
     end
+    % note the difference between these Newton steps and those earlier in
+    % the code - here things depend on the frequency parameter
 end
