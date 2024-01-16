@@ -1,147 +1,156 @@
-function [p_log_out, h_log_out, valley_index, ball_index, Newton_points, Newton_its, Newton_final_pt_its] = ...
-    SDpathODEuler_v4(h0, gCoeffs, SPs, cover_radii, valleys, base_step_size, n_max, r_star,...
-    Newton_small_threshold, Newton_big_threshold, Newton_point_count_max) %#codegen
+function [pArrayOut, hArrayOut, valleyIndex, ballIndex] = ...
+    SDpathODEuler_v4(pathStartPoint, phaseCoeffs, stationaryPointArray, ...
+        ballRadiiArray, valleysArray, baseStepSize, pointCacheSize, rStar,...
+        newtonSmallThreshold, newtonBigThreshold)
 
-    % version three adds error checking at each step
-    if Newton_point_count_max>0
-        Newton_log = true;
-    else
-        Newton_log = false;
-    end
-    %computes NSD path h(p) and h'(p)
-    %excluded_SPs_indices
-    valley_index = [];
-    ball_index = [];
+    % initialise the indices of the valley and ball where the SD path ends
+    valleyIndex = [];
+    ballIndex = [];
 
-    if isempty(SPs)
-        SPs = inf; % bodge to speed things up further down
-        cover_radii = 0;
+    % account for the fact when there are no (other) stationary points, by
+    % adding a ficticious SP at infinity
+    if isempty(stationaryPointArray)
+        stationaryPointArray = inf;
+        ballRadiiArray = 0;
     end
-    for n=1:length(SPs)
-        % another bodge to stop endpoints being treated like stationary
-        % points
-        if cover_radii(n)==0% || ismember(n,excluded_SPs_indices)
-            SPs(n) = inf;
+
+    % similarly, we don't want endpoints to be treated like SPs, as they do
+    % not affect ODE stability. So move the location of any endpoints to
+    % infinity. These can be detected because their radius is zero.
+    for numPts=1:length(stationaryPointArray)
+        if ballRadiiArray(numPts)==0%
+            stationaryPointArray(numPts) = inf;
         end
     end
 
-    g_se = polyval(gCoeffs,h0); % value of g at steepest exit
+    % get value of phase function at steepest exit, start of path
+    phaseValAtSteepestExit = polyval(phaseCoeffs,pathStartPoint);
 
-    %ODE for path of steepest descent:
-    order = length(gCoeffs)-1;
-    dgCoeffs = gCoeffs(1:(end-1)).*(order:-1:1);
-    ddgCoeffs = dgCoeffs(1:(end-1)).*((order-1):-1:1);
+    % get the polynomial order from the length of the coefficients
+    order = length(phaseCoeffs)-1;
 
-    % main loop
-    h = h0;
-    p_log = zeros(n_max,1);
-    h_log = zeros(n_max,1)+eps*1i;
-    p_log(1) = 0;
-    h_log(1) = h0;
-    n =1;
+    % get the coefficients of the derivatives of the polynomial phase
+    % function
+    dPhaseCoeffs = phaseCoeffs(1:(end-1)).*(order:-1:1);
+    ddPhaseCoeffs = dPhaseCoeffs(1:(end-1)).*((order-1):-1:1);
 
-    Newton_points = complex(zeros(Newton_point_count_max,1));
-    Newton_its = int64(zeros(Newton_point_count_max,1));
-    Newton_log_count = 0;
-    Newton_final_pt_its = 0;
-    
-    dg_h = polyval(dgCoeffs,h);
-    continue_loop = true;
-    log_this_point = false;
+    % initialise variables for main loop
+    h = pathStartPoint;
+    % intialise with zeros
+    pArray = zeros(pointCacheSize,1);
+    hArray = zeros(pointCacheSize,1)+eps*1i;
+    % fill in first value with information about start point
+    pArray(1) = 0;
+    hArray(1) = pathStartPoint;
 
-    while continue_loop
-        % get ingreidents which will be used multiple times
-        n = n+1;
-        ddg_h = polyval(ddgCoeffs,h);
+    % initiliase iterator variable / counter for array
+    numPts = 1;
+    continueLoop = true;
 
-        % PREVIOUSLY MISSING THIS UPDATE:
-        dg_h = polyval(dgCoeffs,h);
+    %% main ODE stepping loop
+    while continueLoop
+        numPts = numPts+1;
+
+        % get deriv values at the front of the SD contour
+        ddPhaseAt_h = polyval(ddPhaseCoeffs,h);
+        dPhaseAt_h = polyval(dPhaseCoeffs,h);
 
         % Forward Euler step
-        F_h = 1i/dg_h;
-        p_step_size = base_step_size*min(2*abs(dg_h^2/ddg_h),min(abs(SPs-h))/abs(F_h));
-        h = h + p_step_size*F_h;
+
+        % get value of ODE given p and h(p)
+        odeAt_h = 1i/dPhaseAt_h;
+
+        % compute step size based on distance to stationary points
+        pStepSize = baseStepSize*min(2*abs(dPhaseAt_h^2/ddPhaseAt_h),...
+                    min(abs(stationaryPointArray-h))/abs(odeAt_h));
+
+        % increment contour
+        h = h + pStepSize*odeAt_h;
         
-        % error checking
-        g_h = polyval(gCoeffs,h);
-        dg_h = polyval(dgCoeffs,h);
-        p = p_log(n-1)+p_step_size;
-        Newton_step = get_Newton_step();
+        % update phase and deriv vals again
+%         phaseAt_h = polyval(phaseCoeffs,h);
+%         dPhaseAt_h = polyval(dPhaseCoeffs,h);
 
-        if Newton_log && (Newton_log_count <Newton_point_count_max) && (abs(Newton_step)>Newton_big_threshold)
-            log_this_point = true;
-            Newton_log_count = Newton_log_count + 1;
+        % update cumulative value of p
+        p = pArray(numPts-1)+pStepSize;
+
+        % get value of Newton step here
+        newtonStep = getNewtonStep();
+
+        % do Newton iteration of the size of step is sufficiently small
+        while abs(newtonStep)>newtonBigThreshold
+            h = h-newtonStep;
+            newtonStep = getNewtonStep();
         end
 
-        while abs(Newton_step)>Newton_big_threshold
-            if Newton_log && (Newton_log_count <Newton_point_count_max)
-                Newton_its(Newton_log_count) = Newton_its(Newton_log_count) + 1;
+        % might as well apply Newton once more, as we have the value
+        h = h - newtonStep;
+
+        % update arrays of p and h values
+        pArray(numPts) = p;
+        hArray(numPts) = h;
+
+        % determine if the process should be halted, because we are either
+        % in a ball or region of no return
+        [isInBall, isInNoReturn, endIndex] = haltEuler();
+
+        % only continue the loop if in neither
+        continueLoop = ~(isInBall || isInNoReturn);
+
+        if isInBall
+
+            % if we are in a ball, we need the endpoint to be very accurate. So
+            % apply Newton refinement at the finer level here.
+            newtonStep = getNewtonStep();
+            while abs(newtonStep) > newtonSmallThreshold
+                h = h - newtonStep;
+                newtonStep = getNewtonStep();
             end
-            h = h-Newton_step;
-            Newton_step = get_Newton_step();
-        end
 
-        if Newton_log && (Newton_log_count <Newton_point_count_max)
-            Newton_points(Newton_log_count) = h;
-            log_this_point = false;
-        end
-        % might as well apply Newton once more
-        h = h-Newton_step;
+            % might as well apply Newton once more, as we have the value
+            hArray(numPts) = h - newtonStep;
 
-        p_log(n) = p;
-        h_log(n) = h;
-
-        [inball_yn, in_no_return_yn, endex] = halt_euler();
-
-        continue_loop = ~(inball_yn || in_no_return_yn);
-
-        if inball_yn % only refine endpoint to fine level if in a ball
-            % before actually halting the process, refine this endpoint
-            Newton_step = get_Newton_step();
-            while abs(Newton_step)>Newton_small_threshold
-                h = h-Newton_step;
-                Newton_step = get_Newton_step();
-                if Newton_log
-                    Newton_final_pt_its = Newton_final_pt_its + 1;
-                end
-            end
-            % might as well apply Newton once more
-            h_log(n) = h-Newton_step;
-            ball_index = endex;
+            % get index of the ball
+            ballIndex = endIndex;
         else
-            valley_index = endex;
+            % get index of the valley
+            valleyIndex = endIndex;
         end
 
-        if mod(int64(n),int64(n_max))==0 % need to add more points
-            p_log_copy = p_log;
-            h_log_copy = h_log;
-            p_log = zeros(n_max+n,1);
-            h_log = zeros(n_max+n,1);
-            p_log(1:n) = p_log_copy;
-            h_log(1:n) = h_log_copy;
+        % if we are at the limit of the cache size, increase the array size
+        % further
+        if mod(int64(numPts), int64(pointCacheSize)) == 0 % need to add more points
+            pArrayCopy = pArray;
+            hArrayCopy = hArray;
+            pArray = zeros(pointCacheSize+numPts, 1);
+            hArray = zeros(pointCacheSize+numPts, 1);
+            pArray(1:numPts) = pArrayCopy;
+            hArray(1:numPts) = hArrayCopy;
         end
     end
-    p_log_out = p_log(1:n);
-    h_log_out = h_log(1:n);
 
-    if Newton_log
-        Newton_points = Newton_points(1:(Newton_log_count-1));
-        Newton_its = Newton_its(1:(Newton_log_count-1));
-    end
+    % truncate output arrays to only contain worthwhile data
+    pArrayOut = pArray(1:numPts);
+    hArrayOut = hArray(1:numPts);
 
     %% indented functions
-    function step = get_Newton_step()
-        g_h = polyval(gCoeffs,h);
-        dg_h = polyval(dgCoeffs,h);
-        step = (g_h-g_se-1i*p)/dg_h;
+
+    function step = getNewtonStep()
+        % update the phase and its derivative
+        phaseAt_h = polyval(phaseCoeffs,h);
+        dPhaseAt_h = polyval(dPhaseCoeffs,h);
+        % apply Newton iteration
+        step = (phaseAt_h-phaseValAtSteepestExit-1i*p)/dPhaseAt_h;
     end
 
-    function [inball_yn, in_no_return_yn, index] = halt_euler() 
-        [inball_yn, index] = inAball(h, SPs, cover_radii);
-        if inball_yn
-            in_no_return_yn = false;
+    function [isInBall, inInNoReturn, index] = haltEuler()
+        % check if h is in a ball
+        [isInBall, index] = inAball(h, stationaryPointArray, ballRadiiArray);
+        if isInBall
+            inInNoReturn = false;
         else
-            [in_no_return_yn, index] = beyondNoReturn(h,valleys,gCoeffs,r_star);
+            % check if in region of no return
+            [inInNoReturn, index] = beyondNoReturn(h, valleysArray, phaseCoeffs, rStar);
         end
     end
 end

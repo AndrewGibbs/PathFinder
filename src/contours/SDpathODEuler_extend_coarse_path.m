@@ -9,8 +9,8 @@ function [pArrayOut, hArrayOut, success] = ...
     order = length(phaseCoeffs)-1;
 
     % get coefficients of derivatives of phase function
-    diffPhase = phaseCoeffs(1:(end-1)).*(order:-1:1);
-    doubleDiffPhase = diffPhase(1:(end-1)).*((order-1):-1:1);
+    diffPhaseCoeffs = phaseCoeffs(1:(end-1)).*(order:-1:1);
+    doubleDiffPhaseCoeffs = diffPhaseCoeffs(1:(end-1)).*((order-1):-1:1);
 
     % main loop
 
@@ -33,8 +33,8 @@ function [pArrayOut, hArrayOut, success] = ...
 
         % get value of derivatives h'(p), h''(p) at this point on approx SD
         % path:
-        diffPhaseAtContourEndpoint = polyval(diffPhase,contourEndpoint);
-        doubleDiffPhaseAtContourEndpoint = polyval(doubleDiffPhase,contourEndpoint);
+        diffPhaseAtContourEndpoint = polyval(diffPhaseCoeffs,contourEndpoint);
+        doubleDiffPhaseAtContourEndpoint = polyval(doubleDiffPhaseCoeffs,contourEndpoint);
 
         % get value of ODE for this value of h and p
         odeVal = 1i/diffPhaseAtContourEndpoint;
