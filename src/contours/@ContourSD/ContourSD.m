@@ -1,80 +1,68 @@
- classdef ContourSD %<handle
-    %Steepest descent contour object
+%Steepest descent contour object, containing information about coarse 
+% contour approximation, and information needed to produce quadrature
+classdef ContourSD
     
     properties
-        startPoint
-        endPoint
-        startCoverIndex
-        endCoverIndex = []
-        startClusterIndices
-        endClusterIndices = []
-        intervalEndpoint = []
-        endClusterIntervalEndpoints = []
-        coarsePath
-        coarseParam
-        coarsePathGrad
-        length
-        endValley %may be unpopulated if finite length
-        paramOrder
-        ODEorder = 1
-        phaseDerivs
-        phaseCoeffs
-        minArgDist = pi/2;
-        ICs
-        quadFreq
-        polynomial = true
+        startPoint % start of approximate contour, steepest exit
+        endPoint % end of approximate contour
+        startCoverIndex % index of the ball in which contour starts
+        endCoverIndex = [] % (possible) index of ball where contour ends
+        coarsePath % array of complex points approximating contour
+        coarseParam % parameter p in h(p), corresponding to above array
+        length % max value of the parameter p, can be infinite for infinite paths
+        endValley = []% (possible) valley where path converges
+        phaseCoeffs % coefficients of phase function
+        phaseDerivs % coefficients of derivatives of phase function
+        ICs % initial conditions for ODE solve, (h(0), h'(0))
     end
     
     methods
-        function self = ContourSD(startPoint, G, startCover, otherCovers, valleys, global_contour_params)
+        % ------------------------ constructor  ------------------------- %
+        function self = ContourSD(startPoint, G, startCover, otherCovers, ...
+                        valleys, global_contour_params)
             
+            % allocate coefficients for phase and derivs
             self.phaseCoeffs = G;
             self.phaseDerivs = getHandlesFromCoeffs(G);
             
-            %construct an instance of this class
+            % allocate initial conditions for contour
             self.startPoint = startPoint;
             self.startCoverIndex = startCover.index;
-
             self.ICs = [startPoint; 1i/self.phaseDerivs{2}(startPoint)];
             
-            %need coarse path to be longer if there are more stationary
-            %points
-            
-            %new streamlined version of ODE solver, much simpler than orig
-            %PathFinder:
-            [other_CPs, other_CPs_radii] = getBallDeets(otherCovers);
-            max_steps_before_fail = global_contour_params.max_number_of_ODE_steps;
+            % get information about the other balls (not the one where
+            % this contour starts).
+            [otherCPs, otherCPsRadii] = getBallDeets(otherCovers);
+            maxStepsBeforeFail = global_contour_params.max_number_of_ODE_steps;
 
+            % approximate the path using Euler-Newton predictor-corrector
+            % will/won't use MEX function, as required.
             if global_contour_params.mex
-                [p, self.coarsePath, valley_index, other_ball_index] ...
-                    = SDpathODEuler_v4_mex(self.ICs(1), G(:), other_CPs(:), other_CPs_radii(:), valleys(:),...
-                global_contour_params.step_size, int64(max_steps_before_fail), global_contour_params.r_star,...
+                [self.coarseParam, self.coarsePath, valley_index, other_ball_index] ...
+                    = SDpathODEuler_v4_mex(self.ICs(1), G(:), otherCPs(:), otherCPsRadii(:), valleys(:),...
+                global_contour_params.step_size, int64(maxStepsBeforeFail), global_contour_params.r_star,...
                 global_contour_params.NewtonThresh, global_contour_params.NewtonBigThresh, int64(global_contour_params.log.Newton_its));
             else
-                [p, self.coarsePath, valley_index, other_ball_index] ...
-                    = SDpathODEuler_v4(self.ICs(1), G, other_CPs, other_CPs_radii, valleys.',...
-                global_contour_params.step_size, int64(max_steps_before_fail), global_contour_params.r_star,...
+                [self.coarseParam, self.coarsePath, valley_index, other_ball_index] ...
+                    = SDpathODEuler_v4(self.ICs(1), G, otherCPs, otherCPsRadii, valleys.',...
+                global_contour_params.step_size, int64(maxStepsBeforeFail), global_contour_params.r_star,...
                 global_contour_params.NewtonThresh, global_contour_params.NewtonBigThresh);
             end
-            
-            % logging of Newton info:
-            if global_contour_params.log.take && (global_contour_params.log.Newton_its>0)
-                global_contour_params.log.add_to_log(sprintf('Contour from %.2f + %.2fi',real(startPoint),imag(startPoint)));
-                for n=1:length(Newton_its)
-                    global_contour_params.log.add_to_log(sprintf('\tPoint %.2f + %.2fi had %d Newton iterations',real(Newton_points(n)),imag(Newton_points(n)),Newton_its(n)));
-                end
-                if ~isempty(other_ball_index)
-                    global_contour_params.log.add_to_log(sprintf('\tFinal point %.2f + %.2fi had %d Newton iterations',real(h_(end)),imag(h_(end)),Newton_fineal_pt_its));
-                end
-            end
 
-            if isempty(other_ball_index) %infinite contour
+            if isempty(other_ball_index)
+            % if contour is infinite
+
+                %thus, infinite length
                 self.length = inf;
+                % record index of valley where contour converges
                 self.endValley = valleys(valley_index);
-            else    %finite 
-                self.length = p(end);
-%                     end
-                self.endValley = [];
+            else    
+            % otherwise, contour is finite 
+
+                % get information about the end of the path
+                self.length = self.coarseParam(end);
+                self.endPoint = self.coarsePath(end);
+
                 % adjust for possible index shift of 'other' balls:
                 if other_ball_index>=self.startCoverIndex
                     % add one
@@ -84,14 +72,15 @@
                     self.endCoverIndex = other_ball_index;
                 end
 
-                self.endPoint = self.coarsePath(end); % should have
-%                     been taken care of further up
             end
-            self.coarseParam = p;
         end
         
+        % --------------- prototypes for other methods  ------------------ %
+
+        % contour plotting method
         plot(self,varargin)
         
+        % routine to allocate quadrature nodes
         [Z, W] = getQuad(self,freq,Npts,quad_params)
     end
 end

@@ -1,5 +1,5 @@
 function [Z, W] = getQuad(self,freq,Npts,quad_params)
-    self.quadFreq = freq;
+%     self.quadFreq = freq;
     if isinf(self.length)
         %get relevant weighted Gauss quad rule:
         if strcmp(quad_params.inf_quad_rule,'laguerre')
