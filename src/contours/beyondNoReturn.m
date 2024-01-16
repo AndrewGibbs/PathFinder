@@ -1,32 +1,41 @@
-function [value,v_index] = beyondNoReturn(h,V,g_coeffs,r_star)
+function [value, vIndex] = beyondNoReturn(h,valleys,phaseCoeffs,rStar)
 %function corresponding to an event which would halt ODE solve, because SD
 %path is at 'point of no return'.
 
-    % the 'no return test'
+    % the 'no return test'.
+
+    % output value 'true' if in no return region, 'false' otherwise
     value = false;
-    v_index = [];
-    order = length(V);
-    R = abs(h);
-    if R>r_star % first test, based on length of z
+    % index of output valley to which h is closest
+    vIndex = [];
+    % order of polynomial phase is same as number of valleys
+    order = length(valleys);
+    % get radius of point on SD path
+    radius = abs(h);
+    if radius > rStar % first test, based on length of z
 
         % now check that path is sufficiently close to monomial SD path
-        [~,v_index] = min(abs(exp(1i*angle(V))-exp(1i*angle(h))));
-        v = mod(angle(V(v_index)),2*pi);
-    
-        theta = mod(angle(h),2*pi);
-        theta_diff = min(abs([theta-v theta-v-2*pi theta-v+2*pi]),[],2);
-%         theta_diff = max(theta_in_diff,pi/(4*order));
+        [~, vIndex] = min(abs(exp(1i*angle(valleys))-exp(1i*angle(h))));
+        v = mod(angle(valleys(vIndex)),2*pi);
 
-        if theta_diff < pi/(2*order)
-            % now check Dave's refined polynomial condition
-            G = order*abs(g_coeffs(1))*R^(order-1)*min(1/sqrt(2),cos(order*theta_diff));
-            for j=1:(order-1)
-                G = G - j*abs(g_coeffs(end-j))*R^(j-1);
-                if G<=0 % G isn't getting any bigger
+        % get angular distance from closest valley
+        theta = mod(angle(h),2*pi);
+        thetaDiff = min(abs([theta-v theta-v-2*pi theta-v+2*pi]),[],2);
+
+        if thetaDiff < pi/(2*order)
+            % first part of polynomial condition
+            G = order*abs(phaseCoeffs(1))*radius^(order-1)*min(1/sqrt(2),cos(order*thetaDiff));
+            for iCoeffs = 1:(order-1)
+                % subtract off remaining parts of polymomial condition
+                G = G - iCoeffs*abs(phaseCoeffs(end-iCoeffs))*radius^(iCoeffs-1);
+                if G <= 0
+                    % G isn't getting any bigger, if condition is broken,
+                    % end now.
                     break;
                 end
             end
-            if G>0
+            if G > 0
+                % if condition is satisfied, we are in 'no return' region
                 value = true;
             end
         end

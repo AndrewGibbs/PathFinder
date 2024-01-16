@@ -1,4 +1,4 @@
-function maxErr = PearceyTest(nQuadPts, output_text)
+function maxErr = pearceyTest(nQuadPts, output_text)
     if nargin == 1
         output_text = false;
     end

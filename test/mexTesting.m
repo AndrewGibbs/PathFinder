@@ -2,7 +2,7 @@
 % with and without MEX. Some discrepancies are unavoidable, and the paths
 % may not always match, but the output values should agree (up to some
 % tolerance).
-function pass_tf = mex_testing()
+function pass_tf = mexTesting()
     % always expect more agreement than this:
     err_thresh = 1e-14;
     % however we will allow more error at high frequencies, due to rounding

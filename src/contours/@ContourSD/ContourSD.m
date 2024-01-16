@@ -19,44 +19,22 @@
         ODEorder = 1
         phaseDerivs
         phaseCoeffs
-        %some parameters with default settings:
-%         coarseTol = 1e-3;
-%         fineTol = 1e-13;
-%         paramPathLength = 100
         minArgDist = pi/2;
-%         leavesAnalyticRegion = false
-        ICs %intiial conditions
-        %quad bits:
-%         P0
-%         h = []
-%         dhdp
-%         Wgauss
+        ICs
         quadFreq
-        polynomial = false
-%         finitePathTrunc = 1.0
+        polynomial = true
     end
     
     methods
         function self = ContourSD(startPoint, G, startCover, otherCovers, valleys, global_contour_params)
             
-            %quick check
-            if iscell(G)
-                self.phaseDerivs = G;
-                noReturnEvent = [];
-            else
-                self.polynomial = true;
-                self.phaseCoeffs = G;
-                self.phaseDerivs = getHandlesFromCoeffs(G);
-                Cnr = getNoReturnConstant(G);
-                noReturnEvent = @(p,h) noReturn(h,Cnr,angle(G(1)),valleys);
-            end
+            self.phaseCoeffs = G;
+            self.phaseDerivs = getHandlesFromCoeffs(G);
             
             %construct an instance of this class
             self.startPoint = startPoint;
-%             self.paramOrder = startCover.orderSum;
             self.startCoverIndex = startCover.index;
-%             [self.startClusterIndices, self.intervalEndpoint] = getClusterBuddies(clusterIndices, self.startCoverIndex, clusterEndpoints);
-            
+
             self.ICs = [startPoint; 1i/self.phaseDerivs{2}(startPoint)];
             
             %need coarse path to be longer if there are more stationary
@@ -67,11 +45,6 @@
             [other_CPs, other_CPs_radii] = getBallDeets(otherCovers);
             max_steps_before_fail = global_contour_params.max_number_of_ODE_steps;
 
-%             [p_, h_, valley_index_, ball_index_] = SDpathODEuler_v3_mex(self.ICs(1), G, CPs, CPs_radii, valleys.', ...
-%             global_contour_params.step_size, int64(max_steps_before_fail), global_contour_params.r_star,...
-%             global_contour_params.NewtonBigThresh, global_contour_params.NewtonThresh);
-
-            %mex]
             if global_contour_params.mex
                 [p, self.coarsePath, valley_index, other_ball_index] ...
                     = SDpathODEuler_v4_mex(self.ICs(1), G(:), other_CPs(:), other_CPs_radii(:), valleys(:),...

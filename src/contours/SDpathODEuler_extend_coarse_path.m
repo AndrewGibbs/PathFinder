@@ -1,36 +1,68 @@
-function [p_log_out, h_log_out, success] = ...
-    SDpathODEuler_extend_coarse_path(p_init, h_init, gCoeffs, SPs, base_step_size, n_max, P_new_max) %#codegen
-    %computes NSD path h(p) and h'(p)
+% Extends steepest descent contour into the region of no return. This may
+% be required to allocate a sufficiently large number of quadrature points.
 
-    %ODE for path of steepest descent:
-    order = length(gCoeffs)-1;
-    dgCoeffs = gCoeffs(1:(end-1)).*(order:-1:1);
-    ddgCoeffs = dgCoeffs(1:(end-1)).*((order-1):-1:1);
+function [pArrayOut, hArrayOut, success] = ...
+    SDpathODEuler_extend_coarse_path(pIn, hIn, phaseCoeffs, SPs, ...
+    baseStepSize, maxPts, pNewMax)
+
+    % get polynomial order of phase from length of coefficients
+    order = length(phaseCoeffs)-1;
+
+    % get coefficients of derivatives of phase function
+    diffPhase = phaseCoeffs(1:(end-1)).*(order:-1:1);
+    doubleDiffPhase = diffPhase(1:(end-1)).*((order-1):-1:1);
 
     % main loop
-    h = h_init(end);
-    p_log = zeros(n_max,1);
-    h_log = zeros(n_max,1)+eps*1i;
-    n =length(p_init);
-    p_log(1:n) = p_init;
-    h_log(1:n) = h_init;
-    success = true;
-    while p_log(n)<P_new_max
-        n = n+1;
-        dg_h = polyval(dgCoeffs,h);
-        ddg_h = polyval(ddgCoeffs,h);
-        F_h = 1i/dg_h;
-        p_step_size = base_step_size*min(abs(dg_h^2/ddg_h),min(abs(SPs-h))/abs(F_h));
-        h = h + p_step_size*F_h;
 
-        p_log(n) = p_log(n-1)+p_step_size;
-        h_log(n) = h;
-        if n==n_max
+    % start extension at the end of the previous contour approx:
+    contourEndpoint = hIn(end);
+
+    % initialise h(p) and p approx arrays
+    pArray = zeros(maxPts,1);
+    hArray = zeros(maxPts,1)+eps*1i;
+    numPts = length(pIn);
+    % initialise with previous contour approx
+    pArray(1:numPts) = pIn;
+    hArray(1:numPts) = hIn;
+    success = true;
+
+    % continue to extend contour until parametrisation value p is
+    % sufficiently large
+    while pArray(numPts)<pNewMax
+        numPts = numPts+1;
+
+        % get value of derivatives h'(p), h''(p) at this point on approx SD
+        % path:
+        diffPhaseAtContourEndpoint = polyval(diffPhase,contourEndpoint);
+        doubleDiffPhaseAtContourEndpoint = polyval(doubleDiffPhase,contourEndpoint);
+
+        % get value of ODE for this value of h and p
+        odeVal = 1i/diffPhaseAtContourEndpoint;
+
+        % determine step size based on standard estimate and distance to
+        % the nearest stationary point, as explained in the paper
+        p_step_size = baseStepSize*min(...
+                    abs(diffPhaseAtContourEndpoint^2/doubleDiffPhaseAtContourEndpoint),...
+                    min(abs(SPs-contourEndpoint))/abs(odeVal));
+
+        % step along approx contour
+        contourEndpoint = contourEndpoint + p_step_size*odeVal;
+
+        % increase value of p as required
+        pArray(numPts) = pArray(numPts-1)+p_step_size;
+
+        % update endpoint of contour
+        hArray(numPts) = contourEndpoint;
+
+        % break while look if max number of points is reached
+        if numPts==maxPts
             success = false;
             break
         end
     end
-    p_log_out = p_log(1:n);
-    h_log_out = h_log(1:n);
+
+    % truncate output arrays so that they only contain meaningful data
+    pArrayOut = pArray(1:numPts);
+    hArrayOut = hArray(1:numPts);
 
 end

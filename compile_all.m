@@ -1,7 +1,7 @@
 clear all;
 close all;
 PF_dir = fileparts(which('PathFinder'));
-mex_path = [PF_dir '/MEXcompilation/'];
+mex_path = [PF_dir '/mex_compilation/'];
 
 %% First, compile path tracing routines as MEX code.
 % No non-standard packages are required, so these can be compiled with the 

@@ -67,7 +67,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
     
     tic;
     %cover each stationary point:
-    [covers, endPointIndices]...
+    [covers, ~]...
             = getExteriorBalls(phase_handles{1},freq,stationaryPoints,params.infContour,a,b, ...
             params.numOscs, phaseIn, params.ball_clump_thresh,params.num_rays, ...
             params.interior_balls, params.imag_thresh, params.use_mex);
@@ -77,7 +77,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
     
     tic;
     %make the contours from each cover:
-    contours = getContours(phaseIn, covers, valleys, endPointIndices, params);
+    contours = getContours(phaseIn, covers, valleys, params);
     if params.log.take
         params.log.add_to_log(sprintf("Contour coarse construction:\t%fs",toc));
     end

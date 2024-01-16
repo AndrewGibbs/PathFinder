@@ -1,4 +1,4 @@
-function maxRelErr = AiryTest(nQuadPts, output_text)
+function maxRelErr = airyTest(nQuadPts, output_text)
     % compares Matlab's Airy function approx to PathFinder's (first kind)
     % number of x values to test against
     nxPts = 100;

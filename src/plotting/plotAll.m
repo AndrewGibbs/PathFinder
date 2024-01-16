@@ -38,9 +38,9 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeff
 %         plot(C);
         if C.radius>0 && ~ismember(C.index,HermiteInds)
            fillCircle(C.centre,C.radius,lightGrayColor);
+           hold on;
            % plot(C.steepestExits,'ob','MarkerSize',18);
         end
-        hold on;
     end
     grayColor = [.1 .1 .1];
     for count = 1:length(contours)
