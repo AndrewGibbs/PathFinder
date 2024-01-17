@@ -31,7 +31,7 @@ function [hArray, wArray] = getQuad(self, freq, numPts, QuadParams)
             optimalTruncation = QuadParams.finitePathTruncL*numPts/freq;
             trunc = freq*min(optimalTruncation, machinePrecisionLength);
             % get (scaled) Gauss Legendre weights and nodes
-            [gaussNodes, gaussWeights] = gauss_quad(0,trunc,numPts);
+           [gaussNodes, gaussWeights] = gaussQuadComplex(0,trunc,numPts);
         else
             error("Optional argument 'inf quad rule' must " + ...
                     "be either 'laguerre' or 'legendre'");
@@ -52,8 +52,7 @@ function [hArray, wArray] = getQuad(self, freq, numPts, QuadParams)
         trunc = freq*min([self.length, optimalTruncation, ...
                             machinePrecisionLength]);
         % get (scaled) Gauss Legendre weights and nodes
-        [gaussNodes, gaussWeights] = gauss_quad(0,trunc,numPts);
-        gaussNodes=flipud(gaussNodes);
+       [gaussNodes, gaussWeights] = gaussQuadComplex(0,trunc,numPts);
     end
 
     % if largest p value of coarse solve is less than
