@@ -105,14 +105,14 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
 
     %get quadrature points
     tic;
-    [z, w, HermiteInds] = makeQuad(quadIngredients, freq, nPts, phase_handles{1}, params);
+    [z, w] = makeQuad(quadIngredients, freq, nPts, phase_handles{1}, params);
     if params.log.take
         params.log.add_to_log(sprintf("Quadrature allocation time:\t%fs",toc));
     end
 
     %make a plot of what's happened, if requested
     if params.plot
-        plotAll(covers, contours, z, a, b, params.infContour, stationaryPoints, HermiteInds, phaseIn, valleys);
+        plotAll(covers, contours, z, a, b, params.infContour, stationaryPoints, phaseIn, valleys);
     end
 
     if params.plot_graph

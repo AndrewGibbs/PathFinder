@@ -1,10 +1,7 @@
-function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeffs,V)
+function plotAll(covers, contours, z, a, b, infContour, SPs, g_coeffs,V)
 
     set(0,'defaultTextInterpreter','latex');
-%     f = figure();
-    if nargin == 7
-        HermiteInds = [];
-    end
+
     fontSize = 18;
     %get your margins:
     marginSpace = 0.5;
@@ -36,7 +33,7 @@ function plotAll(covers, contours, z, a, b, infContour, SPs,HermiteInds, g_coeff
             C=C{1};
         end
 %         plot(C);
-        if C.radius>0 && ~ismember(C.index,HermiteInds)
+        if C.radius>0% && ~ismember(C.index,HermiteInds)
            fillCircle(C.centre,C.radius,lightGrayColor);
            hold on;
            % plot(C.steepestExits,'ob','MarkerSize',18);
