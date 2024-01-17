@@ -1,82 +1,112 @@
-function [Z, W] = getQuad(self,freq,Npts,quad_params)
-%     self.quadFreq = freq;
+% Routine which allocates quadrature nodes and weights for evaluation of a
+% contour integral.
+
+function [hArray, wArray] = getQuad(self, freq, numPts, QuadParams)
+% the two outputs are the complex quadrature nodes and weights respectively
+
+    % if the contour is unbounded
     if isinf(self.length)
         %get relevant weighted Gauss quad rule:
-        if strcmp(quad_params.inf_quad_rule,'laguerre')
-%             [P0, Wgauss] = quad_gauss_exp(self.ODEorder, Npts);
-            [P0, Wgauss] = gausLagHC(Npts);
-        elseif strcmp(quad_params.inf_quad_rule,'legendre')
-            % COPIED CODE FROM BELOW, MAKE THIS INTO A FUNCTION 
-            IG_start_size = abs(exp(1i*freq*polyval(self.phaseCoeffs,self.startPoint)));
-            machine_precision_length = abs(log(quad_params.max_SP_integrand_val*quad_params.contourStartThresh/IG_start_size))/freq;
-%                     machine_precision_length = abs(log(quad_params.max_SP_integrand_val*quad_params.contourStartThresh))/freq;
+        if strcmp(QuadParams.inf_quad_rule,'laguerre')
+            % get Gauss Laguerre weights and nodes
+            [gaussNodes, gaussWeights] = gausLagHC(numPts);
+        elseif strcmp(QuadParams.inf_quad_rule,'legendre')
+            % We will use truncated Gauss Legendre. First, determine the
+            % truncation point, see paper for details.
+
+            % Estimate the size of the integrand at the start of the
+            % contour integral.
+            integrandStartSize = ...
+                abs(exp(1i*freq*polyval(self.phaseCoeffs,self.startPoint)));
+
+            % Estimate how far along the contour (in terms of
+            % parametrisation variable) the integrand drops below machine
+            % precision (which can be modified by used)
+            machinePrecisionLength = ...
+                abs(log(QuadParams.max_SP_integrand_val*...
+                QuadParams.contourStartThresh/integrandStartSize))/freq;
+
             % now determine truncation parameter, based on optimal
             % truncation vs discretisation of GauLeg:
-            optimal_truncation = quad_params.finitePathTruncL*Npts/freq;
-            trunc = freq*min(optimal_truncation, machine_precision_length);
-            [P0, Wgauss] = gauss_quad(0,trunc,Npts);
+            optimalTruncation = QuadParams.finitePathTruncL*numPts/freq;
+            trunc = freq*min(optimalTruncation, machinePrecisionLength);
+            % get (scaled) Gauss Legendre weights and nodes
+            [gaussNodes, gaussWeights] = gauss_quad(0,trunc,numPts);
         else
-            error("Optional argument 'inf quad rule' must be either 'laguerre' or 'legendre'");
+            error("Optional argument 'inf quad rule' must " + ...
+                    "be either 'laguerre' or 'legendre'");
         end
-        %scale by frequency and add zero
     else % finite path
-        % determine the truncation parameter, based on when
-        % integrand reaches machine precision:
-        IG_start_size = abs(exp(1i*freq*polyval(self.phaseCoeffs,self.startPoint)));
-        machine_precision_length = abs(log(quad_params.max_SP_integrand_val*quad_params.contourStartThresh/IG_start_size))/freq;
-        % now determine truncation parameter, based on optimal
-        % truncation vs discretisation of GauLeg:
-        optimal_truncation = quad_params.finitePathTruncL*Npts/freq;
+        % In the case of a finite (bounded) contour, we use truncated Gauss
+        % Legendre (as above) but now there is a third max value, based on
+        % the length of the contour
+        integrandStartSize = ... 
+            abs(exp(1i*freq*polyval(self.phaseCoeffs,self.startPoint)));
+        machinePrecisionLength = ...
+                    abs(log(QuadParams.max_SP_integrand_val*...
+                    QuadParams.contourStartThresh/integrandStartSize))/freq;
+        % optimal truncation is now based on finite path length
+        optimalTruncation = QuadParams.finitePathTruncL*numPts/freq;
         % now combine all of these, accounting for p/\omega
         % scaling:
-        trunc = freq*min([self.length, optimal_truncation, machine_precision_length]);
-        [P0, Wgauss] = gauss_quad(0,trunc,Npts);
-        P0=flipud(P0);
+        trunc = freq*min([self.length, optimalTruncation, ...
+                            machinePrecisionLength]);
+        % get (scaled) Gauss Legendre weights and nodes
+        [gaussNodes, gaussWeights] = gauss_quad(0,trunc,numPts);
+        gaussNodes=flipud(gaussNodes);
     end
-%            
-        % get SPs again (could just store them if they're going to
-        % be this useful)
+
+    % if largest p value of coarse solve is less than
+    % largest p value of quad, trace further so we have a good initial
+    % guess for the refinement/corrector step later
+    if max(gaussNodes) > freq*max(self.coarseParam)
+        % get polynomial order from length of phase coefficients
         order = length(self.phaseCoeffs)-1;
-        Dpolycoeffs=self.phaseCoeffs(1:(order)).*fliplr(1:(order));
-
-        % if largest p value of coarse solve is less than
-        % largest p value of quad, trace further
-        if max(P0) > freq*max(self.coarseParam)% global_contour_params.step_size, int64(max_steps_before_fail)
-            SPs = roots(Dpolycoeffs);
-            max_steps_before_fail = quad_params.max_number_of_ODE_steps;
-            if quad_params.mex
-                [self.coarseParam, self.coarsePath, success] = ...
-                    SDpathODEuler_extend_coarse_path_mex(self.coarseParam, self.coarsePath, self.phaseCoeffs(:), SPs, quad_params.global_step_size, int64(max_steps_before_fail), max(P0)/freq);
-            else
-                [self.coarseParam, self.coarsePath, success] = ...
-                    SDpathODEuler_extend_coarse_path(self.coarseParam, self.coarsePath, self.phaseCoeffs, SPs, quad_params.global_step_size, int64(max_steps_before_fail), max(P0)/freq);
-            end
-            if ~success
-                warning('failed to converge extended contour');
-            end
-        end
-        
-        %_mex
-        if quad_params.mex
-            [h, dhdp, Newton_success] = SDquadODEulerNEwtonCorrection_mex(P0, freq*self.coarseParam, self.ICs(1), self.coarsePath, self.phaseCoeffs(:), freq, quad_params.NewtonThresh, uint32(quad_params.NewtonIts));
+        % get coefficients of derivative of phase
+        diffPhaseCoeffs=self.phaseCoeffs(1:(order)).*fliplr(1:(order));
+        % get stationary points
+        stationaryPoints = roots(diffPhaseCoeffs);
+        % extend the coarse path, using mex function if specified
+        if QuadParams.mex
+            [self.coarseParam, self.coarsePath, success] = ...
+                SDpathODEuler_extend_coarse_path_mex(self.coarseParam, ...
+                self.coarsePath, self.phaseCoeffs(:), stationaryPoints, ...
+                QuadParams.global_step_size, ...
+                int64(QuadParams.max_number_of_ODE_steps), max(gaussNodes)/freq);
         else
-            [h, dhdp, Newton_success] = SDquadODEulerNEwtonCorrection(P0, freq*self.coarseParam, self.ICs(1), self.coarsePath, self.phaseCoeffs, freq, quad_params.NewtonThresh, uint32(quad_params.NewtonIts));
+            [self.coarseParam, self.coarsePath, success] = ...
+                SDpathODEuler_extend_coarse_path(self.coarseParam, ...
+                self.coarsePath, self.phaseCoeffs, stationaryPoints, ...
+                QuadParams.global_step_size, ...
+                int64(QuadParams.max_number_of_ODE_steps), max(gaussNodes)/freq);
         end
-
-        weightWatchers = ones(length(h),1);
-        for n = 1:length(h)
-            if Newton_success(n) > quad_params.NewtonIts
-                warning(['Newton did not converge in ',num2str(quad_params.NewtonIts),' steps']);
-                weightWatchers(n) = exp(1i*(freq*self.phaseDerivs{1}(h(n))-1i*P0(n).^self.ODEorder - freq*self.phaseDerivs{1}(self.startPoint)));
-            end
+        if ~success
+            warning('failed to converge extended contour');
         end
-        weightWatchers = 1;
-    
-    if isinf(self.length) && strcmp(quad_params.inf_quad_rule,'laguerre')
-        %absorb h'(p) and other constants into weights.
-        W= exp(1i*freq*self.phaseDerivs{1}(self.startPoint)).*dhdp.*Wgauss.*weightWatchers;
-    else
-       W = dhdp.*Wgauss.*exp(1i*freq*self.phaseDerivs{1}(h)).*weightWatchers;
     end
-    Z=h;
+    
+    % using coarse path, interpolate for initial guess, and refine/correct
+    % using Newton iteration to get the quadrature points
+    if QuadParams.mex
+        [hArray, jacobianArray, NewtonSuccess] = ...
+            SDquadODEulerNEwtonCorrection_mex(gaussNodes, ...
+            freq*self.coarseParam, self.ICs(1), self.coarsePath, ...
+            self.phaseCoeffs(:), freq, QuadParams.NewtonThresh, ...
+            uint32(QuadParams.NewtonIts));
+    else
+        [hArray, jacobianArray, NewtonSuccess] = ...
+            SDquadODEulerNEwtonCorrection(gaussNodes, ...
+            freq*self.coarseParam, self.ICs(1), self.coarsePath, ...
+            self.phaseCoeffs, freq, QuadParams.NewtonThresh, ...
+            uint32(QuadParams.NewtonIts));
+    end
+
+    % the points in hArray above will be the quadrature nodes
+    % construct quadrature weights using Jacobian dhdp
+    if isinf(self.length) && strcmp(QuadParams.inf_quad_rule,'laguerre')
+        wArray= exp(1i*freq*self.phaseDerivs{1}(self.startPoint)).*jacobianArray.*gaussWeights;
+    else
+       % for Gauss Legendre, need to explicitly include the phase function
+       wArray = jacobianArray.*gaussWeights.*exp(1i*freq*self.phaseDerivs{1}(hArray));
+    end
 end
