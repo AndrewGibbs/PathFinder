@@ -1,24 +1,28 @@
 function [covers, endPointIndices]...
-                = getExteriorBalls(g, freq, SPs, infContour, a, b, Cosc,g_coeffs,...
-                    ball_clump_thresh,num_rays,int_balls_yn,imag_thresh, use_mex)
+                = getExteriorBalls(phaseFn, freq, stationaryPointArray, ...
+                    isInfEndptArray, a, b, Cosc, phaseCoeffs, ...
+                    ballMergeTol, numRays, isInteriorBalls, imagThresh, ...
+                    useMex)
     
     %% put a ball of radius zero around the endpoints
 
     % initialise variables
-    coverIndex = 0;
+    ballsIndex = 0;
     endPointBalls = [];
     endPointIndices = [];
     
-    %not yet sure if endpoints are finite/infinite
-    maybzEndpoints = [a b];
-    ep_count = 0; %endpoint count, for number of infinite endpoints
-    for m = [1 2]
-       if ~infContour(m)
-           coverIndex = coverIndex + 1;
-           ep_count = ep_count + 1;
+    %not yet sure if endpoints are finite/infinite, found out here
+    possibleFiniteEndpoints = [a b];
+    numFiniteEndpoints = 0; % counter for number of infinite endpoints
+    for iEndpoint = [1 2]
+       % only put ball (or zero radius) around endpoint if finite
+       if ~isInfEndptArray(iEndpoint)
+           ballsIndex = ballsIndex + 1;
+           numFiniteEndpoints = numFiniteEndpoints + 1;
            % construct the ball of radius zero
-           endPointBalls{ep_count} = Ball(0,maybzEndpoints(m),g,coverIndex);
-           endPointIndices = [endPointIndices coverIndex];
+           endPointBalls{numFiniteEndpoints} = Ball(0, possibleFiniteEndpoints(iEndpoint), ...
+                                                    phaseFn,ballsIndex);
+           endPointIndices = [endPointIndices ballsIndex];
        end
     end
     
@@ -28,76 +32,87 @@ function [covers, endPointIndices]...
     % which |g(z)-g(SP)|<numOscs, where g is the phase, z is any point in the
     % ball, SP is the stationary point.
 
-    if ~isempty(SPs)
+    if ~isempty(stationaryPointArray)
         % initialise radius variable
-        radii = zeros(length(SPs),1);
+        radii = zeros(length(stationaryPointArray),1);
         % initialise ball centres as stationary points
-        centres = SPs;
-        for n = 1:length(SPs)
-            % determine radius, so that it has a bounded number of
-            % oscillations
-            if use_mex
-                radii(n) = get_smallest_supset_ball_mex(g_coeffs.', freq, SPs(n), Cosc, num_rays,~int_balls_yn,imag_thresh);
+        centres = stationaryPointArray;
+        for jEndpoint = 1:length(stationaryPointArray)
+            % determine radius, so that there is a bounded number of
+            % oscillations inside the complex ball
+            if useMex
+                radii(jEndpoint) = get_smallest_supset_ball_mex(phaseCoeffs.', ...
+                            freq, stationaryPointArray(jEndpoint), Cosc, numRays, ...
+                            ~isInteriorBalls,imagThresh);
             else
-                radii(n) = getSmallestSupsetBall(g_coeffs.', freq, SPs(n), Cosc, num_rays,~int_balls_yn,imag_thresh);
+                radii(jEndpoint) = getSmallestSupsetBall(phaseCoeffs.', freq, ...
+                                stationaryPointArray(jEndpoint), Cosc, numRays, ...
+                                ~isInteriorBalls, imagThresh);
             end
         end
         
 
         %% merge balls which are close together
-        num_SP_balls = length(SPs);
-        continue_loop = true;
+        numStatPointBalls = length(stationaryPointArray);
+        continueLoop = true;
 
         % continue process until all balls are sufficiently far apart
-        while num_SP_balls>1 && continue_loop
+        while numStatPointBalls>1 && continueLoop
 
-            D = zeros(num_SP_balls);
-            min_m = 0;
-            min_n = 0;
-            min_val = inf;
+            D = zeros(numStatPointBalls);
+
+            % following two variables correspond to position of the minimum
+            % value in the matrix of distances
+            iMin = 0;
+            jMin = 0;
+            % and the minimum value
+            minVal = inf;
 
             % construct matrix describing distances between SPs
-            for m=1:num_SP_balls
-                for n=(m+1):num_SP_balls
+            for iEndpoint=1:numStatPointBalls
+                for jEndpoint=(iEndpoint+1):numStatPointBalls
                     % the condition for 'closeness' is the following:
-                    D(m,n) = abs(centres(m)-centres(n))/max(radii(m),radii(n));
+                    D(iEndpoint,jEndpoint) = abs(centres(iEndpoint)-centres(jEndpoint))/max(radii(iEndpoint),radii(jEndpoint));
                     % possibly merge the balls which are closest in the
                     % above sense
-                    if D(m,n)<min_val
-                        min_val = D(m,n);
-                        min_m = m;
-                        min_n = n;
+                    if D(iEndpoint, jEndpoint) < minVal
+                        minVal = D(iEndpoint,jEndpoint);
+                        iMin = iEndpoint;
+                        jMin = jEndpoint;
                     end
                 end
             end
     
             % if closest balls are sufficiently close, merge them
-            if min_val<=ball_clump_thresh
+            if minVal <= ballMergeTol
                 % now remove extra index from the list
-                if radii(min_m) < radii(min_n)
-                    remove_index = min_m;
+                if radii(iMin) < radii(jMin)
+                    removeIndex = iMin;
                 else
-                    remove_index = min_n;
+                    removeIndex = jMin;
                 end
                 % and remove relevant data from other variables
-                radii = radii(1:num_SP_balls~=remove_index);
-                centres = centres(1:num_SP_balls~=remove_index);
-                num_SP_balls = num_SP_balls - 1;
+                radii = radii(1:numStatPointBalls ~= removeIndex);
+                centres = centres(1:numStatPointBalls ~= removeIndex);
+                numStatPointBalls = numStatPointBalls - 1;
             else
-                continue_loop = false;
+                % break loop if no balls need merging
+                continueLoop = false;
             end
         end
 
-        for n=1:num_SP_balls
-            coverIndex = coverIndex + 1;
-            coversInit{n} = Ball(radii(n),centres(n),g_coeffs,coverIndex);
+        % now create a ball at each of the remaining 'centres'
+        for jEndpoint = 1:numStatPointBalls
+            ballsIndex = ballsIndex + 1;
+            ballsInit{jEndpoint} = Ball(radii(jEndpoint), ...
+                                centres(jEndpoint), phaseCoeffs, ballsIndex);
         end
 
         %% delete redundant exits
         % Some steepest exits will start inside another ball. This can be
         % deleted now, saving work later on.
-        covers = [endPointBalls deleteRedundantExits(coversInit)];
-    else
+        covers = [endPointBalls deleteRedundantExits(ballsInit)];
+    else % case without stationary points
         covers = endPointBalls;
     end
 end

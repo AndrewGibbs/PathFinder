@@ -1,11 +1,19 @@
-function [value,output_index] = inAball(h, cover_centres, cover_radii)
-%returns 1 if SD path is in a ball, 0 otherwise
-    value = false;
-    output_index = 0;
-    for index = 1:length(cover_centres)
-        if abs(h-cover_centres(index))<cover_radii(index)
-            value = true;
-            output_index = index;
+function [isInBall, outputIndex] = inAball(h, ballCentres, ballRadii)
+% determines if the point h is inside any of the balls
+
+    % assume not, until we know otherwise
+    isInBall = false;
+    % default index for the case where not in ball
+    outputIndex = 0;
+
+    % loop over all balls
+    for iBall = 1:length(ballCentres)
+        % check if inside a ball
+        if abs(h-ballCentres(iBall))<ballRadii(iBall)
+            isInBall = true;
+            outputIndex = iBall;
+            % break loop here, as we only care about being inside of one
+            % ball
             break;
         end
     end

@@ -1,25 +1,42 @@
-function r = getSmallestSupsetBall(g_coeffs, freq, xi, Cosc,num_rays, take_max, imag_thresh)
-%% find the smallest/largest ball enclosed by the closed contour such that
-% freq*|g(z)-g(\xi)|<C.
+% find the smallest/largest (determined by 'isLargestBall') ball enclosed
+% by the closed contour such that:
+% freq*|g(z)-g(\xi)|<numOscs,
+% where g is the phase function
+ function r = getSmallestSupsetBall(phaseCoeffs, freq, stationaryPoint, ...
+                                    numOscs, numRays, isLargestBall, ...
+                                    imag_thresh)
+    % here the radii are determined by firing a ray in each direction 
+    % \theta, and finding r when
+    % freq*|g(\xi+r*exp(i\theta))-g(\xi)|=numOscs
+    radii = zeros(numRays,1);
 
-% the default is to take
-    radii = zeros(num_rays,1);
-    d_theta = 2*pi/double(num_rays);
-    for n=1:num_rays
-        theta = d_theta*double(n);
-        radii(n) = getRGivenTheta(g_coeffs, xi, Cosc/freq, theta, imag_thresh);
-        if isinf(radii(n)) && take_max
-            radii(n) = 0;
-        end
+    % these rays are determined by splitting 2pi into numRays directions,
+    % the following width apart:
+    dTheta = 2*pi/double(numRays);
+
+    % loop over all rays
+    for iRay=1:numRays
+        % get ray direction
+        theta = dTheta*double(iRay);
+
+        % get radius, in the sense defined above, using the below
+        % rootfinding algorithm
+        radii(iRay) = getRGivenTheta(phaseCoeffs, stationaryPoint, ...
+                                        numOscs/freq, theta, imag_thresh);
+
     end
 
-    if take_max
+    % choose either the the smallest ball bounding the region, or a the
+    % largest ball inside the region
+    if isLargestBall
         r = max(radii);
     else
         r = min(radii);
     end
     
+    % error checking for infinite or zero radius, incase rootfinder fails
     if isinf(r) || r==0
-        error("Could not determine radius of ball, try increasing parameter 'num rays', (default value is 16)");
+        error("Could not determine radius of ball, try increasing parameter" + ...
+            " 'num rays', (default value is 16)");
     end
 end
