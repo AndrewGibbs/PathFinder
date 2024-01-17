@@ -1,44 +1,36 @@
-classdef Ball% < ComplexCover
-    %Ball in complex plane
+classdef Ball
+    % Ball in complex plane, typically centred at (or close to) a
+    % stationary point
     
-    properties
-        radius
+    properties % defining the ball
+        radius % use convention that endpoints are balls with zero radius
         centre
-        index
-        steepestExits
+        index % each ball has a unique integer index
+        steepestExits % points on circumferance at which imaginary part of
+                      % phase is maximal
     end
     
     methods
+        % constructor
         function self = Ball(r,c,g_coeffs,index)
+            % allocate basic properties
             self.radius = r;
             self.centre = c;
-%             self.pseudoCentre = c;
             self.index = index;
-%             self.orderSum = orderSum;
-%             self.boundaryLength = 2*pi*r;
-%             self.diameter = r;
-%             self.boundary.xdata = [c];
-%             self.boundary.ydata = [c];
-%             self.exitGrad = 32*max(self.orderSum,1);
             
-            if r>0
-                if nargin>2
-
-                    % get steepest exits on the circumference of the ball
-                    self.steepestExits = unique(getSteepestExitsOnBall(g_coeffs.',c,r).');
-%                   
-                end
+            % steepest exits must be computed by rootfinding
+            if r>0 % i.e. not an endpoint
+                self.steepestExits = ...
+                    unique(getSteepestExitsOnBall(g_coeffs.',c,r).');
             else % if zero radius
-                % default to steepest exit at centre
+                % default to a single steepest exit at centre
                 self.steepestExits = c;
             end
-%             s = linspace(0,1,self.exitGrad);
-%             self.boundaryComplex = self.boundaryTrace(s);
         end
 
-        % methods defined elsewhere
-        yn = isIn(self,point)
-        point = boundaryTrace(self,paramVal)
+        % other methods
+        yn = isIn(self,point) % check if point is in ball
+        point = boundaryTrace(self,paramVal) % get points on circumferance
         
     end
 end

@@ -1,9 +1,14 @@
-function point = boundaryTrace(self,paramVal)
+% given a Ball object, and some points in [0,1] parametrising the
+% circumferance, map to the circumferance.
+function pointsOnCircle = boundaryTrace(self,paramArray)
+    % if ball has positive radius
     if self.radius>0
-        point = self.centre + ...
-                self.radius*cos(paramVal*2*pi) + ...
-                self.radius*1i*sin(paramVal*2*pi);
+        % plot points on complex circumferance
+        pointsOnCircle = self.centre + ...
+                self.radius*cos(paramArray*2*pi) + ...
+                self.radius*1i*sin(paramArray*2*pi);
     else
-        point = self.centre+1i*eps;
+        % otherwise just return single point at centre
+        pointsOnCircle = self.centre+1i*eps;
     end
 end
