@@ -1,108 +1,141 @@
-function plotGraph(graph_data, covers, finite_endpoints)
 % produces a visual representation of the planar PathFinder graph
-    hold on;
-    set(0,'defaultTextInterpreter','latex');
-    R_stretch = 1.25; % need a better way of choosing this radius
-    centre = mean(graph_data.CPs);
-    R = R_stretch*max(abs(centre-graph_data.CPs));
 
+function plotGraph(graphData, ballsArray, finiteEndpoints)
+
+    %% First set formats
+    % use LaTeX fonts
+    set(0,'defaultTextInterpreter','latex');
+    fontSize = 18;
+    markerSize = 35;
+    thickWidth = 3.0;
+
+    % determine where the graph should be centred, and the size needed to
+    % contain all of the balls
+    rStretch = 1.25;
+    centre = mean(graphData.CPs);
+    r = rStretch*max(abs(centre - graphData.CPs));
+
+    % the colours for the different nodal components
     cols = {[0 0.4470 0.7410],[0.8500 0.3250 0.0980],[0.9290 0.6940 0.1250],...
         [0.4940 0.1840 0.5560], [0.4660 0.6740 0.1880], [0.3010 0.7450 0.9330],...
                 [0.6350 0.0780 0.1840]};
 
-    lightGrayColor = [.95 .95 .95];
-    fontSize = 18;
-    markerSize = 35;
-    thick_width = 3.0;
+    % colour for the balls
+    lightGrayColor = [.8 .8 .8];
 
 
-    for C=covers
-        if iscell(C)
-            C=C{1};
+    %% Fill balls in first, so everything else gets drawn on top.
+    for iBall = ballsArray
+        % convert cell to correct cell format
+        if iscell(iBall)
+            iBall=iBall{1};
         end
-        hold on;
-%         plot(C);
-        if C.radius>0
-           fillCircle(C.centre,C.radius,lightGrayColor);
-%            C.plot(':k');
+
+        % only fill balls with positive radius
+        if iBall.radius>0
+           fillCircle(iBall.centre, iBall.radius, lightGrayColor);
+           hold on;
         end
-        hold on;
     end
     
-    for n = 1:length(graph_data.points)
-        for m=1:length(graph_data.points)
-             if graph_data.adj_mat(m,n)
-%                 draw_line(graph_data.points(m), graph_data.points(n));
-                if check_if_on_shortest_path(m,n)
-                    draw_thick_line(graph_data.points(m), graph_data.points(n));
+    %% Next, plot the edges.
+    % double loop over all nodes on graph:
+    for n = 1:length(graphData.points)
+        for m=1:length(graphData.points)
+            % check if these nodes are connected
+             if graphData.adj_mat(m,n)
+                if isOnShortestPath(m,n)
+                    % if they correspond to the deformation, use a thick
+                    % line
+                    drawThickLine(graphData.points(m), graphData.points(n));
                 else
-                    draw_line(graph_data.points(m), graph_data.points(n));
+                    % otherwise, use a regular line
+                    drawLine(graphData.points(m), graphData.points(n));
                 end
              end
         end
     end
 
-    valley_nodes = centre+R*graph_data.valleys;
-    for n = 1:length(graph_data.points)
-        for m_=1:length(graph_data.valleys)
-            m = m_ + length(graph_data.points);
-            if graph_data.adj_mat(m,n)
-                if check_if_on_shortest_path(m,n)
-                    draw_thick_line(graph_data.points(n), valley_nodes(m_));
+    %% Now plot the nodes.
+
+    % create finite nodal points for the valleys.
+    valleyNodes = centre + r*graphData.valleys;
+
+    % double loop over all nodes and all valleys on graph
+    for n = 1:length(graphData.points)
+        for m_ = 1:length(graphData.valleys)
+            % shift to the valley index range, which is after the 'points'
+            m = m_ + length(graphData.points);
+
+            % check if point connects to valley
+            if graphData.adj_mat(m, n)
+                % if they correspond to the deformation, use a thick
+                % line
+                if isOnShortestPath(m, n)
+                    drawThickLine(graphData.points(n), valleyNodes(m_));
                 else
-                    draw_line(graph_data.points(n), valley_nodes(m_));
+                % otherwise, use a regular line
+                    drawLine(graphData.points(n), valleyNodes(m_));
                 end
             end
         end
     end
     
-    plot(valley_nodes,'.k','MarkerSize',markerSize, 'Color',cols{1});
+    %% Add nodes to the graph
+    % mark finite points representing valleys
+    plot(valleyNodes,'.k','MarkerSize',markerSize, 'Color',cols{1});
 
-    plot(graph_data.SExs,'.b','MarkerSize',markerSize, 'Color',cols{4});
-    plot(graph_data.SEns,'.g','MarkerSize',markerSize, 'Color',cols{5});
-    plot(graph_data.CPs,'.r','MarkerSize',markerSize,'Color', cols{2});
-%     legend('Valleys','Critical points','Steepest exits','Steepest Entrances');
+    % mark exits
+    plot(graphData.SExs,'.b','MarkerSize',markerSize, 'Color',cols{4});
+    % mark entrances
+    plot(graphData.SEns,'.g','MarkerSize',markerSize, 'Color',cols{5});
+    % mark critical points
+    plot(graphData.CPs,'.r','MarkerSize',markerSize,'Color', cols{2});
 
+    %% Workaround to get Matlab to plot the legend
     legend('','Location', 'eastoutside');
     plot(NaN,NaN,'.k','MarkerSize',markerSize,'DisplayName','Valleys','Color', cols{1});
     plot(NaN,NaN,'.r','MarkerSize',markerSize,'DisplayName','Stationary points','Color', cols{2});
-    if length(finite_endpoints)>1
-        plot(finite_endpoints,'.m','MarkerSize',markerSize,'DisplayName','Finite endpoints','Color', cols{3});
+    if length(finiteEndpoints)>1
+        plot(finiteEndpoints,'.m','MarkerSize',markerSize,'DisplayName','Finite endpoints','Color', cols{3});
     end
     plot(NaN,NaN,'.b','MarkerSize',markerSize,'DisplayName','Exits','Color', cols{4});
     plot(NaN,NaN,'.g','MarkerSize',markerSize,'DisplayName','Entrances','Color', cols{5});
     plot(NaN,NaN,'-k','DisplayName','Edges')
-    plot(NaN,NaN,'-k','LineWidth',thick_width,'DisplayName','Edges in shortest path')
-%     plot(NaN,NaN,':k','DisplayName','Ball subgraphs')
-%     legend('Valleys','Critical points','Steepest exits','Steepest Entrances');
+    plot(NaN,NaN,'-k','LineWidth',thickWidth,'DisplayName','Edges in shortest path')
 
-    xlim(1.1*[min(real(valley_nodes)) max(real(valley_nodes))]);
-    ylim(1.1*[min(imag(valley_nodes)) max(imag(valley_nodes))]);
+    %% Some final formatting
+    % stretch axis limits by a little
+    xlim(1.1*[min(real(valleyNodes)) max(real(valleyNodes))]);
+    ylim(1.1*[min(imag(valleyNodes)) max(imag(valleyNodes))]);
+
     set(gca,'fontsize', fontSize);
     set(gcf, 'Position', [0 0 800 800]);
     axis equal;
     axis off;
     hold off;
 
-    function draw_line(a,b)
+    %% indented functions
+
+    function drawLine(a,b)
         hold on;
         plot([a b]+1i*eps,'-k');
     end
-    function draw_thick_line(a,b)
-        hold on;
-        plot([a b]+1i*eps,'-k','LineWidth',thick_width);
-    end
 
-    function draw_line_to_valley(a,v)
+    function drawThickLine(a,b)
         hold on;
-        plot([a R*v]+1i*eps,'-k');
+        plot([a b]+1i*eps,'-k','LineWidth',thickWidth);
     end
     
-    function yn = check_if_on_shortest_path(m,n)
+    function yn = isOnShortestPath(m,n)
+        % returns true of false, if nodal indices m and n are on the shortest
+        % path, corresponding to the contour deformation
         yn = false;
-        for j=1:(length(graph_data.shortest_path)-1)
-            if (m==graph_data.shortest_path(j) && n==graph_data.shortest_path(j+1))...
-               || (n==graph_data.shortest_path(j) && m==graph_data.shortest_path(j+1))
+        % loop over all indices in shortest path sequence
+        for j=1:(length(graphData.shortest_path)-1)
+            % check if m and n are neighbours in sequence
+            if (m==graphData.shortest_path(j) && n==graphData.shortest_path(j+1))...
+               || (n==graphData.shortest_path(j) && m==graphData.shortest_path(j+1))
                yn = true;
                break;
             end

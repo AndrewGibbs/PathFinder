@@ -57,7 +57,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
     %% main algorithm
 
     %get info about stationary points:
-    [phase_handles, stationaryPoints, valleys] = getInfoFromPhase(phaseIn);
+    [phaseHandle, stationaryPoints, valleys] = getInfoFromPhase(phaseIn);
 
     % get r* parameter used for determining regions of no return
     params.r_star = getRStar(phaseIn);
@@ -68,7 +68,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
     tic;
     %cover each stationary point:
     [covers, ~]...
-            = getExteriorBalls(phase_handles{1},freq,stationaryPoints,params.infContour,a,b, ...
+            = getExteriorBalls(phaseHandle,freq,stationaryPoints,params.infContour,a,b, ...
             params.numOscs, phaseIn, params.ball_clump_thresh,params.num_rays, ...
             params.interior_balls, params.imag_thresh, params.use_mex);
     if params.log.take
@@ -93,7 +93,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
         params.max_SP_integrand_val = inf;
     else
         % filter out SD contours which are of much smaller value, or empty
-        [quadIngredients, params.max_SP_integrand_val] = fliterPaths(quadIngredients, phase_handles{1}, freq, params.contourStartThresh);
+        [quadIngredients, params.max_SP_integrand_val] = fliterPaths(quadIngredients, phaseHandle, freq, params.contourStartThresh);
         if isinf(params.max_SP_integrand_val)
             error("Integral is infinite");
         elseif params.max_SP_integrand_val>1E16
@@ -105,7 +105,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
 
     %get quadrature points
     tic;
-    [z, w] = makeQuad(quadIngredients, freq, nPts, phase_handles{1}, params);
+    [z, w] = makeQuad(quadIngredients, freq, nPts, phaseHandle, params);
     if params.log.take
         params.log.add_to_log(sprintf("Quadrature allocation time:\t%fs",toc));
     end

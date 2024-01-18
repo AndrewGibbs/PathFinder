@@ -3,17 +3,13 @@ function [phase,stationaryPoints,valleys] = getInfoFromPhase(phaseIn)
 %input as coefficients of a polynomial, or (soon) a cell array of anonymous
 %functions
 
-stationaryPointMinDist = .001;
-
     if isvector(phaseIn)
-        [phase,stationaryPoints] = NSDeetsFromPoly(phaseIn, stationaryPointMinDist);
+        [phase,stationaryPoints] = NSDeetsFromPoly(phaseIn);
         order = length(phaseIn)-1;
         valleyRotate = exp(-1i*angle(phaseIn(1))/order);
         valleys = valleyRotate*exp(2i*pi*(1/4 + (1:order))/order);
-    elseif iscell(phaseIn) %user has given anonymous function cell array
-        error('Have not yet coded this on latest version of PathFinder');
     else 
-        error('Phase input must be either cell array of anonymous functions, or coefficients of polynomial');
+        error('Phase input must be array of coefficients of polynomial');
     end
 end
 
