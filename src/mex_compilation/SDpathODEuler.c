@@ -7,14 +7,26 @@ function [p_log_out, h_log_out, valley_index, ball_index] = ...
             0           1           2              3
     SDpathODEuler_v4(h0, gCoeffs, SPs, cover_radii, valleys, base_step_size, n_max, r_star,...
                       0     1       2   3           4           5               6       7
-    Newton_small_threshold, Newton_big_threshold, Newton_point_count_max) %#codegen
-            8                       9                   10              
+    Newton_small_threshold, Newton_big_threshold) %#codegen
+            8                       9                     
 */
 
 // the mex gateway to SDpathODEEuler_extend_coarse_path
 void mexFunction(int nlhs, mxArray *plhs[],
                 int nrhs, const mxArray *prhs[])
 {
+    /* check number of inputs is correct*/
+    if(nrhs != 10) {
+    mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nrhs",
+                      "Ten inputs required.");
+    }
+
+    /* check number of outputs is correct*/
+    if(nlhs != 4) {
+    mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nlhs",
+                      "Four outputs required.");
+    }
+
     // convert matlab inputs to C variables
 
     double complex h0;
@@ -67,9 +79,6 @@ void mexFunction(int nlhs, mxArray *plhs[],
     double Newton_big_threshold;
     convert_mxsca_to_double(prhs[9],&Newton_big_threshold);
 
-    // int Newton_point_count_max;
-    // convert_mxint_to_int(prhs[10],&Newton_point_count_max);
-
     // prep output variables, as C variables
 
     double *p_out = (double*) malloc(sizeof(double)*n_max);
@@ -92,18 +101,6 @@ void mexFunction(int nlhs, mxArray *plhs[],
                     &ball_index,
                     &output_length
                     );
-
-    /* check number of inputs is correct*/
-    if(nrhs != 11) {
-    mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nrhs",
-                      "Eleven inputs required.");
-    }
-
-    /* check number of outputs is correct*/
-    if(nlhs != 4) {
-    mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nlhs",
-                      "Four outputs required.");
-    }
 
     
     plhs[0] = mxCreateDoubleMatrix(output_length+1, 1, mxREAL);

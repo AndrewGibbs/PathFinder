@@ -19,7 +19,7 @@ classdef ContourSD
     methods
         % ------------------------ constructor  ------------------------- %
         function self = ContourSD(startPoint, G, startCover, otherCovers, ...
-                        valleys, global_contour_params)
+                        valleys, ContourParams)
             
             % allocate coefficients for phase and derivs
             self.phaseCoeffs = G;
@@ -33,20 +33,20 @@ classdef ContourSD
             % get information about the other balls (not the one where
             % this contour starts).
             [otherCPs, otherCPsRadii] = getBallDeets(otherCovers);
-            maxStepsBeforeFail = global_contour_params.max_number_of_ODE_steps;
+            maxStepsBeforeFail = ContourParams.maxNumODEsteps;
 
             % approximate the path using Euler-Newton predictor-corrector
             % will/won't use MEX function, as required.
-            if global_contour_params.mex
+            if ContourParams.mex
                 [self.coarseParam, self.coarsePath, valley_index, other_ball_index] ...
                     = SDpathODEuler_v4_mex(self.ICs(1), G(:), otherCPs(:), otherCPsRadii(:), valleys(:),...
-                global_contour_params.step_size, int64(maxStepsBeforeFail), global_contour_params.r_star,...
-                global_contour_params.NewtonThresh, global_contour_params.NewtonBigThresh, int64(global_contour_params.log.Newton_its));
+                ContourParams.step_size, int64(maxStepsBeforeFail), ContourParams.r_star,...
+                ContourParams.NewtonThresh, ContourParams.NewtonBigThresh);
             else
                 [self.coarseParam, self.coarsePath, valley_index, other_ball_index] ...
                     = SDpathODEuler_v4(self.ICs(1), G, otherCPs, otherCPsRadii, valleys.',...
-                global_contour_params.step_size, int64(maxStepsBeforeFail), global_contour_params.r_star,...
-                global_contour_params.NewtonThresh, global_contour_params.NewtonBigThresh);
+                ContourParams.step_size, int64(maxStepsBeforeFail), ContourParams.r_star,...
+                ContourParams.NewtonThresh, ContourParams.NewtonBigThresh);
             end
 
             if isempty(other_ball_index)
@@ -81,7 +81,7 @@ classdef ContourSD
         plot(self,varargin)
         
         % routine to allocate quadrature nodes
-        [Z, W] = getQuad(self,freq,Npts,quad_params)
+        [z, w, newtonIts] = getQuad(self, freq, Npts, quad_params)
     end
 end
 

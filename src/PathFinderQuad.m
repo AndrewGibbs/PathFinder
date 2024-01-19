@@ -26,13 +26,13 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
     phaseIn = phaseIn(first_nonzero_index:end);
 
     %% set parameters
-    params = optionalExtras(freq,length(phaseIn)-1,varargin);
+    params = optionalExtras(length(phaseIn)-1,varargin);
 
     %% special cases
     % check if standard quadrature is appropriate, if so, do that & terminate early
     if ((~params.infContour(1)) && (~params.infContour(2)) ...
         && checkEndpointWidth(a, b, phaseIn, freq, params.numOscs,...
-            params.num_rays, params.interior_balls, params.imag_thresh, params.use_mex)) ||...
+            params.numRays, params.interiorBalls, params.imagThresh, params.useMex)) ||...
             (length(phaseIn)==1)
 
         [z, w_, dh_] = gaussQuadComplex(a,b,nPts);
@@ -69,55 +69,80 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
     %cover each stationary point:
     [covers, ~]...
             = getExteriorBalls(phaseHandle,freq,stationaryPoints,params.infContour,a,b, ...
-            params.numOscs, phaseIn, params.ball_clump_thresh,params.num_rays, ...
-            params.interior_balls, params.imag_thresh, params.use_mex);
+            params.numOscs, phaseIn, params.ballMergeThresh,params.numRays, ...
+            params.interiorBalls, params.imagThresh, params.useMex);
     if params.log.take
-        params.log.add_to_log(sprintf("Ball construction:\t%fs",toc));
+        params.log.addToLog(sprintf("Ball construction:\t%fs",toc));
     end
     
     tic;
     %make the contours from each cover:
-    contours = getContours(phaseIn, covers, valleys, params);
+    contourArray = getContours(phaseIn, covers, valleys, params);
     if params.log.take
-        params.log.add_to_log(sprintf("Contour coarse construction:\t%fs",toc));
+        params.log.addToLog(sprintf("Contour coarse construction:\t%fs", toc));
+        % also log the number of points in the coarse approximation of each
+        % contour:
+        for iCount = 1:length(contourArray)
+            contPts = length(contourArray(iCount).coarsePath);
+            if sign(imag(contourArray(iCount).startPoint))<0
+                ipm = '-';
+            else
+                ipm = '+';
+            end
+            params.log.addToLog(sprintf("\tContour %d: start point " + ...
+                "%.2f%s%.2fi,\tlength %.2f,\t%d pts", ...
+                iCount, real(contourArray(iCount).startPoint), ipm,...
+                abs(imag(contourArray(iCount).startPoint)), ...
+                contourArray(iCount).length, contPts));
+        end
     end
 
     %choose the path from a to b
     tic;
-    [quadIngredients, graph_data] = shortestInfinitePath(a,b,contours, covers, valleys, params);
+    [QuadIngredients, GraphData] = shortestInfinitePath(a, b, contourArray,...
+                                    covers, valleys, params);
     if params.log.take
-        params.log.add_to_log(sprintf("Dijkstra shortest path:\t%fs",toc));
+        params.log.addToLog(sprintf("Dijkstra shortest path:\t%fs",toc));
     end
     
     if params.contourStartThresh==0
-        params.max_SP_integrand_val = inf;
+        params.maxSPintegrandVal = inf;
     else
         % filter out SD contours which are of much smaller value, or empty
-        [quadIngredients, params.max_SP_integrand_val] = fliterPaths(quadIngredients, phaseHandle, freq, params.contourStartThresh);
-        if isinf(params.max_SP_integrand_val)
+        [QuadIngredients, params.maxSPintegrandVal] = fliterPaths(QuadIngredients, phaseHandle, freq, params.contourStartThresh);
+        if isinf(params.maxSPintegrandVal)
             error("Integral is infinite");
-        elseif params.max_SP_integrand_val>1E16
+        elseif params.maxSPintegrandVal>1E16
             warning("Integral is greater than 1e16");
-        elseif params.max_SP_integrand_val<1E-16
+        elseif params.maxSPintegrandVal<1E-16
             warning("Integral is less than 1e-16");
         end
     end
 
     %get quadrature points
     tic;
-    [z, w] = makeQuad(quadIngredients, freq, nPts, phaseHandle, params);
+    [z, w, netwonIterationData] = makeQuad(QuadIngredients, freq, nPts, phaseHandle, params);
     if params.log.take
-        params.log.add_to_log(sprintf("Quadrature allocation time:\t%fs",toc));
+        params.log.addToLog(sprintf("Quadrature allocation time:\t%fs",toc));
+        for i = 1:length(netwonIterationData)
+            newtonSummaryString = [];
+            for n = (netwonIterationData{i}.')
+                newtonSummaryString = ...
+                    [newtonSummaryString, ' ', num2str(n)];
+            end
+            params.log.addToLog(sprintf( ...
+                "\tNewton refinement steps:\t%s", newtonSummaryString));
+        end
     end
 
     %make a plot of what's happened, if requested
     if params.plot
-        plotAll(covers, contours, z, a, b, params.infContour, stationaryPoints, phaseIn, valleys);
+        plotAll(covers, contourArray, z, a, b, params.infContour, stationaryPoints, phaseIn, valleys);
     end
 
-    if params.plot_graph
-        finite_endpoints = [a b];
-        finite_endpoints = finite_endpoints(~params.infContour)+1i*eps;
-        plotGraph(graph_data, covers, finite_endpoints);
+    if params.plotGraph
+        finiteEndpoints = [a b];
+        finiteEndpoints = finiteEndpoints(~params.infContour)+1i*eps;
+        plotGraph(GraphData, covers, finiteEndpoints);
     end
 end
