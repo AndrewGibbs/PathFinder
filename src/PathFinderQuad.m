@@ -84,7 +84,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
 
     %choose the path from a to b
     tic;
-    [quadIngredients, graph_data] = shortestInfinitePathV4(a,b,contours, covers, valleys, params);
+    [quadIngredients, graph_data] = shortestInfinitePath(a,b,contours, covers, valleys, params);
     if params.log.take
         params.log.add_to_log(sprintf("Dijkstra shortest path:\t%fs",toc));
     end
