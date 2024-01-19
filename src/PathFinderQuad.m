@@ -65,44 +65,29 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
     % rotate inf valleys if required:
     [a,b,params] = JordanRotate(a,b,valleys,params);
     
-    tic;
+    coverTic = tic;
     %cover each stationary point:
     [covers, ~]...
             = getExteriorBalls(phaseHandle,freq,stationaryPoints,params.infContour,a,b, ...
             params.numOscs, phaseIn, params.ballMergeThresh,params.numRays, ...
             params.interiorBalls, params.imagThresh, params.useMex);
     if params.log.take
-        params.log.addToLog(sprintf("Ball construction:\t%fs",toc));
+        params.log.addToLog(sprintf("Ball construction:\t%fs",toc(coverTic)));
     end
     
-    tic;
+    contourTic = tic;
     %make the contours from each cover:
     contourArray = getContours(phaseIn, covers, valleys, params);
     if params.log.take
-        params.log.addToLog(sprintf("Contour coarse construction:\t%fs", toc));
-        % also log the number of points in the coarse approximation of each
-        % contour:
-        for iCount = 1:length(contourArray)
-            contPts = length(contourArray(iCount).coarsePath);
-            if sign(imag(contourArray(iCount).startPoint))<0
-                ipm = '-';
-            else
-                ipm = '+';
-            end
-            params.log.addToLog(sprintf("\tContour %d: start point " + ...
-                "%.2f%s%.2fi,\tlength %.2f,\t%d pts", ...
-                iCount, real(contourArray(iCount).startPoint), ipm,...
-                abs(imag(contourArray(iCount).startPoint)), ...
-                contourArray(iCount).length, contPts));
-        end
+        logContourDetails(params, contourArray, toc(contourTic));
     end
 
     %choose the path from a to b
-    tic;
+    GraphTic = tic;
     [QuadIngredients, GraphData] = shortestInfinitePath(a, b, contourArray,...
                                     covers, valleys, params);
     if params.log.take
-        params.log.addToLog(sprintf("Dijkstra shortest path:\t%fs",toc));
+        params.log.addToLog(sprintf("Dijkstra shortest path:\t%fs",toc(GraphTic)));
     end
     
     if params.contourStartThresh==0
@@ -120,19 +105,11 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
     end
 
     %get quadrature points
-    tic;
-    [z, w, netwonIterationData] = makeQuad(QuadIngredients, freq, nPts, phaseHandle, params);
+    quadTic = tic;
+    [z, w, netwonIterationData] = makeQuad(QuadIngredients, freq, nPts, ...
+                                            phaseHandle, params);
     if params.log.take
-        params.log.addToLog(sprintf("Quadrature allocation time:\t%fs",toc));
-        for i = 1:length(netwonIterationData)
-            newtonSummaryString = [];
-            for n = (netwonIterationData{i}.')
-                newtonSummaryString = ...
-                    [newtonSummaryString, ' ', num2str(n)];
-            end
-            params.log.addToLog(sprintf( ...
-                "\tNewton refinement steps:\t%s", newtonSummaryString));
-        end
+        logQuadratureDetails(params, netwonIterationData, toc(quadTic));
     end
 
     %make a plot of what's happened, if requested
