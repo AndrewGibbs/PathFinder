@@ -22,8 +22,8 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
 
     %% preprocessing
     % get first nonzero entry
-    first_nonzero_index = find(phaseIn~=0,1,'first');
-    phaseIn = phaseIn(first_nonzero_index:end);
+    firstNonzeroPhaseIndex = find(phaseIn~=0,1,'first');
+    phaseIn = phaseIn(firstNonzeroPhaseIndex:end);
 
     %% set parameters
     params = optionalExtras(length(phaseIn)-1,varargin);
@@ -56,11 +56,15 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
 
     %% main algorithm
 
+    if params.log.take
+        logMexUsage(params);
+    end
+
     %get info about stationary points:
     [phaseHandle, stationaryPoints, valleys] = getInfoFromPhase(phaseIn);
 
     % get r* parameter used for determining regions of no return
-    params.r_star = getRStar(phaseIn);
+    params.rStar = getRStar(phaseIn);
 
     % rotate inf valleys if required:
     [a,b,params] = JordanRotate(a,b,valleys,params);
@@ -117,6 +121,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
         plotAll(covers, contourArray, z, a, b, params.infContour, stationaryPoints, phaseIn, valleys);
     end
 
+    % plot the graph representing the deformation, if requested
     if params.plotGraph
         finiteEndpoints = [a b];
         finiteEndpoints = finiteEndpoints(~params.infContour)+1i*eps;

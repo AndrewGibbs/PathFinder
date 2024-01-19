@@ -241,9 +241,9 @@ function [Q, graphData] = ...
 %    allToValleyMap = @(n) n-numCPs-numExits-numEntrs;
 
      % store this stuff in a struct for plotting later, if desired:
-     graphData = struct('adj_mat', adjMat, 'points', CPsAndExitsAndEntrs, ...
-                        'CPs', CPs, 'SExs', exits, 'SEns', entrs, ...
-                        'valleys', valleys, 'shortest_path', seq);
+     graphData = struct('adjMat', adjMat, 'points', CPsAndExitsAndEntrs, ...
+                        'CPs', CPs, 'exits', exits, 'entrs', entrs, ...
+                        'valleys', valleys, 'shortestPath', seq);
     
     % Now, turn the path, which is currently a sequence of indices corresponding
     % to centres, entrances, exits and valleys, into instructions for quadrature.
@@ -297,7 +297,7 @@ function [Q, graphData] = ...
                 Q{iNode}.type = 'strLn';
                 Q{iNode}.a = CPsAndExitsAndEntrs(startIndex);
                 Q{iNode}.b = CPsAndExitsAndEntrs(endIndex);
-                Q{iNode}.Nscale = 1;
+                Q{iNode}.numPtsScale = 1;
             end
         end
     end

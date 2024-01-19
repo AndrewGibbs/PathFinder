@@ -43,7 +43,7 @@ function plotGraph(graphData, ballsArray, finiteEndpoints)
     for n = 1:length(graphData.points)
         for m=1:length(graphData.points)
             % check if these nodes are connected
-             if graphData.adj_mat(m,n)
+             if graphData.adjMat(m,n)
                 if isOnShortestPath(m,n)
                     % if they correspond to the deformation, use a thick
                     % line
@@ -68,7 +68,7 @@ function plotGraph(graphData, ballsArray, finiteEndpoints)
             m = m_ + length(graphData.points);
 
             % check if point connects to valley
-            if graphData.adj_mat(m, n)
+            if graphData.adjMat(m, n)
                 % if they correspond to the deformation, use a thick
                 % line
                 if isOnShortestPath(m, n)
@@ -86,9 +86,9 @@ function plotGraph(graphData, ballsArray, finiteEndpoints)
     plot(valleyNodes,'.k','MarkerSize',markerSize, 'Color',cols{1});
 
     % mark exits
-    plot(graphData.SExs,'.b','MarkerSize',markerSize, 'Color',cols{4});
+    plot(graphData.exits,'.b','MarkerSize',markerSize, 'Color',cols{4});
     % mark entrances
-    plot(graphData.SEns,'.g','MarkerSize',markerSize, 'Color',cols{5});
+    plot(graphData.entrs,'.g','MarkerSize',markerSize, 'Color',cols{5});
     % mark critical points
     plot(graphData.CPs,'.r','MarkerSize',markerSize,'Color', cols{2});
 
@@ -132,10 +132,10 @@ function plotGraph(graphData, ballsArray, finiteEndpoints)
         % path, corresponding to the contour deformation
         yn = false;
         % loop over all indices in shortest path sequence
-        for j=1:(length(graphData.shortest_path)-1)
+        for j=1:(length(graphData.shortestPath)-1)
             % check if m and n are neighbours in sequence
-            if (m==graphData.shortest_path(j) && n==graphData.shortest_path(j+1))...
-               || (n==graphData.shortest_path(j) && m==graphData.shortest_path(j+1))
+            if (m==graphData.shortestPath(j) && n==graphData.shortestPath(j+1))...
+               || (n==graphData.shortestPath(j) && m==graphData.shortestPath(j+1))
                yn = true;
                break;
             end
