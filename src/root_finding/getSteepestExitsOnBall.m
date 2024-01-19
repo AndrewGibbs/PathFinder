@@ -3,7 +3,7 @@
 
 % In this code, a few standard Matlab coding conventions are broken, so
 % that the code closely resembles the math in Boyd (1986, full reference
-% given below) and the derivation in extra_notes.pdf
+% given below) and the derivation in extra_notes /rootfinding_notes.pdf.
 function SEs = getSteepestExitsOnBall(phaseCoeffs, centre, radius)
     imagThresh = 0.1; % anything with a larger imaginary part is discarded
     order = length(phaseCoeffs)-1; % order of g'(z)     

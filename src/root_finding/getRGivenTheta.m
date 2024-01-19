@@ -5,7 +5,8 @@
 
 
 % In this code, a few standard Matlab coding conventions are broken, so
-% that the code closely resembles the math in extra_notes.pdf
+% that the code closely resembles the math in
+% extra_notes/rootfinding_notes.pdf
 
 function r = getRGivenTheta(phaseCoeffs, centre, cballOverOmega, theta, imag_thresh)
 
@@ -19,7 +20,7 @@ function r = getRGivenTheta(phaseCoeffs, centre, cballOverOmega, theta, imag_thr
     %% follow the algorithm, as written in my notes
     % remember that the indexing of the polynomial coefficients is the
     % opposite in my notes as in Matlab. Allocate coefficients vectors as
-    % in 'extra_notes'.
+    % in 'rootfinding_notes'.
     a(1) = -phaseHandle(centre);
     a_(1) = conj(a(1));
     flipPhaseCoeffs = flip(phaseCoeffs);
