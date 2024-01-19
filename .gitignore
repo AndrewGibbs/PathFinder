@@ -48,3 +48,9 @@ resources/
 PathFinder.prj
 
 *.vscode/
+
+extra_notes/*.aux
+
+extra_notes/*.log
+
+extra_notes/*.gz

@@ -1,0 +1,132 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{amsthm}
+%\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{enumitem}
+%\usepackage{palatino}
+\usepackage{tabularx}
+\usepackage[margin=0.75in]{geometry}
+
+%opening
+\title{Construction of coefficients for polynomial root-finding problems in PathFinder algorithm}
+\author{Andrew Gibbs}
+
+
+\newcommand{\rd}{\mathrm{d}}
+\newcommand{\re}{\mathrm{e}}
+\newcommand{\ri}{\mathrm{i}}
+\newcommand{\bfy}{\mathbf{y}}
+\newcommand{\bfx}{\mathbf{x}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\Cball}{C_{\mathrm{ball}}}
+
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{abstract}
+		In the original paper about the PathFinder algorithm \cite{PFpaper}, the derivation of some root-finding procedures were deemed too trivial to include. Unfortunately, these derivations are not trivial enough to explain within the comments of the code, so full details are given here, for anyone who wants interested in fully understanding the algorithm/code.
+	\end{abstract}
+
+Following the notation of the paper \cite{PFpaper}, we write the polynomial phase function as
+\[
+g(z) = \sum_{j=0}^J \alpha_j z^j.
+\]
+We use $\xi$ to denote the centre of a ball, which can (usually) be assumed to be stationary points.
+
+\section{Finding the intersection of rays with the boundary of the non-oscillatory region}
+
+In \S2.2 of the paper \cite{PFpaper}, we discuss the procedure for choosing the balls around the stationary points. This can be broken down into several smaller root-finding problems, of the following form: Given $\theta$ and $\xi$, find $r>0$ such that
+\begin{equation}\label{eq:rprob}
+\omega\left|g(\xi+r\re^{\ri \theta})-g(\xi)\right|=\Cball.
+\end{equation}
+Since $g$ is a polynomial, the function
+\begin{equation}\label{eq:G}
+G(r) := \omega\left|g(\xi+r\re^{\ri \theta})-g(\xi)\right|^2-\left(\frac{\Cball}{\omega}\right)^2
+\end{equation}
+is also a polynomial, with roots satisfying \eqref{eq:rprob}. The first key omission from the \cite[\S2.2]{PFpaper} is a formula for the coefficients of the polynomial $G$, required for implementation.
+
+First, we find the coefficients of the polynomial inside the absolute value sign in \eqref{eq:rprob}. We can binomially expand, as follows
+\begin{align}
+	g(\xi+r\re^{\ri \theta}) &= \sum_{j=0}^J\alpha_j(\xi+r\re^{\ri\theta})^j\nonumber\\
+	&=\sum_{j=0}^J\alpha_j\sum_{k=0}^j\left(\begin{array}{c}
+		j\\k
+	\end{array}\right)
+	\xi^{j-k}r^k\re^{\ri k \theta}\nonumber\\
+	&=\sum_{k=0}^J r^k\left[\re^{\ri k \theta}\sum_{j=k}^J \alpha_j\left(\begin{array}{c}
+		j\\k
+	\end{array}\right)
+	\xi^{j-k}\right]\label{eq:polysplit},
+\end{align}
+where the coefficients are given explicitly in square brackets, after reordering in the final line.
+
+Now we can write
+\[
+g(\xi+r\re^{\ri \theta})-g(\xi) = \sum_{k=0}^J a_kr^k
+\]
+where
+\[
+a_0 := -g(\xi)+\sum_{j=0}^J \alpha_j
+\xi^{j};\quad
+a_k := \re^{\ri k \theta}\sum_{j=k}^J \alpha_j\left(\begin{array}{c}
+	j\\k
+\end{array}\right)
+\xi^{j-k},\quad\text{for }k=1,\ldots,J.
+\]
+
+Using our knowledge of the coefficients, the function \eqref{eq:G} can now be expressed as
+\begin{align*}
+G(r)&=\left(\sum_{k=0}^J a_kr^k\right)\left(\sum_{k=0}^J \overline{a_k}r^k\right) -\left(\frac{\Cball}{\omega}\right)^2\\
+&=\sum_{\ell=0}^{2J} b_jr^k
+\end{align*}
+where
+\[
+b_0 := |a_0|^2 -\left(\frac{\Cball}{\omega}\right)^2; \quad b_j=\sum_{\ell=0}^{j}a_\ell\overline{a}_{j-\ell}\quad\text{for }j=1,\ldots,2J.
+\]
+From these coefficients, polynomial root-finding algorithms can be applied.
+
+In the PathFinder subroutine \texttt{getRGivenTheta} we use Matlab's \texttt{roots} command, which applies a companion matrix approach. The coefficients $a_k$ are represented by the vector \texttt{a}, its conjugate values $\overline{a_k}$ are represented by the vector \texttt{a\_}. Finally, the coefficients $b_j$ are represented by \texttt{coeffs}.
+
+\section{Finding the exits on the circumference of the ball}
+
+In \S2.3 of the PathFinder paper \cite{PFpaper}, it is mentioned that the exits are determined using a trigonometric root-finding procedure. Now, the radius of the ball $r$ is fixed, and we are looking for local maxima (in $\theta$) of $\Im g(\xi+r\re^{\ri \theta})$, which can be done using elementary derivative testing.
+
+First, we must construct the trigonometric polynomial in $\theta$. From \eqref{eq:polysplit} we can write
+\begin{align*}
+	g(\xi+r\re^{\ri \theta}) &=
+	\sum_{k=0}^J c_k\re^{\ri k \theta};\quad\text{where }c_k:=\sum_{j=k}^Jr^k \alpha_j\left(\begin{array}{c}
+		j\\k
+	\end{array}\right)
+	\xi^{j-k},\quad\text{for }k=0,\ldots,J.
+\end{align*}
+Now we can find coefficients for the derivatives in terms of this Fourier basis, as follows:
+\begin{align}
+\Im\left[g(\xi+r\re^{\ri \theta})\right] &= \sum_{k=0}^J \Im [c_k]\cos(k\theta) + \Re[c_k]\sin(k\theta) \nonumber\\
+\frac{\partial}{\partial\theta}\Im\left[g(\xi+r\re^{\ri \theta})\right] &= \sum_{k=0}^J -k\Im [c_k]\sin(k\theta) + k\Re[c_k]\cos(k\theta) &= \sum_{k=0}^Ja_k\cos(k\theta)+b_k\sin(k\theta)\label{eq:imd}\\
+\frac{\partial^2}{\partial\theta^2}\Im\left[g(\xi+r\re^{\ri \theta})\right] &= \sum_{k=0}^J -k^2\Im [c_k]\cos(k\theta) - k^2\Re[c_k]\sin(k\theta) &= \sum_{k=0}^Ja'_k\cos(k\theta)+b'_k\sin(k\theta)\label{eq:imdd}
+\end{align}
+
+Note that the coefficients $a_k$ and $b_k$ are different to the previous section, we have abused notation to be consistent with local variable names within the code. Now the roots of \eqref{eq:imd} can be found using \cite{boyd}, and the maxima can be filtered out using the second derivative test on \eqref{eq:imdd}.
+
+In PathFinder, this is done in the subroutine \texttt{getSteepestExitsOnBall}. The coefficients $a_k$, $b_k$, $a'_k$ and $b'_k$ are represented by the vectors \texttt{a}, \texttt{b}, \texttt{da} and \texttt{db} respectively.
+
+\begin{thebibliography}{9}
+	
+	\bibitem{PFpaper}
+	A. Gibbs, D. P. Hewett, D. Huybrechs (2024) \emph{Numerical evaluation of oscillatory integrals via automated steepest descent path deformation}, To appear J. Comput. Phys.
+	
+	\bibitem{boyd}
+	J. P. Boyd (1986) \emph{Computing the zeros, maxima and inflection points of Chebyshev, Legendre and Fourier series: solving transcendental equations by spectral interpolation and polynomial rootfinding}, J. Eng. Math., 56 (2006), pp. 203–219.
+	
+	
+\end{thebibliography}
+	
+\end{document}
