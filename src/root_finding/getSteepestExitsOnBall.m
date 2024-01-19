@@ -1,68 +1,84 @@
-function SEs = getSteepestExitsOnBall(g_coeffs,centre,radius)
-    imag_thresh = 0.1;
-    rho = length(g_coeffs)-1; % order of g'(z)
-%     
-    A = complex(zeros(rho+1)); % matrix of indices of double sum
-    dA = complex(zeros(rho+1)); % matrix of indices of double sum, deriv
-    a = (zeros(rho+1,1)); % cosine indices
-    b = (zeros(rho+1,1)); % sine indices
-    da = (zeros(rho+1,1)); % cosine indices, deriv
-    db = (zeros(rho+1,1)); % sine indices, deriv
+% determins the exits on a ball, by reformulating as a trigonometric polynomial
+% rootfinding problem.
+
+% In this code, a few standard Matlab coding conventions are broken, so
+% that the code closely resembles the math in Boyd (1986, full reference
+% given below) and the derivation in extra_notes.pdf
+function SEs = getSteepestExitsOnBall(phaseCoeffs, centre, radius)
+    imagThresh = 0.1; % anything with a larger imaginary part is discarded
+    order = length(phaseCoeffs)-1; % order of g'(z)     
+    A = complex(zeros(order+1)); % matrix of indices of double sum
+    a = (zeros(order+1,1)); % cosine indices
+    b = (zeros(order+1,1)); % sine indices
+    da = (zeros(order+1,1)); % cosine indices, deriv
+    db = (zeros(order+1,1)); % sine indices, deriv
 
     %%  compute Fourier indices (notation as in my notes)
-    for j=0:rho
+
+    % calculate all terms in double sum, so that we can reorder the sum to
+    % get coefficients for the trig polymomial
+    for j=0:order
         for k=0:j
-            main_coeff = nchoosek(j,k)*radius^k*centre^(j-k)*g_coeffs(rho-j+1);
-            A(j+1, k+1) = k*main_coeff;
-            dA(j+1, k+1) = k^2*main_coeff;
+            A(j+1, k+1) = k*nchoosek(j,k)*radius^k*centre^(j-k)*phaseCoeffs(order-j+1);
         end
     end
 
     % filtering in this way isolates the imaginary part of g'(z):
-    for k=0:rho
+    for k=0:order
+        % reorder the sum by summing along the j terms
         d_jk = sum(A(:,k+1));
+        % coefficient of cos(k\theta) in first derivative:
         a(k+1) = real(d_jk);
-        da(k+1) = -imag(d_jk);
+        % coefficieint of cos(k\theta) in second derivative
+        da(k+1) = -k*imag(d_jk);
         if k>0
+            % coefficient of sin(k\theta) in first derivative:
             b(k+1) = -imag(d_jk);
-            db(k+1) = -real(d_jk);
+            % coefficient of sin(k\theta) in second derivative:
+            db(k+1) = -k*real(d_jk);
         end
     end
-
-%     binomial_check;
-%       imag_check();
-% binomial_check();
  
     %%  now find zeros of Fourier series using colleague method
-    %( notation as in Boyd)
-    % construct Frobenius matrix (with zeros in final row)
-    B = complex([ zeros(2*rho-1,1) eye(2*rho-1,2*rho-1) ; zeros(1,2*rho)]);
+
+    % Follow the approach of, and match the notation of:
+    % J. P. Boyd (1986) Computing the zeros, maxima and 
+    % inflection points of Chebyshev, Legendre and Fourier series: solving 
+    % transcendental equations by spectral interpolation and polynomial 
+    % rootfinding}, . Eng. Math., 56 (2006), pp. 203–219.
+
+    % construct Fourier-Frobenius matrix (with zeros in final row)
+    B = complex([ zeros(2*order-1,1) eye(2*order-1,2*order-1) ; zeros(1,2*order)]);
     % now construct final row
-    for k=1:(2*rho)
+    for k=1:(2*order)
         B(end,k) = -get_h_j(k-1)/(a(end) - 1i*b(end));
     end
 
     % convert eigenvalues to roots
     [~,E] = eig(B);
-    eig_vals = diag(E);
-    complex_angular_roots = angle(eig_vals) - 1i*log(abs(eig_vals));
+    eigenvals = diag(E);
+    complexAngularRoots = angle(eigenvals) - 1i*log(abs(eigenvals));
     % now filter out real-valued roots
-    turning_points = real(complex_angular_roots(abs(imag(complex_angular_roots))<imag_thresh));
-%     dg_coeffs = diff_coeffs(g_coeffs);
-%     ddg_coeffs = diff_coeffs(dg_coeffs);
+    turningPoints = real(complexAngularRoots(abs(imag(complexAngularRoots))<imagThresh));
 
-    tp_vals = zeros(size(turning_points));
-    for k_=0:rho
-        tp_vals = tp_vals+(da(k_+1)*cos(k_*turning_points));
+    %% apply second derivative test to determine local maxima
+    secondDerivValsAtTurningPoints = zeros(size(turningPoints));
+    for k_=0:order
+        secondDerivValsAtTurningPoints = ...
+            secondDerivValsAtTurningPoints+(da(k_+1)*cos(k_*turningPoints));
         if k_>0
-            tp_vals = tp_vals+(db(k_+1)*sin(k_*turning_points));
+            secondDerivValsAtTurningPoints = ...
+                secondDerivValsAtTurningPoints+(db(k_+1)*sin(k_*turningPoints));
         end
     end
 
-    SEs = centre+radius*exp(1i*turning_points(tp_vals<0));
+    % filter turning points which are maxima
+    SEs = centre+radius*exp(1i*turningPoints(secondDerivValsAtTurningPoints<0));
 
+    %% indended function creates the coefficient (7) from Boyd's paper,
+    % given the Fourier coefficients a_j and b_j
     function h_j = get_h_j(j)
-        N = rho;
+        N = order; % copied just to be consistent with the paper
         if j<N
             h_j = a(N-j+1)+1i*b(N-j+1);
         elseif j==N
@@ -71,33 +87,4 @@ function SEs = getSteepestExitsOnBall(g_coeffs,centre,radius)
             h_j = a(j-N+1)-1i*b(j-N+1);
         end
     end
- 
-%     function binomial_check()
-%         theta = linspace(0,2*pi);
-%         dg_coeffs = diff_coeffs(g_coeffs); % coefficients of dg/dz
-%         plot(theta,real(polyval(dg_coeffs,centre+radius*exp(1i*theta))),'b:');
-%         val = zeros(size(theta));
-%         for k_=0:rho
-%             c_k = sum(A(:,k_+1));
-%             val = val+c_k*exp(1i*k_*theta);
-%         end
-%         hold on;
-%         plot(theta,real(val),'rx');
-%     end
-% % 
-%     function imag_check()
-%         theta = linspace(0,2*pi);
-%         dg_coeffs = diff_coeffs(g_coeffs); % coefficients of dg/dz
-%         plot(theta,imag(polyval(g_coeffs,centre+radius*exp(1i*theta))),'b');
-%         val = zeros(size(theta));
-%         for k_=0:rho
-%             val = val+a(k_+1)*cos(k_*theta);
-%             if k_>0
-%                 val = val+b(k_+1)*sin(k_*theta);
-%             end
-%         end
-%         hold on;
-%         plot(theta,val,'r');
-%         legend('g(z)','Im g(z)');
-%     end
 end

@@ -1,33 +1,56 @@
-function r_star = getRStar(g_coeffs,theta)
+% routine to determine $r_*$, in the notation of the paper (section 2.4).
+% The parameter $r_*$ is used to determine 'no return' regions
+function rStar = getRStar(phaseCoeffs, theta)
+
+    % we expect real roots, so any roots with a larger imaginary part than
+    % this will be discarded.
+    imagThresh = 100*eps;
+
     if nargin == 1
         theta = 0;
     end
 
-    % function which computes the r_* parameter, used for determining no
-    % return regions
-    rho = length(g_coeffs)-1;
-    if sum(g_coeffs(2:rho) == 0)==(rho-1) % if all but first coefficient are zero
-        r_star = 0;
+    % polynomial phase order is 'J' in the paper
+    order = length(phaseCoeffs)-1;
+
+    % if all but leading coefficient are zero, simplifies as follows
+    if sum(phaseCoeffs(2:order) == 0)==(order-1)
+        rStar = 0;
         return; % leave subroutine early
     end
-    star_coeffs_lr = zeros(1,rho-1+1); % order is one lower, but add one for zero index
 
-    % make final coefficient of polynomial
-    star_coeffs_lr(end) = rho*abs(g_coeffs(1))*min(1/sqrt(2),cos(rho*theta));
+    % coefficients of polynomrial in $r_*$, order is one less than phase
+    starCoeffsFlipLR = zeros(1,order);
 
-    % too confusing to work with anything else - fliplr for now, then flip
-    % back. Make rest of polynomial to solve.
-    g_coeffs_lr = fliplr(g_coeffs);
-    for j=1:(rho-1)
-        star_coeffs_lr(j+1-1) = -j*abs(g_coeffs_lr(j+1));
+    % momentarily, we abandon the matlab convention of indexing polynomial
+    % coefficients with the leading term first. This is to be consistent
+    % with the notation of the paper, for a net gain in clarity overall.
+
+    % final coefficient of polynomial (corresponds to leading order term)
+    starCoeffsFlipLR(end) = order*...
+                        abs(phaseCoeffs(1))*min(1/sqrt(2), cos(order*theta));
+    
+    % make fliiped version of phase coefficients too
+    phaseCoeffsFlipLR = fliplr(phaseCoeffs);
+
+    % Make rest of polynomial to solve.
+    for j=1:(order-1)
+        starCoeffsFlipLR(j+1-1) = -j*abs(phaseCoeffsFlipLR(j+1));
     end
-    star_coeffs = fliplr(star_coeffs_lr);
-    % solve polynomial for r*
-    star_roots = roots(star_coeffs);
+
+    % now flip back, into Matlab style polynomial coefficient indexing...
+    starCoeffs = fliplr(starCoeffsFlipLR);
+
+    % ... so we can solve polynomial for $r_*$
+    rStarRoots = roots(starCoeffs);
+
     % filter out imaginary roots, and make purely real
-    real_roots = real(star_roots(abs(imag(star_roots))<100*eps));
-    r_star = min(real_roots(real_roots>0));
-    if isempty(r_star)
+    realRStarRoots = real(rStarRoots(abs(imag(rStarRoots))<imagThresh));
+
+    % take the value of $r_*$ to be the smallest root
+    rStar = min(realRStarRoots(realRStarRoots>0));
+    
+    if isempty(rStar)
         error("Could not find r_star variable");
     end
 end

@@ -1,25 +1,32 @@
-function [root, found_a_root] = planBisection(g_coeffs, xi, C_over_omega, theta, guesses)
-    tol = 1e-8; % bisection tolerance
-    % define the polynomial g
-    g = @(x) polyval(g_coeffs,x);
-    % and the 'polynomial' which we are seeking the root of
-    G = @(r) abs(g(xi+r*exp(1i*theta))-g(xi)).^2-C_over_omega^2;
-    % note that G(0)<0
+% if the companion matrix approx fails to find a radius, plan B is to use
+% this bisection approach. The guesses are the positive real parts from the
+% roots of the companion matrix approach; their imaginary parts were
+% deemed too large in magnitude for them to be trustworthy.
+function [root, isSuccess] = planBisection(phaseCoeffs, xi, numOscsDivByFreq, theta, guesses)
 
-    % add a couple of extra extremities to the guesses, just incase
+    tol = 1e-8; % bisection tolerance
+
+    % define the polynomial phase as a function handle
+    phaseHandle = @(x) polyval(phaseCoeffs,x);
+    % and the 'polynomial' which we are seeking the root of
+    bisecFnHandle = @(r) abs(phaseHandle(xi+r*exp(1i*theta))-phaseHandle(xi)).^2-numOscsDivByFreq^2;
+
+    % add a couple of extra extremities to the guesses to be safe
     guesses = [0; guesses; max(guesses)*2];
-    found_a_root = false;
+
+    % initialise bisection parameters
+    isSuccess = false;
     root = inf;
     
+    % loop over all possible guess intervals, and try bisection on each one
     for n=2:length(guesses)
-        if G(guesses(n))>0 % look for a sign change
-            found_a_root = true;
-            root = bisection(G, guesses(n-1), guesses(n), tol);
+        % we know that bisecFnHandle(0)<0
+        if bisecFnHandle(guesses(n))>0 % look for a sign change
+            isSuccess = true;
+            % now zoom in on the root using bisection method
+            root = bisection(bisecFnHandle, guesses(n-1), guesses(n), tol);
             break; % no need to keep looking
         end
     end
     
-%     if ~found_a_root
-%         print('Warning - no roots found after bisection, treating radius at this angle as inf');
-%     end
 end
