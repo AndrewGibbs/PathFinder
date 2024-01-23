@@ -3,7 +3,7 @@ addpath('..');
 %run('../addPaths.m');
 %run('../compile_all.m');
 addPaths;
-compile_all;
+compileAll;
 show_text = false;
 
 %% Test 0: test the mex code agrees with the non-mex version
