@@ -53,8 +53,8 @@ function plotAll(balls, contours, quadPoints, a, b, infContour, stationaryPoints
     end
 
     % loop over all contours and plot
-    for iContour = contours
-        plot(iContour, '.:', 'Color', grayColor, 'MarkerSize', 4.5);
+    for iContour = 1:length(contours)
+        plot(contours(iContour), '.:', 'Color', grayColor, 'MarkerSize', 4.5);
         hold on;
     end
     

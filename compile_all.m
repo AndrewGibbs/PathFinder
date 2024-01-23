@@ -1,6 +1,6 @@
-clear all;
-close all;
-PF_dir = fileparts(which('PathFinder'));
+%clear all;
+%close all;
+PF_dir = fileparts(which('PathFinder.m'));
 mex_path = [PF_dir '/mex_compilation/'];
 
 %% First, compile path tracing routines as MEX code.

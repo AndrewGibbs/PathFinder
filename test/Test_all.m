@@ -1,10 +1,13 @@
 % add pathfinder files to path
-run('../addPaths.m');
-run('../compile_all.m');
+addpath('..');
+%run('../addPaths.m');
+%run('../compile_all.m');
+addPaths;
+compile_all;
 show_text = false;
 
 %% Test 0: test the mex code agrees with the non-mex version
-assert(mexTesting());
+assert(mexTesting(50));
 
 %% Test 1a: Testing against N.P. Kirk et al. approximations of Pearcey integral, medium N
 assert(2e-4>pearceyTest(20,show_text));
@@ -34,4 +37,4 @@ assert(1e-12>coalescenceTesting(75,show_text));
 assert(1e-12>coalescenceTesting(101,show_text));
 
 %% Test 4: Test linear phase special case works
-assert(abs(PathFinder(-1,1,[],[1 0],100,100)--0.010127312822195)<1e-14);
+assert(abs(PathFinder(-1,1,[],[1 0],100,100)+0.010127312822195)<1e-14);
