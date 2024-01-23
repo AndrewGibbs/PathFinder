@@ -1,6 +1,9 @@
 #include "mex.h"
 #include "PathFinder.h"
 #include "interface.h"
+#ifndef COMPLEX_H
+    #include <complex.h>
+#endif
 
 /*
 function [p_log_out, h_log_out, valley_index, ball_index] = ...

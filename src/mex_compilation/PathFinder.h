@@ -1,11 +1,22 @@
-#include <complex.h>
-#include <stdbool.h>
-#include <math.h>
-#include <float.h>
-#include <lapacke.h>
+#ifndef COMPLEX_H
+    #include <complex.h>
+#endif
+
+#ifndef MATH_H
+    #include <math.h>
+#endif
 
 #define sqrt2 1.414213562373095
-#define PI 3.141592653589793
+
+// Define pi if required
+#if !defined(PI)
+    #define PI 3.141592653589793
+#endif
+
+// DBL_MAX, which we treat as infinite
+#if !defined(DBL_MAX)
+    #define DBL_MAX 1.79769e+308
+#endif
 
 /* ----------------- function prototypes ------------------------*/
 
@@ -174,13 +185,13 @@ int imax(const int a, const int b)
     return c;
 }
 
-double safe_pow(const double x, const double p, const double X)
+double safe_pow(const double x, const double p, const double safe_output)
 {
     /* produces a backup value X when 0^0 is called */
     double y;
     if (x == 0 & p == 0)
     {
-        y = X;
+        y = safe_output;
     }
     else
     {
@@ -191,12 +202,12 @@ double safe_pow(const double x, const double p, const double X)
 
 double complex safe_cpow(const double complex x,
                          const double complex p,
-                         const double complex X)
+                         const double complex safe_output)
 {
     double y;
     if (x == 0 & p == 0)
     {
-        y = X;
+        y = safe_output;
     }
     else
     {

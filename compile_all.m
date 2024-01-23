@@ -10,27 +10,27 @@ mex_path = [PF_dir '/mex_compilation/'];
 % compilation path for the contour-based MEX functions
 contours_path = [PF_dir '/contours/'];
 
-% compile 'SDpathODEuler'
-mex('-output', [contours_path 'SDpathODEuler_v4_mex'], [mex_path 'SDpathODEuler.c']); 
+% compile 'sdPathODEeuler'
+mex('-output', [contours_path 'sdPathODEeulerMex'], [mex_path 'sd_path_ode_euler.c']); 
 
-% compile 'SDquadODEulerNEwtonCorrection'
-mex('-output', [contours_path 'SDquadODEulerNEwtonCorrection_mex'], [mex_path 'SDquadODEulerNEwtonCorrection.c']);
+% compile 'sdQuadODEeulerCorrection'
+mex('-output', [contours_path 'sdQuadODEeulerCorrectionMex'], [mex_path 'sd_quad_ode_euler_correction.c']);
 
-% compile 'SDpathODEuler_extend_coarse_path'
-mex('-output', [contours_path 'SDpathODEuler_extend_coarse_path_mex'], [mex_path 'SDpathODEuler_extend_coarse_path.c']);
+% compile 'sdPathODEeulerExtendCoarsePath'
+mex('-output', [contours_path 'sdPathODEeulerExtendCoarsePathMex'], [mex_path 'sd_path_ode_euler_extend_coarse_path.c']);
     
 %% compile 'get_smallest_supset_ball', requires LApack
 % the stynax for compiling with LApack is different in Matlab and Octave.
 % Use the following environment variable to determine if we're running
 % Octave.
 
-covers_path = [PF_dir '/covers/'];
+covers_path = [PF_dir '/balls/'];
 
-try OCTAVE_VERSION
+try OCTAVE_VERSION;
   % running Octave
   display("Compiling for Octave MEX");
-  mkoctfile('--mex','-llapacke', '-llapack', '-lblas', '-o', [covers_path 'get_smallest_supset_ball_mex'], [mex_path 'get_smallest_supset_ball.c']);
+  mkoctfile('--mex','-llapacke', '-llapack', '-lblas', '-o', [covers_path 'getSmallestSupsetBallMex'], [mex_path 'get_smallest_supset_ball.c']);
 catch ERR % running matlab 
   display("Compiling for Matlab MEX");
-  mex('-output',[covers_path 'get_smallest_supset_ball_mex'], [mex_path 'get_smallest_supset_ball.c'], '-lmwlapack');
+  mex('-output',[covers_path 'getSmallestSupsetBallMex'], [mex_path 'get_smallest_supset_ball.c'], '-lmwlapack');
 end

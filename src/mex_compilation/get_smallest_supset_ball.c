@@ -1,6 +1,9 @@
 #include "mex.h"
 #include "get_r.h"
 #include "interface.h"
+#ifndef COMPLEX_H
+    #include <complex.h>
+#endif
 
 /*
 r = get_smallest_supset_ball(phase_coeffs, freq, centre, cball, num_rays, take_max, imag_thresh);

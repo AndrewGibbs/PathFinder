@@ -1,6 +1,9 @@
 #include "mex.h"
 #include "PathFinder.h"
 #include "interface.h"
+#ifndef COMPLEX_H
+    #include <complex.h>
+#endif
 
 // SDpathODEuler_extend_coarse_path(p_init, h_init, phase_coeffs, SPs, base_step_size, n_max, p_new_max)
 //                                   0    ,  1    ,  2     , 3  ,    4          ,    5 ,   6

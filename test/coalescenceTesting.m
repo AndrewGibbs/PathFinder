@@ -6,7 +6,7 @@
 
 function maxErr = coalescenceTesting(numQuadPts, showText)
 
-    try OCTAVE_VERSION
+    try OCTAVE_VERSION;
         isOctave = true;
     catch ERR
         isOctave = false;

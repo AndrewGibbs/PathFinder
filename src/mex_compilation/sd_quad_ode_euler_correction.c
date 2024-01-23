@@ -1,6 +1,9 @@
 #include "mex.h"
 #include "PathFinder.h"
 #include "interface.h"
+#ifndef COMPLEX_H
+    #include <complex.h>
+#endif
 
 // [h_quad, dhdp_quad, newton_success] =
 // SDquadODEulerNEwtonCorrection(p_quad, p_coarse, h0, h_coarse, phase_coeffs, freq, newton_thresh, newton_its)

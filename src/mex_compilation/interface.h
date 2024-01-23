@@ -1,3 +1,7 @@
+#ifndef COMPLEX_H
+    #include <complex.h>
+#endif
+
 /* -------------------- interface functions ----------------------*/
 /* for converting Matlab variables to C variables, and back again */
 /* ---------------------------------------------------------------*/
