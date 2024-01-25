@@ -12,8 +12,8 @@ function isOverlapping = checkEndpointWidth(a, b, phaseCoeffs, freq, numOscs, ..
     % get radii around endpoints, as if they were balls around stationary
     % points
     if useMex
-        r_a = get_smallest_supset_ball_mex(phaseCoeffs.', freq, a, numOscs, numRays, ~isInteriorBall, imagThresh);
-        r_b = get_smallest_supset_ball_mex(phaseCoeffs.', freq, b, numOscs, numRays, ~isInteriorBall, imagThresh);
+        r_a = getSmallestSupsetBallMex(phaseCoeffs.', freq, a, numOscs, numRays, ~isInteriorBall, imagThresh);
+        r_b = getSmallestSupsetBallMex(phaseCoeffs.', freq, b, numOscs, numRays, ~isInteriorBall, imagThresh);
     else
         r_a = getSmallestSupsetBall(phaseCoeffs.', freq, a, numOscs, numRays, ~isInteriorBall, imagThresh);
         r_b = getSmallestSupsetBall(phaseCoeffs.', freq, b, numOscs, numRays, ~isInteriorBall, imagThresh);

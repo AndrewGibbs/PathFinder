@@ -29,12 +29,16 @@ Steepest descent contours are directed complex contours, along which $\Re g$ is 
 * The contours obtained are used to build a graph, the shortest path through which (connecting the endpoints $a$ and $b$) is chosen via Dijkstra's algorithm.
 * Quadrature points are allocated along the contours in the shortest path (Gauss-Legendre for the straight-line contours near the stationary points and Gauss-Laguerre for the steepest descent contours). 
 
-![Example](intro_eg_CROP.png)
+![Example](intro_eg_nocolour_CROP.png)
 ![Example](intro_eg_graph_CROP.png)
 
 ## Setup
 
 After downloading the source code from GitHub, open Matlab and navigate to the PathFinder folder. Then run ```addPaths.m``` to add all necessary paths to the Matlab search path.
+
+Compile the MEX codes for your system by running ```compileAll.m```. This works with Octave or Matlab. If there are any issues with compilation:
+* please raise an issue on the issues page, explaining your Matlab/Octave version and operating system
+* add the optional argument ```'use mex',false``` to PathFinder calls to avoid the use of MEX functions.
 
 To test the code works, try running
 ```matlab

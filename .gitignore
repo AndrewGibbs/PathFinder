@@ -54,3 +54,5 @@ extra_notes/*.aux
 extra_notes/*.log
 
 extra_notes/*.gz
+
+joss_paper/
