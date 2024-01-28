@@ -2,31 +2,36 @@
 #include "PathFinder.h"
 #include "interface.h"
 #ifndef COMPLEX_H
-    #include <complex.h>
+#include <complex.h>
 #endif
 
-// [h_quad, dhdp_quad, newton_success] =
-// SDquadODEulerNEwtonCorrection(p_quad, p_coarse, h0, h_coarse, phase_coeffs, freq, newton_thresh, newton_its)
-//                                  0       1       2   3           4       5       6           7
+/*
+Matlab MEX function:
+ [h_quad, dhdp_quad, newton_success] =
+ sdQuadODEeulerCorrectionMex(p_quad, p_coarse, h0, h_coarse, phase_coeffs,
+                                  0       1       2   3           4
+                              freq, newton_thresh, newton_its)
+                                 5       6           7
+*/
 
+// the mex gateway
 void mexFunction(int nlhs, mxArray *plhs[],
                  int nrhs, const mxArray *prhs[])
 {
-    /* check number of inputs is correct*/
+    /* ---------- check number of inputs / outputs ----------*/
     if (nrhs != 8)
     {
         mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nrhs",
                           "Eight inputs required.");
     }
 
-    /* check number of outputs is correct*/
     if (nlhs != 3)
     {
         mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nlhs",
                           "Three outputs required.");
     }
 
-    /* -------------- initialise input variables ---------------- */
+    /* ----- intialise Matlab inputs as C variables ------ */
     // convert inputs to appropriate types
     int quad_size = mxGetM(prhs[0]);
     double *p_quad = malloc(quad_size * sizeof(double));
@@ -62,6 +67,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
     double complex dhdp_quad[quad_size];
 
     /* -------------- call the main C function ------------------------ */
+
     sd_quad_ode_euler_correction( // orig inputs
         p_quad,
         p_coarse,
@@ -80,7 +86,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
         dhdp_quad,
         newton_success);
 
-    /* ------------- create output variables ------------- */
+    /* ---------- convert outputs to Matlab variables ---------- */
 
     plhs[0] = mxCreateDoubleMatrix(quad_size, 1, mxCOMPLEX);
     plhs[1] = mxCreateDoubleMatrix(quad_size, 1, mxCOMPLEX);

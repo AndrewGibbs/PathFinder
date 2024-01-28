@@ -6,33 +6,35 @@
 #endif
 
 /*
-function [p_log_out, h_log_out, valley_index, ball_index] = ...
+Matlab MEX function:
+function [p_log_out, h_log_out, valley_index, ball_index] = 
             0           1           2              3
-    SDpathODEuler_v4(h0, phase_coeffs, SPs, cover_radii, valleys, base_step_size, n_max, r_star,...
-                      0     1       2   3           4           5               6       7
-    newton_small_threshold, newton_big_threshold) %#codegen
+    sdPathODEeulerMex(h0, phase_coeffs, SPs, cover_radii, valleys,
+                    0     1            2        3         4     
+    base_step_size, n_max, r_star,
+            5           6       7
+    newton_small_threshold, newton_big_threshold)
             8                       9
 */
 
-// the mex gateway to SDpathODEEuler_extend_coarse_path
+// the mex gateway
 void mexFunction(int nlhs, mxArray *plhs[],
                  int nrhs, const mxArray *prhs[])
 {
-    /* check number of inputs is correct*/
+    /* ---------- check number of inputs / outputs ----------*/
     if (nrhs != 10)
     {
         mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nrhs",
                           "Ten inputs required.");
     }
 
-    /* check number of outputs is correct*/
     if (nlhs != 4)
     {
         mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nlhs",
                           "Four outputs required.");
     }
 
-    // convert matlab inputs to C variables
+    /* ----- intialise Matlab inputs as C variables ------ */
 
     double complex h0;
     convert_mxsca_to_c(prhs[0], &h0);
@@ -95,6 +97,8 @@ void mexFunction(int nlhs, mxArray *plhs[],
     int ball_index = -1;
     int output_length;
 
+    /* ---------- run main subroutine to get coarse path ----------*/
+
     sd_path_ode_euler( // inputs
         h0, phase_coeffs, otherSPs, otherSPs_radii, valleys, base_step_size,
         n_max, r_star, newton_small_threshold, newton_big_threshold,
@@ -106,6 +110,8 @@ void mexFunction(int nlhs, mxArray *plhs[],
         &valley_index,
         &ball_index,
         &output_length);
+
+    /* ---------- convert outputs to Matlab variables ---------- */
 
     plhs[0] = mxCreateDoubleMatrix(output_length + 1, 1, mxREAL);
     /* need to deal with the fact this isn't complex */
@@ -142,7 +148,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
         convert_int_to_mxsca(&ball_index, plhs[3]);
     }
 
-    /* deallocate memory - I'm sure this would happen anyway*/
+    /* ------------- deallocate memory ------------- */
     free(p_out);
     p_out = NULL;
     free(h_out);

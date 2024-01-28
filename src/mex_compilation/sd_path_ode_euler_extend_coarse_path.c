@@ -5,27 +5,32 @@
     #include <complex.h>
 #endif
 
-// SDpathODEuler_extend_coarse_path(p_init, h_init, phase_coeffs, SPs, base_step_size, n_max, p_new_max)
-//                                   0    ,  1    ,  2     , 3  ,    4          ,    5 ,   6
-//  the mex gateway to SDpathODEEuler_extend_coarse_path
+/*
+Matlab MEX function:
+sdPathODEeulerExtendCoarsePathMex(p_init, h_init, phase_coeffs,
+                                   0    ,  1    ,  2     , 3  ,
+                                   SPs, base_step_size)
+                                    4 ,    5 ,   6
+*/
+
+//  the mex gateway
 void mexFunction(int nlhs, mxArray *plhs[],
                  int nrhs, const mxArray *prhs[])
 {
-    /* check number of inputs is correct*/
+    /* ---------- check number of inputs / outputs ----------*/
     if (nrhs != 7)
     {
         mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nrhs",
                           "Seven inputs required.");
     }
 
-    /* check number of outputs is correct*/
     if (nlhs != 3)
     {
         mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nlhs",
                           "Three outputs required.");
     }
 
-    /* --------------- set inputs, by converting to C variables ----------------- */
+    /* ----- intialise Matlab inputs as C variables ------ */
     //     number of entries in main vectors, so far
     int n_max;
     convert_mxint_to_int(prhs[5], &n_max);
@@ -62,7 +67,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
     convert_mxsca_to_double(prhs[6], &p_new_max);
 
     /* --------------- initialise outputs, as C variables ----------------- */
-    // outputs (as pointers)
+    // // prep output variables, as C variables
     bool success;      // turns to fail when we exceed max number of steps
     int output_length; // length of p_init and h_init vectors which will be truncated at the end
 
