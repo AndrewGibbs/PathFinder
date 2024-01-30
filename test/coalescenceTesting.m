@@ -6,12 +6,6 @@
 
 function maxErr = coalescenceTesting(numQuadPts, showText)
 
-    try OCTAVE_VERSION;
-        isOctave = true;
-    catch ERR
-        isOctave = false;
-    end
-
     % init the output max err variable
     maxErr = 0;
 
@@ -27,7 +21,7 @@ function maxErr = coalescenceTesting(numQuadPts, showText)
     %% loopable parameters:
 
     % test at these frequencies:
-    if isOctave
+    if usingOctave()
         % Octave numerical integrator starts to fail at higher freqs
         freqRange = [50 100 250];
     else

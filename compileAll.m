@@ -26,11 +26,10 @@ mex('-output', [contours_path 'sdPathODEeulerExtendCoarsePathMex'], [mex_path 's
 
 covers_path = [PF_dir '/balls/'];
 
-try OCTAVE_VERSION;
-  % running Octave
+if usingOctave()
   display("Compiling for Octave MEX");
   mkoctfile('--mex','-llapacke', '-llapack', '-lblas', '-o', [covers_path 'getSmallestSupsetBallMex'], [mex_path 'get_smallest_supset_ball.c']);
-catch ERR % running matlab 
+else
   display("Compiling for Matlab MEX");
   mex('-output',[covers_path 'getSmallestSupsetBallMex'], [mex_path 'get_smallest_supset_ball.c'], '-lmwlapack');
 end

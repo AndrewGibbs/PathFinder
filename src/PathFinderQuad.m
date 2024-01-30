@@ -40,7 +40,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
         w = w_.*dh_.*sgw(z);
 
        if params.plot
-            plotAll([], [], z, a, b, params.infContour, [], [], [], []);
+            plotAll([], [], z, a, b, params.infContour, [], [], []);
         end
        return
     end
@@ -49,7 +49,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
         % contour can be computed instantly without approximation, reduce to this
         [z,w] = linearPhaseNSD(a,b,freq,phaseIn(1),phaseIn(2),nPts);
         if params.plot
-            plotAll([], [], z, a, b, params.infContour, [], [], [], []);
+            plotAll([], [], z, a, b, params.infContour, [], [], []);
         end
         return;
     end
