@@ -1,24 +1,28 @@
 function I = PathFinder(a, b, f, phaseIn, freq, nPts, varargin)
-%Construct weights and nodes to numerically evaluate an oscillatory
-%integral.
-%[z,w] = PathFinder(a, b, f, G, k, N, infContour)
-%evaluates the oscillatory
-%integral of f(z)exp(i*k*g(z))dz from a to b, for analytic f & g.
+%Numerically evaluates an oscillatory integral.
+%I = PathFinder(a, b, f, G, k, N) evaluates the integral
+% of f(z)exp(i*k*g(z))dz from a to b, for analytic f & polynomial g.
 %
-%G is the coefficients of a polynomial, in standard Matlab
-%format: G(1)*X^N + ... + G(N)*X + phaseIn(N+1)
+% f is a vectorised function handle, or f=[] if f(z)=1.
 %
-%a and b are either finite enpoints, or (in the case where the integral is an infinite contour)
-%angles of valleys in the complex plane. The entries of (optional) two-dimensional
-%flag infContour flag if the endpoint of the integral is infinite.
+% G is a vector of polynomial coefficients, in standard Matlab
+% format: G(1)*X^P + ... + G(P)*X + G(N+1)
 %
-%k is the frequency parameter of the integral
+% a and b are either finite endpoints or (in the case where the integral is 
+% an infinite contour) angles of valleys in the complex plane.
 %
-%N is the number of points used per segment of the PathFinder routine.
+% k is the frequency parameter of the integral
 %
-%A large number of optional inputs are available. For more information,
-%see
-%<a href="matlab:web('www.github.com/AndrewGibbs/PathFinder','-browser')">github.com/AndrewGibbs/PathFinder</a>
+% N is the number of points used per segment of the PathFinder routine.
+%
+% A large number of optional inputs are available.  These are needed if the 
+% endpoints are infinite, for example. For more information, see
+% <a href="matlab:web('www.github.com/AndrewGibbs/PathFinder','-browser')">github.com/AndrewGibbs/PathFinder</a>
+%
+% PathFinder is provided under an MIT license, for more details see
+% LICENSE in the root directory, or on the github page linked above.
+
+    checkInputs(a, b, f, phaseIn, freq, nPts);
 
     [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin{:});
 

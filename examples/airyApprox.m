@@ -86,7 +86,8 @@ for ia = 0:3
 
     set(gca,'FontSize',20);
 end
-sgtitle('Comparison between PathFinder and Matlab approx of Airy functions');
+sgtitle('Comparison between PathFinder and Matlab approx of Airy functions',...
+    'fontsize',20);
 
 set(gcf, 'Position', [100, 600, 1000, 800]);
 
@@ -103,4 +104,4 @@ for n=1:numSubPlots^2
     title(sprintf('Ai(%.4f)',xDefRange(n)));
 end
 set(gcf, 'Position', [700, 600, 1000, 1000]);
-sgtitle('PathFinder deformation for a range of values of x');
+sgtitle('PathFinder deformation for a range of values of x','fontsize',20);

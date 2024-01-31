@@ -1,24 +1,14 @@
 function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
-%Construct weights and nodes to numerically evaluate an oscillatory
-%integral.
-%[z,w] = PathFinderQuad(a, b, G, k, N, infContour)
-%returns weights w and nodes z for efficient evaluation of oscillatory
-%integral of f(z)exp(i*k*g(z))dz from a to b, for analytic f & g.
+% Construct weights and nodes to numerically evaluate an oscillatory
+% integral.
+%[z,w] = PathFinderQuad(a, b, G, k, N)
+% Here the parameters are the same as for 'PathFinder', except there is no
+% function handle input, and the weights and nodes are output.
 %
-%G is either the coefficients of a polynomial, in standard Matlab
-%format: G(1)*X^N + ... + G(N)*X + phaseIn(N+1)
-%
-%a and b are either finite endpoints, or (in the case where the integral is an infinite contour)
-%angles of valleys in the complex plane. The entries of (optional) two-dimensional
-%flag infContour flag if the endpoint of the integral is infinite.
-%
-%k is the frequency parameter of the integral
-%
-%N is the number of points used per segment of the PathFinder routine.
-%
-%A large number of optional inputs are available. For more information,
-%see
-%<a href="matlab:web('www.github.com/AndrewGibbs/PathFinder','-browser')">github.com/AndrewGibbs/PathFinder</a>
+% See also PathFinder
+
+% PathFinder is provided under an MIT license, for more details see
+% LICENSE in the root directory.
 
     %% preprocessing
     % get first nonzero entry
