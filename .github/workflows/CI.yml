@@ -3,7 +3,7 @@ on: [push]
 jobs:
   my-job:
     name: Run MATLAB Tests and Generate Artifacts
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest       
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
@@ -15,6 +15,8 @@ jobs:
           test-results-junit: test-results/results.xml
           code-coverage-cobertura: code-coverage/coverage.xml
       - name: Upload coverage reports to Codecov
+        ignore:
+          - "examples/"
         uses: codecov/codecov-action@v3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
