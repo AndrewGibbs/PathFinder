@@ -13,7 +13,14 @@ where $g$ is a polynomial, $f$ is entire (analytic everywhere in $\mathbb{C}$), 
 
 PathFinder is based on steepest descent contour deformation, but it can be easily used without a deep understanding of the underlying mathematics; it is sufficient to understand the conditions in the previous paragraph. This document intends to provide a full explanation of **how to use PathFinder**, without giving details of the mathematical processes going on beneath. If you would like to understand how it all works, full details of the algorithm can be found in [[1]](#references), with some additional information in the 'extra_notes' subfolder. Alternatively, a brief overview can be found [below](#the-idea-behind-the-numerical-steepest-descent-nsd-method-and-pathfinder).
 
-## Setup
+## Contents of README
+* [Setup and installation](#setup-and-installation)
+* [Using PathFinder](#using-pathfinder)
+* [Examples](#examples)
+* [Advanced usage](#advanced-usage)
+* [The idea behind the Numerical Steepest Descent (NSD) method and PathFinder](#the-idea-behind-the-numerical-steepest-descent-nsd-method-and-pathfinder)
+
+## Setup and installation
 
 After downloading the source code from GitHub, open Matlab/Octave and navigate to the PathFinder folder. Then run ```addPaths.m``` to add all necessary paths to the Matlab search path.
 
@@ -92,27 +99,7 @@ An integral may be highly oscillatory for a frequency parameter $\omega=1$ if th
 
 It is also worth noting that PathFinder is useful for many low-frequency integrals over unbounded complex contours. These can be problematic when approximating from scratch, even when 'brute force' numerical methods are used, as care must be taken to avoid regions where the integrand is growing exponentially.
 
-## Examples
-
-In the 'examples' subfolder, we provide sample codes using PathFinder. These are summarised below:
-
-* `plotEGs.m` produces the contour deformation plot and graph shown above.
-* `stdComparison.m` is an example where the phase $g$ has coefficients based on the digits of $\pi$. First, the contour deformation is plotted for a range of $\omega$, to demonstrate how this is affected by frequency (in contrast to standard steepest descent approaches). Second, the performance of PathFinder is compared to Matlab/Octave's `integral` routine. The digits of agreement and CPU time are compared.
-* `airyApprox` uses PathFinder to approximate the Airy function of the first and second kind, based on the integral representation [[2, 9.5.4-9.5.5]](#references). First, this approximation is validated against the Matlab/Octave routine `airy`. Second, PathFinder's contour deformation is plotted for a range of input arguments, showing different topological behaviour.
-* `cuspCatastrophe.m` produces a plot of the Pearcey/Cusp canonical Catastrophe integral [[2, 36.2.4]](#references). This is an interesting application of PathFinder, as each point in $\mathbb{R}^2$ corresponds to a different phase function.
-* `swallowtailCatastrophe.m` produces various slice plots of the Swallowtail Catastrophe integral [[2, 36.2.4]](#references). Now each point in $\mathbb{R}^3$ corresponds to a different phase function.
-
-<figure>
-  <img src="examples/cusp.png" alt="Cusp Plot">
-  <figcaption>PathFinder Approximation to Pearcey/Cusp Catastrophe, produced by  cuspCatastrophe.m</figcaption>
-</figure>
-
-<figure>
-  <img src="examples/swallowtail.png" alt="Swallowtail Plot"> 
-  <figcaption>PathFinder Approximation to Swallowtail Catastrophe, produced by  swallowtailCatastrophe.m</figcaption>
-</figure>
-
- ### Plotting
+### Plotting
 
  It can be interesting to see the contour deformation being performed by PathFinder. Some understanding of the underlying mathematics is required to correctly interpret these plots, but in any case, they usually look quite nice. On the other hand, if you are trying to learn how PathFnder works, these plots can be a useful way to do that.
 
@@ -145,6 +132,29 @@ PathFinder(-1, 1, [], [1 -0.5 0.5 0 -1 0], 50, 25, 'plot graph');
  ![Example](examples/eg_graph.png)
 
  Further examples of plots can be found in the 'examples' subfolder, and in [1](references).
+
+## Examples
+
+In the 'examples' subfolder, we provide sample codes using PathFinder. These are summarised below:
+
+* `plotEGs.m` produces the contour deformation plot and graph shown above.
+* `stdComparison.m` is an example where the phase $g$ has coefficients based on the digits of $\pi$. First, the contour deformation is plotted for a range of $\omega$, to demonstrate how this is affected by frequency (in contrast to standard steepest descent approaches). Second, the performance of PathFinder is compared to Matlab/Octave's `integral` routine. The digits of agreement and CPU time are compared.
+* `airyApprox` uses PathFinder to approximate the Airy function of the first and second kind, based on the integral representation [[2, 9.5.4-9.5.5]](#references). First, this approximation is validated against the Matlab/Octave routine `airy`. Second, PathFinder's contour deformation is plotted for a range of input arguments, showing different topological behaviour.
+* `cuspCatastrophe.m` produces a plot of the Pearcey/Cusp canonical Catastrophe integral [[2, 36.2.4]](#references). This is an interesting application of PathFinder, as each point in $\mathbb{R}^2$ corresponds to a different phase function.
+* `swallowtailCatastrophe.m` produces various slice plots of the Swallowtail Catastrophe integral [[2, 36.2.4]](#references). Now each point in $\mathbb{R}^3$ corresponds to a different phase function.
+
+<figure>
+  <img src="examples/cusp.png" alt="Cusp Plot">
+  <figcaption>PathFinder Approximation to Pearcey/Cusp Catastrophe, produced by  cuspCatastrophe.m</figcaption>
+</figure>
+
+<figure>
+  <img src="examples/swallowtail.png" alt="Swallowtail Plot"> 
+  <figcaption>PathFinder Approximation to Swallowtail Catastrophe, produced by  swallowtailCatastrophe.m</figcaption>
+</figure>
+
+## Advanced usage
+ 
  ### Adjustable parameters
 
 The optional inputs `'plot'`, `'plot graph'` and `'infcontour'` are just three of many adjustable parameters. In fact, all of the algorithm parameters defined in [1, Table 4.1](#references) can be easily modified, if the user wishes to do so. Here is a list of adjustable parameters - each can be adjusted by adding the optional input as a text string, followed by the new value.
@@ -178,7 +188,7 @@ PathFinder(-1, 1, @(x) x.^2, [1 -0.5 0.5 0 -1 0], 50, 10, 'log name','el_murad')
 
 ## The idea behind the Numerical Steepest Descent (NSD) method and PathFinder
 
-Here we briefly outline how PathFinder works. This section is completely optional, and not required to _use_ PathFinder.
+PathFinder is designed to be used by non-experts, who do not understand how it works. But if you'd like a brief explanation of what's going on underneath - here we briefly outline how PathFinder works.
 
 Steepest descent contours are directed complex contours, along which $\Re g$ is constant and $\Im g$ is strictly increasing. This corresponds to zero oscillation and exponential decay of the integrand. Compared with oscillatory integrals, exponentially decaying integrals are much easier to evaluate numerically. The idea behind the Numerical Steepest Descent is to deform the original contour (from $a$ to $b$) onto a series of steepest descent contours. Typically these pass through stationary points of $g$, that is $\xi$ where $g'(\xi)=0$. The value of $I[f]$ will remain the same after this deformation, by Cauchy's Theorem. In principle, one can then apply suitable numerical quadrature rules to evaluate the contributions from the steepest descent contours. However, in practice, determining the steepest descent deformation for a given phase function can be complicated, and standard numerical quadrature rules may be inaccurate when multiple coalescing stationary points are present. PathFinder solves both these difficulties, by automating the deformation process and enclosing stationary points in a "non-oscillatory region" in which the integrand undergoes at most a bounded number of oscillations, and in which we do not attempt to trace or integrate along steepest descent contours. 
 
