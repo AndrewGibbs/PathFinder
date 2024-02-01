@@ -39,3 +39,6 @@ assert(abs(PathFinder(-1,1,[],[1 0],100,100)+0.010127312822195)<1e-14);
 
 %% Test 5: Test plotting
 assert(plotTest());
+
+%% Test 6: Test logging
+assert(logTest());
