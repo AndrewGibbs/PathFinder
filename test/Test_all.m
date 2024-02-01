@@ -41,4 +41,5 @@ assert(abs(PathFinder(-1,1,[],[1 0],100,100)+0.010127312822195)<1e-14);
 assert(plotTest());
 
 %% Test 6: Test logging
+addpath('../log/');
 assert(logTest());
