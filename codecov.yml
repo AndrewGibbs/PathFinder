@@ -1,0 +1,4 @@
+# ignore examples and md files in codecov
+ignore:
+  - "examples/"
+  - "**/*.md"
