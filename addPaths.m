@@ -1,6 +1,6 @@
 function addPaths()
     % add paths required for PathFinder
-    path_to_root = fileparts(which('addPaths.m'));
-    path_to_src = [path_to_root '/src/'];
-    addpath(genpath(path_to_src));
+    pathToRoot = fileparts(which('addPaths.m'));
+    pathToSrc = [pathToRoot '/src/'];
+    addpath(genpath(pathToSrc));
 end

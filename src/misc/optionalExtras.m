@@ -70,9 +70,7 @@ function options = optionalExtras(order,varargin)
                    options.log = initLog();
                    found_options(n) = 1;
                case 'log name'
-                   its = options.log.Newton_its;
                    options.log = initLog(varargin{n+1});
-                   options.log.Newton_its = its;
                    found_options(n:(n+1)) = 1;
                case 'n_ball'
                    options.numRays = uint32(varargin{n+1});

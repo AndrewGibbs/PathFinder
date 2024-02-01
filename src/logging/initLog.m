@@ -9,8 +9,9 @@ function LogStruct = initLog(filename)
     end
 
     % get path to logs directory
-    s = what('PathFinder');
-    logPath = [s.path '/log/'];
+
+    pathToRoot = fileparts(which('addPaths.m'));
+    logPath = [pathToRoot '/log/'];
 
     % write some details at the top of the file
     fid = fopen(fullfile(logPath, filename), 'w');
