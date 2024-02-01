@@ -17,7 +17,7 @@ authors:
 affiliations:
  - name: University College London, United Kingdom
    index: 1
-date: 30 January 2023
+date: 2nd February 2023
 bibliography: joss_refs.bib
 ---
 
@@ -57,15 +57,9 @@ We now describe an important problem class that was previously very difficult to
 
 Just two coalescing saddle points can cause Steepest Descent methods to break down (see, e.g., @HuJuLe:19). Fortunately, `PathFinder` is robust for any number of coalescing saddle points. This is demonstrated in Figures 1 and 2 below, where PathFinder has been used to model well-known optics problems with coalescing saddles.
 
-<figure>
-  <img src="../examples/cusp.png" alt="Cusp Plot">
-  <figcaption>Figure 1: PathFinder Approximation to Pearcey/Cusp Catastrophe integrals [@Pe:46], which contain coalescing saddle points.</figcaption>
-</figure>
+![Figure 1: PathFinder Approximation to Pearcey/Cusp Catastrophe integrals [@Pe:46], which contain coalescing saddle points.](../examples/cusp.png)
 
-<figure>
-  <img src="../examples/swallowtail.png" alt="Cusp Plot">
-  <figcaption>Figure 2: PathFinder Approximation to Swallowtail Catastrophe integrals [@Ar:81], which contain many coalescing saddle points.</figcaption>
-</figure>
+![Figure 2: PathFinder Approximation to Swallowtail Catastrophe integrals [@Ar:81], which contain many coalescing saddle points.](../examples/swallowtail.png)
 
 Recently in @OcTeHeGi:24, PathFinder was applied to model caustic waves with multiple coalescing saddle points, shedding light on the famous (and unsolved) Popov inflection point problem [@Popov79].
 
