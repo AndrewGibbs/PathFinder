@@ -184,7 +184,16 @@ If you want to name it something different, use the option `'log name'` followed
 PathFinder(-1, 1, @(x) x.^2, [1 -0.5 0.5 0 -1 0], 50, 10, 'log name','el_murad');
 ```
 
+### Hard-coded quadrature
 
+For efficiency, PathFinder uses hard-coded Gaussian quadrature to evaluate contour integrals. By default, these hard-coded values have been stored for up to 100 points each in the subroutines `src/gauss_quadrature_rules/gausLagHC.m` and `src/gauss_quadrature_rules/gausLegHC.m`, corresponding to Gauss-Laguerre and Gauss-Legendre respectively.
+
+If more points are requested by PathFinder, these are generated from scratch using the Golub-Welsch algorithm, with code supplied by Dirk Laurie (22/6/1998); later edited by Walter Gautschi (4/4/2002).
+
+If desired, you can increase the number of hard-coded points, overwriting the subroutines `gausLagHC` and `gausLegHC`. To do this:
+* Change the working directory to `src/gauss_quadrature_rules`
+* Open the script(s) `hardCodeQuadratureGaulag` and/or `hardCodeQuadratureGauleg` as required
+* Adjust the parameter `maxNumHardCodedPts` as required, and run the script.
 
 ## The idea behind the Numerical Steepest Descent (NSD) method and PathFinder
 
@@ -194,10 +203,18 @@ Steepest descent contours are directed complex contours, along which $\Re g$ is 
 
 * Away from stationary points, PathFinder constructs steepest descent contours using an ODE solver combined with a Newton correction.
 * Close to stationary points, where the integrand is non-oscillatory, PathFinder connects the endpoints of different steepest descent contours using straight line contours.
-* The contours obtained are used to build a graph, the shortest path through which (connecting the endpoints $a$ and $b$) is chosen via Dijkstra's algorithm.
-* Quadrature points are allocated along the contours in the shortest path (Gauss-Legendre for the straight-line contours near the stationary points and Gauss-Laguerre for the steepest descent contours). 
+* The contours obtained are used to build a graph, the shortest path through which (connecting the endpoints $a$ and $b$) is chosen via Dijkstra's algorithm. This step uses the code [[3]](#references).
+* Quadrature points are allocated along the contours in the shortest path (Gauss-Legendre for the straight-line contours near the stationary points and Gauss-Laguerre for the steepest descent contours).
 
-# References
+## Acknowledgments
+
+I am very grateful for the guidance and advice of Daan Huybrechs and David Hewett throughout the development of this software. I am also grateful for financial support from KU Leuven project C14/15/05 and EPSRC projects EP/S01375X/1, EP/V053868/.
+
+Some of the code in PathFinder relies on other projects. I am grateful to Dimas Aryo whose code is used for the Dijkstra shortest path algorithm. Copyright information for this code can be found in: `src/shortest_path/dijkstra/license.txt`. I am also grateful to Dirk Laurie and Walter Gautschi for writing the Golub-Welsch algorithm used to generate Gaussian quadrature rules. 
+
+## References
 * [1] <a href="https://www.sciencedirect.com/science/article/pii/S0021999124000366/pdfft?md5=f86304d6eaa58530f9316f273896d3b0&pid=1-s2.0-S0021999124000366-main.pdf" target="_blank">Numerical evaluation of oscillatory integrals via automated steepest descent contour deformation, _A. Gibbs, D. P. Hewett, D. Huybrechs_, J. Comput. Phys. 501 (2024)</a>
 
 * [2] <a href="https://dlmf.nist.gov/" target="_blank">Digital Library of Mathematical Functions, release 1.1.12 of 2023-12-15.</a>
+
+* [3] [Dimas Aryo (2024). Dijkstra Algorithm, MATLAB Central File Exchange. Retrieved January 12, 2024.](https://www.mathworks.com/matlabcentral/fileexchange/36140-dijkstra-algorithm)
