@@ -145,7 +145,7 @@ In the 'examples' subfolder, we provide sample codes using PathFinder. These are
 
 <figure>
   <img src="examples/cusp.png" alt="Cusp Plot">
-  <figcaption>PathFinder Approximation to Pearcey/Cusp Catastrophe, produced by  cuspCatastrophe.m</figcaption>
+  <figcaption>PathFinder Approximation to Pearcey/Cusp Catastrophe integrals, produced by  cuspCatastrophe.m</figcaption>
 </figure>
 
 <figure>
@@ -206,11 +206,13 @@ Steepest descent contours are directed complex contours, along which $\Re g$ is 
 * The contours obtained are used to build a graph, the shortest path through which (connecting the endpoints $a$ and $b$) is chosen via Dijkstra's algorithm. This step uses the code [[3]](#references).
 * Quadrature points are allocated along the contours in the shortest path (Gauss-Legendre for the straight-line contours near the stationary points and Gauss-Laguerre for the steepest descent contours).
 
+In the paper [[1]](#references), certain details of rootfinding processes are skipped for brevity. Full details of these can be found in `documents/rootfinding_notes.md`.
+
 ## Acknowledgments
 
 I am very grateful for the guidance and advice of Daan Huybrechs and David Hewett throughout the development of this software. I am also grateful for financial support from KU Leuven project C14/15/05 and EPSRC projects EP/S01375X/1, EP/V053868/.
 
-Some of the code in PathFinder relies on other projects. I am grateful to Dimas Aryo whose code is used for the Dijkstra shortest path algorithm. Copyright information for this code can be found in: `src/shortest_path/dijkstra/license.txt`. I am also grateful to Dirk Laurie and Walter Gautschi for writing the Golub-Welsch algorithm used to generate Gaussian quadrature rules. 
+Some of the code in PathFinder relies on other projects. I am grateful to Dimas Aryo, whose code [[3]](#references) is used for the Dijkstra shortest path algorithm. Copyright information for this code can be found in: `src/shortest_path/dijkstra/license.txt`. I am also grateful to Dirk Laurie and Walter Gautschi for writing the Golub-Welsch algorithm used to generate Gaussian quadrature rules. 
 
 ## References
 * [1] <a href="https://www.sciencedirect.com/science/article/pii/S0021999124000366/pdfft?md5=f86304d6eaa58530f9316f273896d3b0&pid=1-s2.0-S0021999124000366-main.pdf" target="_blank">Numerical evaluation of oscillatory integrals via automated steepest descent contour deformation, _A. Gibbs, D. P. Hewett, D. Huybrechs_, J. Comput. Phys. 501 (2024)</a>
