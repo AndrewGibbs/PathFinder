@@ -92,7 +92,8 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
         params.maxSPintegrandVal = inf;
     else
         % filter out SD contours which are of much smaller value, or empty
-        [QuadIngredients, params.maxSPintegrandVal] = fliterPaths(QuadIngredients, phaseHandle, freq, params.contourStartThresh);
+        [QuadIngredients, params.maxSPintegrandVal] = ...
+            fliterPaths(QuadIngredients, phaseHandle, freq, params.contourStartThresh);
         if isinf(params.maxSPintegrandVal)
             error("Integral is infinite");
         elseif params.maxSPintegrandVal>1E16
@@ -110,15 +111,7 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
         logQuadratureDetails(params, netwonIterationData, toc(quadTic));
     end
 
-    %make a plot of what's happened, if requested
-    if params.plot
-        plotAll(covers, contourArray, z, a, b, params.infContour, stationaryPoints, phaseIn, valleys);
-    end
-
-    % plot the graph representing the deformation, if requested
-    if params.plotGraph
-        finiteEndpoints = [a b];
-        finiteEndpoints = finiteEndpoints(~params.infContour)+1i*eps;
-        plotGraph(GraphData, covers, finiteEndpoints);
-    end
+    %% make a plot of what's happened, if requested
+    plotMain(params, covers, contourArray, z, a, b, stationaryPoints, ...
+        phaseIn, valleys, GraphData);
 end
