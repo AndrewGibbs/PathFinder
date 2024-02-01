@@ -11,5 +11,4 @@ function isPass = logTest()
 %     catch ERR
 %         isPass = false;
 %     end
-    close all;
 end
