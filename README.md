@@ -176,6 +176,6 @@ Steepest descent contours are directed complex contours, along which $\Re g$ is 
 * Quadrature points are allocated along the contours in the shortest path (Gauss-Legendre for the straight-line contours near the stationary points and Gauss-Laguerre for the steepest descent contours). 
 
 # References
-* [1] [Numerical evaluation of oscillatory integrals via automated steepest descent contour deformation, _A. Gibbs, D. P. Hewett, D. Huybrechs_, J. Comput. Phys. 501 (2024)](https://www.sciencedirect.com/science/article/pii/S0021999124000366/pdfft?md5=f86304d6eaa58530f9316f273896d3b0&pid=1-s2.0-S0021999124000366-main.pdf)
+* [1] <a href="https://www.sciencedirect.com/science/article/pii/S0021999124000366/pdfft?md5=f86304d6eaa58530f9316f273896d3b0&pid=1-s2.0-S0021999124000366-main.pdf" target="_blank">Numerical evaluation of oscillatory integrals via automated steepest descent contour deformation, _A. Gibbs, D. P. Hewett, D. Huybrechs_, J. Comput. Phys. 501 (2024)</a>
 
-* [2] [Digital Library of Mathematical Functions, release 1.1.12 of 2023-12-15.](https://dlmf.nist.gov/)
+* [2] <a href="https://dlmf.nist.gov/" target="_blank">Digital Library of Mathematical Functions, release 1.1.12 of 2023-12-15.</a>
