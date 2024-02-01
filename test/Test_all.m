@@ -42,3 +42,9 @@ assert(plotTest());
 
 %% Test 6: Test logging
 assert(logTest());
+
+%% Test 7: Check that the input checks are correct
+assert(testInputCheck());
+
+%% Test 8: Check the auto-generated hard-coded quadrature works
+assert(testHCquad());

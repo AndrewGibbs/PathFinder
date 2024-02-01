@@ -2,3 +2,5 @@
 ignore:
   - "examples/"
   - "**/*.md"
+  - "src/gauss_quadrature_rules/hardCodeQuadratureGaulag.m"
+  - "src/gauss_quadrature_rules/hardCodeQuadratureGauleg.m"
