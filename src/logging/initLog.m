@@ -13,6 +13,10 @@ function LogStruct = initLog(filename)
     pathToRoot = fileparts(which('addPaths.m'));
     logPath = [pathToRoot '/log/'];
 
+    if ~exist(logPath, 'dir')
+        mkdir(logPath);
+    end
+
     % write some details at the top of the file
     fid = fopen(fullfile(logPath, filename), 'w');
     fprintf(fid, 'PathFinder log, %s\n', datestr(now, 0));

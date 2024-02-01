@@ -163,7 +163,16 @@ The optional inputs `'plot'`, `'plot graph'` and `'infcontour'` are just three o
 
 ### Creating a log file
 
-There is also the option to record information about the algorithm at each step. This can be achieved by adding the optional input `'log'`. A log file is then generated, and the name is based on the time and date that the file was created. If you want to name it something different, use the option `'log name'` followed by a text string argument with the desired name. 
+There is also the option to record information about the algorithm at each step. This can be achieved by adding the optional input `'log'`. A log file is then generated, and the name is based on the time and date that the file was created. For example:
+```matlab
+PathFinder(-1, 1, @(x) x.^2, [1 -0.5 0.5 0 -1 0], 50, 10, 'log');
+```
+
+
+If you want to name it something different, use the option `'log name'` followed by a text string argument with the desired name. For example:
+```matlab
+PathFinder(-1, 1, @(x) x.^2, [1 -0.5 0.5 0 -1 0], 50, 10, 'log name','el_murad');
+```
 
 
 
