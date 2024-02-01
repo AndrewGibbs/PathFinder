@@ -86,8 +86,11 @@ for ia = 0:3
 
     set(gca,'FontSize',20);
 end
-sgtitle('Comparison between PathFinder and Matlab approx of Airy functions',...
-    'fontsize',20);
+
+if ~usingOctave
+    sgtitle('Comparison between PathFinder and Matlab approx of Airy functions',...
+        'fontsize',20);
+end
 
 set(gcf, 'Position', [100, 600, 1000, 800]);
 
