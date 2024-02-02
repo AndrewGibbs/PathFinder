@@ -71,12 +71,12 @@ The ideas of @HeOcSm:19 were combined with `PathFinder` in @OcTeHeGi:24, sheddin
 As was explained in @PathFinderPaper, to the author's best knowledge, the only other software that can efficiently evaluate oscillatory integrals is Mathematica's `NIntegrate` function, and the `cuspint` package of @KiCoHo:00. We now briefly compare these packages with `PathFinder`.
 
 `NIntegrate` has three drawbacks when compared to `PathFinder`.
- - `NIntegrate` is not open source; the code cannot be seen or modified, and one must acquire a license to use it. 
- - `NIntegrate` only appears to have a frequency-independent cost for monomial phase functions, i.e., $g(x)=x^\rho$ for $\rho\in\mathbb{N}$; a much narrower class than `PathFinder`, which can evaluate \eqref{eq:I} for any polynomial phase $g$. 
- - It appears that `NIntegrate` requires the integration range to be finite, whereas `PathFinder` can evaluate integrals on an unbounded contour.
+- `NIntegrate` is not open source; the code cannot be seen or modified, and one must acquire a license to use it. 
+- `NIntegrate` only appears to have a frequency-independent cost for monomial phase functions, i.e., $g(x)=x^\rho$ for $\rho\in\mathbb{N}$; a much narrower class than `PathFinder`, which can evaluate \eqref{eq:I} for any polynomial phase $g$. 
+- It appears that `NIntegrate` requires the integration range to be finite, whereas `PathFinder` can evaluate integrals on an unbounded contour.
 
 `cuspint` is more similar to `PathFinder`, in that it is also based on steepest descent contour deformation. There are two drawbacks when compared with PathFinder:
-- The problem class is restricted to \eqref{eq:I} when $[a,b]=\mathbb{R}$. Therefore, it may be used to model the catastrophe integrals of Figures \ref{fig:pearcey} and \ref{fig:swallowtail}. However, without the existence of an appropriate change of variables or a suitable contour deformation (requiring mathematical expertise), it cannot be immediately applied to many of the complex contour integrals in @HeOcSm:19 and @OcTeHeGi:24, for which $[a,b]\neq\mathbb{R}$ (described in the previous section).
+- The problem class is restricted to \eqref{eq:I} when $[a,b]=\mathbb{R}$. Therefore, it may be used to model the catastrophe integrals of Figures \ref{fig:pearcey} and \ref{fig:swallowtail}. However, without the existence of an appropriate change of variables or a suitable contour deformation (requiring mathematical expertise), it cannot be immediately applied to many integrals $[a,b]\neq\mathbb{R}$, such as those visualised in Figures \ref{fig:pwe}-\ref{fig:inflection}.
 - `cuspint` can experience "violent" exponential growth in certain regions of the complex plane, which can lead to inaccurate results. This is because, unlike `PathFinder`, it does not attempt a highly accurate approximation of the steepest descent contours.
 
 # Acknowledgments
