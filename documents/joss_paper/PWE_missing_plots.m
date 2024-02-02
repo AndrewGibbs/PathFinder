@@ -62,8 +62,8 @@ plt = surf(x, y, (abs(Agrid)));
 view([0 90]);
 set(plt,'linestyle','none');
 shading interp;
-xlabel('$x$');
-ylabel('$y$');
+xlabel('$x_1$');
+ylabel('$x_2$');
 %bn ~ Mari, 10th Nov, 2022
 set(gca,'FontSize', 20);
 colorbar('TickLabelInterpreter', 'latex', 'FontSize', 20);
