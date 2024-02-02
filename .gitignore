@@ -55,6 +55,4 @@ extra_notes/*.log
 
 extra_notes/*.gz
 
-joss_paper/
-
 documents/joss_paper/paper.pdf
