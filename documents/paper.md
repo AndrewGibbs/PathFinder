@@ -50,7 +50,7 @@ Despite being based on complex mathematics [@HuVa:06], `PathFinder` can be easil
 
 We now describe an important problem class that was previously very difficult to model but can now be done in just a few lines of code using `PathFinder`. A _saddle point_ is defined to be any $\xi\in\mathbb{C}$ such that $g'(\xi)=0$. When multiple saddle points are sufficiently near one another, this is commonly referred to as *coalescence*. A broad range of exciting problems have numerical models that require the evaluation of integrals with coalescing saddle points. For example, chemical reactions, rainbows, twinkling starlight, ultrasound pulses, and focusing of sunlight by rippling water (see Chapter 36 of @DLMF for a thorough review).
 
-Just two coalescing saddle points can cause Steepest Descent methods to break down [@HuJuLe:19]. Fortunately, `PathFinder` is robust for any number of coalescing saddle points. This is demonstrated in Figures \autoref{fig:pearcey} and \autoref{fig:swallowtail} below, where `PathFinder` has been used to model well-known optics problems with coalescing saddles.
+Just two coalescing saddle points can cause Steepest Descent methods to break down [@HuJuLe:19]. Fortunately, `PathFinder` is robust for any number of coalescing saddle points. This is demonstrated in \autoref{fig:pearcey} and \autoref{fig:swallowtail}, where `PathFinder` has been used to model well-known optics problems with coalescing saddles.
 
 ![PathFinder approximation to Pearcey/Cusp Catastrophe integrals [@Pe:46], which contain coalescing saddle points.\label{fig:pearcey}](../examples/cusp.png)
 
@@ -67,7 +67,7 @@ As was explained in @PathFinderPaper, to the author's best knowledge, the only o
 
 # Acknowledgments
 
-I am very grateful for the guidance of Daan Huybrechs and David Hewett throughout the development of this software. I am also grateful for financial support from KU Leuven project C14/15/05 and EPSRC projects EP/S01375X/1, EP/V053868/.
+I am very grateful for the guidance of Daan Huybrechs and David Hewett throughout the development of this software. I am also grateful for financial support from KU Leuven project C14/15/05 and EPSRC projects EP/S01375X/1, EP/V053868/1.
 
 Some of the code in `PathFinder` relies on other projects. I am grateful to Dimas Aryo whose code is used for the Dijkstra shortest path algorithm. I am also grateful to Dirk Laurie and Walter Gautschi for writing the Golub-Welsch algorithm used to generate Gaussian quadrature rules.
 
