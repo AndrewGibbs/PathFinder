@@ -23,11 +23,9 @@ bibliography: joss_refs.bib
 # Summary
 
 Oscillatory integrals arise in models of a wide range of physical applications, from acoustics to quantum mechanics. `PathFinder` is a Matlab/Octave package for efficient evaluation of oscillatory integrals of the form
-
-$$
-I = \int_a^b f(x) \exp(\mathrm{i}\omega g(x))~\mathrm{d}x,\label{eq:I}
-$$
-
+\begin{equation}\label{eq:I}
+I = \int_a^b f(x) \exp(\mathrm{i}\omega g(x))~\mathrm{d}x,
+\end{equation}
 where the endpoints $a$ and $b$ can be complex-valued, even infinite; $\omega>0$ is the frequency parameter, $f$ is an entire function and $g$ is a polynomial phase function. The syntax is simple:
 ```matlab
 I = PathFinder(a, b, f, gCoeffs, omega, N);
