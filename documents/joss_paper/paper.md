@@ -30,9 +30,9 @@ where the endpoints $a$ and $b$ can be complex-valued, even infinite; $\omega>0$
 ```matlab
 I = PathFinder(a, b, f, gCoeffs, omega, N);
 ```
-Here, `f` is a function handle representing $f(x)$, `gCoeffs` is a vector of coefficients of $g$, `omega` is the frequency parameter $\omega$ and `N` is a parameter that controls the number of quadrature points used.
+Here, `f` is a function handle representing $f(x)$, `gCoeffs` is a vector of coefficients of $g$, `omega` is the frequency parameter $\omega$ and `N` is a parameter that controls the degree of approximation.
 
-`PathFinder` is the first black-box method that can evaluate \eqref{eq:I} accurately, robustly and efficiently for any frequency $\omega$. It will be useful across a range of scientific disciplines, enabling the solution of problems that were previously too computationally expensive, or too mathematically challenging.
+`PathFinder` is the first black-box method that can evaluate \eqref{eq:I} accurately, robustly and efficiently for any frequency $\omega$. It will be useful across a range of scientific disciplines, for problems that were previously too computationally expensive or too mathematically challenging to solve.
 
 # Statement of need
 
@@ -42,44 +42,46 @@ Based on the method of Numerical Steepest Descent [@HuVa:06], `PathFinder` is an
 
 Standard quadrature rules (midpoint rule, Gauss quadrature, etc) are easy to use, and many open-source implementations are available. However, when applied to \eqref{eq:I}, such methods become prohibitively inefficient for large $\omega$.
 
-On the other hand, several methods exist for the efficient evaluation of oscillatory (large $\omega$) integrals [@DeHuIs:18], but applying these methods often requires an expert understanding of the process and a detailed analysis of the integral, making such methods inaccessible to non-mathematicians. Even with the necessary mathematical understanding, many models may require hundreds or thousands of oscillatory integrals to be evaluated, making detailed analysis of each integral highly challenging or impossible.
+On the other hand, several methods exist for the efficient evaluation of oscillatory (large $\omega$) integrals such as \eqref{eq:I}, a thorough review is given in @DeHuIs:18. However, applying these methods often requires an expert understanding of the process and a detailed analysis of the integral, making such methods inaccessible to non-mathematicians. Even with the necessary mathematical understanding, models may require hundreds or thousands of oscillatory integrals to be evaluated, making detailed analysis of each integral highly challenging or impossible.
 
 Despite being based on complex mathematics, `PathFinder` can be easily used by non-mathematicians. The user must simply understand the definitions of the components of \eqref{eq:I}.
 
 ### Use in academic research
 
-We now describe an important problem class that can be easily modelled using `PathFinder`, and new research that has been made possible due to `PathFinder`.
+We now describe an important problem class that can be easily modelled using `PathFinder`, and new research that has been stimulated as a result.
 
-A _saddle point_ is defined to be any $\xi\in\mathbb{C}$ such that $g'(\xi)=0$. When multiple saddle points are sufficiently near one another, this is commonly referred to as *coalescence*. Many physical problems have numerical models requiring multiple evaluations of \eqref{eq:I}, where the coefficients of $g$ depend on a point $\mathbf{x}$ in $\mathbb{R}^2$ or $\mathbb{R}^3$. Interesting physical phenomena often correspond to points where $\mathbf{x}$ is such that $g$ has coalescing saddle points. Examples include chemical reactions, rainbows, twinkling starlight, ultrasound pulses, and focusing of sunlight by rippling water [@DLMF, 36.14].
+In many physical models, interesting physical phenomena occur in the presence of *coalescing saddle points*, (see e.g. @PathFinderPaper for a definition). Examples include chemical reactions, rainbows, twinkling starlight, ultrasound pulses, and focusing of sunlight by rippling water [@DLMF, 36.14].
 
-Just two coalescing saddle points can cause Steepest Descent methods to break down [@HuJuLe:19]. Fortunately, `PathFinder` is robust for any number of coalescing saddle points. This is demonstrated in Figures \ref{fig:pearcey} and \ref{fig:swallowtail}, where `PathFinder` has been used to model well-known optics problems with coalescing saddles.
+Coalescing saddle points can cause steepest descent methods to break down, even in simple cases where $g$ is a cubic polynomial [@HuJuLe:19]. Fortunately, `PathFinder` is robust for any number of coalescing saddle points. This is demonstrated in Figures \ref{fig:pearcey} and \ref{fig:swallowtail}, where `PathFinder` has been used to model well-known optics problems with coalescing saddle points.
 
 ![PathFinder approximation to Pearcey/Cusp Catastrophe integrals [@Pe:46], which contain coalescing saddle points.\label{fig:pearcey}](../../examples/cusp.png){width=90%}
 
 ![PathFinder approximation to Swallowtail Catastrophe integrals [@Ar:81], which contain many coalescing saddle points.\label{fig:swallowtail}](../../examples/swallowtail.png)
 
-In @HeOcSm:19 a new technique was described for the construction of integral solutions to the *Parabolic Wave Equation*, typically of the form \eqref{eq:I}. Via a simple change of variables, these solutions could be transformed into meaningful solutions of the Helmholtz equation. Plots of these solutions were provided using `cuspint` (described below) in the cases that were "not too difficult", but some were excluded, for example, $A_{32}(x_1,x_2)$ of equation (32) therein. This can now be easily produced using `PathFinder`, as shown in Figure \ref{fig:pwe}.
+In @HeOcSm:19 a new technique was described for the construction of integral solutions to the *Parabolic Wave Equation*, typically of the form \eqref{eq:I}. Via a simple change of variables, these solutions could be transformed into meaningful solutions of the Helmholtz equation. Plots of these solutions were provided using `cuspint` ([described below](#comparison-with-other-software)) in the cases that were "not too difficult", but some were excluded, for example, $A_{32}$ of equation (32) therein. This can now be easily produced using `PathFinder`, as shown in Figure \ref{fig:pwe}.
 
 ![PathFinder approximation to $|A_{32}(x_1,x_2)|$, (32) of @HeOcSm:19.\label{fig:pwe}](A32.png){width=80%}
 
-![PathFinder approximation of a caustic terminating at an inflection point.\label{fig:inflection}](HelmSol_k40_joss.png)
+![PathFinder approximation of a wavefield with a caustic near an inflection point. Here the wavenumber is $40$.\label{fig:inflection}](HelmSol_k40_joss.png)
 
-The ideas of @HeOcSm:19 were combined with `PathFinder` in @OcTeHeGi:24, shedding light on the famous (and unsolved) Popov inflection point problem [@Popov79]. Here `PathFinder` was used to visualise caustic solutions of the Helmholtz equation terminating at an inflection point (as in Figure \ref{fig:inflection}), and provided numerical validation of asymptotic approximations.
+The ideas of @HeOcSm:19 were combined with `PathFinder` in @OcTeHeGi:24 and applied to the famous (unsolved) Popov inflection point problem [@Popov79]. Here `PathFinder` was used to visualise a wavefield with caustic behaviour close to a curve with an inflection point (as in Figure \ref{fig:inflection}), and provided numerical validation of the asymptotic approximations therein.
 
 ### Comparison with other software
 
-As was explained in @PathFinderPaper, to the author's best knowledge, the only other software that can efficiently evaluate oscillatory integrals is Mathematica's `NIntegrate` function, and the `cuspint` package of @KiCoHo:00. We now briefly compare these packages with `PathFinder`.
+As was explained in @PathFinderPaper, to the author's best knowledge, the only other software packages that can efficiently evaluate oscillatory integrals are Mathematica's `NIntegrate` function, and the Fortan `cuspint` package of @KiCoHo:00. We now briefly compare these packages with `PathFinder`.
 
-`NIntegrate` has three drawbacks when compared to `PathFinder`:
+One advantage of Mathematica's `NIntegrate` is that the oscillatory component does not always need to be separated explicitly, as in \eqref{eq:I}. There are three drawbacks when compared to `PathFinder`:
 
 - `NIntegrate` is not open source; the code cannot be seen or modified, and one must acquire a license to use it. 
 - `NIntegrate` only appears to have a frequency-independent cost for monomial phase functions, i.e., $g(x)=x^\rho$ for $\rho\in\mathbb{N}$; a much narrower class than `PathFinder`, which can evaluate \eqref{eq:I} for any polynomial phase $g$. 
 - It appears that `NIntegrate` requires the integration range to be finite, whereas `PathFinder` can evaluate integrals on an unbounded contour.
 
-`cuspint` is more similar to `PathFinder`, in that it is also based on steepest descent contour deformation. There are two drawbacks when compared with PathFinder:
+The `cuspint` package is similar to `PathFinder` in that it is also based on steepest descent contour deformation. There are two drawbacks when compared with PathFinder:
 
-- The problem class is restricted to \eqref{eq:I} when $[a,b]=\mathbb{R}$. Therefore, it may be used to model the catastrophe integrals of Figures \ref{fig:pearcey} and \ref{fig:swallowtail}. However, without the existence of an appropriate change of variables or a suitable contour deformation (requiring mathematical expertise), it cannot be immediately applied to many integrals $[a,b]\neq\mathbb{R}$, such as those visualised in Figures \ref{fig:pwe}-\ref{fig:inflection}.
-- `cuspint` can experience "violent" exponential growth in certain regions of the complex plane, which can lead to inaccurate results. This is because, unlike `PathFinder`, it does not attempt a highly accurate approximation of the steepest descent contours.
+- The problem class is restricted to \eqref{eq:I} when $[a,b]=\mathbb{R}$. Therefore, it may be used to model the catastrophe integrals of Figures \ref{fig:pearcey} and \ref{fig:swallowtail}.
+- `cuspint` can experience "violent" [@KiCoHo:00,\S2] exponential growth in certain regions of the complex plane, which can lead to inaccurate results. This is because, unlike `PathFinder`, it does not attempt a highly accurate approximation of the steepest descent contours.
+
+In summary, `PathFinder` is the only software package that can be applied in general to \eqref{eq:I} when $a$ and/or $b$ are infinite and complex, as in the problems visualised in Figures \ref{fig:pwe}-\ref{fig:inflection}.
 
 # Acknowledgments
 
