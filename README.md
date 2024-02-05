@@ -143,6 +143,7 @@ In the 'examples' subfolder, we provide sample codes using PathFinder. These are
 * `airyApprox` uses PathFinder to approximate the Airy function of the first and second kind, based on the integral representation [[2, 9.5.4-9.5.5]](#references). First, this approximation is validated against the Matlab/Octave routine `airy`. Second, PathFinder's contour deformation is plotted for a range of input arguments, showing different topological behaviour.
 * `cuspCatastrophe.m` produces a plot of the Pearcey/Cusp canonical Catastrophe integral [[2, 36.2.4]](#references). This is an interesting application of PathFinder, as each point in $\mathbb{R}^2$ corresponds to a different phase function.
 * `swallowtailCatastrophe.m` produces various slice plots of the Swallowtail Catastrophe integral [[2, 36.2.4]](#references). Now each point in $\mathbb{R}^3$ corresponds to a different phase function.
+* [`Octave_notebook_egs.ipynb`](https://mybinder.org/v2/gh/AndrewGibbs/PathFinder/HEAD?labpath=examples%2FOctave_notebook_egs.ipynb) is an Octave notebook hosted by MyBinder, which can be run in a browser, without having to download any software. As we are unable to compile MEX functions in this remote container, these examples are much slower than they would be running locally.
 
 <figure>
   <img src="examples/cusp.png" alt="Cusp Plot">
