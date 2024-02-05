@@ -1,0 +1,2 @@
+addPaths();
+compileAll();
