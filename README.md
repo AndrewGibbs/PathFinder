@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/AndrewGibbs/PathFinder/actions/workflows/CI.yml/badge.svg)](https://github.com/AndrewGibbs/PathFinder/actions/workflows/CI.yml)
 [![codecov](https://codecov.io/github/AndrewGibbs/PathFinder/graph/badge.svg?token=AQKOHW4CZJ)](https://codecov.io/github/AndrewGibbs/PathFinder)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/AndrewGibbs/PathFinder/HEAD?labpath=examples%2FOctave_notebook_egs.ipynb)
 
 PathFinder is a Matlab/Octave toolbox for the numerical evaluation of highly oscillatory integrals. Specifically, PathFinder can efficiently evaluate integrals of the form
 
