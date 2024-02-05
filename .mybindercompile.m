@@ -1,2 +1,0 @@
-addPaths();
-compileAll();
