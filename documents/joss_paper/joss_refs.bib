@@ -21,9 +21,9 @@ journal = {Journal of Computational Physics},
 pages = {112787},
 year = {2024},
 issn = {0021-9991},
-doi = {https://doi.org/10.1016/j.jcp.2024.112787},
+doi = {10.1016/j.jcp.2024.112787},
 url = {https://www.sciencedirect.com/science/article/pii/S0021999124000366},
-author = {A. Gibbs and D.P. Hewett and D. Huybrechs},
+AUTHOR = {A. Gibbs and D.P. Hewett and D. Huybrechs},
 keywords = {Oscillatory quadrature, numerical steepest descent method, saddle point method, integrals with coalescing saddles},
 abstract = {Steepest descent methods combining complex contour deformation with numerical quadrature provide an efficient and accurate approach for the evaluation of highly oscillatory integrals. However, unless the phase function governing the oscillation is particularly simple, their application requires a significant amount of a priori analysis and expert user input, to determine the appropriate contour deformation, and to deal with the non-uniformity in the accuracy of standard quadrature techniques associated with the coalescence of stationary points (saddle points) with each other, or with the endpoints of the original integration contour. In this paper we present a novel algorithm for the numerical evaluation of oscillatory integrals with general polynomial phase functions, which automates the contour deformation process and avoids the difficulties typically encountered with coalescing stationary points and endpoints. The inputs to the algorithm are simply the phase and amplitude functions, the endpoints and orientation of the original integration contour, and a small number of numerical parameters. By a series of numerical experiments we demonstrate that the algorithm is accurate and efficient over a large range of frequencies, even for examples with a large number of coalescing stationary points and with endpoints at infinity. As a particular application, we use our algorithm to evaluate cuspoid canonical integrals from scattering theory. A Matlab implementation of the algorithm is made available and is called PathFinder.}
 }
@@ -43,7 +43,7 @@ year = {2024}
 
 @website{DAryo,
   title = {Dijkstra Algorithm},
-  author = "Dimas Aryo",
+  author = "D. Aryo",
   note = "MATLAB Central File Exchange. Retrieved January 12, 2024.",
   year = {2024},
   url = "https://www.mathworks.com/matlabcentral/fileexchange/36140-dijkstra-algorithm"
@@ -85,13 +85,20 @@ volume = {11},
 }
 
 @article{HuJuLe:19,
-    title = {A numerical method for oscillatory integrals with coalescing saddle points},
-    author = {D. Huybrechs and A. B. J Kuijlaars and N. Lejon},
-    year = {2019},
-    journal = {SIAM J. Numer. Anal.},
-    volume = {57},
-    number = {6},
-    pages = {2707--2729}
+    AUTHOR = {Huybrechs, D. and K., Arno and Lejon, N.},
+     TITLE = {A numerical method for oscillatory integrals with coalescing
+              saddle points},
+   JOURNAL = {SIAM J. Numer. Anal.},
+  FJOURNAL = {SIAM Journal on Numerical Analysis},
+    VOLUME = {57},
+      YEAR = {2019},
+    NUMBER = {6},
+     PAGES = {2707--2729},
+      ISSN = {0036-1429,1095-7170},
+   MRCLASS = {65D30 (42C05 42C25)},
+  MRNUMBER = {4031470},
+       DOI = {10.1137/18M1221138},
+       URL = {https://doi.org/10.1137/18M1221138},
 }
 
 @article {Pe:46,
@@ -130,7 +137,8 @@ MRREVIEWER = {Alan Weinstein},
 @article{HeOcSm:19,
   title={Contour integral solutions of the parabolic wave equation},
   author={D. P. Hewett and J. R. Ockendon and V. P. Smyshlyaev},
-journal={Wave Motion},
+  journal={Wave Motion},  
+  doi={10.1016/j.wavemoti.2018.09.015},
   volume={84},
   pages={90--109},
   year={2019}
@@ -144,7 +152,7 @@ number = "1",
 pages = "142 - 165",
 year = "2000",
 issn = "0010-4655",
-doi = "https://doi.org/10.1016/S0010-4655(00)00126-0",
+doi = "10.1016/S0010-4655(00)00126-0",
 url = "http://www.sciencedirect.com/science/article/pii/S0010465500001260",
 author = "N.P. Kirk and J.N.L. Connor and C.A. Hobbs"
 }
