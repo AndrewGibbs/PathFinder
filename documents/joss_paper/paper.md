@@ -26,13 +26,13 @@ Oscillatory integrals arise in models of a wide range of physical applications, 
 \begin{equation}\label{eq:I}
 I = \int_a^b f(z) \exp(\mathrm{i}\omega g(z))~\mathrm{d}z,
 \end{equation}
-where the endpoints $a$ and $b$ can be complex-valued, even infinite; $\omega>0$ determines the angular frequency, $f$ is a non-oscillatory entire function and $g$ is a polynomial phase function. The syntax is simple:
+where the endpoints $a$ and $b$ can be complex-valued, even infinite; $\omega>0$ determines the angular frequency, $f(z)$ is a non-oscillatory entire function and $g(z)$ is a polynomial phase function. The syntax is simple:
 ```matlab
 I = PathFinder(a, b, f, gCoeffs, omega, N);
 ```
-Here, `f` is a function handle representing $f(z)$, `gCoeffs` is a vector of coefficients of $g$, `omega` is the frequency parameter $\omega$ and `N` is a parameter that controls the degree of approximation.
+Here, `f` is a function handle representing $f(z)$, `gCoeffs` is a vector of coefficients of $g(z)$, `omega` is the frequency parameter $\omega$ and `N` is a parameter that controls the degree of approximation.
 
-`PathFinder` is the first black-box software that can evaluate \eqref{eq:I} accurately, robustly and efficiently for any frequency $\omega$. It will be useful across many scientific disciplines, for problems that were previously too computationally expensive or too mathematically challenging to solve.
+`PathFinder` is the first black-box software that can evaluate \eqref{eq:I} accurately, robustly and efficiently for any $\omega>0$. It will be useful across many scientific disciplines, for problems that were previously too computationally expensive or too mathematically challenging to solve.
 
 # Statement of need
 
@@ -48,9 +48,9 @@ Despite being based on complex mathematics, `PathFinder` can be easily used by n
 
 ### Use in academic research
 
-In many physical models, interesting physical phenomena occur in the presence of *coalescing saddle points*, (see e.g. @PathFinderPaper for a definition). Examples include chemical reactions, rainbows, twinkling starlight, ultrasound pulses, and focusing of sunlight by rippling water [@DLMF, Section 36.14].
+In many physical models, interesting physical phenomena occur in the presence of *coalescing saddle points* (see e.g. @PathFinderPaper for a definition). Examples include chemical reactions, rainbows, twinkling starlight, ultrasound pulses, and focusing of sunlight by rippling water [@DLMF, Section 36.14].
 
-Coalescing saddle points can cause steepest descent methods to break down, even in simple cases where $g$ is a cubic polynomial [@HuJuLe:19]. By design, `PathFinder` is robust for any number of coalescing saddle points. This is demonstrated in Figures \ref{fig:pearcey} and \ref{fig:swallowtail}, where `PathFinder` has been used to model well-known optics problems with coalescing saddle points. Here, each point $(x_1,x_2)$ requires a separate evaluation of \eqref{eq:I} and thus a separate call to `PathFinder`.
+Coalescing saddle points can cause steepest descent methods to break down, even in simple cases where $g(z)$ is a cubic polynomial [@HuJuLe:19]. By design, `PathFinder` is robust for any number of coalescing saddle points. This is demonstrated in Figures \ref{fig:pearcey} and \ref{fig:swallowtail}, where `PathFinder` has been used to model well-known optics problems with coalescing saddle points. Here, each point $(x_1,x_2)$ requires a separate evaluation of \eqref{eq:I} and thus a separate call to `PathFinder`.
 
 ![PathFinder approximation to Pearcey/Cusp Catastrophe integrals [@Pe:46], which contain coalescing saddle points.\label{fig:pearcey}](../../examples/cusp.png){width=90%}
 
@@ -70,21 +70,21 @@ To the author's best knowledge, the only other software packages that can effici
 
 An advantage of Mathematica's `NIntegrate` is that the oscillatory component does not always need to be factored explicitly; Mathematica does this symbolically. However, there are three drawbacks when compared to `PathFinder`:
 
-- Based on experiments, `NIntegrate` does not appear to have a frequency-independent cost for polynomial phase functions.
+- Based on experiments [@PathFinderPaper, Section 5.3], `NIntegrate` does not appear to have a frequency-independent cost for general polynomial phase functions.
 - `NIntegrate` does not work in general for an unbounded contour with complex endpoints.
 - `NIntegrate` is not open source; the code cannot be seen or modified, and one must acquire a license to use it. 
 
-The `cuspint` package is similar to `PathFinder` in that it is also based on steepest descent contour deformation. There are two drawbacks when compared with PathFinder:
+The `cuspint` package is similar to `PathFinder` in that it is also based on steepest descent contour deformation. There are two drawbacks when compared with `PathFinder`:
 
 - The problem class is restricted to \eqref{eq:I} when $(a,b)=\mathbb{R}$. Therefore, it may be used to model the catastrophe integrals of Figures \ref{fig:pearcey} and \ref{fig:swallowtail}, but not those of Figure \ref{fig:pwe} and \ref{fig:inflection}.
 - `cuspint` can experience "violent" exponential growth [@KiCoHo:00, Section 2], which can lead to inaccurate results. This is because, unlike `PathFinder`, it does not attempt a highly accurate approximation of the steepest descent contours.
 
-In summary, `PathFinder` is the only software package that can be applied in general to the class \eqref{eq:I}, for problems such as those visualised in Figures \ref{fig:pwe}-\ref{fig:inflection}.
+In summary, `PathFinder` is the only existing software package that can be applied in general to \eqref{eq:I}.
 
 # Acknowledgments
 
 I am very grateful for the guidance of Daan Huybrechs and David Hewett throughout the development of this software. I am also grateful for financial support from KU Leuven project C14/15/05 and EPSRC projects EP/S01375X/1, EP/V053868/1.
 
-Some of the code in `PathFinder` relies on other projects. I am grateful to @DAryo whose code is used for the Dijkstra shortest path algorithm. I am also grateful to Dirk Laurie and Walter Gautschi for writing the Golub-Welsch algorithm used to generate Gaussian quadrature rules.
+Some of the code in `PathFinder` is copied from other projects. I acknowledge @DAryo, used for the Dijkstra shortest path algorithm. I also acknowledge Dirk Laurie and Walter Gautschi for writing the code used for the Golub-Welsch algorithm.
 
 # References
