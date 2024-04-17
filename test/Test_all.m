@@ -1,3 +1,6 @@
+% check correct compiler is being used in CI log
+mex -setup C;
+
 % add pathfinder files to path
 addpath('..');
 addPaths;
