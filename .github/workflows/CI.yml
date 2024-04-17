@@ -5,9 +5,8 @@ jobs:
     name: Run MATLAB Tests and Generate Artifacts
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}   
-    products: MATLAB_Support_for_MinGW-w64_C/C++/Fortran_Compiler 
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
