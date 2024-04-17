@@ -23,8 +23,8 @@
 // mex functions
 void sd_path_ode_euler_extend_coarse_path(
     const int p_length,
-    const double complex phase_coeffs[],
-    const double complex stationary_points[],
+    const double complex *phase_coeffs,
+    const double complex *stationary_points,
     const double base_step_size,
     const int n_max,
     const double p_new_max,
@@ -70,11 +70,11 @@ void sd_path_ode_euler(
     int *n);
 
 // utility functions
-double complex polyval(const double complex poly_coeffs[],
+double complex polyval(const double complex *poly_coeffs,
                        const double complex z,
                        int poly_order);
 
-void get_diff_poly_coeffs(const double complex poly_coeffs[],
+void get_diff_poly_coeffs(const double complex *poly_coeffs,
                           double complex *diff_poly_coeffs,
                           int poly_order);
 
@@ -137,7 +137,7 @@ void halt_euler(
  * @param order The integer order/degree of the polynomial g.
  * @return The value g(z).
  */
-double complex polyval(const double complex poly_coeffs[],
+double complex polyval(const double complex *poly_coeffs,
                        const double complex z,
                        int order)
 {
@@ -170,7 +170,7 @@ For a polynomial g(z), return the coefficients of g'(z).
  * @param diff_poly_coeffs The output coefficients of g'.
  * @param poly_order The order/degree of g.
 */
-void get_diff_poly_coeffs(const double complex poly_coeffs[],
+void get_diff_poly_coeffs(const double complex *poly_coeffs,
                           double complex *diff_poly_coeffs,
                           int poly_order)
 {
@@ -280,8 +280,8 @@ double complex safe_cpow(const double complex x,
 void sd_path_ode_euler_extend_coarse_path(
     // inputs
     const int p_length,
-    const double complex poly_coeffs[],
-    const double complex stationary_points[],
+    const double complex *poly_coeffs,
+    const double complex *stationary_points,
     const double base_step_size,
     const int n_max,
     const double p_new_max,
