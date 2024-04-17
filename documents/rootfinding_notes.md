@@ -30,11 +30,11 @@ First, we find the polynomial coefficients inside the absolute value sign in the
 
 $$
 \begin{align*}
-g(\xi+r\mathrm{e}^{\mathrm{i} \theta}) &= \sum_{j=0}^J\alpha_j(\xi+r\mathrm{e}^{\mathrm{i}\theta})^j\nonumber\\
+g(\xi+r\mathrm{e}^{\mathrm{i} \theta}) &= \sum_{j=0}^J\alpha_j(\xi+r\mathrm{e}^{\mathrm{i}\theta})^j\\
 	&=\sum_{j=0}^J\alpha_j\sum_{k=0}^j\left(\begin{array}{c}
 		j\\k
 	\end{array}\right)
-	\xi^{j-k}r^k\mathrm{e}^{\mathrm{i} k \theta}\nonumber\\
+	\xi^{j-k}r^k\mathrm{e}^{\mathrm{i} k \theta}\\
 &= \sum_{k=0}^J r^k\left[\mathrm{e}^{\mathrm{i} k \theta}\sum_{j=k}^J \alpha_j\left(\begin{array}{c} j\\k \end{array}\right)\xi^{j-k}\right].\tag{2}
 \end{align*}
 $$
