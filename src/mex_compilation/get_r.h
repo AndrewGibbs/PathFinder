@@ -86,7 +86,7 @@ void roots(const double complex *phase_coeffs,
 {
     // initialise Frobenius/companion matrix
     int n = phase_coeffs_len - 1; // size of matrix
-    lapack_complex_double A[n][n];
+    double complex A[n][n];
     // fill with zeros
     for (int j = 0; j < n; j++)
     {
@@ -118,7 +118,7 @@ void roots(const double complex *phase_coeffs,
 
     // find eigenvalues of companion matrix A
     info_eigs = LAPACKE_zgeev(LAPACK_COL_MAJOR, 'N', 'N', n,
-                              (lapack_complex_double *)A, n, root_vals,
+                              (lapack_complex_double *)A, n, (lapack_complex_double *)root_vals,
                               NULL, 1, NULL, 1);
 
     // those eigenvalues are the roots of the polynomial, stored in 'root_vals'
