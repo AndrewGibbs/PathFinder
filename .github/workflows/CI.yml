@@ -7,6 +7,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}   
+    products: MATLAB_Support_for_MinGW-w64_C/C++/Fortran_Compiler 
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
