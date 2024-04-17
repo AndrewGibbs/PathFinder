@@ -2,7 +2,8 @@
 mex -setup C;
 if ispc
   mingw64XmlPath = fullfile(matlabroot, 'bin', 'win64', 'mexopts', 'mingw64.xml');
-  mex('-setup', mingw64XmlPath, 'C');
+  mex -setup:D:\hostedtoolcache\windows\MATLAB\2024.1.999\x64\bin\win64\mexopts\msvc2022.xml C;
+  % mex('-setup', mingw64XmlPath, 'C');
   mex -setup C;
 end
 
