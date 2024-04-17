@@ -1,5 +1,10 @@
 % check correct compiler is being used in CI log
 mex -setup C;
+if ispc
+  mingw64XmlPath = fullfile(matlabroot, 'bin', 'win64', 'mexopts', 'mingw64.xml');
+  mex('-setup', mingw64XmlPath, 'C');
+  mex -setup C;
+end
 
 % add pathfinder files to path
 addpath('..');
