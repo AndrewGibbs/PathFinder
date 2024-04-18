@@ -4,6 +4,7 @@ function switchWindowsCompiler()
     
     % Find the MinGW-w64 compiler
     mingw_compiler = [];
+    disp(numel(compilers));
     for i = 1:numel(compilers)
         disp(compilers(i).Name);
         if contains(compilers(i).Name, 'MinGW-w64')
