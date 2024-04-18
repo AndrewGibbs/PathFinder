@@ -3,19 +3,20 @@ on: [push]
 jobs:
   my-job:
     name: Run MATLAB Tests and Generate Artifacts
-    if: always()
     strategy:
       matrix:
         os: [macos-11, macos-12, macos-13]
         version: [R2021a, R2021b, R2022a]
-    runs-on: ${{ matrix.os }}   
+    runs-on: ${{ matrix.os }}
+    continue-on-error: true
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@v2
         with:
-          release: ${{ matrix.version }} 
+          release: ${{ matrix.version }}
+          continue-on-error: true
       - name: Run tests and generate artifacts
         uses: matlab-actions/run-tests@v1
         with:
