@@ -5,7 +5,7 @@ jobs:
     name: Run MATLAB Tests and Generate Artifacts
     strategy:
       matrix:
-        os: [macos-latest]
+        os: [macos-13.6]
     runs-on: ${{ matrix.os }}   
     steps:
       - name: Check out repository
