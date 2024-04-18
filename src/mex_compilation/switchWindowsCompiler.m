@@ -13,7 +13,7 @@ function switchWindowsCompiler()
     pattern = strcat('(', startSubstr, '.*?', endSubstr, ')');
     
     % Extract substring using regular expression
-    extracted = regexp(str, pattern, 'tokens', 'once');
+    extracted = regexp(full_message, pattern, 'tokens', 'once');
 
     % get shortest one, which is likely to be the one we want
     min_length = inf;
