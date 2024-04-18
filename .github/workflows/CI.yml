@@ -5,7 +5,8 @@ jobs:
     name: Run MATLAB Tests and Generate Artifacts
     strategy:
       matrix:
-        os: [macos-12]
+        os: [macos-11, macos-12, macos-13]
+        version: [R2021a, R2021b, R2022a]
     runs-on: ${{ matrix.os }}   
     steps:
       - name: Check out repository
@@ -13,7 +14,7 @@ jobs:
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@v2
         with:
-          release: R2022a
+          release: ${{ matrix.version }} 
       - name: Run tests and generate artifacts
         uses: matlab-actions/run-tests@v1
         with:
