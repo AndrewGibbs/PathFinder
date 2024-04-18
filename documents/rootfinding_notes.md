@@ -21,9 +21,11 @@ $$
 $$
 
 Since $g$ is a polynomial, the function
+
 $$
 G(r) := \omega\left|g(\xi+r\mathrm{e}^{\mathrm{i} \theta})-g(\xi)\right|^2-\left(\frac{C_{\mathrm{ball}}}{\omega}\right)^2
 $$
+
 is also a polynomial, with roots satisfying (1). The coefficients of the polynomial $G$ can be obtained as follows:
 
 First, we find the polynomial coefficients inside the absolute value sign in the root-finding problem. Binomially expand as follows:
@@ -31,11 +33,9 @@ First, we find the polynomial coefficients inside the absolute value sign in the
 $$
 \begin{align*}
 g(\xi+r\mathrm{e}^{\mathrm{i} \theta}) &= \sum_{j=0}^J\alpha_j(\xi+r\mathrm{e}^{\mathrm{i}\theta})^j\\
-	&=\sum_{j=0}^J\alpha_j\sum_{k=0}^j\left(\begin{array}{c}
-		j\\k
-	\end{array}\right)
+	&=\sum_{j=0}^J\alpha_j\sum_{k=0}^j\binom{j}{k}
 	\xi^{j-k}r^k\mathrm{e}^{\mathrm{i} k \theta}\\
-&= \sum_{k=0}^J r^k\left[\mathrm{e}^{\mathrm{i} k \theta}\sum_{j=k}^J \alpha_j\left(\begin{array}{c} j\\k \end{array}\right)\xi^{j-k}\right].\tag{2}
+&= \sum_{k=0}^J r^k\left[\mathrm{e}^{\mathrm{i} k \theta}\sum_{j=k}^J \alpha_j\binom{j}{k}\xi^{j-k}\right].\tag{2}
 \end{align*}
 $$
 
@@ -43,7 +43,7 @@ Now, the coefficients can be expressed as:
 
 $$ a_0 := -g(\xi)+\sum_{j=0}^J \alpha_j \xi^{j}; $$
 
-$$ a_k := \mathrm{e}^{\mathrm{i} k \theta}\sum_{j=k}^J \alpha_j\left(\begin{array}{c} j\\k \end{array}\right)\xi^{j-k}, \text{ for } k=1,\ldots,J. $$
+$$ a_k := \mathrm{e}^{\mathrm{i} k \theta}\sum_{j=k}^J \alpha_j\binom{j}{k}\xi^{j-k}, \text{ for } k=1,\ldots,J. $$
 
 Using these coefficients, the function $G(r)$ can be expressed as:
 
@@ -66,7 +66,7 @@ $$ g(\xi+r\mathrm{e}^{\mathrm{i} \theta}) = \sum_{k=0}^J c_k\mathrm{e}^{\mathrm{
 
 where
 
-$$ c_k:=\sum_{j=k}^Jr^k \alpha_j\left(\begin{array}{c} j\\k \end{array}\right)\xi^{j-k}, \text{ for } k=0,\ldots,J. $$
+$$ c_k:=\sum_{j=k}^Jr^k \alpha_j\binom{j}{k}\xi^{j-k}, \text{ for } k=0,\ldots,J. $$
 
 Now, find coefficients for the derivatives in terms of this Fourier basis:
 
