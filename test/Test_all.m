@@ -46,11 +46,13 @@ assert(1e-12>coalescenceTesting(101,show_text));
 %% Test 4: Test linear phase special case works
 assert(abs(PathFinder(-1,1,[],[1 0],100,100)+0.010127312822195)<1e-14);
 
-%% Test 5: Test plotting
-assert(plotTest());
-
-%% Test 6: Test logging
-assert(logTest());
+if ~ispc % doesn't work on Windows VM
+    %% Test 5: Test plotting
+    assert(plotTest());
+    
+    %% Test 6: Test logging
+    assert(logTest());
+end
 
 %% Test 7: Check that the input checks are correct
 assert(testInputCheck());
