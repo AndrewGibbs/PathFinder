@@ -3,6 +3,7 @@ on: [push]
 jobs:
   my-job:
     name: Run MATLAB Tests and Generate Artifacts
+    if: always()
     strategy:
       matrix:
         os: [macos-11, macos-12, macos-13]
