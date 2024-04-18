@@ -2,6 +2,7 @@
 mex -setup C;
 % add pathfinder files to path
 addpath('..');
+addPaths;
 if ispc
   % mingw64XmlPath = fullfile(matlabroot, 'bin', 'win64', 'mexopts', 'mingw64.xml');
 %   mex -setup:D:\hostedtoolcache\windows\MATLAB\2024.1.999\x64\bin\win64\mexopts\mingw64.xml C
@@ -9,7 +10,6 @@ if ispc
   % mex('-setup', mingw64XmlPath, 'C');
   mex -setup C;
 end
-addPaths;
 compileAll;
 show_text = false;
 
