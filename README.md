@@ -25,7 +25,9 @@ PathFinder is based on steepest descent contour deformation, but it can be easil
 
 After downloading the source code from GitHub, open Matlab/Octave and navigate to the PathFinder folder. Then run ```addPaths.m``` to add all necessary paths to the Matlab search path.
 
-The more computationally expensive parts of PathFinder have been written in C, to compile as MEX functions (Matlab executable). Compile the MEX codes for your system by running ```compileAll.m```. This works with Octave or Matlab. and only needs to be done once for each.
+The more computationally expensive parts of PathFinder have been written in C, to compile as MEX functions (Matlab executable). When running Matlab on Windows, this requires [an extra step](#windows-matlab-compilation).
+
+Compile the MEX codes for your system by running ```compileAll.m```. This works with Octave or Matlab. and only needs to be done once for each.
 
 If there are any compilation issues:
 * Please raise an issue on the GitHub issues page, stating your Matlab/Octave version and operating system.
@@ -44,6 +46,17 @@ $$
 and will produce a simple plot of the contour deformation.
 
 You could also try running the codes in the 'examples' subfolder.
+
+### Windows Matlab compilation
+
+If compiling in **Matlab on Windows**, first [download the MinGW-w64 Compiler](https://uk.mathworks.com/help/matlab/matlab_external/install-mingw-support-package.html). Then make sure it is set to default, by typing
+```
+mex -setup C
+```
+into the Matlab terminal and following on-screen instructions. Now run
+`CompileAll.m`
+
+In Octave, this shouldn't be an issue, as MinGW-w64 compiler is used by default. 
 
 ## Using PathFinder
 
