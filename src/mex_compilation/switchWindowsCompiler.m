@@ -1,7 +1,11 @@
 function switchWindowsCompiler()
 
     full_message = evalc('mex -setup C');
+    disp('full_message:');
+    disp(full_message);
     mex_string = strrep(full_message, 'For MinGW64 Compiler (C):  ', '');
+    disp('mex_string:');
+    disp(mex_string);
     eval(mex_string);
     
     % Get a list of installed compilers
