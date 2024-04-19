@@ -54,9 +54,9 @@ void mexFunction(int nlhs, mxArray *plhs[],
 
     // initialise these two vectors which may be blank in Matlab version
     double complex otherSPs[max_1_or_other_SPs_len];
-    double otherSPs_radii[other_stationary_points_len];
+    double otherSPs_radii[max_1_or_other_SPs_len];
 
-    if (otherSPs == 0)
+    if (other_stationary_points_len == 0)
     {
         // in the case where there are no other SPs, add fictitious SP at infinity,
         // to keep things simple later on.
