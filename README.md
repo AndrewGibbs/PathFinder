@@ -93,9 +93,11 @@ For example, if $a=\exp(\mathrm{i}\theta)\infty$, and $b\in\mathbb{C}$ is finite
 Suppose that $a$ and/or $b$ are infinite, but not exactly in a complex valley, in the sense of [[1]](#references). PathFinder checks if Jordan's lemma can be applied, justifying a rotation of the infinite endpoint to the valley.
 
 For example, the integral
+
 $$
 \int_{-\infty}^{\infty}\exp(\mathrm{i}\omega x^2)\mathrm{d} x = \frac{(\mathrm{i}+1)\sqrt\pi}{\sqrt{2\omega}}
 $$
+
 has endpoints at $\pm\infty$; these are not strictly valleys, but the integral is convergent. The true valleys are at $\{5\pi/4,\pi/4\}$. This is not an issue in practice, as PathFinder will return the same value for
 ```matlab
 PathFinder(pi,0,[],[1 0 0],100,10,'infcontour',[true true])
