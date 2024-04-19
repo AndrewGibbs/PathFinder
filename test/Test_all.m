@@ -53,3 +53,7 @@ assert(testInputCheck());
 
 %% Test 8: Check the auto-generated hard-coded quadrature works
 assert(testHCquad());
+
+%% Test 9: Check the simple single stationary point example works
+assert(PathFinder(pi,0,[],[1 0 0],100,10,'infcontour',[true true]) ...
+        - ((1i+1)*sqrt(pi)/(sqrt(2*100))) < 1e-5);
