@@ -4,7 +4,7 @@ function isIncluded = checkForPackage(packageName)
     isIncluded = false;
     for ip = packages
         % check if name of element matches desired package
-        if strcmp(packages.Name, packageName)
+        if strcmp(ip.Name, packageName)
             isIncluded = true;
             break;
         end
