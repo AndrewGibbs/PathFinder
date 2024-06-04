@@ -1,6 +1,9 @@
 % add pathfinder files to path
 addpath('..');
 addPaths;
+if ispc
+    switchWindowsCompiler();
+end
 compileAll;
 show_text = false;
 
@@ -37,14 +40,20 @@ assert(1e-12>coalescenceTesting(101,show_text));
 %% Test 4: Test linear phase special case works
 assert(abs(PathFinder(-1,1,[],[1 0],100,100)+0.010127312822195)<1e-14);
 
-%% Test 5: Test plotting
-assert(plotTest());
-
-%% Test 6: Test logging
-assert(logTest());
+if ~ispc % doesn't work on Windows VM
+    %% Test 5: Test plotting
+    assert(plotTest());
+    
+    %% Test 6: Test logging
+    assert(logTest());
+end
 
 %% Test 7: Check that the input checks are correct
 assert(testInputCheck());
 
 %% Test 8: Check the auto-generated hard-coded quadrature works
 assert(testHCquad());
+
+%% Test 9: Check the simple single stationary point example works
+assert(PathFinder(pi,0,[],[1 0 0],100,10,'infcontour',[true true]) ...
+        - ((1i+1)*sqrt(pi)/(sqrt(2*100))) < 1e-5);

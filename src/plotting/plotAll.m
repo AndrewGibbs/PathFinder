@@ -112,7 +112,7 @@ function plotAll(balls, contours, quadPoints, a, b, infContour, stationaryPoints
     set(gcf, 'Position', [0 0 800 800]);
 
     % if symbolic toolbox is installed, add the phase to the title
-    if license('test','symbolic_toolbox')
+    if checkForPackage('Symbolic Math Toolbox')
         title(['$g(x)=',latex(poly2sym(polyCoeffs)),'$'],'Interpreter','latex');
     end
     hold off;
