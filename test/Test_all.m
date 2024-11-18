@@ -1,9 +1,9 @@
 % add pathfinder files to path
 addpath('..');
 addPaths;
-if ispc
-    switchWindowsCompiler();
-end
+% if ispc
+%    switchWindowsCompiler();
+% end
 compileAll;
 show_text = false;
 
