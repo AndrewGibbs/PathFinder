@@ -57,7 +57,16 @@ mex -setup C
 into the Matlab terminal and following on-screen instructions. Now run
 `CompileAll.m`
 
-In Octave, this shouldn't be an issue, as MinGW-w64 compiler is used by default. 
+In Octave, this shouldn't be an issue, as MinGW-w64 compiler is used by default.
+
+### Mac Octave compilation
+
+Make sure `openblas` [is installed](https://formulae.brew.sh/formula/openblas). Open the Mac terminal and type
+```
+brew info openblas
+```
+Now make sure the addresses of the two export flags match those used in line 35 of `compileAll.m`.
+
 
 ## Using PathFinder
 
