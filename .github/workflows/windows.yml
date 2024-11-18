@@ -2,7 +2,7 @@ name: CI
 on: [push]
 jobs:
   my-job:
-    name: Run MATLAB Tests and Generate Artifacts
+    name: Run MATLAB Tests and Generate Artifacts on Windows
     runs-on: windows-latest   
     steps:
       - name: Check out repository
