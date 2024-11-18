@@ -27,7 +27,7 @@ PathFinder is based on steepest descent contour deformation, but it can be easil
 
 After downloading the source code from GitHub, open Matlab/Octave and navigate to the PathFinder folder. Then run ```addPaths.m``` to add all necessary paths to the Matlab search path.
 
-The more computationally expensive parts of PathFinder have been written in C, to compile as MEX functions (Matlab executable). When running Matlab on Windows, this requires [an extra step](#windows-matlab-compilation).
+The more computationally expensive parts of PathFinder have been written in C, to compile as MEX functions (Matlab executable). When running Matlab on Windows, this requires [an extra step](#windows-matlab-compilation). When compiling on Octave, this can also requrie an extra step, depending on your OS; see [here for MacOS](#Mac-Octave-compilation), or [here for Ubuntu and Windows](#Windows-and-Ubuntu-Octave-ompilation).
 
 Compile the MEX codes for your system by running ```compileAll.m```. This works with Octave or Matlab. and only needs to be done once for each.
 
@@ -59,6 +59,10 @@ into the Matlab terminal and following on-screen instructions. Now run
 `CompileAll.m`
 
 In Octave, this shouldn't be an issue, as MinGW-w64 compiler is used by default.
+
+## Windows and Ubuntu Octave compilation
+
+For Octave coimpilation on Windows and Ubuntu, you need the [LAPACKE](https://www.netlib.org/lapack/lapacke.html) library installed.
 
 ### Mac Octave compilation
 
