@@ -3,17 +3,12 @@ on: [push]
 jobs:
   my-job:
     name: Run MATLAB Tests and Generate Artifacts
-    strategy:
-      matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
-    runs-on: ${{ matrix.os }}  
-    continue-on-error: true
+    runs-on: windows-latest   
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@v2
-        if: runner.os == 'Windows'
         with:
           products: MATLAB_Support_for_MinGW-w64_C/C++/Fortran_Compiler 
       - name: Run tests and generate artifacts
