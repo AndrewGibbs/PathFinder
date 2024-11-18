@@ -147,10 +147,4 @@ void mexFunction(int nlhs, mxArray *plhs[],
         ball_index++;
         convert_int_to_mxsca(&ball_index, plhs[3]);
     }
-
-    /* ------------- deallocate memory ------------- */
-    free(p_out);
-    p_out = NULL;
-    free(h_out);
-    h_out = NULL;
 }
