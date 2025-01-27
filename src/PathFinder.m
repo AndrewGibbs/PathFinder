@@ -6,14 +6,14 @@ function I = PathFinder(a, b, f, phaseIn, freq, nPts, varargin)
 % f is a vectorised function handle, or f=[] if f(z)=1.
 %
 % G is a vector of polynomial coefficients, in standard Matlab
-% format: G(1)*X^P + ... + G(P)*X + G(N+1)
+% format: G(1)*X^P + ... + G(P)*X + G(N+1), where the coefficients are complex
 %
-% a and b are either finite endpoints or (in the case where the integral is 
+% a and b are either finite endpoints (complex valued) or (in the case where the integral is 
 % an infinite contour) angles of valleys in the complex plane.
 %
-% k is the frequency parameter of the integral
+% k (real or complex) is the frequency parameter of the integral
 %
-% N is the number of points used per segment of the PathFinder routine.
+% N (real, positive, integer) is the number of points used per segment of the PathFinder routine.
 %
 % A large number of optional inputs are available.  These are needed if the 
 % endpoints are infinite, for example. For more information, see

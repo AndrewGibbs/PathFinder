@@ -50,7 +50,24 @@ Despite being based on complex mathematics, `PathFinder` can be easily used by n
 
 In many physical models, interesting physical phenomena occur in the presence of *coalescing saddle points* (see e.g. @PathFinderPaper for a definition). Examples include chemical reactions, rainbows, twinkling starlight, ultrasound pulses, and focusing of sunlight by rippling water [@DLMF, Section 36.14].
 
-Coalescing saddle points can cause steepest descent methods to break down, even in simple cases where $g(z)$ is a cubic polynomial [@HuJuLe:19]. By design, `PathFinder` is robust for any number of coalescing saddle points. This is demonstrated in Figures \ref{fig:pearcey} and \ref{fig:swallowtail}, where `PathFinder` has been used to model well-known optics problems with coalescing saddle points. Here, each point $(x_1,x_2)$ requires a separate evaluation of \eqref{eq:I} and thus a separate call to `PathFinder`.
+Coalescing saddle points can cause steepest descent methods to break down, even in simple cases where $g(z)$ is a cubic polynomial [@HuJuLe:19]. By design, `PathFinder` is robust for any number of coalescing saddle points. This is demonstrated in Figures \ref{fig:pearcey} and \ref{fig:swallowtail}, where `PathFinder` has been used to model well-known optics problems with coalescing saddle points. Specifically these are the *Cusp Catastrophe*
+\begin{equation}\label{cusp}
+\int_{-\infty}^{\infty}  \exp(\mathrm{i}(z^4+x_2z^2+x_1z))~\mathrm{d}z
+\end{equation}
+and the *Swallowtail*
+\begin{equation*}
+\int_{-\infty}^{\infty}  \exp(\mathrm{i}(z^5+x_3z^3+x_2z^2+x_1z))~\mathrm{d}z
+\end{equation*}
+respectively. More information about the physical significance of these integrals can be found in [@DLMF, Section 36.14]. In these plots, each point $(x_1,x_2)$ requires a separate evaluation of \eqref{eq:I} and thus a separate call to `PathFinder`. For example, for \eqref{cusp}, the following code was used for each $(x_1,x_2)$:
+```matlab
+PathFinder( pi, 0, ... % angles of valleys
+            [], ... % no amplitude function
+            [1 0 x2 x1 0],... % phase coeffs
+            1, ... % frequncy parameter
+            10, ... % number of quadrature points per contour
+            'infcontour', [true true] % doubly infinite contour
+            );
+```
 
 ![PathFinder approximation to Pearcey/Cusp Catastrophe integrals [@Pe:46], which contain coalescing saddle points.\label{fig:pearcey}](../../examples/cusp.png){width=90%}
 
@@ -62,7 +79,20 @@ In @HeOcSm:19 a new technique was described for the construction of integral sol
 
 ![PathFinder approximation of a wavefield with a caustic near an inflection point, wavenumber $40$.\label{fig:inflection}](HelmSol_k40_joss.png)
 
-The ideas of @HeOcSm:19 were combined with `PathFinder` in @OcTeHeGi:24 and applied to the famous (unsolved) inflection point problem of @Popov79. Via a simple change of variables, these solutions to the Parabolic Wave Equation could be transformed into meaningful solutions of the Helmholtz equation. Here `PathFinder` was used to visualise a wavefield with caustic behaviour close to a curve with an inflection point (as in Figure \ref{fig:inflection}) and provided numerical validation of the asymptotic approximations therein.
+The ideas of @HeOcSm:19 were combined with `PathFinder` in @OcTeHeGi:24 and applied to the famous (unsolved) inflection point problem of @Popov79. Via a simple change of variables, these solutions to the Parabolic Wave Equation could be transformed into meaningful solutions of the Helmholtz equation. Here `PathFinder` was used to visualise a wavefield with caustic behaviour close to a curve with an inflection point (as in Figure \ref{fig:inflection}) and provided numerical validation of the asymptotic approximations therein. In Figure \ref{fig:pwe}, the integral is
+\begin{equation}\label{eq:ock}
+\int_{\mathrm{e}^{\mathrm{i}9\pi/10}\infty}^{\mathrm{i}\infty} z\exp(\mathrm{i}(-x_2z^2-x_1z^4/2+2z^5/5))~\mathrm{d}z;
+\end{equation}
+this was subsequently transformed to a solution to the Helmholtz equation, in Figure \ref{fig:inflection}. The integrals \eqref{eq:ock} are evaluated using the following code:
+```matlab
+PathFinder( 9\pi/10, 1/2, ... % angles of valleys
+            @(z) z, ... % no amplitude function
+            [2/5 -x_1/2 0 -x_2 0 0],... % phase coeffs
+            1, ... % frequncy parameter
+            10, ... % number of quadrature points per contour
+            'infcontour', [true true] % doubly infinite contour
+            );
+```
 
 ### Comparison with other software
 
@@ -85,6 +115,6 @@ In summary, `PathFinder` is the only existing software package that can be appli
 
 I am very grateful for the guidance of Daan Huybrechs and David Hewett throughout the development of this software. I am also grateful for financial support from KU Leuven project C14/15/05 and EPSRC projects EP/S01375X/1, EP/V053868/1.
 
-Some of the code in `PathFinder` is copied from other projects. I acknowledge @DAryo, used for the Dijkstra shortest path algorithm. I also acknowledge Dirk Laurie and Walter Gautschi for writing the code used for the Golub-Welsch algorithm.
+Some of the code in `PathFinder` is copied from other projects. I acknowledge @DAryo, used for the Dijkstra shortest path algorithm, originally proposed in [@dijkstra2022note]. I also acknowledge Dirk Laurie and Walter Gautschi for writing the code used for the Golub-Welsch algorithm, a full mathematical explanation of this algorithm can be found in [@gautschi2004orthogonal].
 
 # References

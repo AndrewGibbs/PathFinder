@@ -5,6 +5,18 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
 % Here the parameters are the same as for 'PathFinder', except there is no
 % function handle input, and the weights and nodes are output.
 %
+% f is a vectorised function handle, or f=[] if f(z)=1.
+%
+% G is a vector of polynomial coefficients, in standard Matlab
+% format: G(1)*X^P + ... + G(P)*X + G(N+1), where the coefficients are complex
+%
+% a and b are either finite endpoints (complex valued) or (in the case where the integral is 
+% an infinite contour) angles of valleys in the complex plane.
+%
+% k (real or complex) is the frequency parameter of the integral
+%
+% N (real, positive, integer) is the number of points used per segment of the PathFinder routine.
+%
 % See also PathFinder
 
 % PathFinder is provided under an MIT license, for more details see
