@@ -100,16 +100,34 @@ To the author's best knowledge, the only other software packages that can effici
 
 An advantage of Mathematica's `NIntegrate` is that the oscillatory component does not always need to be factored explicitly; Mathematica does this symbolically. However, there are three drawbacks when compared to `PathFinder`:
 
+### Mathematica's `NIntegrate`
+- This is a built-in function of Wolfram Mathematica [@NIntegrate], based on the Levin method (see for e.g. @[@DeHuIs:18, Section 3.3]).
 - Based on experiments [@PathFinderPaper, Section 5.3], `NIntegrate` does not appear to have a frequency-independent cost for general polynomial phase functions.
 - `NIntegrate` does not work in general for an unbounded contour with complex endpoints.
 - `NIntegrate` is not open source; the code cannot be seen or modified, and one must acquire a license to use it. 
 
-The `cuspint` package is similar to `PathFinder` in that it is also based on steepest descent contour deformation. There are two drawbacks when compared with `PathFinder`:
-
+### `cuspint`
+- This package is written in Fortran, based on the paper [@KiCoHo:00].
+- The `cuspint` package is somewhat similar to `PathFinder` in that it is also based on steepest descent contour deformation.
 - The problem class is restricted to \eqref{eq:I} when $(a,b)=\mathbb{R}$. Therefore, it may be used to model the catastrophe integrals of Figures \ref{fig:pearcey} and \ref{fig:swallowtail}, but not those of Figure \ref{fig:pwe} and \ref{fig:inflection}.
 - `cuspint` can experience "violent" exponential growth [@KiCoHo:00, Section 2], which can lead to inaccurate results. This is because, unlike `PathFinder`, it does not attempt a highly accurate approximation of the steepest descent contours.
 
-In summary, `PathFinder` is the only existing software package that can be applied in general to \eqref{eq:I}.
+### `Picard_Lefschetz_Integrator`
+
+- This C++ package is also based on steepest descent. The key difference is the algorithm gradually deforms the contour, details are given in \cite[@FePeTu:23].
+- The scope of propblems to which it is applicable appears broad, the full extent is unclear based on existing documentation. Like PathFinder, it can be applied to catastrophe integrals. There are examples where it is also applied to singular oscillatory integrals.
+- To the best understanding of the PathFinder developers, it appears that user expertise is required to use `Picard_Lefschetz_Integrator`, various parameters must be tweaked to obtain accurate results, integrals must be manually truncated, etc.
+
+### `OscillatoryIntegralsODE.jl`
+
+- This package is based on the Levin method (see for e.g. \cite[@DeHuIs:18, Section 3.3]).
+- This package can evaluate oscillatory integrals
+\begin{equation}
+I = \int_a^bf(x) S(\omega x) \mathrm{d} x,
+\end{equation}
+when $S$ is a Bessel function \cite[@DLMF, 10.2], a Spherical Bessel function \cite[@DLMF, 10.47], or the Fourier oscillator $S(\omega x) = \mathrm{e}^{\mathrm{i}\omega x}$. The latter is clearly equivalent to \eqref{eq:I} when $g$ is a monomial, thus `OscillatoryIntegralsODE.jl` excludes the general case of PathFinder, where the high frequency oscillator has a polynomial phase function.
+
+In summary, we believe that `PathFinder` is the only existing software package that can be applied in general to \eqref{eq:I}, without user expertise.
 
 # Acknowledgments
 
