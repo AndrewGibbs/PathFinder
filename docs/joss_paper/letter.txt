@@ -1,0 +1,13 @@
+To the editors,
+
+This software paper is about PathFinder, a Matlab/Octave package for oscillatory integration. There are oscillatory integrals in physical and engineering applications where no other software can be applied easily and efficiently. Therefore, PathFinder is expected to be applied across various scientific disciplines. 
+
+The algorithm behind the paper has recently been published in "Numerical evaluation of oscillatory integrals via automated steepest descent contour deformation", Journal of Computational Physics 501, 2024. That paper contained numerical experiments using an earlier version of PathFinder, and we gave roughly ten lines of sample code to highlight the versatility and robustness of the algorithm. However, that paper was primarily about the algorithm, not the software. When that paper was written, the code lacked detailed documentation, examples, unit testing, and a stable MEX compilation process. Moreover, it was not Octave compatible, so (in a sense) not open source. These issues have since been addressed, and I believe the software is now worthy of consideration for publication in JOSS.
+
+This is the first submission to JOSS about this software. There are no potential conflicts of interest.
+
+Thank you for taking the time to review this work.
+
+Best wishes,
+
+Dr Andrew Gibbs
