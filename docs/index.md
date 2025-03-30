@@ -1,3 +1,12 @@
-# My MATLAB Package
+# PathFinder Documentation
 
-Welcome to the documentation!
+This is the homepage for my MATLAB package.
+
+## Contents
+
+```{toctree}
+:maxdepth: 2
+:caption: Documentation
+
+api/computePressureGradient
+api/plotFlowField
