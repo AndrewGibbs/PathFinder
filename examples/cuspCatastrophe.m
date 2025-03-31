@@ -5,6 +5,9 @@
 clear all;
 close all;
 
+% parameter to save output
+savefig = false;
+
 %% determine physical properties of integral
 % create the coefficients vector for the canonical integral
 phiCoeffs = @(x1, x2) [1 0 x2 x1 0];
@@ -54,8 +57,8 @@ view([0 90]);
 
 % use LaTeX formatting if running in Matlab:
 if usingOctave
-    xlabel('x_1');
-    ylabel('x_2');
+    xlabel('x_1','interpreter','tex');
+    ylabel('x_2','interpreter','tex');
 else
     set(groot, 'defaultAxesTickLabelInterpreter', 'latex'); 
     set(groot, 'defaulttextinterpreter', 'latex');
@@ -81,4 +84,6 @@ title('Amplitude of Cusp/Pearcey canonical catastophe integral');
 
 set(gcf, 'Position', [100, 600, xScale, yScale]);
 shg;
-print('cusp.png', '-dpng', '-r200');
+if savefig
+    print('cusp.png', '-dpng', '-r200');
+end

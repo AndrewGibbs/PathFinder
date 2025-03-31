@@ -33,8 +33,12 @@ for ifreq = 1:numFreqs
 end
 set(gcf, 'Position', [100, 600, 1400, 400]);
 
-if ~usingOctave()
-  sgtitle('PathFinder deformation for a range of frequencies','fontsize',20);
+if usingOctave()
+      axes('Position', [0 0 1 1], 'Visible', 'off');
+      text(0.5, 0.97, 'PathFinder deformation for a range of frequencies', 'HorizontalAlignment', 'center', ...
+          'FontSize', 20, 'FontWeight', 'bold');
+  else
+      sgtitle('PathFinder deformation for a range of frequencies','fontsize',20);
 end
 
 %% compare performance against Matlab

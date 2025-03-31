@@ -4,7 +4,9 @@ function plotGraph(graphData, ballsArray, finiteEndpoints)
 
     %% First set formats
     % use LaTeX fonts
-    set(0,'defaultTextInterpreter','latex');
+    if ~usingOctave()
+        set(0,'defaultTextInterpreter','latex');
+    end
     fontSize = 18;
     markerSize = 35;
     thickWidth = 3.0;

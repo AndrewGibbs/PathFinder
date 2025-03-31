@@ -5,6 +5,9 @@
 clear all;
 close all;
 
+% parameter to save output
+savefig = false;
+
 %% determine physical properties of integral
 % create the coefficients vector for the canonical integral
 phiCoeffs = @(x1, x2, x3) [1 0 x3 x2 x1 0];
@@ -63,8 +66,8 @@ view([0 90]);
 
 % use LaTeX formatting if running in Matlab:
 if usingOctave
-    xlabel('x_1');
-    ylabel('x_2');
+    xlabel('x_1','interpreter','tex');
+    ylabel('x_2','interpreter','tex');
 else
     set(groot, 'defaultAxesTickLabelInterpreter', 'latex'); 
     set(groot, 'defaulttextinterpreter', 'latex');
@@ -84,7 +87,7 @@ axis tight;
 
 % title for subplot
 if usingOctave
-    title(sprintf('x_=%.1f$', x3));
+    title(sprintf('x_3=%.1f', x3),'interpreter','tex');
 else
     title(sprintf('$x_3=%.1f$', x3),'Interpreter','latex');
 end
@@ -97,11 +100,17 @@ maxWidth = max(xWidth, yWidth);
 xScale = xWidth * imageBaseScale / maxWidth;
 yScale = yWidth * imageBaseScale / maxWidth;
 
-if ~usingOctave
+if usingOctave
+      axes('Position', [0 0 1 1], 'Visible', 'off');
+      text(0.5, 0.97, 'Amplitude of Swallowtail Catastrophee', 'HorizontalAlignment', 'center', ...
+          'FontSize', 20, 'FontWeight', 'bold');
+else
     sgtitle('Amplitude of Swallowtail Catastrophe',...
         'fontsize',20);
 end
 
 set(gcf, 'Position', [100, 600, xScale, yScale]);
 shg;
-print('swallowtail.png', '-dpng', '-r200');
+if savefig
+    print('swallowtail.png', '-dpng', '-r200');
+end

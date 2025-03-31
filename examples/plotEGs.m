@@ -4,6 +4,9 @@
 clear all;
 close all;
 
+% parameter to save output
+savefig = false;
+
 % endpoints
 a = -1;
 b = 1;
@@ -20,9 +23,13 @@ numPts = 25;
 % plot contour deformation
 figure(1);
 PathFinder(a, b, [], phaseCoeffs, freq, numPts, 'plot');
-print('eg_contour_def.png', '-dpng', '-r100');
+if savefig
+    print('eg_contour_def.png', '-dpng', '-r100');
+end
 
 % plot graph
 figure(2);
 PathFinder(a, b, [], phaseCoeffs, freq, numPts, 'plot graph');
-print('eg_graph.png', '-dpng', '-r100');
+if savefig
+    print('eg_graph.png', '-dpng', '-r100');
+end
