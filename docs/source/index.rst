@@ -1,17 +1,8 @@
-.. PathFinder-docs documentation master file, created by
-   sphinx-quickstart on Sat Mar 29 17:05:36 2025.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+# Welcome to My Project
 
-PathFinder-docs documentation
-=============================
-
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
-
+This is the homepage of your documentation. Use Markdown for everything!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
+   intro.md
