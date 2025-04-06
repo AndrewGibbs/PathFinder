@@ -1,0 +1,15 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+chapters:
+- file: setup/index
+  sections:
+  - file: setup/windows
+  - file: setup/octave
+- file: usage/index
+  sections:
+  - file: usage/basic
+  - file: usage/advanced
+- file: bib

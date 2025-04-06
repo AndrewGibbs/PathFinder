@@ -1,6 +1,3 @@
-
-docs/
-
 images/
 
 old bits/
@@ -103,6 +100,6 @@ venv/
 .cache/
 
 # === Documentation Output ===
-docs/_build/
+docs/guide/_build/
 docs/_autosummary/
 docs/_static/generated/
