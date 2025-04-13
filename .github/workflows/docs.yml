@@ -26,7 +26,7 @@ jobs:
         cache: pip # Implicitly uses requirements.txt for cache key
 
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: pip install -r docs/guide/requirements.txt
 
     # Build the book
     - name: Build the book
