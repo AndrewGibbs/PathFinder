@@ -3,8 +3,6 @@ name: deploy-book
 # Run this when the master or main branch changes
 on:
   push:
-    branches:
-    - master
     paths:
     - docs/guide/**
 
