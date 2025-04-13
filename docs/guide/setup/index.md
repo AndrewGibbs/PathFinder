@@ -2,7 +2,7 @@
 
 After downloading the source code from GitHub, open Matlab/Octave and navigate to the PathFinder folder. Then run ```addPaths.m``` to add all necessary paths to the Matlab search path.
 
-The more computationally expensive parts of PathFinder have been written in C, to compile as MEX functions (Matlab executable). When running Matlab on Windows, this requires [an extra step](#windows). When compiling on Octave, this can also requrie an extra step, depending on your OS; see [here for MacOS](#Mac-Octave-compilation), or [here for Ubuntu and Windows](#Windows-and-Ubuntu-Octave-ompilation).
+The more computationally expensive parts of PathFinder have been written in C, to compile as MEX functions (Matlab executable). When running Matlab on Windows, this requires [an extra step](#windows). When compiling on Octave, this can also requrie an extra step, depending on your OS; see [this page for details](#octave)
 
 Compile the MEX codes for your system by running ```compileAll.m```. This works with Octave or Matlab and only needs to be done once for each.
 

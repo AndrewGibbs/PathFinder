@@ -5,5 +5,3 @@
 
 ```{tableofcontents}
 ```
-
-{cite:p}`perez2011python`

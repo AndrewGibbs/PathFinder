@@ -2,9 +2,8 @@
 
 For Octave coimpilation on Windows and Ubuntu, you need the [LAPACKE](https://www.netlib.org/lapack/lapacke.html) library installed.
 
-## MacOS
 
-Make sure `openblas` [is installed](https://formulae.brew.sh/formula/openblas).
+When on MacOS, you must also make sure `openblas` [is installed](https://formulae.brew.sh/formula/openblas).
 
 Once installed, open the Mac terminal and type
 ```bash

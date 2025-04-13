@@ -30,7 +30,7 @@ For example, if $a=\exp(\mathrm{i}\theta)\infty$, and $b\in\mathbb{C}$ is finite
  PathFinder(theta, b, f, poly_coeffs, freq, num_pts,'infcontour', [true false])
  ```
 
-Suppose that $a$ and/or $b$ are infinite, but not exactly in a complex valley, in the sense of [[1]](#references). PathFinder checks if Jordan's lemma can be applied, justifying a rotation of the infinite endpoint to the valley.
+Suppose that $a$ and/or $b$ are infinite, but not exactly in a complex valley, in the sense of {cite:p}'PFpaper'. PathFinder checks if Jordan's lemma can be applied, justifying a rotation of the infinite endpoint to the valley.
 
 For example, the integral
 
@@ -68,7 +68,7 @@ PathFinderQuad(a, b, f, poly_coeffs, freq, num_pts, 'plot')
 PathFinder(-1, 1, [], [1 -0.5 0.5 0 -1 0], 50, 25, 'plot');
  ```
  produces the following plot:
- ![Example](examples/eg_contour_def.png)
+ ![Example](../../../examples/eg_contour_def.png)
  Here's a breakdown of the components:
  * The contour approximations are in black.
  * The balls are in grey
@@ -85,6 +85,6 @@ For example, the code
 PathFinder(-1, 1, [], [1 -0.5 0.5 0 -1 0], 50, 25, 'plot graph');
  ```
  produces the following graph:
- ![Example](examples/eg_graph.png)
+ ![Example](../../../examples/eg_graph.png)
 
- Further examples of plots can be found in the 'examples' subfolder, and in [1](references).
+ Further examples of plots can be found in the 'examples' subfolder, and in {cite:p}`PFpaper`, and more recently in {cite:p}`wm:24`.

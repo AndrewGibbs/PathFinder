@@ -6,11 +6,17 @@ root: intro
 chapters:
 - file: setup/index
   sections:
-  - file: setup/index
   - file: setup/windows
   - file: setup/octave
+  - file: setup/troubleshooting
 - file: usage/index
   sections:
   - file: usage/basic
+  - file: usage/examples
   - file: usage/advanced
+- file: theory/index
+  sections:
+  - file: theory/idea
+  - file: theory/rootfinding
+- file: contributing
 - file: bib

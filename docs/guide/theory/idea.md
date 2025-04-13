@@ -6,5 +6,5 @@ Steepest descent contours are directed complex contours, along which $\Re g$ is 
 
 * Away from stationary points, PathFinder constructs steepest descent contours using an ODE solver combined with a Newton correction.
 * Close to stationary points, where the integrand is non-oscillatory, PathFinder connects the endpoints of different steepest descent contours using straight line contours.
-* The contours obtained are used to build a graph, the shortest path through which (connecting the endpoints $a$ and $b$) is chosen via Dijkstra's algorithm. This step uses the code [[3]](#references).
+* The contours obtained are used to build a graph, the shortest path through which (connecting the endpoints $a$ and $b$) is chosen via Dijkstra's algorithm. This step uses the code {cite:p}`aryo`.
 * Quadrature points are allocated along the contours in the shortest path (Gauss-Legendre for the straight-line contours near the stationary points and Gauss-Laguerre for the steepest descent contours).
