@@ -6,6 +6,7 @@ root: intro
 chapters:
 - file: setup/index
   sections:
+  - file: setup/index
   - file: setup/windows
   - file: setup/octave
 - file: usage/index
