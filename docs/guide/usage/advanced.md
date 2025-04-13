@@ -2,7 +2,7 @@
 
 ## Adjustable parameters
 
-The optional inputs `'plot'`, `'plot graph'` and `'infcontour'` are just three of many adjustable parameters. In fact, all of the algorithm parameters defined in [1, Table 4.1](#references) can be easily modified, if the user wishes to do so. Here is a list of adjustable parameters - each can be adjusted by adding the optional input as a text string, followed by the new value.
+The optional inputs `'plot'`, `'plot graph'` and `'infcontour'` are just three of many adjustable parameters. In fact, all of the algorithm parameters defined in {cite:p}`PFpaper` can be easily modified, if the user wishes to do so. Here is a list of adjustable parameters - each can be adjusted by adding the optional input as a text string, followed by the new value.
 
 |  Parameter |  Meaning |  Default | 
 |---|---|---|

@@ -5,9 +5,20 @@
 [![status](https://joss.theoj.org/papers/851d659a3a85536bfc6b86de45a1641d/status.svg)](https://joss.theoj.org/papers/851d659a3a85536bfc6b86de45a1641d)
 [![CI](https://github.com/AndrewGibbs/PathFinder/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/AndrewGibbs/PathFinder/actions/workflows/ubuntu.yml//badge.svg)
 [![CI](https://github.com/AndrewGibbs/PathFinder/actions/workflows/windows.yml/badge.svg)](https://github.com/AndrewGibbs/PathFinder/actions/workflows/windows.yml//badge.svg)
+[![Documentation Status](https://img.shields.io/badge/docs-published-success)](https://andrewgibbs.github.io/PathFinder/)
 
 
-```{include} docs/intro_insert.md
+PathFinder is a Matlab/Octave toolbox for the numerical evaluation of highly oscillatory integrals. Specifically, PathFinder can efficiently evaluate integrals of the form
+
+$$
+I = \int_{a}^b f(z)\exp(\mathrm{i}\omega g(z)) \mathrm{d}z
+$$
+
+where $g$ is a polynomial, $f$ is entire (analytic everywhere in $\mathbb{C}$), $\omega>0$ is a frequency parameter, and the endpoints $a$ and $b$ may be finite or infinite. Further, it is assumed that $I$ is a convergent integral and that $|f(z)|$ grows sub-exponentially as $|z|\to\infty$.
+
+PathFinder is based on steepest descent contour deformation, but it can be easily used without a deep understanding of the underlying mathematics; it is sufficient to understand the conditions in the previous paragraph.
+
+For information about installation, syntax and how to contribute, please refer to [the full documentation](https://andrewgibbs.github.io/PathFinder/).
 
 ## Acknowledgments
 

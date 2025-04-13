@@ -1,6 +1,6 @@
 # Construction of Coefficients for Polynomial Root-finding Problems in PathFinder
 
-### Outline
+## Outline
 In the original paper about the PathFinder algorithm In the paper {cite:p}`PFpaper`, the derivations of some root-finding procedures were deemed too trivial to include. Unfortunately, these derivations are not trivial enough to explain within the code's comments, so full details are given here for anyone interested in fully understanding the algorithm/code.
 
 Following the notation of {cite:p}`PFpaper`, we write the polynomial phase function as
@@ -11,7 +11,7 @@ $$
 
 We use $\xi$ to denote the center of a complex ball, which is *usually* a stationary point.
 
-### Finding the Intersection of Rays with the Boundary of the Non-oscillatory Region
+## Finding the Intersection of Rays with the Boundary of the Non-oscillatory Region
 In section 2.2 of the paper {cite:p}`PFpaper`, we discuss the procedure for choosing the balls around the stationary points. This can be broken down into several smaller root-finding problems of the following form: Given $\theta$ and $\xi$, find $r>0$ such that
 
 $$
@@ -57,7 +57,7 @@ $$ b_j=\sum_{\ell=0}^{j}a_\ell\overline{a}_{j-\ell}, \text{ for } j=1,\ldots,2J.
 
 By default, in PathFinder a Mex routine `getRGivenTheta_mex` is used to find the roots of $G$. The relevant subroutine is `get_r_given_theta`, in the C header file `get_r.h`. Here the coefficients $a_k$ and $\overline{a_k}$ are represented by arrays `a` and `a_`, respectively. The coefficients vector $b_j$ is represented by the array `coeffs`. When Mex is not used, the Matlab file `getRGivenTheta.m` is used to achieve the same result.
 
-### Finding the Exits on the Circumference of the Ball
+## Finding the Exits on the Circumference of the Ball
 Section 2.3 of the PathFinder paper {cite:p}`PFpaper`mentions that the exits are determined using a trigonometric root-finding procedure. The radius $r$ of the ball is fixed, and we are looking for local maxima (in $\theta$) of $\Im g(\xi+r\mathrm{e}^{\mathrm{i} \theta})$. The approach is to represent $\Im g(\xi+r\mathrm{e}^{\mathrm{i} \theta})$ exactly in terms of a finite-dimensional Fourier basis.
 
 First, construct the trigonometric polynomial in $\theta$ from (2):
