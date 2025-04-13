@@ -5,8 +5,8 @@ on:
   push:
     branches:
       - '**'
-    paths:
-    - docs/guide/**
+    # paths:
+    # - docs/guide/**
 
 # This job installs dependencies, builds the book, and pushes it to `gh-pages`
 jobs:
