@@ -1,6 +1,3 @@
-
-documentation/
-
 images/
 
 old bits/
@@ -61,4 +58,48 @@ examples/.ipynb_checkpoints/
 
 documents/joss_paper/letter.txt
 
-docs/_build/
+# === MATLAB ===
+*.asv
+*.m~
+*.mlx~
+*.mat
+*.p
+*.mex*
+*.log
+*.out
+*.autosave
+.DS_Store
+*.fig
+*.bak
+*.tmp
+*.user.mat
+
+# MATLAB Code Generation and Simulink Coder artifacts
+codegen/
+slprj/
+sfun.mexa64
+*_mex.*
+
+# === Python / Sphinx ===
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.eggs/
+.build/
+_build/
+dist/
+*.log
+.env/
+.venv/
+env/
+venv/
+.mypy_cache/
+.tox/
+.cache/
+
+# === Documentation Output ===
+docs/guide/_build/
+docs/_autosummary/
+docs/_static/generated/
