@@ -22,7 +22,7 @@ fi
 # Create output folder if it doesn't exist
 mkdir -p "$output_folder"
 
-# Empty the YAML file
+# Start the YAML file
 echo "files:" > "$yaml_output"
 
 # Iterate over .m files
@@ -32,14 +32,17 @@ for file in "$input_folder"/*.m; do
     new_file="${base_name}.md"
     new_path="${output_folder}/${new_file}"
 
-    # Only create new .md file if it doesn't exist
+    # If file doesn't exist, create it
     if [[ -f "$new_path" ]]; then
       echo "Skipping $new_file (already exists)"
     else
       cp "$blank_template" "$new_path"
-      echo "  - $new_file" >> "$yaml_output"
+      echo "Created $new_file"
     fi
+
+    # Add to YAML list (whether newly created or skipped)
+    echo "  - $new_file" >> "$yaml_output"
   fi
 done
 
-echo "Done! Created new .md files and updated YAML list in $output_folder."
+echo "Done! All .md files listed in $yaml_output"

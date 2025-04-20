@@ -1,0 +1,8 @@
+files:
+  - bisection.md
+  - checkEndpointWidth.md
+  - deleteRedundantExits.md
+  - getBallDeets.md
+  - getExteriorBalls.md
+  - getSmallestSupsetBall.md
+  - inAball.md

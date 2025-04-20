@@ -18,5 +18,14 @@ chapters:
   sections:
   - file: theory/idea
   - file: theory/rootfinding
+- file: api/index
+  sections:
+  - file: api/matlab/bisection.md
+  - file: api/matlabcheckEndpointWidth.md
+  - file: api/matlabdeleteRedundantExits.md
+  - file: api/matlabgetBallDeets.md
+  - file: api/matlabgetExteriorBalls.md
+  - file: api/matlabgetSmallestSupsetBall.md
+  - file: api/matlabinAball.md
 - file: contributing
 - file: bib
