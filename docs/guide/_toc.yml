@@ -21,11 +21,11 @@ chapters:
 - file: api/index
   sections:
   - file: api/matlab/bisection.md
-  - file: api/matlabcheckEndpointWidth.md
-  - file: api/matlabdeleteRedundantExits.md
-  - file: api/matlabgetBallDeets.md
-  - file: api/matlabgetExteriorBalls.md
-  - file: api/matlabgetSmallestSupsetBall.md
-  - file: api/matlabinAball.md
+  - file: api/matlab/checkEndpointWidth.md
+  - file: api/matlab/deleteRedundantExits.md
+  - file: api/matlab/getBallDeets.md
+  - file: api/matlab/getExteriorBalls.md
+  - file: api/matlab/getSmallestSupsetBall.md
+  - file: api/matlab/inAball.md
 - file: contributing
 - file: bib

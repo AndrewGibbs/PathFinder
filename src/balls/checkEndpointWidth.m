@@ -1,17 +1,6 @@
 function isOverlapping = checkEndpointWidth(a, b, phaseCoeffs, freq, numOscs, ...
                                             numRays, isInteriorBall, imagThresh, ...
                                             useMex)
-Determines if an integral over a bounded contour can be considered
-non-oscillatory.   
-isOverlapping = CHECKENDPOINTWIDTH(a, b, phaseCoeffs, freq, numOscs, ...
-                                            numRays, isInteriorBall, imagThresh, ...
-                                            useMex)
-As described in the paper, this is a preliminary step to determine if the
-original integral can be considered non-oscillatory. To achieve this, we
-place temporary balls around both endpoints {a,b}, based on the same critirea
-used to determine radii throughout the algorithm. If the balls overlap,
-this is an indication that there are only a small nunmber of oscillations
-between the endpoints.
 
 % Inputs:
 %   a and b are the (finite) endpoints of the contour
