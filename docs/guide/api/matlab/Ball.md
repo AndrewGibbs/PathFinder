@@ -1,6 +1,6 @@
 # `Ball.m`
 
-A class corresponding to non-oscillatory balls.
+A class corresponding to non-oscillatory balls. This contains the simple geometric information about a ball.
 
 ## Properties
 * `radius`: Radius of the ball

@@ -30,7 +30,12 @@ chapters:
   - file: api/matlab/Ball.md
   - file: api/matlab/boundaryTrace.md
   - file: api/matlab/isIn.md
-  - file: api/matlab/plot.md
+  - file: api/matlab/beyondNoReturn.md
+  - file: api/matlab/getContours.md
+  - file: api/matlab/JordanRotate.md
+  - file: api/matlab/sdPathODEeulerExtendCoarsePath.md
+  - file: api/matlab/sdPathODEeuler.md
+  - file: api/matlab/sdQuadODEeulerCorrection.md
 
 - file: contributing
 - file: bib

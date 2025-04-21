@@ -1,5 +1,7 @@
 files:
-  - Ball.md
-  - boundaryTrace.md
-  - isIn.md
-  - plot.md
+  - beyondNoReturn.md
+  - getContours.md
+  - JordanRotate.md
+  - sdPathODEeulerExtendCoarsePath.md
+  - sdPathODEeuler.md
+  - sdQuadODEeulerCorrection.md
