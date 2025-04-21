@@ -27,5 +27,10 @@ chapters:
   - file: api/matlab/getExteriorBalls.md
   - file: api/matlab/getSmallestSupsetBall.md
   - file: api/matlab/inAball.md
+  - file: api/matlab/Ball.md
+  - file: api/matlab/boundaryTrace.md
+  - file: api/matlab/isIn.md
+  - file: api/matlab/plot.md
+
 - file: contributing
 - file: bib
