@@ -8,8 +8,8 @@ ballsOut = deleteRedundantExits(ballsIn)
 
 ## Inputs
 
-`ballsIn` is a cell array of `Ball` objects. Specifically, this is the collection of balls *before* the exits have been deleted.
+`ballsIn` is a cell array of [`Ball`](Ball.md) objects. Specifically, this is the collection of balls *before* the exits have been deleted.
 
 ## Outputs
 
-`ballsOut` is a cell array of `Ball` objects. This is the collection of balls `ballsIn`, *after* the exits have been deleted.
+`ballsOut` is a cell array of [`Ball`](Ball.md) objects. This is the collection of balls `ballsIn`, *after* the exits have been deleted.

@@ -1,7 +1,4 @@
 files:
-  - beyondNoReturn.md
-  - getContours.md
-  - JordanRotate.md
-  - sdPathODEeulerExtendCoarsePath.md
-  - sdPathODEeuler.md
-  - sdQuadODEeulerCorrection.md
+  - ContourSD.md
+  - getQuad.md
+  - plot.md

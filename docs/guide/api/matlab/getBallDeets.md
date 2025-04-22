@@ -1,6 +1,6 @@
 # `getBallDeets.m`
 
-This function extracts relevant data from a cell array of Ball objects, in terms of numerical arrays, so that it can be passed to MEX functions.
+This function extracts relevant data from a cell array of [`Ball`](Ball.md) objects, in terms of numerical arrays, so that it can be passed to MEX functions.
 
 ```matlab
 [ballCentres, ballRadii, nonEndpointBallCentres,  nonEndpointBallRadii] = getBallDeets(BallCellArray)
@@ -8,7 +8,7 @@ This function extracts relevant data from a cell array of Ball objects, in terms
 
 ## Inputs
 
-* `BallCellArray`, a cell array of objects in the `Ball` class.
+* `BallCellArray`, a cell array of objects in the [`Ball`](Ball.md) class.
 
 ## Outputs
 

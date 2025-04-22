@@ -14,7 +14,7 @@ isOverlapping = checkEndpointWidth(a, b, phaseCoeffs, freq, numOscs, numRays, is
 * `freq` is the frequency parameter of the original integral
 * `numOscs` is the parameter which governs the size of the balls; the larger this value, the more oscillations are permitted inside of the balls.
 * `numRays` the number of rays fired from the endpoints $\{a,b\}$ when determining the non-oscillatory ball around them.
-* `isInteriorBal` is a boolean flag which determines if the non-oscillatory ball contains the non-oscillatory region, or is contained within it. Practically, it corresponds to choosing the shortest ray (interior) or the longest ray (exterior) which intercepts the boundary of the non-oscillatory region in the bisection method.
+* `isInteriorBall` is a boolean flag which determines if the non-oscillatory ball contains the non-oscillatory region, or is contained within it. Practically, it corresponds to choosing the shortest ray (interior) or the longest ray (exterior) which intercepts the boundary of the non-oscillatory region in the bisection method.
 
 ## Outputs
 * `isOverlapping` is a boolean flag, true if the non-oscillatory balls around the endpoints $a$ and $b$ overlap. 
