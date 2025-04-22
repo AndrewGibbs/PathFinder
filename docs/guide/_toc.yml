@@ -36,9 +36,8 @@ chapters:
   - file: api/matlab/sdPathODEeulerExtendCoarsePath.md
   - file: api/matlab/sdPathODEeuler.md
   - file: api/matlab/sdQuadODEeulerCorrection.md
-  - file: ContourSD.md
-  - file: getQuad.md
-  - file: plot.md
+  - file: api/matlab/ContourSD.md
+  - file: api/matlab/getQuad.md
 
 - file: contributing
 - file: bib
