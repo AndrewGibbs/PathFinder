@@ -20,11 +20,11 @@ These contours can be finite or infinite, but in practice they must be approxima
 
 ## Methods
 
-### plot
+### `plot`
 
 This plots the approximate contour.
 
-### getQuad
+### `getQuad`
 
 This produces a quadrature rule along a given contour.
 
@@ -42,4 +42,4 @@ This produces a quadrature rule along a given contour.
 
 * `hArray`: $N$ quadrature points
 * `wArray`: $N$ quadrature weights
-* `newtonSuccess`: a boolean array of length $N$, each entry is true if the Newton method converged for the corresponding quadrature point.
+* `newtonSuccess`: a boolean array of length $N$, each entry is true if the Newton iteration converged for the corresponding quadrature point.

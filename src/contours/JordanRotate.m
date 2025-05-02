@@ -1,4 +1,4 @@
-function [a,b,Params] = JordanRotate(a,b,valleys,Params)
+function [a,b] = JordanRotate(a,b,valleys,Params)
     % here (a,b) are the original endpoints, before deformation
 
     % calculate the angular width that an infinite endpoint can deviate
