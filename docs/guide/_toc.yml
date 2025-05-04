@@ -65,6 +65,11 @@ chapters:
   - file: plotAll.md
   - file: plotGraph.md
   - file: plotMain.md
+  - file: getInfoFromPhase.md
+  - file: getRGivenTheta.md
+  - file: getRStar.md
+  - file: getSteepestExitsOnBall.md
+  - file: planBisection.md
 
 - file: contributing
 - file: bib

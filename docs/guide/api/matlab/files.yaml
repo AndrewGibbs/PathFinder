@@ -1,5 +1,6 @@
 files:
-  - fillCircle.md
-  - plotAll.md
-  - plotGraph.md
-  - plotMain.md
+  - getInfoFromPhase.md
+  - getRGivenTheta.md
+  - getRStar.md
+  - getSteepestExitsOnBall.md
+  - planBisection.md
