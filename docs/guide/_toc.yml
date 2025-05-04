@@ -61,6 +61,10 @@ chapters:
   - file: getHandlesFromCoeffs.md
   - file: optionalExtras.md
   - file: usingOctave.md
+  - file: fillCircle.md
+  - file: plotAll.md
+  - file: plotGraph.md
+  - file: plotMain.md
 
 - file: contributing
 - file: bib

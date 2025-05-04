@@ -1,6 +1,5 @@
 files:
-  - checkForPackage.md
-  - checkInputs.md
-  - getHandlesFromCoeffs.md
-  - optionalExtras.md
-  - usingOctave.md
+  - fillCircle.md
+  - plotAll.md
+  - plotGraph.md
+  - plotMain.md
