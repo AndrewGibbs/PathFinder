@@ -1,14 +1,5 @@
 files:
-  - computeGauss.md
-  - fliterPaths.md
-  - gausLagHC.md
-  - gausLegHC.md
-  - gauss.md
-  - gaussQuadComplex.md
-  - hardCodeQuadratureGaulag.md
-  - hardCodeQuadratureGauleg.md
-  - linearPhaseNSD.md
-  - makeQuad.md
-  - quadGaussLaguerre.md
-  - rJacobi.md
-  - rLaguerre.md
+  - initLog.md
+  - logContourDetails.md
+  - logMexUsage.md
+  - logQuadratureDetails.md

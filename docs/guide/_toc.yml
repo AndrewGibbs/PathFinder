@@ -51,6 +51,10 @@ chapters:
   - file: quadGaussLaguerre.md
   - file: rJacobi.md
   - file: rLaguerre.md
+  - file: initLog.md
+  - file: logContourDetails.md
+  - file: logMexUsage.md
+  - file: logQuadratureDetails.md
 
 - file: contributing
 - file: bib
