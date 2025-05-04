@@ -47,6 +47,19 @@ function [z,w] = PathFinderQuad(a, b, phaseIn, freq, nPts, varargin)
        return
     end
 
+    if length(phaseIn)<=2 % if linear phase
+        if sum(params.infContour)>0
+            error(['Unbounded contour will not converge for linear phase if' ...
+                ' amplitude function is entire.']);
+        end
+        % contour can be computed instantly without approximation, reduce to this
+        [z,w] = linearPhaseNSD(a,b,freq,phaseIn(1),phaseIn(2),nPts);
+        if params.plot
+            plotAll([], [], z, a, b, params.infContour, [], [], []);
+        end
+        return;
+    end
+
     %% main algorithm
 
     if params.log.take
