@@ -21,6 +21,6 @@ where all of the inputs are given in full 16-digit precision.
 
 ## Development guidelines
 
-We try to follow the standard ![Matlab style guide](https://www.ee.columbia.edu/~marios/matlab/MatlabStyle1p5.pdf) for Matlab code, and the [C syntax style](https://cs50.readthedocs.io/style/c/) for the C code used to generate the MEX functions. However, we are not too strict about this, so please do not let this deter you from making a contribution!
+We try to follow the standard [Matlab style guide](https://www.ee.columbia.edu/~marios/matlab/MatlabStyle1p5.pdf) for Matlab code, and the [C syntax style](https://cs50.readthedocs.io/style/c/) for the C code used to generate the MEX functions. However, we are not too strict about this, so please do not let this deter you from making a contribution!
 
 When making changes, we suggest periodically running `test/Test_all.m`, to check that your changes haven't broken features elsewhere.
