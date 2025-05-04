@@ -9,12 +9,6 @@ In the 'examples' subfolder, we provide sample codes using PathFinder. These are
 * `swallowtailCatastrophe.m` produces various slice plots of the Swallowtail Catastrophe integral (36.2.4) of {cite:t}`DLMF`. Now each point in $\mathbb{R}^3$ corresponds to a different phase function.
 * [`Octave_notebook_egs.ipynb`](https://mybinder.org/v2/gh/AndrewGibbs/PathFinder/HEAD?labpath=examples%2FOctave_notebook_egs.ipynb) is an Octave notebook hosted by MyBinder, which can be run in a browser, without having to download any software. As we are unable to compile MEX functions in this remote container, these examples are much slower than they would be running locally.
 
-<figure>
-  <img src="../../../examples/cusp.png" alt="Cusp Plot">
-  <figcaption>PathFinder Approximation to Pearcey/Cusp Catastrophe integrals, produced by  cuspCatastrophe.m</figcaption>
-</figure>
+ ![Cusp](../../../examples/cusp.png)
 
-<figure>
-  <img src="../../../examples/swallowtailCatastrophe.m" alt="Swallowtail Plot"> 
-  <figcaption>PathFinder Approximation to Swallowtail Catastrophe, produced by  swallowtailCatastrophe.m</figcaption>
-</figure>
+ ![Swallowtail](../../../examples/swallowtail.png)

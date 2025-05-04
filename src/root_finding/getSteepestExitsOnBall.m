@@ -1,4 +1,4 @@
-% determins the exits on a ball, by reformulating as a trigonometric polynomial
+% Determines the exits on a ball, by reformulating as a trigonometric polynomial
 % rootfinding problem.
 
 % In this code, a few standard Matlab coding conventions are broken, so

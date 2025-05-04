@@ -18,5 +18,61 @@ chapters:
   sections:
   - file: theory/idea
   - file: theory/rootfinding
+- file: api/index
+  sections:
+  - file: api/matlab/PathFinder.md
+  - file: api/matlab/PathFinderQuad.md
+  - file: api/matlab/addPaths.md
+  - file: api/matlab/compileAll.md
+  - file: api/matlab/bisection.md
+  - file: api/matlab/checkEndpointWidth.md
+  - file: api/matlab/deleteRedundantExits.md
+  - file: api/matlab/getBallDeets.md
+  - file: api/matlab/getExteriorBalls.md
+  - file: api/matlab/getSmallestSupsetBall.md
+  - file: api/matlab/inAball.md
+  - file: api/matlab/Ball.md
+  - file: api/matlab/beyondNoReturn.md
+  - file: api/matlab/getContours.md
+  - file: api/matlab/JordanRotate.md
+  - file: api/matlab/sdPathODEeulerExtendCoarsePath.md
+  - file: api/matlab/sdPathODEeuler.md
+  - file: api/matlab/sdQuadODEeulerCorrection.md
+  - file: api/matlab/ContourSD.md
+  - file: api/matlab/computeGauss.md
+  - file: api/matlab/fliterPaths.md
+  - file: api/matlab/gausLagHC.md
+  - file: api/matlab/gausLegHC.md
+  - file: api/matlab/gauss.md
+  - file: api/matlab/gaussQuadComplex.md
+  - file: api/matlab/hardCodeQuadratureGaulag.md
+  - file: api/matlab/hardCodeQuadratureGauleg.md
+  - file: api/matlab/linearPhaseNSD.md
+  - file: api/matlab/makeQuad.md
+  - file: api/matlab/quadGaussLaguerre.md
+  - file: api/matlab/rJacobi.md
+  - file: api/matlab/rLaguerre.md
+  - file: api/matlab/initLog.md
+  - file: api/matlab/logContourDetails.md
+  - file: api/matlab/logMexUsage.md
+  - file: api/matlab/logQuadratureDetails.md
+  - file: api/matlab/switchWindowsCompiler.md
+  - file: api/matlab/checkForPackage.md
+  - file: api/matlab/checkInputs.md
+  - file: api/matlab/getHandlesFromCoeffs.md
+  - file: api/matlab/optionalExtras.md
+  - file: api/matlab/usingOctave.md
+  - file: api/matlab/fillCircle.md
+  - file: api/matlab/plotAll.md
+  - file: api/matlab/plotGraph.md
+  - file: api/matlab/plotMain.md
+  - file: api/matlab/getInfoFromPhase.md
+  - file: api/matlab/getRGivenTheta.md
+  - file: api/matlab/getRStar.md
+  - file: api/matlab/getSteepestExitsOnBall.md
+  - file: api/matlab/planBisection.md
+  - file: api/matlab/shortestInfinitePath.md
+  - file: api/matlab/Dijkstra.md
+
 - file: contributing
 - file: bib
