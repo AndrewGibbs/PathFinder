@@ -4,3 +4,8 @@ files:
   - getRStar.md
   - getSteepestExitsOnBall.md
   - planBisection.md
+  - shortestInfinitePath.md
+  - PathFinder.md
+  - PathFinderQuad.md
+  - compileAll.md
+  - addPaths.md
