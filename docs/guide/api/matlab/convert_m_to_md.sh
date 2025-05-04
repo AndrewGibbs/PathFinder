@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Usage: ./convert_m_to_md.sh input_folder output_folder
+# easiest to navigate to this folder and type for eg: ./convert_m_to_md.sh ../../../../src/gauss_quadrature_rules/ .
 
 input_folder="$1"
 output_folder="$2"

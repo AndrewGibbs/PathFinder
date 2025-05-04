@@ -38,6 +38,19 @@ chapters:
   - file: api/matlab/sdQuadODEeulerCorrection.md
   - file: api/matlab/ContourSD.md
   - file: api/matlab/getQuad.md
+  - file: computeGauss.md
+  - file: fliterPaths.md
+  - file: gausLagHC.md
+  - file: gausLegHC.md
+  - file: gauss.md
+  - file: gaussQuadComplex.md
+  - file: hardCodeQuadratureGaulag.md
+  - file: hardCodeQuadratureGauleg.md
+  - file: linearPhaseNSD.md
+  - file: makeQuad.md
+  - file: quadGaussLaguerre.md
+  - file: rJacobi.md
+  - file: rLaguerre.md
 
 - file: contributing
 - file: bib
