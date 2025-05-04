@@ -1,5 +1,6 @@
 files:
-  - initLog.md
-  - logContourDetails.md
-  - logMexUsage.md
-  - logQuadratureDetails.md
+  - checkForPackage.md
+  - checkInputs.md
+  - getHandlesFromCoeffs.md
+  - optionalExtras.md
+  - usingOctave.md

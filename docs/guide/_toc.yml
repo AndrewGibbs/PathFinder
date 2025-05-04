@@ -55,6 +55,12 @@ chapters:
   - file: logContourDetails.md
   - file: logMexUsage.md
   - file: logQuadratureDetails.md
+  - file: switchWindowsCompiler.md
+  - file: checkForPackage.md
+  - file: checkInputs.md
+  - file: getHandlesFromCoeffs.md
+  - file: optionalExtras.md
+  - file: usingOctave.md
 
 - file: contributing
 - file: bib
