@@ -6,8 +6,8 @@ CompileAll.m
 ```
 This should compile all necessary binaries.
 
-If using in **Matlab on Windows**, an additional step is needed before compilation. First [download the MinGW-w64 Compiler](https://uk.mathworks.com/help/matlab/matlab_external/install-mingw-support-package.html). Then make sure it is set to default, by typing
-```
+If using **Matlab on Windows**, an additional step is needed before compilation. First [download the MinGW-w64 Compiler](https://uk.mathworks.com/help/matlab/matlab_external/install-mingw-support-package.html). Then make sure it is set to default, by typing
+```matlab
 mex -setup C
 ```
 into the Matlab terminal and following on-screen instructions. Now run

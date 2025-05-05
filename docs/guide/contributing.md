@@ -6,8 +6,8 @@ If you would like to contribute to PathFinder, there are two main ways to do it:
 
 ## Suggestions for contributions
 
-* We are particularly keen to learn about applications of PathFinder. If you have an example that you have used for a project, we would love to hear about it. Better still - you could add something related to the `examples` subfolder.
-* Contributions to the documentation are very welcome. We would be welcome any feedback, if any of it is unclear.
+* We are particularly keen to learn about applications of PathFinder. If you have an example that you have used for a project, we would love to hear about it. Better still - you could upload something related into the `examples` subfolder.
+* Contributions to the documentation are very welcome. We would welcome any feedback, if any of it is unclear.
 * We are certainly interested in bug fixes and performance improvements. Any modification which changes the core algorithm significantly, or changes the scope of the problems which can be solved, may be better suited to a new project, perhaps using or adapting existing PathFinder code. If you are considering a major change such as this, please let us know, and we would be happy to advise.
 
 ## Reporting bugs
@@ -17,7 +17,7 @@ If you manage to break PathFinder, or find any kind of bug, please create an iss
 `PathFinder(a,b,f,g_coeffs,freq,N)`
 where all of the inputs are given in full 16-digit precision.
 * Please state if you are using Octave or Matlab, and which operating system you are using.
-* Please report the error message you get. If the code crashes, it would be helpful if you are able to tell us where this happens.
+* Please report the error message you get. If the code crashes, it would be helpful if you are able to tell us roughly where in the code (file, line number) this happens.
 
 ## Development guidelines
 

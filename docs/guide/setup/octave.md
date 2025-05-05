@@ -1,6 +1,6 @@
 # Octave installation
 
-For Octave coimpilation on Windows and Ubuntu, you need the [LAPACKE](https://www.netlib.org/lapack/lapacke.html) library installed.
+For Octave compilation on Windows and Linux, you need the [LAPACKE](https://www.netlib.org/lapack/lapacke.html) library installed.
 
 
 When on MacOS, you must also make sure `openblas` [is installed](https://formulae.brew.sh/formula/openblas).

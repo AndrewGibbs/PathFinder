@@ -6,7 +6,7 @@ When $a$ and $b$ are finite:
 ```matlab
 I = PathFinder(a, b, f, polyCoeffs, freq, numPts);
  ```
- Referring to the integral (1):
+ Referring to the integral ($I$)[../intro.md]:
  * `a` and `b` correspond to endpoints $a$ and $b$. For now, we assume that they are finite - the syntax changes slightly when they are infinite.
  * `f` is a **vectorised** function handle representing the function $f(z)$
  * `polyCoeffs` are the coefficients of the phase function $g(z)$
