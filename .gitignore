@@ -103,3 +103,4 @@ venv/
 docs/guide/_build/
 docs/_autosummary/
 docs/_static/generated/
+docs/joss_paper/paper.pdf
