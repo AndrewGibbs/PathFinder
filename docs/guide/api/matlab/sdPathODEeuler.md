@@ -15,7 +15,7 @@ $$
 g(h_\eta(p)) = h_\eta(0) + \mathrm{i}p.
 $$
 
-We don't require high accuracy of the paths $h_\eta$ at this stage, the purpose of this function is to understand the large-scale contour behaviour, how they connect, etc. There is a more accurate refinement of a subset of these SD paths later on, in [sdQuadODEeulerCorrection.m](#sdQuadODEeulerCorrection.md), which is used to compute quadrature points along the true steepest descent paths.
+We don't require high accuracy of the paths $h_\eta$ at this stage, the purpose of this function is to understand the large-scale contour behaviour, how they connect, etc. There is a more accurate refinement of a subset of these SD paths later on, in [sdQuadODEeulerCorrection.m](sdQuadODEeulerCorrection.md), which is used to compute quadrature points along the true steepest descent paths.
 
 There are two ways this algorithm can termine:
 1. By entering a non-oscillatory ball. This is determined by [inAball.m](inAball.md)

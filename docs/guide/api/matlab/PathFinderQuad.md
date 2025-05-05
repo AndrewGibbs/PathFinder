@@ -1,10 +1,13 @@
 # `PathFinderQuad.m`
 
 One of the two main functions. This function takes information about the oscillatory integral
+
 $$
 I = \int_\gamma f(z)\mathrm{e}^{\mathrm{i}\omega g(z)}\mathrm{d} z
 $$
+
 and returns weights $w_j$ and nodes $z_j$ such that
+
 $$
 I \approx \sum_{j=1}^N f(z_j)w_j
 $$

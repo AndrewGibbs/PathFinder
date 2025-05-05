@@ -5,12 +5,15 @@ This subroutine takes a coarse path approximation $h_j$ for $j=1,\ldots, N$, and
 As in the coarse path approximation, a Newton iteration is used to refine the quadrature points. However, here, this is to a higher accuracy.
 
 The cost function is now, for quadrature point $p^*_j$,
+
 $$
 C(h^*_j; p^*_j) = \omega g(h_j) - \eta - \mathrm{i}p^*_j,
 $$
+
 where $g$ is the polynomial phase function of the original integral.
 
 This follows immediately from the(frequency-dependent) formula for a steepest descent path
+
 $$
 g(h_\eta(p)) = \omega h_\eta(0) + \mathrm{i}p.
 $$

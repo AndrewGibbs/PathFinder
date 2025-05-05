@@ -1,9 +1,11 @@
 # `PathFinder.m`
 
 One of the two main functions. This function takes information about the oscillatory integral
+
 $$
 I = \int_\gamma f(z)\mathrm{e}^{\mathrm{i}\omega g(z)}\mathrm{d} z
 $$
+
 and returns an approximation to $I$. This is essentially a wrapper for the quadrature rule [PathFinderQuad.m](PathFinderQuad.md), which applies it to the integral with $f$.
 
 ```matlab

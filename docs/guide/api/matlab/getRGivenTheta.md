@@ -1,4 +1,4 @@
-#
+# `getRGivenTheta.m`
 
 Given a ray from $\xi$, in direction $\theta$, find $r$ at which the ray
 intersects the boundary of the closed contour bounding the non-oscillatory
@@ -8,7 +8,7 @@ $$
 |g(\xi)-g(\xi+r\exp(\mathrm{i}\theta)|=C/\omega
 $$
 
-This algorithm is **not** explained in {cite:p}`PFpaper`. An explanation can be found in [these extra notes](../../theory/rootfinding.md#finding-the-intersection-of-rays-with-the-boundary-of-the-non-oscillatory-region).
+This algorithm is **not** explained in {cite:p}`PFpaper`. An explanation can be found in [these extra notes](../../theory/rootfinding.md).
 
 ```matlab
 r = getRGivenTheta(phaseCoeffs, centre, cballOverOmega, theta, imag_thresh)

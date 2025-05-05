@@ -1,4 +1,4 @@
-#
+# `initLog.m`
 
 If the user has requested to log performance of various PathFinder  routines, this routine creates a struct with all of the relevant information.
 
