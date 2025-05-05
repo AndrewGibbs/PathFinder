@@ -96,7 +96,7 @@ PathFinder( 9\pi/10, 1/2, ... % angles of valleys
 
 ### Comparison with other software
 
-To the author's best knowledge, the only other software packages that can efficiently evaluate oscillatory integrals are Mathematica's `NIntegrate` function, when used with the `LevinRule` option [@NIntegrate], and the Fortan `cuspint` package [@KiCoHo:00]. We now briefly compare these packages against `PathFinder`.
+To the best knowledge of the author, there are only a handful of other software packages which can efficiently evaluate oscillatory integrals. We now compare these to PathFinder.
 
 ### Mathematica's `NIntegrate`
 - This is a built-in function of Wolfram Mathematica [@NIntegrate], based on the Levin method (see for e.g. [@DeHuIs:18, Section 3.3]).
@@ -115,12 +115,12 @@ To the author's best knowledge, the only other software packages that can effici
 
 - This C++ package is also based on steepest descent. The key difference is the algorithm gradually deforms the contour, details are given in [@FePeTu:23].
 - The scope of problems to which it is applicable appears broad, the full extent is unclear based on existing documentation. Like PathFinder, it can be applied to catastrophe integrals. There are examples where it is also applied to singular oscillatory integrals.
-- To the best understanding of the PathFinder developers, it appears that user expertise is required to use `Picard_Lefschetz_Integrator`, various parameters must be tweaked to obtain accurate results, integrals must be manually truncated, etc.
+- To the best understanding of the PathFinder developers, it appears that user expertise is required to use `Picard_Lefschetz_Integrator`, various parameters must be tweaked to obtain accurate results, integrals must be manually truncated, etc. This is in contrast to PathFinder, which aims to be fully automated where possible, requiring minimal user input.
 
 ### `OscillatoryIntegralsODE.jl`
 
 - This package is based on the Levin method (see for e.g. [@DeHuIs:18, Section 3.3]).
-- This package can evaluate oscillatory integrals
+- This package can evaluate oscillatory integrals of the form
 \begin{equation}
 I = \int_a^bf(x) S(\omega x) \mathrm{d} x,
 \end{equation}
