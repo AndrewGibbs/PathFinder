@@ -134,6 +134,6 @@ I am very grateful for the guidance of Daan Huybrechs and David Hewett throughou
 
 Some of the code in `PathFinder` is copied from other projects. I acknowledge @DAryo, used for the Dijkstra shortest path algorithm, originally proposed in [@dijkstra2022note]. I also acknowledge Dirk Laurie and Walter Gautschi for writing the code used for the Golub-Welsch algorithm, a full mathematical explanation of this algorithm can be found in [@gautschi2004orthogonal].
 
-Finally, I must express my gratitude to the referees who gave their time to review the software and this paper. This paper, the code and its documentation were significantly improved as a result of this review process.
+Finally, I must express my gratitude to the referees who gave their time to review the software and this paper. This paper, the code and its documentation were significantly improved as a result of the review process.
 
 # References
