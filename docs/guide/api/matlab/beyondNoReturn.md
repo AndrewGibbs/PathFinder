@@ -6,6 +6,9 @@ This is the Matlab version of a routine which is typically run as compiled C cod
 [value, vIndex] = beyondNoReturn(h,valleys,phaseCoeffs,rStar)
 ```
 
+The *no return* regions can be seen around the edges of the following image:
+ ![Example](../../../examples/eg_contour_def.png)
+
 ## Inputs
 * `h`: The steepest point that has been traced along the steepest descent path
 * `valleys`: Valleys of the polynomial phase function $g$

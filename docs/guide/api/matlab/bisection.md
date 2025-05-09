@@ -6,15 +6,15 @@ contour such that $\omega|g(z)-g(\xi)|=C$, where $g$ is the phase function, $\om
 The function to minimise is therefore
 
 $$
-f(c) = \omega|g(\xi + r\mathrm{e}^{\mathrm{i}\theta})-g(\xi)| - C,
+f(r) = \omega|g(\xi + r\mathrm{e}^{\mathrm{i}\theta})-g(\xi)| - C,
 $$
 
-and we're seeking $f(c)=0$ for some $c\in[a,b]$
+and we're seeking $f(r)=0$ for some $r\in[a,b]$ (here $a$ and $b$ are **not** the original integration endpoints.)
 
 This function will only be called when the main rootfinding algorithm (which uses a companion matrix approach) fails.
 
 ```matlab
-[c, numIterations] = bisection(f, a, b, tol)
+[r, numIterations] = bisection(f, a, b, tol)
 ```
 ## Inputs
 * `f` is the function $f$ defined above
