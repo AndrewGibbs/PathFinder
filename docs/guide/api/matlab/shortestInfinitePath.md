@@ -5,7 +5,7 @@ Chooses a suitable sequence of steepest descent and straight line contours, whic
 
 Specifically, for this graph:
 balls, exits, entrances, endpoints and valleys are interpreted as nodes. Steepest descent contours (finite or infinite), and straight line contours connecting points inside balls, are represented as edges.
- The approach in this code is to create multiple adjacency matrices corresponding to the connections between different types of points (or
+ The approach in this code is to create multiple [adjacency matrices](https://en.wikipedia.org/wiki/Adjacency_matrix) corresponding to the connections between different types of points (or
  valleys). These adjacency matrices are then combined, and we keep track
  of the different meanings of the different indices. This adjacency matrix
  is used to solve the shortest path problem.
@@ -27,4 +27,4 @@ balls, exits, entrances, endpoints and valleys are interpreted as nodes. Steepes
 ## Outputs
 
 * `Q` : Struct of quadrature ingredients, which contains all of the information about the chosen path deformation. From this, quadrature points are subsequently constructed.
-* `graphData` : Simplified struct, used for plotting,.
+* `graphData` : Simplified struct, used for plotting.

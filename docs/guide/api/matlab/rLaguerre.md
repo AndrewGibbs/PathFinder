@@ -1,6 +1,6 @@
 # `rLaguerre.m`
 
-`ab = R_LAGUERRE(n, a)` generates the first $n$ recurrence coefficients for the monic generalized [Laguerre polynomials](https://en.wikipedia.org/wiki/Laguerre_polynomials) 
+`ab = rLaguerre(n, a)` generates the first $n$ recurrence coefficients for the monic generalized [Laguerre polynomials](https://en.wikipedia.org/wiki/Laguerre_polynomials) 
 with parameter $a$. These polynomials are orthogonal on $[0, \infty)$ relative 
 to the weight function
 
@@ -11,7 +11,7 @@ $$
 The $n$ $\alpha$-coefficients are stored in the first column, and the 
 $n$ $\beta$-coefficients in the second column of the $n \times 2$ array `ab`.
 
-The call `ab = R_LAGUERRE(n)` is the same as `ab = R_LAGUERRE(n, 0)`.
+The call `ab = rLaguerre(n)` is the same as `ab = rLaguerre(n, 0)`.
 
 ```matlab
 ab=rLaguerre(N,a)

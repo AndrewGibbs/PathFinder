@@ -6,6 +6,8 @@ It is possible that the user can provide unbounded endpoints $a$ and/or $b$ whic
 [a,b] = JordanRotate(a,b,valleys,Params)
 ```
 
+Note that only infinite endpoints are rotated - as this does not change the value of the integral.
+
 ## Inputs
 
 * `a` and `b`: The original endpoints, before rotation.

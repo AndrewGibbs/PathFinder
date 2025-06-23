@@ -11,8 +11,7 @@ and the second column the $n$ $\beta$-coefficients — the call:
 xw = GAUSS(n, ab)
 ```
 
-generates the nodes and weights $xw$ of the $n$-point Gauss quadrature 
-rule for the weight function $w$.
+generates the nodes and weights $x, w$ of the $n$-point Gauss quadrature rule.
 
 ## Inputs
 

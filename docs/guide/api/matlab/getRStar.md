@@ -1,6 +1,6 @@
 # `getRStar.m`
 
-% routine to determine $r_*$, as described in {cite:p}`PFpaper`, section 2.4. The parameter $r_*$ is used to determine *no return* regions at later stages of the algorithm.
+Routine to determine $r_*$, as described in {cite:p}`PFpaper`, section 2.4. The parameter $r_*$ is used to determine *no return* regions at later stages of the algorithm.
 
 ```matlab
 rStar = getRStar(phaseCoeffs, theta)

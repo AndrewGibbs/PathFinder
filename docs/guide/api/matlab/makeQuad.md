@@ -8,7 +8,7 @@ This routine pieces together all the quadrature *ingredients* describing the seq
 
 ## Inputs
 
-* `quadIngredients` : Information about each component of the steepest descent deformation.
+* `quadIngredients` : An array of structs, each containing information about a component of the steepest descent deformation.
 * `freq` : The frequency parameter $\omega$
 * `numPts` : The number of 
 * `phaseFunction` : The the phase function $g$

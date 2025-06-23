@@ -1,8 +1,7 @@
 # `fliterPaths.md`
 
 Some contour integrals will have a negligible value compared to others.
-This function removes those contours from the sequence, so quadrature
-% points are only allocated along non-negligable conoturs.
+This function removes those contours from the sequence, so quadrature points are only allocated along non-negligable conoturs.
 
 Here, information about each contour corresponds to a different *quadrature ingredient* stored in `QuadIngredientArray`. This is an array of structs, each corresponding to a steepest descent path, or straight line segment, which forms the path deformation of $\gamma$.
 

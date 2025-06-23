@@ -8,6 +8,6 @@ logQuadratureDetails(params, netwonIterationData, quadToc)
 
 ## Inputs
 
-* `params` : Information about which information is to be logged.
-* `netwonIterationData` : Information about the number of Newton iterations each quadrature point needed to converge.
-* `quadToc` : The time taken to construct the quadrature points, given the coarse path approximations.
+* `params` : A struct containing information about which information is to be logged.
+* `netwonIterationData` : An array containing information about the number of Newton iterations each quadrature point needed to converge.
+* `quadToc` : An array, containing the times taken to construct the quadrature points, given the coarse path approximations.

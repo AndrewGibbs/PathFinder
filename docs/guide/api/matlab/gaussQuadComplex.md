@@ -1,6 +1,7 @@
 # `gaussQuadComplex`
 
 Given a straight line segment $\gamma\subset\mathbb{C}$ with endpoints $a$ and $b$, this subtroutine produces a Gauss Legendre quadrature rule
+
 $$
 \sum_{j=1}^N w_j f(z_j) \approx \int_\gamma f(z) \mathrm{d}z .
 $$
