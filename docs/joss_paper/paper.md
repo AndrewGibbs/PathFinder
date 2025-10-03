@@ -26,7 +26,7 @@ Oscillatory integrals arise in models of a wide range of physical applications, 
 \begin{equation}\label{eq:I}
 I = \int_a^b f(z) \exp(\mathrm{i}\omega g(z))~\mathrm{d}z,
 \end{equation}
-where the endpoints $a$ and $b$ can be complex-valued, even infinite; $\omega>0$ determines the angular frequency, $f(z)$ is a non-oscillatory entire function and $g(z)$ is a polynomial phase function. The syntax is simple:
+where the endpoints $a$ and $b$ can be complex-valued, even infinite; $\omega>0$ determines the angular frequency; $f(z)$ is the *amplitude function*, a non-oscillatory entire function; $g(z)$ is the *phase function*, which must be a polynomial. The basic syntax is simple:
 ```matlab
 I = PathFinder(a, b, f, gCoeffs, omega, N);
 ```
@@ -68,6 +68,7 @@ PathFinder( pi, 0, ... % angles of valleys
             'infcontour', [true true] % doubly infinite contour
             );
 ```
+Note the optional input specified by `'infcontour'` and the vector `[true true]`, which tells `PathFinder` that *both* endpoints of the integration contour are unbounded. The first two arguments of PathFinder, which describe the endpoints of the contour, are then interpreted as angles describing complex valleys: $\exp(\mathrm{i}\pi)\infty=-\infty$ and $\exp(\mathrm{i}0)\infty=\infty$, our limits of integration. Recall that in the *standard* syntax, the first two inputs are interpreted as finite endpoints of the contour.
 
 ![PathFinder approximation to Pearcey/Cusp Catastrophe integrals [@Pe:46], which contain coalescing saddle points.\label{fig:pearcey}](../../examples/cusp.png){width=90%}
 
@@ -86,13 +87,14 @@ The ideas of @HeOcSm:19 were combined with `PathFinder` in @OcTeHeGi:24 and appl
 this was subsequently transformed to a solution to the Helmholtz equation, in Figure \ref{fig:inflection}. The integrals \eqref{eq:ock} are evaluated using the following code:
 ```matlab
 PathFinder( 9\pi/10, 1/2, ... % angles of valleys
-            @(z) z, ... % no amplitude function
+            @(z) z, ... % amplitude function f(z)=z
             [2/5 -x_1/2 0 -x_2 0 0],... % phase coeffs
             1, ... % frequncy parameter
             10, ... % number of quadrature points per contour
             'infcontour', [true true] % doubly infinite contour
             );
 ```
+Note again the optional input `'infcontour'` which specifies that the integration contour is unbounded.
 
 ### Comparison with other software
 
@@ -106,7 +108,7 @@ To the best knowledge of the author, there are only a handful of other software 
 - `NIntegrate` is not open source; the code cannot be seen or modified, and one must acquire a license to use it. 
 
 ### `cuspint`
-- This package is written in Fortran, based on the paper @KiCoHo:00.
+- This package is written in Fortran, based on the paper [@KiCoHo:00].
 - The `cuspint` package is somewhat similar to `PathFinder` in that it is also based on steepest descent contour deformation.
 - The problem class is restricted to \eqref{eq:I} when $(a,b)=\mathbb{R}$. Therefore, it may be used to model the catastrophe integrals of Figures \ref{fig:pearcey} and \ref{fig:swallowtail}, but not those of Figure \ref{fig:pwe} and \ref{fig:inflection}.
 - `cuspint` can experience "violent" exponential growth [@KiCoHo:00, Section 2], which can lead to inaccurate results. This is because, unlike `PathFinder`, it does not attempt a highly accurate approximation of the steepest descent contours.
@@ -115,7 +117,7 @@ To the best knowledge of the author, there are only a handful of other software 
 
 - This C++ package is also based on steepest descent. The key difference is the algorithm gradually deforms the contour, details are given in [@FePeTu:23].
 - The scope of problems to which it is applicable appears broad, the full extent is unclear based on existing documentation. Like PathFinder, it can be applied to catastrophe integrals. There are examples where it is also applied to singular oscillatory integrals.
-- To the best understanding of the PathFinder developers, it appears that user expertise is required to use `Picard_Lefschetz_Integrator`, various parameters must be tweaked to obtain accurate results, integrals must be manually truncated, etc. This is in contrast to PathFinder, which aims to be fully automated where possible, requiring minimal user input.
+- To the best understanding of the PathFinder developers, it appears that prior user expertise in the underlying mathematics is required to use `Picard_Lefschetz_Integrator`, various parameters must be tweaked to obtain accurate results, integrals must be manually truncated, etc. This is in contrast to PathFinder, which aims to be fully automated where possible, requiring minimal user input.
 
 ### `OscillatoryIntegralsODE.jl`
 
@@ -126,7 +128,7 @@ I = \int_a^bf(x) S(\omega x) \mathrm{d} x,
 \end{equation}
 when $S$ is a Bessel function [@DLMF, sec. 10.2], a Spherical Bessel function [@DLMF, sec. 10.47], or the Fourier oscillator $S(\omega x) = \mathrm{e}^{\mathrm{i}\omega x}$. The latter is clearly equivalent to \eqref{eq:I} when $g$ is a monomial, thus `OscillatoryIntegralsODE.jl` excludes the general case of PathFinder, where the high frequency oscillator has a polynomial phase function.
 
-In summary, we believe that `PathFinder` is the only existing software package that can be applied in general to \eqref{eq:I}, without user expertise.
+In summary, we believe that `PathFinder` is the only existing software package that can be applied in general to \eqref{eq:I}, without prior user expertise in the underlying mathematics.
 
 # Acknowledgments
 
@@ -134,6 +136,6 @@ I am very grateful for the guidance of Daan Huybrechs and David Hewett throughou
 
 Some of the code in `PathFinder` is copied from other projects. I acknowledge @DAryo, used for the Dijkstra shortest path algorithm, originally proposed in [@dijkstra2022note]. I also acknowledge Dirk Laurie and Walter Gautschi for writing the code used for the Golub-Welsch algorithm, a full mathematical explanation of this algorithm can be found in [@gautschi2004orthogonal].
 
-Finally, I must express my gratitude to the referees who gave their time to review the software and this paper. This paper, the code and its documentation were significantly improved as a result of the review process.
+Finally, I must express my gratitude to the referees and editor who gave their time to review the software and this paper. This paper, the code and its documentation were significantly improved as a result of the review process.
 
 # References
