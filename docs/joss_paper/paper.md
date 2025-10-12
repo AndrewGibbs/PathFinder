@@ -68,7 +68,7 @@ PathFinder( pi, 0, ... % angles of valleys
             'infcontour', [true true] % doubly infinite contour
             );
 ```
-Note the optional input specified by `'infcontour'` and the vector `[true true]`, which tells `PathFinder` that *both* endpoints of the integration contour are unbounded. The first two arguments of PathFinder, which describe the endpoints of the contour, are then interpreted as angles describing complex valleys: $\exp(\mathrm{i}\pi)\infty=-\infty$ and $\exp(\mathrm{i}0)\infty=\infty$, our limits of integration. Recall that in the *standard* syntax, the first two inputs are interpreted as finite endpoints of the contour.
+Note the optional input specified by `'infcontour'` and the vector `[true true]`, which tells `PathFinder` that *both* endpoints of the integration contour are unbounded. The first two arguments of `PathFinder`, which describe the endpoints of the contour, are then interpreted as angles describing complex valleys: $\exp(\mathrm{i}\pi)\infty=-\infty$ and $\exp(\mathrm{i}0)\infty=\infty$, our limits of integration. Recall that in the *standard* syntax, the first two inputs are interpreted as finite endpoints of the contour.
 
 ![PathFinder approximation to Pearcey/Cusp Catastrophe integrals [@Pe:46], which contain coalescing saddle points.\label{fig:pearcey}](../../examples/cusp.png){width=90%}
 
