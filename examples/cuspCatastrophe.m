@@ -80,7 +80,7 @@ yWidth = max(yRange) - min(yRange);
 maxWidth = max(xWidth, yWidth);
 xScale = xWidth * imageBaseScale / maxWidth;
 yScale = yWidth * imageBaseScale / maxWidth;
-title('Amplitude of Cusp/Pearcey canonical catastophe integral');
+title('Amplitude of Cusp/Pearcey canonical catastrophe integral');
 
 set(gcf, 'Position', [100, 600, xScale, yScale]);
 shg;
